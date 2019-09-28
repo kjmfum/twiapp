@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="10">
+
+
+    <TextView
+        android:id="@+id/tvDaysOfWkEnglish"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="5"
+        android:textSize="30sp"
+        android:text="Monday"
+        android:shadowRadius="@android:integer/config_longAnimTime"
+        android:gravity="center"/>
+
+    <TextView
+        android:onClick="log3"
+        android:id="@+id/tvDaysOfWkTwi"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="5"
+        android:textSize="30sp"
+        android:text="Dwoada"
+        android:gravity="center"/>
+
+</LinearLayout>

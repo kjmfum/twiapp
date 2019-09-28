@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="10"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_weight="6"
+        android:id="@+id/Text1"
+        android:onClick="log1"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:text="HELLO THERE"
+        android:gravity="center"
+        />
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="4"
+        android:id="@+id/LinearLayout2"
+        >
+
+
+        <TextView
+            android:onClick="log1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:id="@+id/Text2"
+            android:text="TEXT2"/>
+
+        <TextView
+            android:onClick="log1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:id="@+id/Text3"
+            android:text="TEXT3"/>
+
+        />
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.learnakantwi.twiguides">
+
+    <application
+        android:resizeableActivity="true"
+        android:allowBackup="true"
+        android:icon="@drawable/learnakantwiimage"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/learnakantwiimage"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".QuizAnimals"
+            android:resizeableActivity="true"
+            android:supportsPictureInPicture="true"/>
+        <activity android:name=".Quiz1" />
+        <activity android:name=".QuizFood" />
+        <activity android:name=".QuizFamily" />
+        <activity android:name=".QuizTime" />
+        <activity android:name=".QuizDaysOfWeek" />
+        <activity android:name=".QuizNumbers" />
+        <activity android:name=".QuizWeather" />
+        <activity android:name=".QuizBodyParts" />
+        <activity android:name=".QuizMonths" />
+        <activity android:name=".QuizCommonExpressionsa" />
+        <activity android:name=".QuizColours" />
+        <activity android:name=".QuizAll" />
+        <activity android:name=".AllActivity" />
+        <activity android:name=".WeatherActivity" />
+        <activity android:name=".TimeActivity" />
+        <activity android:name=".PronounsActivity" />
+        <activity android:name=".NumbersActivity" />
+        <activity android:name=".MonthsActivity" />
+        <activity android:name=".Home" />
+        <activity android:name=".FoodActivity" />
+        <activity android:name=".FamilyActivity" />
+        <activity android:name=".DaysOfWeekActivity" />
+        <activity android:name=".CommonExpressionsaActivity" />
+        <activity android:name=".ColoursActivity" />
+        <activity android:name=".BodypartsActivity" />
+        <activity android:name=".AnimalsActivity" />
+        <activity android:name=".AlphabetsActivity" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity> <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+       <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-6999427576830667~6251296006" />
+<!-- ca-app-pub-6999427576830667~6251296006   ca-app-pub-6999427576830667/9998969325   ca-app-pub-6999427576830667/9981230407-->
+    </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+</manifest>

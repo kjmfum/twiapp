@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <group>
+
+        <item
+            android:id="@+id/quiz11"
+            android:title="Go Back"></item>
+
+        <item
+            android:id="@+id/main"
+            android:title="@string/main_menu"></item>
+
+
+    </group>
+
+
+    <item
+    android:title="Mymenu">
+
+
+    <item
+        android:title="Reset Quiz"
+        android:id="@+id/resetquiz">
+    </item>
+
+        <item
+            android:id="@+id/videoCourse"
+            android:title="@string/buy_video_course"></item>
+
+</item>
+
+
+</menu>

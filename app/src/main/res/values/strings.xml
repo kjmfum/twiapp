@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Twi guide</string>
+    <string name="alphabets">Alphabets</string>
+    <string name="numbers">Numbers</string>
+    <string name="days_of_week">Days of Week</string>
+    <string name="time">time</string>
+    <string name="family">Family</string>
+    <string name="weather">Weather</string>
+    <string name="months">Months</string>
+    <string name="pronouns">Pronouns</string>
+    <string name="title_activity_common_expressionsa">CommonExpressionsaActivity</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="search">Search</string>
+    <string name="ghanaflag">ghanaflag</string>
+    <string name="learn_akan_twi">Learn Akan Twi</string>
+    <string name="communicate">Communicate</string>
+    <string name="Quiz">Quiz</string>
+    <string name="QuestionText">TextView</string>
+    <string name="buy_video_course">Video Course</string>
+</resources>

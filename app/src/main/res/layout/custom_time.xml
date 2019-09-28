@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:weightSum="10">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@android:color/background_light"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_light"
+        android:orientation="horizontal"
+        android:paddingBottom="2dp"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:onClick="log2"
+            android:id="@+id/speakEnglishTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:background="@color/cardview_light_background"
+            android:gravity="center"
+            android:paddingRight="@android:dimen/app_icon_size"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="Monday"
+            android:textSize="20sp" />
+
+        <TextView
+
+            android:onClick="timeClick"
+            android:id="@+id/speakTwiTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_light_background"
+            android:layout_weight="5"
+            android:textSize="20sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="Dwoada"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>

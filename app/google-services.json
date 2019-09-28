@@ -1,0 +1,57 @@
+{
+  "project_info": {
+    "project_number": "262589979519",
+    "firebase_url": "https://akan-twi-guide.firebaseio.com",
+    "project_id": "akan-twi-guide",
+    "storage_bucket": "akan-twi-guide.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262589979519:android:b5baf5537f68c36571184a",
+        "android_client_info": {
+          "package_name": "com.learnakantwi.twiguides"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262589979519-g9vkuuvp005v98mq17464f731kejj2i1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.learnakantwi.twiguides",
+            "certificate_hash": "310cbbe72b45242b9b7967214528f8f36bbcf99c"
+          }
+        },
+        {
+          "client_id": "262589979519-8j6ggbu7lmb2uerfti1f91g4ob6k194q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.learnakantwi.twiguides",
+            "certificate_hash": "da50e7b54192b4fc452877057829ad7da3e91b79"
+          }
+        },
+        {
+          "client_id": "262589979519-qp1e63074ao7rkdcjoqo4olcf5120pb5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcBZi42vzXtys439s6nvuRFt5D_YiT14g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262589979519-qp1e63074ao7rkdcjoqo4olcf5120pb5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-6999427576830667~6251296006"
+    }
+  ],
+  "configuration_version": "1"
+}
