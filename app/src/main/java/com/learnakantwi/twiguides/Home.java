@@ -2151,7 +2151,7 @@ public class Home extends AppCompatActivity {
 
         allArrayList.add(new All("When","Bere bɛn","","", "", ""));
         allArrayList.add(new All("What is the All?","Abɔ sɛn?","","", "", ""));
-        allArrayList.add(new All("What All is it?","Abɔ sɛn?","","", "", ""));
+        allArrayList.add(new All("What time is it?","Abɔ sɛn?","","", "", ""));
 
 
 

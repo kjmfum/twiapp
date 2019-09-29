@@ -1,9 +1,14 @@
 package com.learnakantwi.twiguides;
 
+import android.Manifest;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
@@ -18,7 +24,13 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -52,6 +64,124 @@ public class QuizAll extends AppCompatActivity {
     int counter;
     double scorePercent= ((score/totalQuestions)*100);
     AdView mAdView;
+    StorageReference storageReference;
+    MediaPlayer playFromDevice;
+    MediaPlayer mp1;
+
+
+
+
+
+    public void playFromFileOrDownload(final String filename){
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
+        if (myFile.exists()){
+
+            try {
+                if (playFromDevice != null){
+                    playFromDevice.stop();
+                    playFromDevice.reset();
+                    playFromDevice.release();
+                }
+                playFromDevice = new MediaPlayer();
+
+                playFromDevice.setDataSource(myFile.toString());
+                playFromDevice.prepareAsync();
+                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.start();
+                    }
+                });
+                Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+
+
+            final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+            musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    String url = uri.toString();
+                    playFromFirebase(musicRef);
+                    // Toast.makeText(getApplicationContext(), "Got IT", Toast.LENGTH_SHORT).show();
+                    downloadFile(getApplicationContext(), filename, ".m4a", url);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+    }
+    public void playFromFirebase(StorageReference musicRef) {
+
+        if (Build.VERSION.SDK_INT > 22) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+        try {
+            final File localFile = File.createTempFile("aduonu", "m4a");
+
+            if (localFile != null) {
+                musicRef.getFile(localFile)
+                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                                if (mp1 != null){
+                                    mp1.stop();
+                                    mp1.reset();
+                                    mp1.release();
+                                }
+                                mp1 = new MediaPlayer();
+                                try {
+                                    Toast.makeText(getApplicationContext(), "Yes Yes", Toast.LENGTH_SHORT).show();
+                                    mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
+                                    mp1.prepareAsync();
+                                    mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                        @Override
+                                        public void onPrepared(MediaPlayer mp) {
+                                            mp.start();
+                                        }
+                                    });
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle failed download
+                        // ...
+                    }
+                });
+            } else {
+                Toast.makeText(this, "File was not created", Toast.LENGTH_SHORT).show();
+            }
+
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void downloadFile(Context context, String filename, String fileExtension, String url){
+        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(url);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setVisibleInDownloadsUi(false);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        //   request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+        request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_MUSIC, filename+fileExtension);
+        //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+        downloadManager.enqueue(request);
+
+    }
 
 
 
@@ -230,7 +360,7 @@ public class QuizAll extends AppCompatActivity {
             b= b.replace("?","");
         }
 
-        int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
+        /*int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
 
 
         final MediaPlayer player = MediaPlayer.create(this, resourceId);
@@ -241,7 +371,39 @@ public class QuizAll extends AppCompatActivity {
             public void onCompletion(MediaPlayer mp) {
                 player.release();
             }
-        });
+        });*/
+
+
+        ////////
+
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+b+ ".m4a");
+        if (myFile.exists()){
+
+            try {
+                if (playFromDevice != null){
+                    playFromDevice.stop();
+                    playFromDevice.reset();
+                    playFromDevice.release();
+                }
+                playFromDevice = new MediaPlayer();
+
+                playFromDevice.setDataSource(myFile.toString());
+                playFromDevice.prepareAsync();
+                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.start();
+                    }
+                });
+                Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
+            } catch (IOException ev) {
+                ev.printStackTrace();
+            }
+        }
+
+        ////////
+
+
 
         if (counter == totalQuestions){
 
