@@ -360,7 +360,7 @@ public class QuizAll extends AppCompatActivity {
             b= b.replace("?","");
         }
 
-        /*int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
+    /*    int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
 
 
         final MediaPlayer player = MediaPlayer.create(this, resourceId);
@@ -371,13 +371,13 @@ public class QuizAll extends AppCompatActivity {
             public void onCompletion(MediaPlayer mp) {
                 player.release();
             }
-        });*/
-
+        });
+*/
 
         ////////
 
         File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+b+ ".m4a");
-        if (myFile.exists()){
+       // if (myFile.exists()){
 
             try {
                 if (playFromDevice != null){
@@ -388,18 +388,20 @@ public class QuizAll extends AppCompatActivity {
                 playFromDevice = new MediaPlayer();
 
                 playFromDevice.setDataSource(myFile.toString());
-                playFromDevice.prepareAsync();
+                playFromDevice.start();
+
+                /*playFromDevice.prepareAsync();
                 playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
                     public void onPrepared(MediaPlayer mp) {
                         mp.start();
                     }
-                });
+                });*/
                 Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
             } catch (IOException ev) {
                 ev.printStackTrace();
             }
-        }
+
 
         ////////
 
