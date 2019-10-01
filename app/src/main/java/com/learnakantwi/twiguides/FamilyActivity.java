@@ -1,10 +1,17 @@
 package com.learnakantwi.twiguides;
 
+import android.Manifest;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 //import android.support.v7.app.AppCompatActivity;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,14 +20,166 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class FamilyActivity extends AppCompatActivity {
 
     ListView listView;
     static ArrayList<Family> familyArrayList;
+
+    StorageReference storageReference;
+    MediaPlayer playFromDevice;
+    MediaPlayer mp1;
+
+
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
+    public void playFromFileOrDownload(final String filename, final String appearText){
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
+        if (myFile.exists()){
+
+            try {
+                if (playFromDevice != null){
+                    playFromDevice.stop();
+                    playFromDevice.reset();
+                    playFromDevice.release();
+                }
+                playFromDevice = new MediaPlayer();
+
+                playFromDevice.setDataSource(myFile.toString());
+                playFromDevice.prepareAsync();
+                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.start();
+                        Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                //Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+
+            if (isNetworkAvailable()){
+                //Toast.makeText(this, "I'm available", Toast.LENGTH_SHORT).show();
+
+                final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+                musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String url = uri.toString();
+                        playFromFirebase(musicRef);
+                        // Toast.makeText(getApplicationContext(), "Got IT", Toast.LENGTH_SHORT).show();
+                        downloadFile(getApplicationContext(), filename, ".m4a", url);
+                        Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else {
+                Toast.makeText(this, "Please connect to Internet to download audio", Toast.LENGTH_SHORT).show();
+            }
+
+
+        }
+    }
+    public void playFromFirebase(StorageReference musicRef) {
+
+        if (Build.VERSION.SDK_INT > 22) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+        try {
+            final File localFile = File.createTempFile("aduonu", "m4a");
+
+            if (localFile != null) {
+                musicRef.getFile(localFile)
+                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                                if (mp1 != null){
+                                    mp1.stop();
+                                    mp1.reset();
+                                    mp1.release();
+                                }
+                                mp1 = new MediaPlayer();
+                                try {
+                                    mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
+                                    mp1.prepareAsync();
+                                    mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                        @Override
+                                        public void onPrepared(MediaPlayer mp) {
+                                            mp.start();
+                                        }
+                                    });
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle failed download
+                        // ...
+                    }
+                });
+            } else {
+                Toast.makeText(this, "File was not created", Toast.LENGTH_SHORT).show();
+            }
+
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                Uri uri = Uri.parse(url);
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+                request.setVisibleInDownloadsUi(false);
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                //   request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+                request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+                downloadManager.enqueue(request);
+            }
+        };
+        Thread myThread = new Thread(runnable);
+        myThread.start();
+
+
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,7 +279,6 @@ public class FamilyActivity extends AppCompatActivity {
 
         TextView blabla = (TextView) view.findViewById(idview);
         String a = (String) blabla.getText();
-        Toast.makeText(this, a, Toast.LENGTH_SHORT).show();
 
         String b = a.toLowerCase();
 
@@ -139,18 +297,8 @@ public class FamilyActivity extends AppCompatActivity {
             b= b.replace("'","");
         }
 
-        int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
+        playFromFileOrDownload(b,a);
 
-
-        final MediaPlayer player = MediaPlayer.create(this, resourceId);
-        player.start();
-
-        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                player.release();
-            }
-        });
 
     }
 
@@ -160,120 +308,7 @@ public class FamilyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_family);
 
         listView = findViewById(R.id.familyListView);
-
-       /* familyArrayList = new ArrayList<>();
-
-        familyArrayList.add(new Family("Family", "Abusua"));
-        familyArrayList.add(new Family("Families", "Mmusua"));
-
-        familyArrayList.add(new Family("Father (1)", "Papa"));
-        familyArrayList.add(new Family("Father (2)", "Agya"));
-        familyArrayList.add(new Family("Father (3)", "Ɔse"));
-        familyArrayList.add(new Family("My father (1)", "Me papa"));
-        familyArrayList.add(new Family("My father (2)", "M'agya"));
-        familyArrayList.add(new Family("My father (3)", "Me se"));
-        familyArrayList.add(new Family("Daddy", "Dada"));
-
-        familyArrayList.add(new Family("Mother (1)", "Maame"));
-        familyArrayList.add(new Family("Mother (2)", "Ɛna"));
-        familyArrayList.add(new Family("Mother (3)", "Oni"));
-        familyArrayList.add(new Family("My Mother (1)", "Me maame"));
-        familyArrayList.add(new Family("My Mother (2)", "Me na"));
-        familyArrayList.add(new Family("My Mother (3)", "Me ni"));
-        familyArrayList.add(new Family("Mummy", "Mama"));
-
-
-        familyArrayList.add(new Family("Parent", "Ɔwofo"));
-        familyArrayList.add(new Family("Parents", "Awofo"));
-        familyArrayList.add(new Family("Child (1)", "Abofra"));
-        familyArrayList.add(new Family("Child (2)", "Akwadaa"));
-        familyArrayList.add(new Family("Children (1)", "mma"));
-        familyArrayList.add(new Family("Children (2)", "mmofra"));
-        familyArrayList.add(new Family("Baby", "Abofra"));
-
-        familyArrayList.add(new Family("Firstborn (1)", "Abakan"));
-        familyArrayList.add(new Family("Firstborn (2)", "Piesie"));
-        familyArrayList.add(new Family("Lastborn", "Kaakyire"));
-
-        familyArrayList.add(new Family("Husband", "Kunu"));
-        familyArrayList.add(new Family("Husbands", "Kununom"));
-
-        familyArrayList.add(new Family("Wife", "Yere"));
-        familyArrayList.add(new Family("Wives", "Yerenom"));
-
-        familyArrayList.add(new Family("Brother", "Nuabarima"));
-        familyArrayList.add(new Family("Brothers", "Nua mmarima"));
-        familyArrayList.add(new Family("Sister", "Nuabaa"));
-        familyArrayList.add(new Family("Sisters", "Nua mmaa"));
-
-        familyArrayList.add(new Family("Sibling", "Nua"));
-        familyArrayList.add(new Family("Siblings", "Nuanom"));
-
-        familyArrayList.add(new Family("Son", "Babarima"));
-        familyArrayList.add(new Family("Sons", "mma mmarima"));
-        familyArrayList.add(new Family("Daughter", "Babaa"));
-        familyArrayList.add(new Family("Daughters", "Mma mmaa"));
-
-        familyArrayList.add(new Family("Cousin", "Nua"));
-        familyArrayList.add(new Family("Grandchild", "Banana"));
-        familyArrayList.add(new Family("Great Grandchild", "Nanankanso"));
-        familyArrayList.add(new Family("Grandfather", "Nanabarima"));
-        familyArrayList.add(new Family("Great grandfather", "Nanabarima prenu"));
-        familyArrayList.add(new Family("Grandmother", "Nanabaa"));
-        familyArrayList.add(new Family("Great grandmother", "Nanabaa prenu"));
-
-        familyArrayList.add(new Family("In-law", "Asew"));
-        familyArrayList.add(new Family("Father-in-law", "Asebarima"));
-        familyArrayList.add(new Family("Mother-in-law", "Asebaa"));
-        familyArrayList.add(new Family("Brother-in-law", "Akonta"));
-        familyArrayList.add(new Family("Sister-in-law", "Akumaa"));
-        familyArrayList.add(new Family("Son-in-law (1)", "Asew"));
-        familyArrayList.add(new Family("Son-in-law (2)", "Babaa kunu"));
-        familyArrayList.add(new Family("Daughter-in-law", "Asew"));
-        familyArrayList.add(new Family("Daughter-in-law", "Babarima yere"));
-
-
-        familyArrayList.add(new Family("Maternal Uncle", "Wɔfa"));
-        familyArrayList.add(new Family("Paternal Uncle (1)", "Papa"));
-        familyArrayList.add(new Family("Paternal Uncle (2)", "Agya"));
-        familyArrayList.add(new Family("Paternal Uncle (3)", "Papa nuabarima"));
-
-        familyArrayList.add(new Family("Paternal Aunt", "Sewaa"));
-        familyArrayList.add(new Family("My Paternal Aunt", "Me Sewaa"));
-
-        familyArrayList.add(new Family("Maternal Aunt (1)", "Maame nuabaa"));
-        familyArrayList.add(new Family("Maternal Aunt (2)", "Maame"));
-        familyArrayList.add(new Family("My maternal Aunt", "Me maame nuabaa"));
-
-        familyArrayList.add(new Family("Niece", "Wɔfaase"));
-        familyArrayList.add(new Family("Nephew", "Wɔfaase"));
-
-        familyArrayList.add(new Family("Cousin (1)", "Nua"));
-        familyArrayList.add(new Family("Cousin (2)", "Wɔfa ba"));
-        familyArrayList.add(new Family("Cousin (3)", "Sewaa ba"));
-        familyArrayList.add(new Family("My Cousin", "Me nua"));
-
-
-        familyArrayList.add(new Family("Adopted child", "Abanoma"));
-        familyArrayList.add(new Family("Orphan", "Agyanka"));
-        familyArrayList.add(new Family("Widow", "Okunafo"));
-        familyArrayList.add(new Family("Widower", "Barima kunafo"));
-
-        familyArrayList.add(new Family("Marriage", "Awareɛ"));
-
-        familyArrayList.add(new Family("Twins", "Ntafoɔ"));
-        familyArrayList.add(new Family("Triplets", "Ahenasa"));
-        familyArrayList.add(new Family("Quadruplets", "Ahenanan"));
-*/
-
-
-
-
-
-
-
-
-
+        storageReference = FirebaseStorage.getInstance().getReference();
 
 
         FamilyAdapter familyAdapter = new FamilyAdapter(this, familyArrayList);

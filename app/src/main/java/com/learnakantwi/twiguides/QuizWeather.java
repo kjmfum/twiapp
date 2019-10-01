@@ -1,9 +1,14 @@
 package com.learnakantwi.twiguides;
 
+import android.Manifest;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
@@ -19,7 +25,14 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -53,6 +66,132 @@ public class QuizWeather extends AppCompatActivity {
     int counter;
     double scorePercent= ((score/totalQuestions)*100);
     AdView mAdView;
+
+    StorageReference storageReference;
+    MediaPlayer playFromDevice;
+    MediaPlayer mp1;
+
+
+    public void playFromFileOrDownload(final String filename) {
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + filename + ".m4a");
+        if (myFile.exists()) {
+
+            try {
+                if (playFromDevice != null) {
+                    playFromDevice.stop();
+                    playFromDevice.reset();
+                    playFromDevice.release();
+                }
+                playFromDevice = new MediaPlayer();
+
+                playFromDevice.setDataSource(myFile.toString());
+                playFromDevice.prepareAsync();
+                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.start();
+                    }
+                });
+                //generateQuestion();
+                // Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+
+            final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+            musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    String url = uri.toString();
+                    playFromFirebase(musicRef);
+                    // Toast.makeText(getApplicationContext(), "Got IT", Toast.LENGTH_SHORT).show();
+                    downloadFile(getApplicationContext(), filename, ".m4a", url);
+                    //generateQuestion();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                }
+            });
+
+        }
+    }
+
+    public void playFromFirebase(StorageReference musicRef) {
+
+        if (Build.VERSION.SDK_INT > 22) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+        try {
+            final File localFile = File.createTempFile("aduonu", "m4a");
+
+            if (localFile != null) {
+                musicRef.getFile(localFile)
+                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                                if (mp1 != null) {
+                                    mp1.stop();
+                                    mp1.reset();
+                                    mp1.release();
+                                }
+                                mp1 = new MediaPlayer();
+                                try {
+                                    // Toast.makeText(getApplicationContext(), "Yes Yes", Toast.LENGTH_SHORT).show();
+                                    mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
+                                    mp1.prepareAsync();
+                                    mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                        @Override
+                                        public void onPrepared(MediaPlayer mp) {
+                                            mp.start();
+                                        }
+
+                                    });
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle failed download
+                        // ...
+                    }
+                });
+            } else {
+                Toast.makeText(this, "File was not created", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                Uri uri = Uri.parse(url);
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+                request.setVisibleInDownloadsUi(false);
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                //   request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+                request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+                downloadManager.enqueue(request);
+            }
+        };
+        Thread myThread = new Thread(runnable);
+        myThread.start();
+
+
+    }
+
 
 
 
@@ -119,54 +258,6 @@ public class QuizWeather extends AppCompatActivity {
     }*/
 
 
-
-
-
-
-    public void generateQuestion(View v){
-        random = new Random();
-        answers = new ArrayList<>();
-        answerLocation = random.nextInt(4);
-
-        randomChoiceQuestion = random.nextInt(chosenSize);
-        english1 = weatherArray.get(randomChoiceQuestion).getWeatherEnglish();
-
-        questionText.setText(english1);
-
-        twi1 = weatherArray.get(randomChoiceQuestion).getWeatherTwi();
-
-
-
-        for (int i = 0; i < 4;i++ ){
-            chosenSizeRand= random.nextInt(chosenSize);
-
-            //boolean compare = allArrayList.get(i).getTwiMain().equals(twi1);
-            if (i== answerLocation){
-                answers.add(twi1);
-            }
-            else {
-
-                //answers.add(allArrayList.get(chosenSizeRand).getTwiMain());
-                while (weatherArray.get(chosenSizeRand).getWeatherTwi().equals(twi1)
-                ) {
-                    chosenSizeRand = random.nextInt(chosenSize);
-                    // answers.add(allArrayList.get(chosenSize).getTwiMain());
-                }
-
-                answers.add(weatherArray.get(chosenSizeRand).getWeatherTwi());
-            }
-
-
-
-        }
-
-        button1.setText(answers.get(0));
-        button2.setText(answers.get(1));
-        button3.setText(answers.get(2));
-        button4.setText(answers.get(3));
-
-    }
-
     public void resetQuiz(){
         counter =0;
         score=0;
@@ -230,9 +321,6 @@ public class QuizWeather extends AppCompatActivity {
 
     public void quizClickSound(View view){
 
-        //int idview= view.getId();
-
-
         int idview= view.getId();
 
         Button blabla = (Button) view.findViewById(idview);
@@ -274,18 +362,7 @@ public class QuizWeather extends AppCompatActivity {
             b= b.replace("?","");
         }
 
-        int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
-
-
-        final MediaPlayer player = MediaPlayer.create(this, resourceId);
-        player.start();
-
-        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                player.release();
-            }
-        });
+        playFromFileOrDownload(b);
 
         if (counter == totalQuestions){
 
@@ -298,20 +375,15 @@ public class QuizWeather extends AppCompatActivity {
             scorePercent= Math.round(scorePercent*10.0)/10.0;
 
            // questionText.setText("FINAL SCORE= " + String.valueOf(scorePercent)+"%");
-            questionText.setText("YOU HAD " + Double.toString(scorePercent)+"%");
+            questionText.setText(getString(R.string.resulttext) + Double.toString(scorePercent)+"%");
 
-            if (scorePercent> 90){
-                gradeText.setText("Excellent!!!!!");
-            }
-            else if (scorePercent>40 && scorePercent <90){
-                gradeText.setText("Well Done!!");
-            }
-            else if (scorePercent>20 && scorePercent <40){
-                gradeText.setText("Nice Try");
-            }
-            else {
-                gradeText.setText("Fail. You can do better");
-            }
+            if (scorePercent> 90)
+                gradeText.setText(getString(R.string.excellent));
+            else if (scorePercent>40 && scorePercent <90)
+                gradeText.setText(getString(R.string.welldone));
+            else if (scorePercent>20 && scorePercent <40) {
+                gradeText.setText(getString(R.string.nicetry));
+            } else gradeText.setText(getString(R.string.fail));
 
 
 
@@ -351,15 +423,14 @@ public class QuizWeather extends AppCompatActivity {
 
         button5.setVisibility(View.INVISIBLE);
 
+        storageReference = FirebaseStorage.getInstance().getReference();
+
 
            resetQuiz();
            generateQuestion();
 
 
-
-
-
-        /*MobileAds.initialize(this, new OnInitializationCompleteListener() {
+       /* MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
@@ -372,7 +443,7 @@ public class QuizWeather extends AppCompatActivity {
                 .addTestDevice("1E42299CB1A3F8218629BA7531041D73")  // An example device ID
                 .build();
 
-        mAdView.loadAd(adRequest);*/
+        mAdView.loadAd(adRequest); */
 
     }
 

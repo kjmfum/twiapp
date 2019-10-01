@@ -8,6 +8,8 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +36,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -53,9 +57,41 @@ public class AllActivity extends AppCompatActivity {
 
 
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
 
 
-    public void playFromFileOrDownload(final String filename){
+   /* public boolean hasInternetAccess(Context context) {
+        if (isNetworkAvailable(context)) {
+            try {
+                HttpURLConnection urlc = (HttpURLConnection)
+                        (new URL("http://clients3.google.com/generate_204")
+                                .openConnection());
+                urlc.setRequestProperty("User-Agent", "Android");
+                urlc.setRequestProperty("Connection", "close");
+                urlc.setConnectTimeout(1500);
+                urlc.connect();
+                Toast.makeText(context, "True Internet", Toast.LENGTH_SHORT).show();
+                return (urlc.getResponseCode() == 204 &&
+                        urlc.getContentLength() == 0);
+
+            } catch (IOException e) {
+                //Log.e(TAG, "Error checking internet connection", e);
+            }
+        } else {
+            return false;//Toast.makeText(context, "No internet", Toast.LENGTH_SHORT).show();
+           // Log.d(TAG, "No network available!");
+        }
+        return false;
+    }
+    */
+
+
+    public void playFromFileOrDownload(final String filename, final String appearText){
         File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
         if (myFile.exists()){
 
@@ -73,31 +109,40 @@ public class AllActivity extends AppCompatActivity {
                     @Override
                     public void onPrepared(MediaPlayer mp) {
                         mp.start();
+                        Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
                     }
                 });
-                Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         else {
 
+            if (isNetworkAvailable()){
+                //Toast.makeText(this, "I'm available", Toast.LENGTH_SHORT).show();
 
-            final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
-            musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    String url = uri.toString();
-                    playFromFirebase(musicRef);
-                   // Toast.makeText(getApplicationContext(), "Got IT", Toast.LENGTH_SHORT).show();
-                    downloadFile(getApplicationContext(), filename, ".m4a", url);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
-                }
-            });
+                final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+                musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String url = uri.toString();
+                        playFromFirebase(musicRef);
+                        // Toast.makeText(getApplicationContext(), "Got IT", Toast.LENGTH_SHORT).show();
+                        downloadFile(getApplicationContext(), filename, ".m4a", url);
+                        Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else {
+                Toast.makeText(this, "Please connect to Internet to download audio", Toast.LENGTH_SHORT).show();
+            }
+
 
         }
     }
@@ -123,7 +168,6 @@ public class AllActivity extends AppCompatActivity {
                                 }
                                 mp1 = new MediaPlayer();
                                 try {
-                                    Toast.makeText(AllActivity.this, "Yes Yes", Toast.LENGTH_SHORT).show();
                                     mp1.setDataSource(AllActivity.this, Uri.fromFile(localFile));
                                     mp1.prepareAsync();
                                     mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -153,16 +197,25 @@ public class AllActivity extends AppCompatActivity {
 
         }
 
-    public void downloadFile(Context context, String filename, String fileExtension, String url){
-        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-        Uri uri = Uri.parse(url);
-        DownloadManager.Request request = new DownloadManager.Request(uri);
-        request.setVisibleInDownloadsUi(false);
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        //   request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
-        request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_MUSIC, filename+fileExtension);
-        //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
-        downloadManager.enqueue(request);
+    public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                Uri uri = Uri.parse(url);
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+                request.setVisibleInDownloadsUi(false);
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                //   request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+                request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+                downloadManager.enqueue(request);
+            }
+        };
+        Thread myThread = new Thread(runnable);
+        myThread.start();
+
 
     }
 
@@ -182,7 +235,7 @@ public class AllActivity extends AppCompatActivity {
 
         TextView blabla = view.findViewById(idview);
         String a = (String) blabla.getText();
-        Toast.makeText(this, a, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, a, Toast.LENGTH_SHORT).show();
 
         String b = a.toLowerCase();
 
@@ -206,7 +259,7 @@ public class AllActivity extends AppCompatActivity {
         }
 
 
-        playFromFileOrDownload(b);
+        playFromFileOrDownload(b, a);
 
        /* int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
 
@@ -307,6 +360,8 @@ public class AllActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all);
+
+
 
 
 

@@ -1,10 +1,17 @@
 package com.learnakantwi.twiguides;
 
+import android.Manifest;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 //import android.support.v7.app.AppCompatActivity;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,14 +21,165 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class WeatherActivity extends AppCompatActivity {
 
     ListView weatherListView;
     static ArrayList<Weather> weatherArray;
+
+    StorageReference storageReference;
+    MediaPlayer playFromDevice;
+    MediaPlayer mp1;
+
+
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
+    public void playFromFileOrDownload(final String filename, final String appearText){
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
+        if (myFile.exists()){
+
+            try {
+                if (playFromDevice != null){
+                    playFromDevice.stop();
+                    playFromDevice.reset();
+                    playFromDevice.release();
+                }
+                playFromDevice = new MediaPlayer();
+
+                playFromDevice.setDataSource(myFile.toString());
+                playFromDevice.prepareAsync();
+                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.start();
+                        Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                //Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+
+            if (isNetworkAvailable()){
+                //Toast.makeText(this, "I'm available", Toast.LENGTH_SHORT).show();
+
+                final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+                musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String url = uri.toString();
+                        playFromFirebase(musicRef);
+                        // Toast.makeText(getApplicationContext(), "Got IT", Toast.LENGTH_SHORT).show();
+                        downloadFile(getApplicationContext(), filename, ".m4a", url);
+                        Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else {
+                Toast.makeText(this, "Please connect to Internet to download audio", Toast.LENGTH_SHORT).show();
+            }
+
+
+        }
+    }
+    public void playFromFirebase(StorageReference musicRef) {
+
+        if (Build.VERSION.SDK_INT > 22) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+        try {
+            final File localFile = File.createTempFile("aduonu", "m4a");
+
+            if (localFile != null) {
+                musicRef.getFile(localFile)
+                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                                if (mp1 != null){
+                                    mp1.stop();
+                                    mp1.reset();
+                                    mp1.release();
+                                }
+                                mp1 = new MediaPlayer();
+                                try {
+                                    mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
+                                    mp1.prepareAsync();
+                                    mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                        @Override
+                                        public void onPrepared(MediaPlayer mp) {
+                                            mp.start();
+                                        }
+                                    });
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle failed download
+                        // ...
+                    }
+                });
+            } else {
+                Toast.makeText(this, "File was not created", Toast.LENGTH_SHORT).show();
+            }
+
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                Uri uri = Uri.parse(url);
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+                request.setVisibleInDownloadsUi(false);
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                //   request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+                request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+                downloadManager.enqueue(request);
+            }
+        };
+        Thread myThread = new Thread(runnable);
+        myThread.start();
+
+
+    }
+
 
     public void log2(View view) {
         int idview = view.getId();
@@ -58,18 +216,7 @@ public class WeatherActivity extends AppCompatActivity {
             b= b.replace("?","");
         }
 
-        int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
-
-
-        final MediaPlayer player = MediaPlayer.create(this, resourceId);
-        player.start();
-
-        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                player.release();
-            }
-        });
+        playFromFileOrDownload(b,a);
 
     }
 
@@ -162,76 +309,7 @@ public class WeatherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weather);
 
         weatherListView = findViewById(R.id.weatherListView);
- /*       weatherArray= new ArrayList<>();
-
-        weatherArray.add(new Weather("Rain","Osu"));
-        weatherArray.add(new Weather("It is raining","Osu retɔ"));
-        weatherArray.add(new Weather("Will it rain today?","Osu bɛtɔ nnɛ anaa?"));
-        weatherArray.add(new Weather("Did it rain yesterday?","Osu tɔɔ ɛnnora anaa?"));
-        weatherArray.add(new Weather("It will rain today","Osu bɛtɔ nnɛ"));
-        weatherArray.add(new Weather("Umbrella","Kyinneɛ"));
-        weatherArray.add(new Weather("Take the umbrella","Fa kyinneɛ no"));
-        weatherArray.add(new Weather("It is drizzling","Osu repetepete"));
-
-        weatherArray.add(new Weather("Snow","Sukyerɛmma"));
-
-
-        weatherArray.add(new Weather("Sun","Awia"));
-        weatherArray.add(new Weather("It is sunny","Awia abɔ"));
-        weatherArray.add(new Weather("It is very sunny","Awia abɔ paa"));
-        weatherArray.add(new Weather("It is hot today","Ewiem ayɛ hye nnɛ"));
-        weatherArray.add(new Weather("Sunset","Owitɔe"));
-        weatherArray.add(new Weather("The sun has set","Owia no akɔtɔ"));
-        weatherArray.add(new Weather("Sunrise","Owipue"));
-        weatherArray.add(new Weather("The sun is rising","Owia no repue"));
-        weatherArray.add(new Weather("The sun has risen","Owia no apue"));
-
-        weatherArray.add(new Weather("It is warm","Ahohuru wom"));
-        weatherArray.add(new Weather("I am feeling hot","Ɔhyew de me"));
-        weatherArray.add(new Weather("I am feeling warm","Ahohuru de me"));
-        weatherArray.add(new Weather("It is cold","Awɔw wom"));
-        weatherArray.add(new Weather("It is very cold","Awɔw wom paa"));
-        weatherArray.add(new Weather("I am feeling cold","Awɔw de me"));
-        weatherArray.add(new Weather("It is very chilly","Awɔw wom paa"));
-
-        weatherArray.add(new Weather("Lightning","Anyinam"));
-        weatherArray.add(new Weather("Thunder","Apranaa"));
-        weatherArray.add(new Weather("Cloud","Mununkum"));
-        weatherArray.add(new Weather("Rain clouds have formed","Osu amuna"));
-        weatherArray.add(new Weather("It is cloudy","Ewiem ayɛ kusuu"));
-        weatherArray.add(new Weather("Wind","Mframa"));
-        weatherArray.add(new Weather("It is windy","Mframa rebɔ"));
-        weatherArray.add(new Weather("It is very windy","Mframa rebɔ paa"));
-
-        weatherArray.add(new Weather("Sky (1)","Soro"));
-        weatherArray.add(new Weather("Sky (2)","Ewiem"));
-        weatherArray.add(new Weather("Weather","Ewiem tebea"));
-        weatherArray.add(new Weather("How is the weather like?","Ewiem tebea te sɛn?"));
-        weatherArray.add(new Weather("What will the weather be like today?","Ɛnnɛ ewiem tebea bɛyɛ sɛn?"));
-        weatherArray.add(new Weather("Weather changes","Ewiem nsakrae"));
-        weatherArray.add(new Weather("Stars","Nsoromma"));
-        weatherArray.add(new Weather("The stars are glittering","Nsoromma no rehyerɛn"));
-
-        weatherArray.add(new Weather("Misty","Ɛbɔ"));
-        weatherArray.add(new Weather("It is misty","Ɛbɔ asi"));
-
-        weatherArray.add(new Weather("Harmattan","Ɔpɛ"));
-        weatherArray.add(new Weather("Harmattan is here","Ɔpɛ asi"));
-
-        weatherArray.add(new Weather("Shade","Onwunu"));
-        weatherArray.add(new Weather("Storm","Ahum"));
-        weatherArray.add(new Weather("Rainbow","Nyankontɔn"));
-        weatherArray.add(new Weather("I saw the rainbow","Me huu nyankontɔn no"));
-
-
-
-
-
-
-        weatherArray.add(new Weather("Moon","Bosome"));*/
-
-
-
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         WeatherAdapter weatherAdapter = new WeatherAdapter(this, weatherArray);
         weatherListView.setAdapter(weatherAdapter);

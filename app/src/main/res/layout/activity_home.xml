@@ -29,12 +29,12 @@
         android:textSize="30sp"
         />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="182dp"
-        android:layout_height="49dp"
-        android:contentDescription="@string/ghanaflag"
-        app:srcCompat="@drawable/ghanaphoto" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="182dp"
+            android:layout_height="49dp"
+            android:contentDescription="@string/ghanaflag"
+            app:srcCompat="@drawable/ghanaphoto" />
 
     </LinearLayout>
 
@@ -55,7 +55,7 @@
     </ListView>
 
 
-    <com.google.android.gms.ads.AdView
+  <!--  <com.google.android.gms.ads.AdView
         android:id="@+id/adView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             android:layout_height="5dp"
             ></TextView>
 
-
+-->
     </LinearLayout>
 
 </LinearLayout>

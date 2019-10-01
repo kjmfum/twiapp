@@ -1,9 +1,16 @@
 package com.learnakantwi.twiguides;
 
+import android.Manifest;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,14 +20,165 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MonthsActivity extends AppCompatActivity {
 
     static ArrayList <Months> monthsArrayList ;
     ListView monthsListView;
+
+    StorageReference storageReference;
+    MediaPlayer playFromDevice;
+    MediaPlayer mp1;
+
+
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
+    public void playFromFileOrDownload(final String filename, final String appearText){
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
+        if (myFile.exists()){
+
+            try {
+                if (playFromDevice != null){
+                    playFromDevice.stop();
+                    playFromDevice.reset();
+                    playFromDevice.release();
+                }
+                playFromDevice = new MediaPlayer();
+
+                playFromDevice.setDataSource(myFile.toString());
+                playFromDevice.prepareAsync();
+                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.start();
+                        Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                //Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+
+            if (isNetworkAvailable()){
+                //Toast.makeText(this, "I'm available", Toast.LENGTH_SHORT).show();
+
+                final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+                musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String url = uri.toString();
+                        playFromFirebase(musicRef);
+                        // Toast.makeText(getApplicationContext(), "Got IT", Toast.LENGTH_SHORT).show();
+                        downloadFile(getApplicationContext(), filename, ".m4a", url);
+                        Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else {
+                Toast.makeText(this, "Please connect to Internet to download audio", Toast.LENGTH_SHORT).show();
+            }
+
+
+        }
+    }
+    public void playFromFirebase(StorageReference musicRef) {
+
+        if (Build.VERSION.SDK_INT > 22) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+        try {
+            final File localFile = File.createTempFile("aduonu", "m4a");
+
+            if (localFile != null) {
+                musicRef.getFile(localFile)
+                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                                if (mp1 != null){
+                                    mp1.stop();
+                                    mp1.reset();
+                                    mp1.release();
+                                }
+                                mp1 = new MediaPlayer();
+                                try {
+                                    mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
+                                    mp1.prepareAsync();
+                                    mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                        @Override
+                                        public void onPrepared(MediaPlayer mp) {
+                                            mp.start();
+                                        }
+                                    });
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle failed download
+                        // ...
+                    }
+                });
+            } else {
+                Toast.makeText(this, "File was not created", Toast.LENGTH_SHORT).show();
+            }
+
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                Uri uri = Uri.parse(url);
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+                request.setVisibleInDownloadsUi(false);
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                //   request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+                request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+                downloadManager.enqueue(request);
+            }
+        };
+        Thread myThread = new Thread(runnable);
+        myThread.start();
+
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,7 +278,6 @@ public class MonthsActivity extends AppCompatActivity {
 
         TextView blabla = (TextView) view.findViewById(idview);
         String a = (String) blabla.getText();
-        Toast.makeText(this, a, Toast.LENGTH_SHORT).show();
 
         String b = a.toLowerCase();
 
@@ -143,18 +300,7 @@ public class MonthsActivity extends AppCompatActivity {
             b= b.replace("?","");
         }
 
-        int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
-
-
-        final MediaPlayer player = MediaPlayer.create(this, resourceId);
-        player.start();
-
-        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                player.release();
-            }
-        });
+        playFromFileOrDownload(b,a);
 
     }
 
@@ -164,29 +310,7 @@ public class MonthsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_months);
 
         monthsListView = findViewById(R.id.monthsListView);
-
-       /* monthsArrayList = new ArrayList<>();
-
-        monthsArrayList.add(new Months("January","Ɔpɛpɔn"));
-        monthsArrayList.add(new Months("We are in the month of January","Yɛwɔ Ɔpɛpɔn bosome mu"));
-        monthsArrayList.add(new Months("February","Ɔgyefoɔ"));
-        monthsArrayList.add(new Months("We will go to Ghana in February","Yɛbɛkɔ Ghana Ɔgyefoɔ bosome no mu"));
-        monthsArrayList.add(new Months("March","Ɔbɛnem"));
-        monthsArrayList.add(new Months("I will see you in March","Mehu wo wɔ Ɔbɛnem bosome no mu"));
-        monthsArrayList.add(new Months("April","Oforisuo"));
-        monthsArrayList.add(new Months("It often rains in April","Osu taa tɔ wɔ Oforisuo bosome no mu"));
-        monthsArrayList.add(new Months("May","Kotonimaa"));
-        monthsArrayList.add(new Months("June","Ayɛwohomumɔ"));
-        monthsArrayList.add(new Months("July","Kitawonsa"));
-        monthsArrayList.add(new Months("August","Ɔsanaa"));
-        monthsArrayList.add(new Months("I was born in the month of August","Wɔwoo me Ɔsanaa bosome no mu"));
-        monthsArrayList.add(new Months("September","Ɛbɔ"));
-        monthsArrayList.add(new Months("October","Ahinime"));
-        monthsArrayList.add(new Months("November","Obubuo"));
-        monthsArrayList.add(new Months("December","Ɔpɛnimma"));
-        monthsArrayList.add(new Months("It is often cold in December","Awɔw taa ba wɔ Ɔpɛnimma bosome no mu"));
-
-        monthsArrayList.add(new Months("Which month?","Bosome bɛn?"));*/
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         MonthsAdapter monthsAdapter = new MonthsAdapter(this, monthsArrayList);
         monthsListView.setAdapter(monthsAdapter);

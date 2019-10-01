@@ -27,6 +27,7 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
@@ -58,26 +59,24 @@ public class QuizAll extends AppCompatActivity {
     Button button5;
     ArrayList<String> answers;
     TextView questionText;
-    int chosenSize=(allArrayList.size()-1);
-    int totalQuestions=50;
+    int chosenSize = (allArrayList.size() - 1);
+    int totalQuestions = 50;
     int score;
     int counter;
-    double scorePercent= ((score/totalQuestions)*100);
+    double scorePercent = ((score / totalQuestions) * 100);
     AdView mAdView;
+
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
 
 
-
-
-
-    public void playFromFileOrDownload(final String filename){
-        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
-        if (myFile.exists()){
+    public void playFromFileOrDownload(final String filename) {
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + filename + ".m4a");
+        if (myFile.exists()) {
 
             try {
-                if (playFromDevice != null){
+                if (playFromDevice != null) {
                     playFromDevice.stop();
                     playFromDevice.reset();
                     playFromDevice.release();
@@ -92,13 +91,12 @@ public class QuizAll extends AppCompatActivity {
                         mp.start();
                     }
                 });
-                Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
+                //generateQuestion();
+               // Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else {
-
+        } else {
 
             final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
             musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -108,16 +106,17 @@ public class QuizAll extends AppCompatActivity {
                     playFromFirebase(musicRef);
                     // Toast.makeText(getApplicationContext(), "Got IT", Toast.LENGTH_SHORT).show();
                     downloadFile(getApplicationContext(), filename, ".m4a", url);
+                    //generateQuestion();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
                 }
             });
 
         }
     }
+
     public void playFromFirebase(StorageReference musicRef) {
 
         if (Build.VERSION.SDK_INT > 22) {
@@ -133,14 +132,14 @@ public class QuizAll extends AppCompatActivity {
                             @Override
                             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
 
-                                if (mp1 != null){
+                                if (mp1 != null) {
                                     mp1.stop();
                                     mp1.reset();
                                     mp1.release();
                                 }
                                 mp1 = new MediaPlayer();
                                 try {
-                                    Toast.makeText(getApplicationContext(), "Yes Yes", Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(getApplicationContext(), "Yes Yes", Toast.LENGTH_SHORT).show();
                                     mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
                                     mp1.prepareAsync();
                                     mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -148,6 +147,7 @@ public class QuizAll extends AppCompatActivity {
                                         public void onPrepared(MediaPlayer mp) {
                                             mp.start();
                                         }
+
                                     });
                                 } catch (IOException ex) {
                                     ex.printStackTrace();
@@ -164,22 +164,30 @@ public class QuizAll extends AppCompatActivity {
                 Toast.makeText(this, "File was not created", Toast.LENGTH_SHORT).show();
             }
 
-        }catch(IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
 
-    public void downloadFile(Context context, String filename, String fileExtension, String url){
-        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-        Uri uri = Uri.parse(url);
-        DownloadManager.Request request = new DownloadManager.Request(uri);
-        request.setVisibleInDownloadsUi(false);
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        //   request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
-        request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_MUSIC, filename+fileExtension);
-        //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
-        downloadManager.enqueue(request);
+    public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                Uri uri = Uri.parse(url);
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+                request.setVisibleInDownloadsUi(false);
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                //   request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+                request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+                downloadManager.enqueue(request);
+            }
+        };
+        Thread myThread = new Thread(runnable);
+        myThread.start();
+
 
     }
 
@@ -324,21 +332,6 @@ public class QuizAll extends AppCompatActivity {
         Button blabla = (Button) view.findViewById(idview);
         String a = (String) blabla.getText();
 
-
-        if (a.equals(twi1)) {
-            Toast.makeText(this, a + " -" +" "+"CORRECT!!!!", Toast.LENGTH_SHORT).show();
-            generateQuestion();
-            score++;
-        }
-
-        correctWrong.setText("CORRECT ANSWERS");
-        scoreText.setText(String.valueOf(score));
-        counter++;
-        String counterSet = String.valueOf(counter) +" / " + String.valueOf(totalQuestions);
-        counterText.setText(counterSet );
-
-
-
         String b = a.toLowerCase();
 
         boolean d = b.contains("ɔ");
@@ -360,6 +353,28 @@ public class QuizAll extends AppCompatActivity {
             b= b.replace("?","");
         }
 
+
+
+
+        if (a.equals(twi1)) {
+            Toast.makeText(this, a + " -" +" "+"CORRECT!!!!", Toast.LENGTH_SHORT).show();
+           generateQuestion();
+            score++;
+        }
+
+
+        playFromFileOrDownload(b);
+
+        correctWrong.setText("CORRECT ANSWERS");
+        scoreText.setText(String.valueOf(score));
+        counter++;
+        String counterSet = String.valueOf(counter) +" / " + String.valueOf(totalQuestions);
+        counterText.setText(counterSet );
+
+
+
+
+
     /*    int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
 
 
@@ -375,33 +390,6 @@ public class QuizAll extends AppCompatActivity {
 */
 
         ////////
-
-        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+b+ ".m4a");
-       // if (myFile.exists()){
-
-            try {
-                if (playFromDevice != null){
-                    playFromDevice.stop();
-                    playFromDevice.reset();
-                    playFromDevice.release();
-                }
-                playFromDevice = new MediaPlayer();
-
-                playFromDevice.setDataSource(myFile.toString());
-                playFromDevice.start();
-
-                /*playFromDevice.prepareAsync();
-                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
-                        mp.start();
-                    }
-                });*/
-                Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
-            } catch (IOException ev) {
-                ev.printStackTrace();
-            }
-
 
         ////////
 
@@ -437,6 +425,18 @@ public class QuizAll extends AppCompatActivity {
 
         }
 
+
+
+        /*final String filename = b;
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                playFromFileOrDownload(filename);
+            }
+        } ;
+        Thread thread = new Thread(runnable);
+        thread.start();*/
+
     }
 
     public void hideStartButton(View v){
@@ -456,6 +456,7 @@ public class QuizAll extends AppCompatActivity {
         setContentView(R.layout.activity_quiz_animals);
 
 
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         button1 = findViewById(R.id.button1);
         button2 = findViewById(R.id.button2);

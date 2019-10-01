@@ -1,10 +1,17 @@
 package com.learnakantwi.twiguides;
 
+import android.Manifest;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 //import android.support.v7.app.AppCompatActivity;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,8 +20,17 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -22,6 +38,147 @@ public class FoodActivity extends AppCompatActivity {
 
     ListView foodListView;
     static  ArrayList<Food> foodArrayList;
+
+    StorageReference storageReference;
+    MediaPlayer playFromDevice;
+    MediaPlayer mp1;
+
+
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
+    public void playFromFileOrDownload(final String filename, final String appearText){
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
+        if (myFile.exists()){
+
+            try {
+                if (playFromDevice != null){
+                    playFromDevice.stop();
+                    playFromDevice.reset();
+                    playFromDevice.release();
+                }
+                playFromDevice = new MediaPlayer();
+
+                playFromDevice.setDataSource(myFile.toString());
+                playFromDevice.prepareAsync();
+                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.start();
+                        Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                //Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+
+            if (isNetworkAvailable()){
+                //Toast.makeText(this, "I'm available", Toast.LENGTH_SHORT).show();
+
+                final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+                musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String url = uri.toString();
+                        playFromFirebase(musicRef);
+                        // Toast.makeText(getApplicationContext(), "Got IT", Toast.LENGTH_SHORT).show();
+                        downloadFile(getApplicationContext(), filename, ".m4a", url);
+                        Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else {
+                Toast.makeText(this, "Please connect to Internet to download audio", Toast.LENGTH_SHORT).show();
+            }
+
+
+        }
+    }
+    public void playFromFirebase(StorageReference musicRef) {
+
+        if (Build.VERSION.SDK_INT > 22) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+        try {
+            final File localFile = File.createTempFile("aduonu", "m4a");
+
+            if (localFile != null) {
+                musicRef.getFile(localFile)
+                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                                if (mp1 != null){
+                                    mp1.stop();
+                                    mp1.reset();
+                                    mp1.release();
+                                }
+                                mp1 = new MediaPlayer();
+                                try {
+                                    mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
+                                    mp1.prepareAsync();
+                                    mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                        @Override
+                                        public void onPrepared(MediaPlayer mp) {
+                                            mp.start();
+                                        }
+                                    });
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle failed download
+                        // ...
+                    }
+                });
+            } else {
+                Toast.makeText(this, "File was not created", Toast.LENGTH_SHORT).show();
+            }
+
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                Uri uri = Uri.parse(url);
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+                request.setVisibleInDownloadsUi(false);
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                //   request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+                request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
+                downloadManager.enqueue(request);
+            }
+        };
+        Thread myThread = new Thread(runnable);
+        myThread.start();
+
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -114,7 +271,6 @@ public class FoodActivity extends AppCompatActivity {
 
         TextView blabla = (TextView) view.findViewById(idview);
         String a = (String) blabla.getText();
-        Toast.makeText(this, a, Toast.LENGTH_SHORT).show();
 
         String b = a.toLowerCase();
 
@@ -137,7 +293,9 @@ public class FoodActivity extends AppCompatActivity {
             b= b.replace("?","");
         }
 
-        int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
+        playFromFileOrDownload(b,a);
+
+        /*int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
 
 
         final MediaPlayer player = MediaPlayer.create(this, resourceId);
@@ -148,7 +306,7 @@ public class FoodActivity extends AppCompatActivity {
             public void onCompletion(MediaPlayer mp) {
                 player.release();
             }
-        });
+        });*/
 
     }
 
@@ -158,87 +316,7 @@ public class FoodActivity extends AppCompatActivity {
         setContentView(R.layout.activity_family);
 
         foodListView = findViewById(R.id.familyListView);
-
-      /*  foodArrayList = new ArrayList<>();
-
-        foodArrayList.add(new Food("Rice", "Ɛmo"));
-        foodArrayList.add(new Food("Yam", "Bayerɛ"));
-        foodArrayList.add(new Food("Plantain", "Bɔɔdeɛ"));
-        foodArrayList.add(new Food("Cassava", "Bankye"));
-        foodArrayList.add(new Food("Onion", "Gyeene"));
-        foodArrayList.add(new Food("Salt", "Nkyene"));
-
-        //fruits
-        foodArrayList.add(new Food("Fruit", "Aduaba"));
-        foodArrayList.add(new Food("Apple", "Aprɛ"));
-        foodArrayList.add(new Food("Banana", "Kwadu"));
-        foodArrayList.add(new Food("Orange (1)", "Ankaa"));
-        foodArrayList.add(new Food("Orange (2)", "Akutu"));
-        foodArrayList.add(new Food("Pawpaw", "Borɔferɛ"));
-        foodArrayList.add(new Food("Coconut", "Kube"));
-        foodArrayList.add(new Food("Pear", "Paya"));
-        foodArrayList.add(new Food("Tigernut", "Atadwe"));
-        foodArrayList.add(new Food("Pineapple", "Aborɔbɛ"));
-        foodArrayList.add(new Food("Ginger", "Akekaduro"));
-        foodArrayList.add(new Food("Sugarcane", "Ahwedeɛ"));
-        foodArrayList.add(new Food("Corn", "Aburo"));
-        foodArrayList.add(new Food("Maize", "Aburo"));
-        foodArrayList.add(new Food("Groundnut", "Nkateɛ"));
-        foodArrayList.add(new Food("Peanut", "Nkateɛ"));
-        foodArrayList.add(new Food("Palm fruit", "Abɛ"));
-
-
-        //Vegetables
-        foodArrayList.add(new Food("Vegetable", "Atosodeɛ"));
-        foodArrayList.add(new Food("Pepper", "Mako"));
-        foodArrayList.add(new Food("Bean", "Adua"));
-        foodArrayList.add(new Food("Okro", "Nkuruma"));
-        foodArrayList.add(new Food("Garden eggs", "Nyaadewa"));
-        foodArrayList.add(new Food("Tomato", "Ntoosi"));
-        foodArrayList.add(new Food("Garlic", "Galik"));
-        foodArrayList.add(new Food("Cucumber", "Ɛferɛ"));
-
-
-        foodArrayList.add(new Food("Lobster", "Ɔbɔnkɔ"));
-        foodArrayList.add(new Food("Cocoa", "Kokoo"));
-        foodArrayList.add(new Food("Palm kernel", "Adwe"));
-        foodArrayList.add(new Food("Palm kernel oil", "Adwe ngo"));
-        foodArrayList.add(new Food("Vegetable oil", "Anwa"));
-        foodArrayList.add(new Food("Snail", "Nwa"));
-        foodArrayList.add(new Food("Groundnut soup", "Nkate nkwan"));
-        foodArrayList.add(new Food("Palm nut soup", "Abɛ nkwan"));
-
-        //Others
-        foodArrayList.add(new Food("Dough", "Mmɔre"));
-        foodArrayList.add(new Food("Kenkey", "Dɔkono"));
-        foodArrayList.add(new Food("Flour", "Esiam"));
-        foodArrayList.add(new Food("Wheat", "Ayuo"));
-        foodArrayList.add(new Food("Soup", "Nkwan"));
-        foodArrayList.add(new Food("Stew", "Abomu"));
-        foodArrayList.add(new Food("Egg", "Kosua"));
-        foodArrayList.add(new Food("Bread (1)", "Paanoo"));
-        foodArrayList.add(new Food("Bread (2)", "Burodo"));
-        foodArrayList.add(new Food("Oil", "Ngo"));
-        foodArrayList.add(new Food("Fish (1)", "Apataa"));
-        foodArrayList.add(new Food("Fish (2)", "Nsuomnam"));
-        foodArrayList.add(new Food("Pork", "Prakonam"));
-        foodArrayList.add(new Food("Meat", "Nam"));
-        foodArrayList.add(new Food("Mutton", "Odwannam"));
-        foodArrayList.add(new Food("Lamb", "Odwannam"));
-        foodArrayList.add(new Food("Sugar", "Asikyire"));
-        foodArrayList.add(new Food("Honey", "Ɛwoɔ"));
-        foodArrayList.add(new Food("Water", "Nsuo"));
-        foodArrayList.add(new Food("Food", "Aduane"));
-
-        Collections.sort(this.foodArrayList);
-
-        foodArrayList.add(new Food("I am hungry", "Ɛkɔm de me"));
-        foodArrayList.add(new Food("Are you hungry?", "Ɛkɔm de wo anaa?"));
-        foodArrayList.add(new Food("What will you eat?", "Dɛn na wobedi?"));
-        foodArrayList.add(new Food("I will eat kenkey", "Medi dɔkono"));
-*/
-
-
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         FoodAdapter foodAdapter = new FoodAdapter(this, foodArrayList);
         foodListView.setAdapter(foodAdapter);
