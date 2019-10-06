@@ -1167,7 +1167,6 @@ public class Home extends AppCompatActivity {
         numbersArrayList.add(new Numbers("2000", "Mpem mmienu"));
 
         numbersArrayList.add(new Numbers("2001", "Mpem mmienu ne baako"));
-        numbersArrayList.add(new Numbers("2002", "Mpem mmienu ne mmienu"));
         numbersArrayList.add(new Numbers("2010", "Mpem mmienu ne du"));
         numbersArrayList.add(new Numbers("2100", "Mpem mmienu ne ɔha"));
         numbersArrayList.add(new Numbers("2101", "Mpem mmienu ɔha ne baako"));
