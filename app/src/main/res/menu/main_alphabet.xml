@@ -24,4 +24,10 @@
         android:id="@+id/videoCourse">
     </item>
 
+    <item
+        android:id="@+id/downloadAudio"
+        android:title="@string/download_audio">
+    </item>
+
+
 </menu>

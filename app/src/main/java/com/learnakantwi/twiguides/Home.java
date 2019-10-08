@@ -70,7 +70,7 @@ public class Home extends AppCompatActivity {
     public void log2(View view) {
         int idview = view.getId();
 
-        TextView blabla = (TextView) view.findViewById(idview);
+        TextView blabla = view.findViewById(idview);
         String a = (String) blabla.getText();
 
 
@@ -362,14 +362,59 @@ public class Home extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 String me1 = homeButtonArrayList.get(position).getNameofActivity();
-                if (me1 .equals("Time")){
+
+                switch (me1){
+                    case "Alphabets":
+                        goToAlphabets();
+                        return;
+                    case "Animals":
+                        goToAnimals();
+                        return;
+                    case "Body Parts":
+                        goToBodyparts();
+                        return;
+                    case "Colours":
+                        goToColours();
+                        return;
+                    case "Days of Week":
+                        goToDaysOfWk();
+                        return;
+                    case "Expressions":
+                        goToCommonExpressionsa();
+                        return;
+                    case "Family":
+                        goToFamily();
+                        return;
+                    case "Food":
+                        goToFood();
+                        return;
+                    case "Months":
+                        goToMonths();
+                        return;
+                    case "Numbers":
+                        goToNumber();
+                        return;
+                    case "Pronouns":
+                        goToPronouns();
+                        return;
+                    case "Time":
+                        goToTime();
+                        return;
+                    case "Weather":
+                        goToWeather();
+                        return;
+                    case "Search":
+                        goToAll();
+                }
+
+                /*if (me1 .equals("Time")){
                     goToTime();
                 } else if (me1.equals("Family")){
                     goToFamily();
                 }
                 else {
                     Toast.makeText(Home.this, "Item number "+ position , Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         });
 

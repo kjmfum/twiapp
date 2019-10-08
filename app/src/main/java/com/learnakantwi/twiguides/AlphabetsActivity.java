@@ -112,6 +112,29 @@ public class AlphabetsActivity extends AppCompatActivity {
 
         }
     }
+
+    public void downloadOnly(final String filename){
+        if (isNetworkAvailable()){
+            //Toast.makeText(this, "I'm available", Toast.LENGTH_SHORT).show();
+
+            final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+            musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    String url = uri.toString();
+                    downloadFile(getApplicationContext(), filename, ".m4a", url);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else {
+            Toast.makeText(this, "Please connect to Internet to download audio "+ filename, Toast.LENGTH_SHORT).show();
+        }
+    }
     public void playFromFirebase(StorageReference musicRef) {
 
         if (Build.VERSION.SDK_INT > 22) {
@@ -239,8 +262,10 @@ public class AlphabetsActivity extends AppCompatActivity {
                 goToWeb();
                 return  true;
             case R.id.main:
-                //Log.i("Menu Item Selected", "Alphabets");
                 goToMain();
+                return  true;
+            case R.id.downloadAudio:
+                downloadClick();
                 return  true;
             default:
                 return false;
@@ -292,7 +317,7 @@ public class AlphabetsActivity extends AppCompatActivity {
 
         int idview= view.getId();
 
-        TextView blabla = (TextView) view.findViewById(idview);
+        TextView blabla = view.findViewById(idview);
         String a = (String) blabla.getText();
         String b = a.toLowerCase();
         int index = b.indexOf("ɔ");
@@ -326,11 +351,155 @@ public class AlphabetsActivity extends AppCompatActivity {
 
     }
 
+    public void downloadClick () {
+        int counter = 0;
+        int counter1 =0;
+
+        for (int j = 0; j < alphabetArray.size(); j++) {
+
+            String bb = alphabetArray.get(j).getLower();
+            boolean dd = bb.contains("ɔ");
+            boolean ee = bb.contains("ɛ");
+            if (dd || ee) {
+                bb = bb.replace("ɔ", "x");
+                bb = bb.replace("ɛ", "q");
+            }
+
+            if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'")) {
+                bb = bb.replace(" ", "");
+                bb = bb.replace("/", "");
+                bb = bb.replace(",", "");
+                bb = bb.replace("(", "");
+                bb = bb.replace(")", "");
+                bb = bb.replace("-", "");
+                bb = bb.replace("?", "");
+                bb = bb.replace("'", "");
+            }
+            File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
+            if (myFiles.exists()) {
+                counter++;
+            }
+        }
+        if (counter == alphabetArray.size()) {
+            Toast.makeText(this, "All downloaded ", Toast.LENGTH_SHORT).show();
+        } else {
+
+            Toast.makeText(this, "Downloading", Toast.LENGTH_SHORT).show();
+
+            for (int i = 0; i < alphabetArray.size(); i++) {
+
+
+
+                String b = alphabetArray.get(i).getLower();
+                boolean d = b.contains("ɔ");
+                boolean e = b.contains("ɛ");
+                if (d || e) {
+                    b = b.replace("ɔ", "x");
+                    b = b.replace("ɛ", "q");
+                }
+
+                if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") || b.contains("?") || b.contains("'")) {
+                    b = b.replace(" ", "");
+                    b = b.replace("/", "");
+                    b = b.replace(",", "");
+                    b = b.replace("(", "");
+                    b = b.replace(")", "");
+                    b = b.replace("-", "");
+                    b = b.replace("?", "");
+                    b = b.replace("'", "");
+                }
+                File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + b + ".m4a");
+                if (!myFile.exists()) {
+                    downloadOnly(b);
+                    counter1++;
+                    //if (i + 1 == alphabetArray.size()) {
+                    //}
+                }
+
+            }
+
+            Toast.makeText(this, counter1+ " New audio file(s)."+ " Download Complete", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+
+            /*
+
+
+        for (int i=0; i<alphabetArray.size(); i++) {
+
+            String b = alphabetArray.get(i).getLower();
+            boolean d = b.contains("ɔ");
+            boolean e = b.contains("ɛ");
+            if (d || e ){
+                b= b.replace("ɔ","x");
+                b= b.replace("ɛ","q");
+            }
+
+            if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") || b.contains("?")|| b.contains("'")) {
+                b = b.replace(" ", "");
+                b = b.replace("/", "");
+                b= b.replace(",","");
+                b= b.replace("(","");
+                b= b.replace(")","");
+                b= b.replace("-","");
+                b= b.replace("?","");
+                b= b.replace("'","");
+            }
+            File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+b+ ".m4a");
+            if (!myFile.exists()){
+                downloadOnly(b);
+                if (i+1 == alphabetArray.size()){
+                    Toast.makeText(this, "Download Complete", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else {
+                for (int j=0; j <alphabetArray.size(); j++) {
+
+                    String bb = alphabetArray.get(j).getLower();
+                    boolean dd = bb.contains("ɔ");
+                    boolean ee = bb.contains("ɛ");
+                    if (dd || ee) {
+                        bb = bb.replace("ɔ", "x");
+                        bb = bb.replace("ɛ", "q");
+                    }
+
+                    if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'")) {
+                        bb = bb.replace(" ", "");
+                        bb = bb.replace("/", "");
+                        bb = bb.replace(",", "");
+                        bb = bb.replace("(", "");
+                        bb = bb.replace(")", "");
+                        bb = bb.replace("-", "");
+                        bb = bb.replace("?", "");
+                        bb = bb.replace("'", "");
+                    }
+                    File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
+                    if (myFiles.exists()) {
+                        counter++;
+                    }
+                }
+                if (counter == alphabetArray.size()){
+                    Toast.makeText(this, "All downloaded "+counter +" / " + alphabetArray.size(), Toast.LENGTH_SHORT).show();
+                }
+                else if (counter < alphabetArray.size())
+                {
+                    Toast.makeText(this, "Downloading", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+        }
+
+
+    */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alphabets);
-
 
         myListView = findViewById(R.id.myList);
         storageReference = FirebaseStorage.getInstance().getReference();
