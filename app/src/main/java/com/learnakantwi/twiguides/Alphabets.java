@@ -34,4 +34,6 @@ public class Alphabets {
     public void setBoth(String both) {
         this.both = both;
     }
+
+
 }
