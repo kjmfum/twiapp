@@ -2,6 +2,7 @@ package com.learnakantwi.twiguides;
 
 
         import android.content.Context;
+        import android.content.res.Resources;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
@@ -57,9 +58,10 @@ public class HomeAdapter extends BaseAdapter implements Filterable {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView= inflater.inflate(R.layout.custom_home, null);
 
-        TextView textView = (TextView) convertView.findViewById(R.id.homeButtonText);
+        TextView textView =  convertView.findViewById(R.id.homeButtonText);
         //TextView textView1 = convertView.findViewById(R.id.speakTwiTime);
         ImageView imageView = convertView.findViewById(R.id.homeButtonimage);
+
 
         textView.setText(originalArray.get(position).getNameofActivity());
         //textView1.setText(originalArray.get(position).getTwiAnimals());

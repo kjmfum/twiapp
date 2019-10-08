@@ -5,6 +5,7 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
+import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -15,6 +16,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -69,6 +72,8 @@ public class Home extends AppCompatActivity {
 
         TextView blabla = (TextView) view.findViewById(idview);
         String a = (String) blabla.getText();
+
+
 
         Toast.makeText(this, a, Toast.LENGTH_SHORT).show();
 
@@ -198,57 +203,7 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*public void goToWeb(View v) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.jw.org"));
-        startActivity(intent);
-    }*/
 
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu, menu);
-
-
-        MenuItem item = menu.findItem(R.id.menusearch);
-        SearchView searchView = (SearchView) item.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(Home.this, query, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                return false;
-            }
-        });
-
-        return super.onCreateOptionsMenu(menu);
-
-
-        // SearchView searchView = (SearchView) menuItem.getActionView();
-
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
-
-        switch (item.getItemId()){
-            case R.id.settings:
-                Log.i("Menu Item Selected", "Settings");
-                return true;
-            case R.id.alphabets:
-                Log.i("Menu Item Selected", "Alphabets");
-                //goToAlphabets();
-                return  true;
-            default:
-                return false;
-        }
-    }*/
 
     public void goToAlphabets() {
         Intent intent = new Intent(getApplicationContext(), AlphabetsActivity.class);
@@ -401,6 +356,25 @@ public class Home extends AppCompatActivity {
 
         HomeAdapter homeAdapter = new HomeAdapter(this, homeButtonArrayList);
         homeListView.setAdapter(homeAdapter);
+
+        homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String me1 = homeButtonArrayList.get(position).getNameofActivity();
+                if (me1 .equals("Time")){
+                    goToTime();
+                } else if (me1.equals("Family")){
+                    goToFamily();
+                }
+                else {
+                    Toast.makeText(Home.this, "Item number "+ position , Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+
 
 
         //MobileAds.initialize(this, "ca-app-pub-6999427576830667~6251296006");

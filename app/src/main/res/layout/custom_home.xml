@@ -2,7 +2,6 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,14 +22,16 @@
             android:paddingTop="10dp"
             android:id="@+id/homeButtonimage"
             android:layout_width="100dp"
-            android:layout_height="60dp"
+            android:layout_height="0dp"
             android:layout_weight="7"
             android:layout_gravity="center"
             android:src="@drawable/foodimage">
         </ImageView>
 
+
+
         <TextView
-            android:onClick="log2"
+
             android:id="@+id/homeButtonText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +39,7 @@
             android:text="@string/title_activity_common_expressionsa"
             android:layout_gravity="center"
 
-            android:gravity="left">
+            android:gravity="start">
 
         </TextView>
 
@@ -47,7 +48,4 @@
 
 
 
-
-
-
-</LinearLayout>
+   </LinearLayout>
