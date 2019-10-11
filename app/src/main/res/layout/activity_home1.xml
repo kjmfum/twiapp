@@ -63,7 +63,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.15" />
 
-    <com.google.android.gms.ads.AdView
+    <!-- <com.google.android.gms.ads.AdView
         android:id="@+id/adView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,6 +74,8 @@
         app:layout_constraintTop_toBottomOf="@id/homeListView">
 
     </com.google.android.gms.ads.AdView>
+
+    -->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

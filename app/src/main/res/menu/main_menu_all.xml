@@ -5,8 +5,8 @@
 
     <item
         android:id="@+id/menusearch"
-        android:title="@string/search"
         android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/search"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always"
         >
@@ -14,24 +14,18 @@
     </item>
 
     <item
-        android:title="@string/main_menu"
-        android:id="@+id/main">
+        android:id="@+id/main"
+        android:title="@string/main_menu">
     </item>
 
     <item
-        android:title="@string/Quiz"
-        android:id="@+id/quiz1">
+        android:id="@+id/quiz1"
+        android:title="@string/Quiz">
     </item>
 
     <item
-        android:id="@+id/downloadAudio"
-        android:title="@string/download_audio">
-    </item>
-
-
-    <item
-        android:title="@string/buy_video_course"
-        android:id="@+id/videoCourse">
+        android:id="@+id/videoCourse"
+        android:title="@string/buy_video_course">
     </item>
 
 </menu>

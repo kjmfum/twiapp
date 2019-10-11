@@ -17,8 +17,8 @@ android {
         applicationId "com.learnakantwi.twiguides"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 5
-        versionName "1.05"
+        versionCode 6
+        versionName "1.06"
         //multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.releaseme

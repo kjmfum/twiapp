@@ -35,6 +35,8 @@ public class All implements Comparable<All> {
             }*/
     }
 
+
+
     public String getEnglishmain() {
         return englishmain;
     }
