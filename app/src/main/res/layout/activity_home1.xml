@@ -24,10 +24,10 @@
         android:layout_height="0dp"
         android:layout_weight="10"
         android:background="@android:color/background_light"
-        app:layout_constraintBottom_toTopOf="@+id/adView1"
+        app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline15"></ListView>
+        app:layout_constraintTop_toTopOf="@+id/guideline15" />
 
 
     <TextView
@@ -35,19 +35,15 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-
         android:text="@string/learn_akan_twi"
         android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/imageView2"
         app:layout_constraintBottom_toTopOf="@id/homeListView"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteY="40dp" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"></TextView>
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline11"
