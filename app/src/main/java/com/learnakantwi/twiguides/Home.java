@@ -42,6 +42,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import hotchemi.android.rate.AppRate;
+
 import static com.learnakantwi.twiguides.AllActivity.allArrayList;
 import static com.learnakantwi.twiguides.AlphabetsActivity.alphabetArray;
 import static com.learnakantwi.twiguides.AnimalsActivity.animalsArrayList;
@@ -56,6 +58,7 @@ import static com.learnakantwi.twiguides.NumbersActivity.numbersArrayList;
 import static com.learnakantwi.twiguides.PronounsActivity.pronounsArrayList;
 import static com.learnakantwi.twiguides.TimeActivity.timeArrayList;
 import static com.learnakantwi.twiguides.WeatherActivity.weatherArray;
+import static com.learnakantwi.twiguides.BusinessActivity.businessArrayList;
 
 public class Home extends AppCompatActivity {
     //  app:adUnitId="ca-app-pub-6999427576830667~6251296006"
@@ -315,6 +318,13 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home1);
 
 
+        AppRate.with(this)
+                .setInstallDays(0)
+                .setLaunchTimes(4)
+                .setRemindInterval(2)
+                .monitor();
+
+        AppRate.showRateDialogIfMeetsConditions(this);
         // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
 
 
