@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QuizAnimals">
+    tools:context=".QuizAlphabet">
 
 
     <Button
@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:background="@color/design_default_color_primary"
         android:onClick="hideStartButton"
-        android:text="Button"
+        android:text="@string/button"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="@+id/gridlayout123"
         app:layout_constraintEnd_toEndOf="@+id/gridlayout123"
@@ -21,19 +21,21 @@
         app:layout_constraintTop_toTopOf="@+id/gridlayout123" />
 
 
-    <TextView
-        android:id="@+id/QuestionText"
+    <ImageView
+        android:id="@+id/speakerIcon"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/speakAlphabetName"
         android:gravity="center"
-        android:text="@string/QuestionText"
+        android:onClick="quizAlphabetsSound"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/gridlayout123"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline5"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@android:drawable/ic_btn_speak_now" />
 
     <TextView
         android:id="@+id/CorrectWrongText"
@@ -50,8 +52,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:text="Score"
-        android:textSize="20dp"
+        android:text="@string/scoretext"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/guideline5"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +65,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="0/0"
+        android:text="@string/scoreboard"
         app:layout_constraintBottom_toBottomOf="@+id/guideline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline7"
@@ -73,10 +75,10 @@
         android:id="@+id/grade"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text=""
-        android:gravity="center"
-        android:textSize="20sp"
         android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text=""
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline17"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -156,11 +158,12 @@
             android:layout_height="150dp"
             android:background="#90CAF9"
             android:onClick="quizClickSound"
+            android:textSize="20sp"
             app:layout_column="0"
             app:layout_columnWeight="0.5"
             app:layout_gravity="fill"
             app:layout_row="0"
-            app:layout_rowWeight="0.5" />
+            app:layout_rowWeight="0.5"/>
 
         <Button
             android:id="@+id/button2"
@@ -168,11 +171,11 @@
             android:layout_height="150dp"
             android:background="#FFE082"
             android:onClick="quizClickSound"
+            android:textSize="20sp"
             app:layout_column="1"
             app:layout_columnWeight="0.5"
             app:layout_gravity="fill"
             app:layout_row="0"
-
             app:layout_rowWeight="0" />
 
         <Button
@@ -181,11 +184,11 @@
             android:layout_height="150dp"
             android:background="#80CBC4"
             android:onClick="quizClickSound"
+            android:textSize="20sp"
             app:layout_column="0"
             app:layout_columnWeight="0.5"
             app:layout_row="1"
-            app:layout_rowWeight="0.5"
-            tools:text="GOOD NIGHT" />
+            app:layout_rowWeight="0.5" />
 
         <Button
             android:id="@+id/button4"
@@ -193,11 +196,11 @@
             android:layout_height="150dp"
             android:background="#E6EE9C"
             android:onClick="quizClickSound"
+            android:textSize="20sp"
             app:layout_column="1"
             app:layout_columnWeight="0.5"
             app:layout_row="1"
             app:layout_rowWeight="0.5"
-
             tools:text="GOOD EVENING" />
 
 
