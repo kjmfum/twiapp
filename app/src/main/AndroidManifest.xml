@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.learnakantwi.twiguides">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+
     <application
         android:resizeableActivity="true"
         android:allowBackup="true"
@@ -47,14 +51,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
-        </activity> <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+        </activity>
+        <activity android:name=".BusinessActivity" /> <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
        <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-6999427576830667~6251296006" />
 <!-- ca-app-pub-6999427576830667~6251296006   ca-app-pub-6999427576830667/9998969325   ca-app-pub-6999427576830667/9981230407-->
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
 </manifest>
