@@ -2,6 +2,7 @@ package com.learnakantwi.twiguides;
 
 import android.Manifest;
 import android.app.DownloadManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
@@ -187,8 +188,21 @@ public class Home extends AppCompatActivity {
             case R.id.videoCourse:
                 goToWeb();
                 return true;
+            case R.id.rate:
+                rateMe();
+                return true;
             default:
                 return false;
+        }
+    }
+
+    public void rateMe() {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("market://details?id=" + getPackageName())));
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
         }
     }
 
@@ -320,7 +334,7 @@ public class Home extends AppCompatActivity {
 
         AppRate.with(this)
                 .setInstallDays(0)
-                .setLaunchTimes(4)
+                .setLaunchTimes(3)
                 .setRemindInterval(2)
                 .monitor();
 
@@ -416,15 +430,6 @@ public class Home extends AppCompatActivity {
                     case "Search":
                         goToAll();
                 }
-
-                /*if (me1 .equals("Time")){
-                    goToTime();
-                } else if (me1.equals("Family")){
-                    goToFamily();
-                }
-                else {
-                    Toast.makeText(Home.this, "Item number "+ position , Toast.LENGTH_SHORT).show();
-                }*/
             }
         });
 

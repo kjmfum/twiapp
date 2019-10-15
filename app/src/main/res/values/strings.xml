@@ -24,4 +24,17 @@
     <string name="excellent">Excellent!!!!!</string>
     <string name="resulttext">YOU HAD</string>
     <string name="connected">Connected</string>
+    <string name="speakAlphabetName">speakAlphabetName</string>
+    <string name="scoretext">Score</string>
+    <string name="button">Button</string>
+    <string name="scoreboard">0/0</string>
+
+    <string name="rate">Rate 5 stars</string>
+
+
+    <string name="rate_dialog_title">Please Rate This App</string>
+    <string name="rate_dialog_message">If you enjoy this app, please give us a 5 star rating to support us. You can also leave a nice review to encourage us</string>
+    <string name="rate_dialog_ok">Give us 5 stars</string>
+    <string name="rate_dialog_cancel">Remind me later</string>
+    <string name="rate_dialog_no">No, Thanks</string>
 </resources>

@@ -485,26 +485,6 @@ public class QuizAll extends AppCompatActivity {
 
            resetQuiz();
            generateQuestion();
-
-
-
-/*
-
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-
-
-        mAdView = findViewById(R.id.adView1);
-
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("1E42299CB1A3F8218629BA7531041D73")  // An example device ID
-                .build();
-
-        mAdView.loadAd(adRequest);*/
-
     }
 
 }

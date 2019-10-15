@@ -178,7 +178,7 @@ public class QuizMonths extends AppCompatActivity {
                 Uri uri = Uri.parse(url);
                 DownloadManager.Request request = new DownloadManager.Request(uri);
                 request.setVisibleInDownloadsUi(false);
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                // request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                 //   request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
                 request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
                 //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
@@ -199,8 +199,6 @@ public class QuizMonths extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.quiz_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
-
-
     }
 
     @Override
@@ -329,7 +327,7 @@ public class QuizMonths extends AppCompatActivity {
 
         int idview= view.getId();
 
-        Button blabla = (Button) view.findViewById(idview);
+        Button blabla = view.findViewById(idview);
         String a = (String) blabla.getText();
 
 
@@ -342,7 +340,7 @@ public class QuizMonths extends AppCompatActivity {
         correctWrong.setText("CORRECT ANSWERS");
         scoreText.setText(String.valueOf(score));
         counter++;
-        String counterSet = String.valueOf(counter) +" / " + String.valueOf(totalQuestions);
+        String counterSet = counter +" / " + totalQuestions;
         counterText.setText(counterSet );
 
 
@@ -381,7 +379,7 @@ public class QuizMonths extends AppCompatActivity {
             scorePercent= Math.round(scorePercent*10.0)/10.0;
 
            // questionText.setText("FINAL SCORE= " + String.valueOf(scorePercent)+"%");
-            questionText.setText("YOU HAD " + Double.toString(scorePercent)+"%");
+            questionText.setText("YOU HAD " + scorePercent +"%");
 
             if (scorePercent> 90){
                 gradeText.setText("Excellent!!!!!");
@@ -417,6 +415,16 @@ public class QuizMonths extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_animals);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
 
 
 

@@ -184,7 +184,7 @@ public class AlphabetsActivity extends AppCompatActivity {
                     Uri uri = Uri.parse(url);
                     DownloadManager.Request request = new DownloadManager.Request(uri);
                     request.setVisibleInDownloadsUi(false);
-                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    //request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                     //   request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
                     request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
                     //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
@@ -194,11 +194,6 @@ public class AlphabetsActivity extends AppCompatActivity {
             };
             Thread myThread = new Thread(runnable);
             myThread.start();
-            Toast.makeText(context, "I'm in", Toast.LENGTH_SHORT).show();
-
-        }
-       else{
-            Toast.makeText(context, "Wait"+ tempArray.get(1), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -206,7 +201,7 @@ public class AlphabetsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_alphabet, menu);
+        menuInflater.inflate(R.menu.main_menu_all, menu);
 
         final MenuItem item = menu.findItem(R.id.menusearch);
         SearchView searchView = (SearchView) item.getActionView();
@@ -255,6 +250,10 @@ public class AlphabetsActivity extends AppCompatActivity {
                 //Log.i("Menu Item Selected", "Alphabets");
                 goToWeb();
                 return  true;
+            case R.id.quiz1:
+                //Log.i("Menu Item Selected", "Alphabets");
+                goToQuizAlphabets();
+                return  true;
             case R.id.main:
                 goToMain();
                 return  true;
@@ -264,6 +263,11 @@ public class AlphabetsActivity extends AppCompatActivity {
             default:
                 return false;
         }
+    }
+
+    public void goToQuizAlphabets(){
+        Intent intent = new Intent(getApplicationContext(), QuizAlphabet.class);
+        startActivity(intent);
     }
 
 

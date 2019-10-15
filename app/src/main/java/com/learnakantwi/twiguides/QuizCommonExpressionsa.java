@@ -178,7 +178,7 @@ public class QuizCommonExpressionsa extends AppCompatActivity {
                 Uri uri = Uri.parse(url);
                 DownloadManager.Request request = new DownloadManager.Request(uri);
                 request.setVisibleInDownloadsUi(false);
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                //request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                 //   request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
                 request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
                 //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
@@ -329,7 +329,7 @@ public class QuizCommonExpressionsa extends AppCompatActivity {
 
         int idview= view.getId();
 
-        Button blabla = (Button) view.findViewById(idview);
+        Button blabla = view.findViewById(idview);
         String a = (String) blabla.getText();
 
 
@@ -342,7 +342,7 @@ public class QuizCommonExpressionsa extends AppCompatActivity {
         correctWrong.setText("CORRECT ANSWERS");
         scoreText.setText(String.valueOf(score));
         counter++;
-        String counterSet = String.valueOf(counter) +" / " + String.valueOf(totalQuestions);
+        String counterSet = counter +" / " + totalQuestions;
         counterText.setText(counterSet );
 
 
@@ -371,15 +371,7 @@ public class QuizCommonExpressionsa extends AppCompatActivity {
         int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
 
 
-        final MediaPlayer player = MediaPlayer.create(this, resourceId);
-        player.start();
-
-        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                player.release();
-            }
-        });
+      playFromFileOrDownload(b);
 
         if (counter == totalQuestions){
 
@@ -392,7 +384,7 @@ public class QuizCommonExpressionsa extends AppCompatActivity {
             scorePercent= Math.round(scorePercent*10.0)/10.0;
 
            // questionText.setText("FINAL SCORE= " + String.valueOf(scorePercent)+"%");
-            questionText.setText("YOU HAD " + Double.toString(scorePercent)+"%");
+            questionText.setText("YOU HAD " + scorePercent +"%");
 
             if (scorePercent> 90){
                 gradeText.setText("Excellent!!!!!");
@@ -454,20 +446,14 @@ public class QuizCommonExpressionsa extends AppCompatActivity {
 
 
 
-       /* MobileAds.initialize(this, new OnInitializationCompleteListener() {
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-
-
-        mAdView = findViewById(R.id.adView1);
-
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("1E42299CB1A3F8218629BA7531041D73")  // An example device ID
-                .build();
-
-        mAdView.loadAd(adRequest);*/
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
     }
 

@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,12 +35,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.learnakantwi.twiguides.AllActivity.allArrayList;
-import static com.learnakantwi.twiguides.AnimalsActivity.animalsArrayList;
-import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
+import static com.learnakantwi.twiguides.AlphabetsActivity.alphabetArray;
 
 
-public class QuizFood extends AppCompatActivity {
+public class QuizAlphabet extends AppCompatActivity {
 
     TextView correctAnswer;
     TextView correctWrong;
@@ -55,6 +52,7 @@ public class QuizFood extends AppCompatActivity {
     int chosenSizeRand;
     String english1;
     String twi1;
+    String answerText;
     Button button1;
     Button button2;
     Button button3;
@@ -62,11 +60,11 @@ public class QuizFood extends AppCompatActivity {
     Button button5;
     ArrayList<String> answers;
     TextView questionText;
-    int chosenSize=(foodArrayList.size()-1);
-    int totalQuestions=30;
+    int chosenSize = (alphabetArray.size() - 1);
+    int totalQuestions = 50;
     int score;
     int counter;
-    double scorePercent= ((score/totalQuestions)*100);
+    double scorePercent = ((score / totalQuestions) * 100);
     AdView mAdView;
 
     StorageReference storageReference;
@@ -95,7 +93,7 @@ public class QuizFood extends AppCompatActivity {
                     }
                 });
                 //generateQuestion();
-                // Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -142,7 +140,7 @@ public class QuizFood extends AppCompatActivity {
                                 }
                                 mp1 = new MediaPlayer();
                                 try {
-                                    // Toast.makeText(getApplicationContext(), "Yes Yes", Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(getApplicationContext(), "Yes Yes", Toast.LENGTH_SHORT).show();
                                     mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
                                     mp1.prepareAsync();
                                     mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -181,7 +179,7 @@ public class QuizFood extends AppCompatActivity {
                 Uri uri = Uri.parse(url);
                 DownloadManager.Request request = new DownloadManager.Request(uri);
                 request.setVisibleInDownloadsUi(false);
-                //request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+               // request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                 //   request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
                 request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
                 //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
@@ -193,6 +191,7 @@ public class QuizFood extends AppCompatActivity {
 
 
     }
+
 
 
     @Override
@@ -252,63 +251,6 @@ public class QuizFood extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*public static void disableSound(Context context){
-        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0,0);
-    }*/
-
-    public void generateQuestion(View v){
-        random = new Random();
-        answers = new ArrayList<>();
-        answerLocation = random.nextInt(4);
-
-        randomChoiceQuestion = random.nextInt(9);
-        english1 = foodArrayList.get(randomChoiceQuestion).getEnglishFood();
-
-        questionText.setText(english1);
-
-        twi1 = foodArrayList.get(randomChoiceQuestion).getTwiFood();
-
-
-
-        for (int i = 0; i < 4;i++ ){
-            chosenSizeRand= random.nextInt(chosenSize);
-
-            //boolean compare = allArrayList.get(i).getTwiMain().equals(twi1);
-            if (i== answerLocation){
-                answers.add(twi1);
-            }
-            else {
-
-                //answers.add(allArrayList.get(chosenSizeRand).getTwiMain());
-                while (allArrayList.get(chosenSizeRand).getTwiMain().equals(twi1)
-                ) {
-                    chosenSizeRand = random.nextInt(chosenSize);
-                    // answers.add(allArrayList.get(chosenSize).getTwiMain());
-                }
-
-                answers.add(allArrayList.get(chosenSizeRand).getTwiMain());
-            }
-
-
-
-        }
-
-        button1.setText(answers.get(0));
-        button2.setText(answers.get(1));
-        button3.setText(answers.get(2));
-        button4.setText(answers.get(3));
-
-
-
-        Log.i("Got It", english1);
-
-
-
-        Log.i("choose", animalsArrayList.get(randomChoiceQuestion).getEnglishAnimals());
-        Log.i("choose1", String.valueOf(correctAnswerPosition));
-    }
-
     public void resetQuiz(){
         counter =0;
         score=0;
@@ -326,12 +268,13 @@ public class QuizFood extends AppCompatActivity {
         answers = new ArrayList<>();
         answerLocation = random.nextInt(4);
 
-        randomChoiceQuestion = random.nextInt(foodArrayList.size()-1);
-        english1 = foodArrayList.get(randomChoiceQuestion).getEnglishFood();
+        randomChoiceQuestion = random.nextInt(alphabetArray.size()-1);
+        english1 = alphabetArray.get(randomChoiceQuestion).getLower();
 
-        questionText.setText(english1);
+        //questionText.setText(english1);
+        answerText =  english1;
 
-        twi1 = foodArrayList.get(randomChoiceQuestion).getTwiFood();
+        twi1 = alphabetArray.get(randomChoiceQuestion).getLower();
 
 
 
@@ -342,58 +285,28 @@ public class QuizFood extends AppCompatActivity {
                 answers.add(twi1);
             }
             else {
-                while (foodArrayList.get(chosenSizeRand).getTwiFood().equals(twi1) || foodArrayList.get(chosenSizeRand).getEnglishFood().contains("(")){
+                while (alphabetArray.get(chosenSizeRand).getLower().equals(twi1) || alphabetArray.get(chosenSizeRand).getLower().contains("(")){
                     chosenSizeRand = random.nextInt(chosenSize);}
-                answers.add(animalsArrayList.get(chosenSizeRand).getTwiAnimals());
+                answers.add(alphabetArray.get(chosenSizeRand).getLower());
 
            }
-            /*else {
-              // compare = (animalsArrayList.get(chosenSizeRand).getTwiAnimals().equals(twi1) || animalsArrayList.get(chosenSize).getEnglishAnimals().contains("("));
-
-                //answers.add(allArrayList.get(chosenSizeRand).getTwiMain());
-                while (animalsArrayList.get(chosenSizeRand).getTwiAnimals().equals(twi1) ) {
-                    chosenSizeRand = random.nextInt(chosenSize);
-                    while (animalsArrayList.get(chosenSize).getEnglishAnimals().contains("(")){
-                       chosenSizeRand = random.nextInt(chosenSize);
-                   }// answers.add(allArrayList.get(chosenSize).getTwiMain());
-                }
-
-               // answers.add(animalsArrayList.get(chosenSizeRand).getTwiAnimals());
-            }*/
-
-            //answers.add(animalsArrayList.get(chosenSizeRand).getTwiAnimals());
         }
 
         button1.setText(answers.get(0));
         button2.setText(answers.get(1));
         button3.setText(answers.get(2));
         button4.setText(answers.get(3));
-
-
     }
 
     public void quizClickSound(View view){
+
+        //int idview= view.getId();
 
 
         int idview= view.getId();
 
         Button blabla = view.findViewById(idview);
         String a = (String) blabla.getText();
-
-
-        if (a.equals(twi1)) {
-            Toast.makeText(this, a + " -" +" "+"CORRECT!!!!", Toast.LENGTH_SHORT).show();
-            generateQuestion();
-            score++;
-        }
-
-        correctWrong.setText("CORRECT ANSWERS");
-        scoreText.setText(String.valueOf(score));
-        counter++;
-        String counterSet = counter +" / " + totalQuestions;
-        counterText.setText(counterSet );
-
-
 
         String b = a.toLowerCase();
 
@@ -416,7 +329,28 @@ public class QuizFood extends AppCompatActivity {
             b= b.replace("?","");
         }
 
+
+
+
+        if (a.equals(twi1)) {
+            Toast.makeText(this, a + " -" +" "+"CORRECT!!!!", Toast.LENGTH_SHORT).show();
+           generateQuestion();
+            score++;
+        }
+
+
         playFromFileOrDownload(b);
+
+        correctWrong.setText("CORRECT ANSWERS");
+        scoreText.setText(String.valueOf(score));
+        counter++;
+        String counterSet = counter +" / " + totalQuestions;
+        counterText.setText(counterSet );
+
+
+
+
+
 
         if (counter == totalQuestions){
 
@@ -448,6 +382,35 @@ public class QuizFood extends AppCompatActivity {
 
         }
 
+}
+
+    public void quizAlphabetsSound(View view){
+
+
+        String a = answerText;
+        String b = a.toLowerCase();
+
+        boolean d = b.contains("ɔ");
+        boolean e = b.contains("ɛ");
+
+        if (d || e ){
+            b= b.replace("ɔ","x");
+            b= b.replace("ɛ","q");
+        }
+
+
+        if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") | b.contains("?")) {
+            b = b.replace(" ", "");
+            b = b.replace("/", "");
+            b= b.replace(",","");
+            b= b.replace("(","");
+            b= b.replace(")","");
+            b= b.replace("-","");
+            b= b.replace("?","");
+        }
+
+        playFromFileOrDownload(b);
+
     }
 
     public void hideStartButton(View v){
@@ -464,7 +427,8 @@ public class QuizFood extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz_animals);
+        setContentView(R.layout.activity_quiz_alphabets);
+
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -476,14 +440,13 @@ public class QuizFood extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
 
-
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         button1 = findViewById(R.id.button1);
         button2 = findViewById(R.id.button2);
         button3 = findViewById(R.id.button3);
         button4 = findViewById(R.id.button4);
         button5 = findViewById(R.id.playAgain);
-        questionText = findViewById(R.id.QuestionText);
         correctWrong = findViewById(R.id.CorrectWrongText);
         scoreText = findViewById(R.id.Score);
         counterText=findViewById(R.id.counterText);
@@ -491,38 +454,12 @@ public class QuizFood extends AppCompatActivity {
 
 
         button5.setVisibility(View.INVISIBLE);
-        storageReference = FirebaseStorage.getInstance().getReference();
 
 
            resetQuiz();
            generateQuestion();
 
 
-
-
-
-       /* MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-
-
-        mAdView = findViewById(R.id.adView1);
-
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("1E42299CB1A3F8218629BA7531041D73")  // An example device ID
-                .build();
-
-        mAdView.loadAd(adRequest);
-*/
     }
-
-    /*@Override
-    public void onConfigurationChanged(Configuration newConfig){
-        super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.activity_quiz_animals);
-    }*/
-
 
 }

@@ -30,4 +30,9 @@
         android:id="@+id/videoCourse">
     </item>
 
+    <item
+        android:id="@+id/rate"
+        android:title="@string/rate">
+    </item>
+
 </menu>
