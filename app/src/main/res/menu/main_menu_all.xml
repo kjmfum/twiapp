@@ -28,4 +28,9 @@
         android:title="@string/buy_video_course">
     </item>
 
+    <item
+        android:id="@+id/downloadAllAudio"
+        android:title="@string/downloadAllAudio">
+    </item>
+
 </menu>

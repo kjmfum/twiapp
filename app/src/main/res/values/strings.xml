@@ -11,6 +11,7 @@
     <string name="title_activity_common_expressionsa">CommonExpressionsaActivity</string>
     <string name="main_menu">Main Menu</string>
     <string name="download_audio">Download Audio</string>
+    <string name="downloadAllAudio">Download All Audio</string>
     <string name="search">Search</string>
     <string name="ghanaflag">ghanaflag</string>
     <string name="learn_akan_twi">Learn Akan Twi</string>
@@ -28,6 +29,7 @@
     <string name="scoretext">Score</string>
     <string name="button">Button</string>
     <string name="scoreboard">0/0</string>
+    <string name="playagain">PLAY AGAIN</string>
 
     <string name="rate">Rate 5 stars</string>
 
@@ -37,4 +39,6 @@
     <string name="rate_dialog_ok">Give us 5 stars</string>
     <string name="rate_dialog_cancel">Remind me later</string>
     <string name="rate_dialog_no">No, Thanks</string>
+    <string name="correctanswers">CORRECT ANSWERS</string>
+
 </resources>

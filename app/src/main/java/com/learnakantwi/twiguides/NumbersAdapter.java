@@ -56,10 +56,10 @@ public class NumbersAdapter extends BaseAdapter implements Filterable {
         Numbers numbers = new Numbers(figures, numWord);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView= inflater.inflate(R.layout.custom_numbers, null);
+        convertView= inflater.inflate(R.layout.custom_time, null);
 
-        TextView tvTwi =convertView.findViewById(R.id.twi);
-        TextView tvEnglish =convertView.findViewById(R.id.english);
+        TextView tvTwi =convertView.findViewById(R.id.speakTwiTime);
+        TextView tvEnglish =convertView.findViewById(R.id.speakEnglishTime);
 
 
         tvEnglish.setText(figures);

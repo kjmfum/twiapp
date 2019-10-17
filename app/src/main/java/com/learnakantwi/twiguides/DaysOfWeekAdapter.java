@@ -49,10 +49,10 @@ public class DaysOfWeekAdapter extends BaseAdapter implements Filterable {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView= inflater.inflate(R.layout.custom_daysofweek, null);
+        convertView= inflater.inflate(R.layout.custom_time, null);
 
-        TextView textView = (TextView) convertView.findViewById(R.id.tvDaysOfWkEnglish);
-        TextView textView1 = convertView.findViewById(R.id.tvDaysOfWkTwi);
+        TextView textView = convertView.findViewById(R.id.speakEnglishTime);
+        TextView textView1 = convertView.findViewById(R.id.speakTwiTime);
 
         textView.setText(originalArray.get(position).getNameEnglish());
         textView1.setText(originalArray.get(position).getNameTwi());

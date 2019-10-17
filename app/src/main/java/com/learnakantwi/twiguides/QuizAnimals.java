@@ -36,6 +36,9 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -75,52 +78,32 @@ public class QuizAnimals extends AppCompatActivity {
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
 
+    Toast toast;
+    boolean isRunning =false;
 
-    public void playFromFileOrDownload(final String filename) {
-        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + filename + ".m4a");
-        if (myFile.exists()) {
+    public Runnable runnable = new Runnable() {
 
+        @Override
+        public void run() {
             try {
-                if (playFromDevice != null) {
-                    playFromDevice.stop();
-                    playFromDevice.reset();
-                    playFromDevice.release();
-                }
-                playFromDevice = new MediaPlayer();
-
-                playFromDevice.setDataSource(myFile.toString());
-                playFromDevice.prepareAsync();
-                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
-                        mp.start();
-                    }
-                });
-            //    generateQuestion();
-                //Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
+                URL url = new URL("http://www.google.com");
+                URLConnection connection = url.openConnection();
+                connection.connect();
+                isRunning = true;
+                System.out.println("Internet is now connected");
+            } catch (MalformedURLException e) {
+                isRunning =false;
             } catch (IOException e) {
-                e.printStackTrace();
+                isRunning=false;
             }
-        } else {
-
-
-            final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
-            musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    String url = uri.toString();
-                    playFromFirebase(musicRef);
-                    // Toast.makeText(getApplicationContext(), "Got IT", Toast.LENGTH_SHORT).show();
-                    downloadFile(getApplicationContext(), filename, ".m4a", url);
-                    //generateQuestion();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                }
-            });
-
         }
+    };
+
+    public boolean hasInternetAccess() {
+
+        Thread myThread = new Thread(runnable);
+        myThread.start();
+        return isRunning;
     }
 
     public void playFromFirebase(StorageReference musicRef) {
@@ -129,70 +112,192 @@ public class QuizAnimals extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        try {
-            final File localFile = File.createTempFile("aduonu", "m4a");
+        if (hasInternetAccess()) {
 
-            if (localFile != null) {
-                musicRef.getFile(localFile)
-                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+            try {
+                final File localFile = File.createTempFile("aduonu", "m4a");
 
-                                if (mp1 != null) {
-                                    mp1.stop();
-                                    mp1.reset();
-                                    mp1.release();
+                if (localFile != null) {
+                    musicRef.getFile(localFile)
+                            .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                                    if (mp1 != null) {
+                                        mp1.stop();
+                                        mp1.reset();
+                                        mp1.release();
+                                    }
+                                    mp1 = new MediaPlayer();
+                                    try {
+                                        mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
+                                        mp1.prepareAsync();
+                                        mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                            @Override
+                                            public void onPrepared(MediaPlayer mp) {
+                                                mp.start();
+                                            }
+                                        });
+                                    } catch (IOException ex) {
+                                        ex.printStackTrace();
+                                    }
                                 }
-                                mp1 = new MediaPlayer();
-                                try {
-                                    //Toast.makeText(getApplicationContext(), "Yes Yes", Toast.LENGTH_SHORT).show();
-                                    mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
-                                    mp1.prepareAsync();
-                                    mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                                        @Override
-                                        public void onPrepared(MediaPlayer mp) {
-                                            mp.start();
-                                        }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle failed download
+                            // ...
+                        }
+                    });
+                } else {
+                    toast.setText("Unable to download now. Please try later");
+                    toast.show();
+                }
 
-                                    });
-                                } catch (IOException ex) {
-                                    ex.printStackTrace();
-                                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        else {
+            toast.setText("Please Connect to the Internet");
+            toast.show();
+        }
+
+    }
+    public void playFromFileOrDownload(final String filename, final String appearText) {
+
+        if (appearText.equals(twi1)) {
+            toast.setText(appearText + " -" + " " + "CORRECT!!!!");
+            toast.show();
+            score++;
+            scoreText.setText(String.valueOf(score));
+        }
+
+        if (counter == totalQuestions) {
+
+            button5.setVisibility(View.VISIBLE);
+            button5.setText(getString(R.string.playagain));
+
+            double d1 = (double) score;
+            double d2 = (double) totalQuestions;
+            double scorePercent = ((d1 / d2) * 100);
+            scorePercent = Math.round(scorePercent * 10.0) / 10.0;
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("YOU HAD ").append(scorePercent).append("%");
+            // questionText.setText("FINAL SCORE= " + String.valueOf(scorePercent)+"%");
+            questionText.setText(sb);
+
+            if (scorePercent > 90) {
+                gradeText.setText(getString(R.string.excellent));
+            } else if (scorePercent > 40 && scorePercent < 90) {
+                gradeText.setText(getString(R.string.welldone));
+            } else if (scorePercent > 20 && scorePercent < 40) {
+                gradeText.setText(getString(R.string.nicetry));
+            } else {
+                gradeText.setText(getString(R.string.fail));
+            }
+
+        } else {
+
+            File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + filename + ".m4a");
+            if (myFile.exists()) {
+
+                try {
+                    if (playFromDevice != null) {
+                        playFromDevice.stop();
+                        playFromDevice.reset();
+                        playFromDevice.release();
+                    }
+                    playFromDevice = new MediaPlayer();
+
+                    playFromDevice.setDataSource(myFile.toString());
+                    playFromDevice.prepareAsync();
+                    playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                            mp.start();
+                            if (appearText.equals(twi1)) {
+                                toast.setText(appearText + " -" + " " + "CORRECT!!!!");
+                                toast.show();
+                                generateQuestion();
+                            } else {
+                                toast.setText(appearText);
+                                toast.show();
                             }
-                        }).addOnFailureListener(new OnFailureListener() {
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (hasInternetAccess()) {
+                final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+                musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle failed download
-                        // ...
+                    public void onSuccess(Uri uri) {
+                        String url = uri.toString();
+                        playFromFirebase(musicRef);
+                        downloadFile(getApplicationContext(), filename, ".m4a", url);
+                        if (appearText.equals(twi1)) {
+                            toast.setText(appearText + " -" + " " + "CORRECT!!!!");
+                            toast.show();
+                            generateQuestion();
+                        } else {
+                            toast.setText(appearText);
+                            toast.show();
+                        }
+                        //Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
-                Toast.makeText(this, "File was not created", Toast.LENGTH_SHORT).show();
-            }
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
+                if (appearText.equals(twi1)) {
+                    toast.setText(appearText + " -" + " " + "CORRECT!!!!");
+                    toast.show();
+                    generateQuestion();
+                } else {
+                    toast.setText(appearText);
+                    toast.show();
+                }
+
+            }
         }
+
     }
 
     public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
 
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-                Uri uri = Uri.parse(url);
-                DownloadManager.Request request = new DownloadManager.Request(uri);
-                request.setVisibleInDownloadsUi(false);
-                request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
-                //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
-                downloadManager.enqueue(request);
-            }
-        };
-        Thread myThread = new Thread(runnable);
-        myThread.start();
+        if (Build.VERSION.SDK_INT > 22) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
 
+        if (hasInternetAccess()) {
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                    Uri uri = Uri.parse(url);
+                    DownloadManager.Request request = new DownloadManager.Request(uri);
+                    request.setVisibleInDownloadsUi(false);
+                    request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                    downloadManager.enqueue(request);
+                }
+            };
+            Thread myThread = new Thread(runnable);
+            myThread.start();
+        }
+        else
+        {
+            toast.setText("No Internet");
+            toast.show();
 
+        }
     }
 
 
@@ -249,68 +354,6 @@ public class QuizAnimals extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*public static void disableSound(Context context){
-        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0,0);
-    }*/
-
-
-
-
-
-
-    public void generateQuestion(View v){
-        random = new Random();
-        answers = new ArrayList<>();
-        answerLocation = random.nextInt(4);
-
-        randomChoiceQuestion = random.nextInt(9);
-        english1 = allArrayList.get(randomChoiceQuestion).getEnglishmain();
-
-        questionText.setText(english1);
-
-        twi1 = allArrayList.get(randomChoiceQuestion).getTwiMain();
-
-
-
-        for (int i = 0; i < 4;i++ ){
-            chosenSizeRand= random.nextInt(chosenSize);
-
-            //boolean compare = allArrayList.get(i).getTwiMain().equals(twi1);
-            if (i== answerLocation){
-                answers.add(twi1);
-            }
-            else {
-
-                //answers.add(allArrayList.get(chosenSizeRand).getTwiMain());
-                while (allArrayList.get(chosenSizeRand).getTwiMain().equals(twi1)
-                ) {
-                    chosenSizeRand = random.nextInt(chosenSize);
-                    // answers.add(allArrayList.get(chosenSize).getTwiMain());
-                }
-
-                answers.add(allArrayList.get(chosenSizeRand).getTwiMain());
-            }
-
-
-
-        }
-
-        button1.setText(answers.get(0));
-        button2.setText(answers.get(1));
-        button3.setText(answers.get(2));
-        button4.setText(answers.get(3));
-
-
-
-        Log.i("Got It", english1);
-
-
-
-        Log.i("choose", animalsArrayList.get(randomChoiceQuestion).getEnglishAnimals());
-        Log.i("choose1", String.valueOf(correctAnswerPosition));
-    }
-
     public void resetQuiz(){
         counter =0;
         score=0;
@@ -318,7 +361,6 @@ public class QuizAnimals extends AppCompatActivity {
         scoreText.setText("");
         counterText.setText("");
         gradeText.setText("");
-
     }
 
     public void generateQuestion(){
@@ -349,21 +391,6 @@ public class QuizAnimals extends AppCompatActivity {
                 answers.add(animalsArrayList.get(chosenSizeRand).getTwiAnimals());
 
            }
-            /*else {
-              // compare = (animalsArrayList.get(chosenSizeRand).getTwiAnimals().equals(twi1) || animalsArrayList.get(chosenSize).getEnglishAnimals().contains("("));
-
-                //answers.add(allArrayList.get(chosenSizeRand).getTwiMain());
-                while (animalsArrayList.get(chosenSizeRand).getTwiAnimals().equals(twi1) ) {
-                    chosenSizeRand = random.nextInt(chosenSize);
-                    while (animalsArrayList.get(chosenSize).getEnglishAnimals().contains("(")){
-                       chosenSizeRand = random.nextInt(chosenSize);
-                   }// answers.add(allArrayList.get(chosenSize).getTwiMain());
-                }
-
-               // answers.add(animalsArrayList.get(chosenSizeRand).getTwiAnimals());
-            }*/
-
-            //answers.add(animalsArrayList.get(chosenSizeRand).getTwiAnimals());
         }
 
         button1.setText(answers.get(0));
@@ -378,8 +405,6 @@ public class QuizAnimals extends AppCompatActivity {
 
     public void quizClickSound(View view){
 
-        //int idview= view.getId();
-
 
         int idview= view.getId();
 
@@ -387,13 +412,7 @@ public class QuizAnimals extends AppCompatActivity {
         String a = (String) blabla.getText();
 
 
-        if (a.equals(twi1)) {
-            Toast.makeText(this, a + " -" +" "+"CORRECT!!!!", Toast.LENGTH_SHORT).show();
-            generateQuestion();
-            score++;
-        }
-
-        correctWrong.setText("CORRECT ANSWERS");
+        correctWrong.setText(getString(R.string.correctanswers));
         scoreText.setText(String.valueOf(score));
         counter++;
         String counterSet = counter +" / " + totalQuestions;
@@ -422,55 +441,9 @@ public class QuizAnimals extends AppCompatActivity {
             b= b.replace("?","");
         }
 
-
-        playFromFileOrDownload(b);
-
-       /* int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
-
-
-        final MediaPlayer player = MediaPlayer.create(this, resourceId);
-        player.start();
-
-        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                player.release();
-            }
-        });*/
-
-        if (counter == totalQuestions){
-
-            button5.setVisibility(View.VISIBLE);
-            button5.setText("PLAY AGAIN");
-
-            double d1 = new Double(score);
-            double d2 = new Double(totalQuestions);
-            double scorePercent= ((d1/d2)*100);
-            scorePercent= Math.round(scorePercent*10.0)/10.0;
-
-           // questionText.setText("FINAL SCORE= " + String.valueOf(scorePercent)+"%");
-            questionText.setText("YOU HAD " + scorePercent +"%");
-
-            if (scorePercent> 90){
-                gradeText.setText("Excellent!!!!!");
-            }
-            else if (scorePercent>40 && scorePercent <90){
-                gradeText.setText("Well Done!!");
-            }
-            else if (scorePercent>20 && scorePercent <40){
-                gradeText.setText("Nice Try");
-            }
-            else {
-                gradeText.setText("Fail. You can do better");
-            }
-
-
-
-        }
-
+        playFromFileOrDownload(b,a);
 
     }
-
     public void hideStartButton(View v){
         button5.setVisibility(View.INVISIBLE);
         scoreText.setText("");
@@ -486,6 +459,9 @@ public class QuizAnimals extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_animals);
+
+        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
+
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -508,42 +484,16 @@ public class QuizAnimals extends AppCompatActivity {
         questionText = findViewById(R.id.QuestionText);
         correctWrong = findViewById(R.id.CorrectWrongText);
         scoreText = findViewById(R.id.Score);
-        counterText=findViewById(R.id.counterText);
+        counterText = findViewById(R.id.counterText);
         gradeText = findViewById(R.id.grade);
 
 
         button5.setVisibility(View.INVISIBLE);
 
 
-           resetQuiz();
-           generateQuestion();
-
-
-
-
-/*
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-
-
-        mAdView = findViewById(R.id.adView1);
-
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("1E42299CB1A3F8218629BA7531041D73")  // An example device ID
-                .build();
-
-        mAdView.loadAd(adRequest);*/
-
+        resetQuiz();
+        generateQuestion();
     }
-
-    /*@Override
-    public void onConfigurationChanged(Configuration newConfig){
-        super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.activity_quiz_animals);
-    }*/
 
 
 }

@@ -1,6 +1,7 @@
 package com.learnakantwi.twiguides;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +33,9 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class AlphabetsActivity extends AppCompatActivity {
@@ -51,13 +55,193 @@ public class AlphabetsActivity extends AppCompatActivity {
 
     ArrayList<String> tempArray;
 
+    Toast toast;
+    //toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
+    boolean isRunning =false;
 
+    public Runnable runnable = new Runnable() {
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null;
+        @Override
+        public void run() {
+            try {
+                URL url = new URL("http://www.google.com");
+                URLConnection connection = url.openConnection();
+                connection.connect();
+                isRunning = true;
+                System.out.println("Internet is now connected");
+                // Toast.makeText(context, "Connected", Toast.LENGTH_SHORT).show();
+            } catch (MalformedURLException e) {
+                isRunning =false;
+                //System.out.println("Internet is now not connected 1");
+            } catch (IOException e) {
+                isRunning=false;
+                //System.out.println("Internet is now not connected 2");
+            }
+        }
+    };
+    public void downloadOnly(final String filename){
+        if (isRunning){
+
+            final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+            musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    String url = uri.toString();
+                    downloadFile(getApplicationContext(), filename, ".m4a", url);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                    Toast.makeText(getApplicationContext(), "Lost Internet Connection", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else {
+            Toast.makeText(this, "Please connect to Internet to download audio ", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public boolean hasInternetAccess() {
+
+        Thread myThread = new Thread(runnable);
+        myThread.start();
+        return isRunning;
+    }
+
+    public void downloadClick () {
+        int counter = 0;
+        if (hasInternetAccess()) {
+            for (int j = 0; j < alphabetArray.size(); j++) {
+
+                String bb = alphabetArray.get(j).getLower();
+                bb= bb.toLowerCase();
+                boolean dd = bb.contains("ɔ");
+                boolean ee = bb.contains("ɛ");
+                if (dd || ee) {
+                    bb = bb.replace("ɔ", "x");
+                    bb = bb.replace("ɛ", "q");
+                }
+
+                if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'")) {
+                    bb = bb.replace(" ", "");
+                    bb = bb.replace("/", "");
+                    bb = bb.replace(",", "");
+                    bb = bb.replace("(", "");
+                    bb = bb.replace(")", "");
+                    bb = bb.replace("-", "");
+                    bb = bb.replace("?", "");
+                    bb = bb.replace("'", "");
+                }
+                File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
+                if (myFiles.exists()) {
+                    counter++;
+                }
+            }
+            if (counter == alphabetArray.size()) {
+                Toast.makeText(this, "All downloaded ", Toast.LENGTH_SHORT).show();
+            } else {
+
+                Toast.makeText(this, "Downloading", Toast.LENGTH_SHORT).show();
+
+                for (int i = 0; i < alphabetArray.size(); i++) {
+                    String b = alphabetArray.get(i).getLower();
+                    boolean d = b.contains("ɔ");
+                    boolean e = b.contains("ɛ");
+                    if (d || e) {
+                        b = b.replace("ɔ", "x");
+                        b = b.replace("ɛ", "q");
+                    }
+
+                    if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") || b.contains("?") || b.contains("'")) {
+                        b = b.replace(" ", "");
+                        b = b.replace("/", "");
+                        b = b.replace(",", "");
+                        b = b.replace("(", "");
+                        b = b.replace(")", "");
+                        b = b.replace("-", "");
+                        b = b.replace("?", "");
+                        b = b.replace("'", "");
+                    }
+
+                    // Toast.makeText(this, , Toast.LENGTH_SHORT).show();
+                    File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + b + ".m4a");
+                    if (!myFile.exists()) {
+                        if (isRunning){
+                            downloadOnly(b);
+                        }
+                        else{
+                            Toast.makeText(this, "Please Connect to the Inernet", Toast.LENGTH_SHORT).show(); //if (i + 1 == alphabetArray.size()) {
+                            break;
+                        }
+
+                    }
+
+                }
+
+            }
+        }
+        else{
+            Toast.makeText(this, "Please connect to the Internet to download audio", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void playFromFirebase(StorageReference musicRef) {
+
+        if (Build.VERSION.SDK_INT > 22) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+        if (hasInternetAccess()) {
+
+            try {
+                final File localFile = File.createTempFile("aduonu", "m4a");
+
+                if (localFile != null) {
+                    musicRef.getFile(localFile)
+                            .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                                    if (mp1 != null) {
+                                        mp1.stop();
+                                        mp1.reset();
+                                        mp1.release();
+                                    }
+                                    mp1 = new MediaPlayer();
+                                    try {
+                                        mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
+                                        mp1.prepareAsync();
+                                        mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                            @Override
+                                            public void onPrepared(MediaPlayer mp) {
+                                                mp.start();
+                                            }
+                                        });
+                                    } catch (IOException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle failed download
+                            // ...
+                        }
+                    });
+                } else {
+                    Toast.makeText(this, "File was not created", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        else {
+            Toast.makeText(this, "Please Connect to the Internet 1", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public void playFromFileOrDownload(final String filename, final String appearText){
@@ -78,7 +262,8 @@ public class AlphabetsActivity extends AppCompatActivity {
                     @Override
                     public void onPrepared(MediaPlayer mp) {
                         mp.start();
-                        Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                        toast.setText(appearText);
+                        toast.show();
                     }
                 });
                 //Toast.makeText(this, "From Device", Toast.LENGTH_SHORT).show();
@@ -88,7 +273,7 @@ public class AlphabetsActivity extends AppCompatActivity {
         }
         else {
 
-            if (isNetworkAvailable()){
+            if (hasInternetAccess()){
                 //Toast.makeText(this, "I'm available", Toast.LENGTH_SHORT).show();
 
                 final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
@@ -97,10 +282,11 @@ public class AlphabetsActivity extends AppCompatActivity {
                     public void onSuccess(Uri uri) {
                         String url = uri.toString();
                         playFromFirebase(musicRef);
-
                         // Toast.makeText(getApplicationContext(), "Got IT", Toast.LENGTH_SHORT).show();
                         downloadFile(getApplicationContext(), filename, ".m4a", url);
-                        Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                        toast.setText(appearText);
+                        toast.show();
+                        //Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -110,90 +296,39 @@ public class AlphabetsActivity extends AppCompatActivity {
                 });
             }
             else {
-                Toast.makeText(this, "Please connect to Internet to download audio", Toast.LENGTH_SHORT).show();
+                toast.setText("Please connect to Internet to download audio");
+                toast.show();
+               // Toast.makeText(this, "Please connect to Internet to download audio", Toast.LENGTH_SHORT).show();
             }
 
 
         }
     }
 
-
-    public void playFromFirebase(StorageReference musicRef) {
+    public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
 
         if (Build.VERSION.SDK_INT > 22) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        try {
-            final File localFile = File.createTempFile("aduonu", "m4a");
-
-            if (localFile != null) {
-                musicRef.getFile(localFile)
-                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-
-                                if (mp1 != null){
-                                    mp1.stop();
-                                    mp1.reset();
-                                    mp1.release();
-                                }
-                                mp1 = new MediaPlayer();
-                                try {
-                                    mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
-                                    mp1.prepareAsync();
-                                    mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                                        @Override
-                                        public void onPrepared(MediaPlayer mp) {
-                                            mp.start();
-                                        }
-                                    });
-                                } catch (IOException ex) {
-                                    ex.printStackTrace();
-                                }
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle failed download
-                        // ...
-                    }
-                });
-            } else {
-                Toast.makeText(this, "File was not created", Toast.LENGTH_SHORT).show();
-            }
-
-        }catch(IOException ex){
-            ex.printStackTrace();
-        }
-
-    }
-
-    public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
-
-     //
-            if (Build.VERSION.SDK_INT > 22) {
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            }
-        if (!tempArray.contains(filename)) {
+        if (hasInternetAccess()) {
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-                    tempArray.add(filename);
                     DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
                     Uri uri = Uri.parse(url);
                     DownloadManager.Request request = new DownloadManager.Request(uri);
                     request.setVisibleInDownloadsUi(false);
-                    //request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                    //   request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
                     request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
-                    //request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC+File.separator+"LearnTwi1", filename+fileExtension);
                     downloadManager.enqueue(request);
-
                 }
             };
             Thread myThread = new Thread(runnable);
             myThread.start();
+        }
+        else
+        {
+            Toast.makeText(context, "No Internet", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -201,7 +336,7 @@ public class AlphabetsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu_all, menu);
+        menuInflater.inflate(R.menu.main_menu, menu);
 
         final MenuItem item = menu.findItem(R.id.menusearch);
         SearchView searchView = (SearchView) item.getActionView();
@@ -239,19 +374,11 @@ public class AlphabetsActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
 
         switch (item.getItemId()){
-           /* case R.id.settings:
-                Log.i("Menu Item Selected", "Settings");
-                playAll();
-                return true;
-            case R.id.alphabets:
-                Log.i("Menu Item Selected", "Alphabets");
-                return  true;*/
+
             case R.id.videoCourse:
-                //Log.i("Menu Item Selected", "Alphabets");
                 goToWeb();
                 return  true;
             case R.id.quiz1:
-                //Log.i("Menu Item Selected", "Alphabets");
                 goToQuizAlphabets();
                 return  true;
             case R.id.main:
@@ -308,7 +435,7 @@ public class AlphabetsActivity extends AppCompatActivity {
 
     }
 
-    MediaPlayer player = null;
+  //  MediaPlayer player = null;
 
     public void log1(View view){
 
@@ -330,18 +457,7 @@ public class AlphabetsActivity extends AppCompatActivity {
         }
 
 
-       /* int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
 
-
-        final MediaPlayer player = MediaPlayer.create(this, resourceId);
-        player.start();
-
-        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                player.release();
-            }
-        });*/
 
        playFromFileOrDownload(b, a);
 
@@ -349,112 +465,28 @@ public class AlphabetsActivity extends AppCompatActivity {
 
     }
 
-    public void downloadOnly(final String filename){
+    public void log2(View view) {
+        int idview = view.getId();
 
-
-        if (isNetworkAvailable()){
-            final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
-            musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    String url = uri.toString();
-                    downloadFile(getApplicationContext(), filename, ".m4a", url);
-                    //counter1= counter1++;
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-        else {
-            Toast.makeText(this, "Please connect to Internet to download audio ", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void downloadClick () {
-        int counter = 0;
-        int counter1 =0;
-
-        if (isNetworkAvailable()) {
-            for (int j = 0; j < alphabetArray.size(); j++) {
-
-                String bb = alphabetArray.get(j).getLower();
-                boolean dd = bb.contains("ɔ");
-                boolean ee = bb.contains("ɛ");
-                if (dd || ee) {
-                    bb = bb.replace("ɔ", "x");
-                    bb = bb.replace("ɛ", "q");
-                }
-
-                if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'")) {
-                    bb = bb.replace(" ", "");
-                    bb = bb.replace("/", "");
-                    bb = bb.replace(",", "");
-                    bb = bb.replace("(", "");
-                    bb = bb.replace(")", "");
-                    bb = bb.replace("-", "");
-                    bb = bb.replace("?", "");
-                    bb = bb.replace("'", "");
-                }
-                File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
-                if (myFiles.exists()) {
-                    counter++;
-                }
-            }
-            if (counter == alphabetArray.size()) {
-                Toast.makeText(this, "All downloaded ", Toast.LENGTH_SHORT).show();
-            } else {
-
-                Toast.makeText(this, "Downloading", Toast.LENGTH_SHORT).show();
-
-                for (int i = 0; i < alphabetArray.size(); i++) {
-
-
-                    String b = alphabetArray.get(i).getLower();
-                    boolean d = b.contains("ɔ");
-                    boolean e = b.contains("ɛ");
-                    if (d || e) {
-                        b = b.replace("ɔ", "x");
-                        b = b.replace("ɛ", "q");
-                    }
-
-                    if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") || b.contains("?") || b.contains("'")) {
-                        b = b.replace(" ", "");
-                        b = b.replace("/", "");
-                        b = b.replace(",", "");
-                        b = b.replace("(", "");
-                        b = b.replace(")", "");
-                        b = b.replace("-", "");
-                        b = b.replace("?", "");
-                        b = b.replace("'", "");
-                    }
-                    File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + b + ".m4a");
-                    if (!myFile.exists()) {
-
-                        downloadOnly(b);
-                        counter1++;
-                        //if (i + 1 == alphabetArray.size()) {
-                        //}
-                    }
-
-                }
-
-                //Toast.makeText(this, counter1 + " New audio file(s)." + " Download Complete", Toast.LENGTH_SHORT).show();
-            }
-        }
-        else{
-            Toast.makeText(this, "Please connect to the Internet to download audio", Toast.LENGTH_SHORT).show();
-        }
+        TextView blabla = view.findViewById(idview);
+        String a = (String) blabla.getText();
+        toast.setText(a);
+        toast.show();
     }
 
 
 
+
+
+    @SuppressLint("ShowToast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alphabets);
+
+        hasInternetAccess();
+
+        toast = Toast.makeText(getApplicationContext(), "" , Toast.LENGTH_SHORT);
 
         myListView = findViewById(R.id.myList);
         storageReference = FirebaseStorage.getInstance().getReference();
