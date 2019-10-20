@@ -40,5 +40,7 @@
     <string name="rate_dialog_cancel">Remind me later</string>
     <string name="rate_dialog_no">No, Thanks</string>
     <string name="correctanswers">CORRECT ANSWERS</string>
+    <string name="search_all">Search All</string>
+    <string name="share">Share App</string>
 
 </resources>

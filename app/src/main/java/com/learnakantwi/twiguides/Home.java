@@ -244,9 +244,22 @@ public class Home extends AppCompatActivity {
             case R.id.rate:
                 rateMe();
                 return true;
+            case R.id.share:
+                shareApp();
+                return true;
             default:
                 return false;
         }
+    }
+
+    public void shareApp(){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        //sharingIntent.setAction("http://play.google.com/store/apps/details?id=" + getPackageName());
+        sharingIntent.setType("text/plain");
+        String shareBody = "http://play.google.com/store/apps/details?id=" + getPackageName();
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Please install this Nice Android Twi App");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 
     public void rateMe() {

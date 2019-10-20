@@ -20,7 +20,7 @@
     </item>
 
     <item
-        android:title="Search All"
+        android:title="@string/search_all"
         android:id="@+id/searchAll">
     </item>
 
@@ -33,6 +33,11 @@
     <item
         android:id="@+id/rate"
         android:title="@string/rate">
+    </item>
+
+    <item
+        android:id="@+id/share"
+        android:title="@string/share">
     </item>
 
 </menu>
