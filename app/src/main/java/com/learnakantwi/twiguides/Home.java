@@ -71,7 +71,7 @@ public class Home extends AppCompatActivity {
 
 
 
-    public void log2(View view) {
+   /* public void log2(View view) {
         int idview = view.getId();
 
         TextView blabla = view.findViewById(idview);
@@ -126,7 +126,7 @@ public class Home extends AppCompatActivity {
                 return;
 
         }
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -144,7 +144,7 @@ public class Home extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<HomeButton> results = new ArrayList<>();
+                final ArrayList<HomeButton> results = new ArrayList<>();
                 for (HomeButton x: homeButtonArrayList ){
 
                     if(x.getNameofActivity().toLowerCase().contains(newText.toLowerCase())
@@ -154,6 +154,59 @@ public class Home extends AppCompatActivity {
                     }
 
                     ((HomeAdapter)homeListView.getAdapter()).update(results);
+
+                   homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            String me1 = results.get(position).getNameofActivity();
+
+
+                            switch (me1){
+                                case "Alphabets":
+                                    goToAlphabets();
+                                    return;
+                                case "Animals":
+                                    goToAnimals();
+                                    return;
+                                case "Body Parts":
+                                    goToBodyparts();
+                                    return;
+                                case "Colours":
+                                    goToColours();
+                                    return;
+                                case "Days of Week":
+                                    goToDaysOfWk();
+                                    return;
+                                case "Expressions":
+                                    goToCommonExpressionsa();
+                                    return;
+                                case "Family":
+                                    goToFamily();
+                                    return;
+                                case "Food":
+                                    goToFood();
+                                    return;
+                                case "Months":
+                                    goToMonths();
+                                    return;
+                                case "Numbers":
+                                    goToNumber();
+                                    return;
+                                case "Pronouns":
+                                    goToPronouns();
+                                    return;
+                                case "Time":
+                                    goToTime();
+                                    return;
+                                case "Weather":
+                                    goToWeather();
+                                    return;
+                                case "Search":
+                                    goToAll();
+                            }
+                        }
+                    });
                 }
 
 
@@ -220,8 +273,6 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-
     public void goToAlphabets() {
         Intent intent = new Intent(getApplicationContext(), AlphabetsActivity.class);
         startActivity(intent);
@@ -236,7 +287,6 @@ public class Home extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), DaysOfWeekActivity.class);
         startActivity(intent);
     }
-
 
     public void goToTime() {
         Intent intent = new Intent(getApplicationContext(), TimeActivity.class);
@@ -292,38 +342,6 @@ public class Home extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), AllActivity.class);
         startActivity(intent);
     }
-
-
-    //https://1drv.ms/u/s!As3RLmjjsKYjkOM303BjsYQ7Af2gNg?e=PQ6w4K
-
-
-  /*  public void playURL (){
-        String url = "https://1drv.ms/u/s!As3RLmjjsKYjkOM303BjsYQ7Af2gNg?e=PQ6w4K";
-        mediaPlayer = new MediaPlayer();
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-      try {
-            mediaPlayer.setDataSource(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.i("Errors", String.valueOf(e));
-        }
-
-       // mediaPlayer.setOnPreparedListener((MediaPlayer.OnPreparedListener) this);
-        mediaPlayer.prepareAsync();
-      mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-          @Override
-          public void onPrepared(MediaPlayer mp) {
-              mediaPlayer.start();
-              Log.i("Played", "yes");
-          }
-
-      });
-
-
-
-
-    }*/
-
 //In your case, you do not need the LinearLayout and ImageView at all. Just add android:drawableLeft="@drawable/up_count_big" to your TextView.
 
     @Override
@@ -381,11 +399,15 @@ public class Home extends AppCompatActivity {
         HomeAdapter homeAdapter = new HomeAdapter(this, homeButtonArrayList);
         homeListView.setAdapter(homeAdapter);
 
+
+
+
         homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 String me1 = homeButtonArrayList.get(position).getNameofActivity();
+
 
                 switch (me1){
                     case "Alphabets":
