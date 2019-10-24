@@ -70,64 +70,6 @@ public class Home extends AppCompatActivity {
     MediaPlayer mediaPlayer;
 
 
-
-   /* public void log2(View view) {
-        int idview = view.getId();
-
-        TextView blabla = view.findViewById(idview);
-        String a = (String) blabla.getText();
-
-
-
-        Toast.makeText(this, a, Toast.LENGTH_SHORT).show();
-
-        switch (a) {
-            case "Alphabets":
-                goToAlphabets();
-                return;
-            case "Animals":
-                goToAnimals();
-                return;
-            case "Body Parts":
-                goToBodyparts();
-                return;
-            case "Colours":
-                goToColours();
-                return;
-            case "Days of Week":
-                goToDaysOfWk();
-                return;
-            case "Expressions":
-                goToCommonExpressionsa();
-                return;
-            case "Family":
-                goToFamily();
-                return;
-            case "Food":
-                goToFood();
-                return;
-            case "Months":
-                goToMonths();
-                return;
-            case "Numbers":
-                goToNumber();
-                return;
-            case "Pronouns":
-                goToPronouns();
-                return;
-            case "Time":
-                goToTime();
-                return;
-            case "Weather":
-                goToWeather();
-                return;
-            case "Search":
-                goToAll();
-                return;
-
-        }
-    }*/
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //MenuInflater menuInflater = getMenuInflater();
@@ -362,6 +304,15 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home1);
 
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
 
         AppRate.with(this)
                 .setInstallDays(0)
@@ -370,6 +321,11 @@ public class Home extends AppCompatActivity {
                 .monitor();
 
         AppRate.showRateDialogIfMeetsConditions(this);
+
+
+
+
+
         // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
 
 
@@ -2341,8 +2297,8 @@ public class Home extends AppCompatActivity {
         allArrayList.add(new All("Sky (1)","Soro","","", "", ""));
         allArrayList.add(new All("Sky (2)","Ewiem","","", "", ""));
         allArrayList.add(new All("Weather","Ewiem tebea","","", "", ""));
-        allArrayList.add(new All("How is the All like?","Ewiem tebea te sɛn?","","", "", ""));
-        allArrayList.add(new All("What will the All be like today?","Ɛnnɛ ewiem tebea bɛyɛ sɛn?","","", "", ""));
+        allArrayList.add(new All("How is the weather like?","Ewiem tebea te sɛn?","","", "", ""));
+        allArrayList.add(new All("What will the weather be like today?","Ɛnnɛ ewiem tebea bɛyɛ sɛn?","","", "", ""));
         allArrayList.add(new All("Weather changes","Ewiem nsakrae","","", "", ""));
         allArrayList.add(new All("Stars","Nsoromma","","", "", ""));
         allArrayList.add(new All("The stars are glittering","Nsoromma no rehyerɛn","","", "", ""));
