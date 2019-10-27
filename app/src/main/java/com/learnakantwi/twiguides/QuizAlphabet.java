@@ -250,7 +250,14 @@ public class QuizAlphabet extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                        if (appearText.equals(twi1)) {
+                            toast.setText(appearText + " -" + " " + "CORRECT!!!!");
+                            toast.show();
+                            generateQuestion();
+                        } else {
+                            toast.setText(appearText);
+                            toast.show();
+                        }
                     }
                 });
             } else {

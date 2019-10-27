@@ -31,6 +31,7 @@
         <activity android:name=".QuizMonths" />
         <activity android:name=".QuizCommonExpressionsa" />
         <activity android:name=".QuizColours" />
+        <activity android:name=".QuizBusiness" />
         <activity android:name=".QuizAll" />
         <activity android:name=".AllActivity" />
         <activity android:name=".WeatherActivity" />
@@ -45,6 +46,7 @@
         <activity android:name=".CommonExpressionsaActivity" />
         <activity android:name=".ColoursActivity" />
         <activity android:name=".BodypartsActivity" />
+        <activity android:name=".BusinessActivity" />
         <activity android:name=".AnimalsActivity" />
         <activity android:name=".AlphabetsActivity" />
         <activity android:name=".MainActivity">
@@ -55,7 +57,8 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".BusinessActivity" /> <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+
+         <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
        <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-7384642419407303~6578212997" />

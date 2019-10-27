@@ -482,9 +482,6 @@ public class Home extends AppCompatActivity {
         businessArrayList.add(new Business("I am going to the market","Merekɔ dwaso"));
 
 
-
-
-
         businessArrayList.add(new Business("Give me money","Ma me sika"));
         businessArrayList.add(new Business("Pay me","Tua me"));
         businessArrayList.add(new Business("Pay","Tua"));
@@ -1618,6 +1615,91 @@ public class Home extends AppCompatActivity {
 
         allArrayList = new ArrayList<>();
 
+        //AllBusiness
+
+        allArrayList.add(new All("Money","Sika","", "", "",""));
+        allArrayList.add(new All("I don't have money","Menni sika","", "", "",""));
+        allArrayList.add(new All("I have money","Mewɔ sika","", "", "",""));
+        allArrayList.add(new All("Bank","Sikakorabea","", "", "",""));
+        allArrayList.add(new All("Buy","Tɔ","", "", "",""));
+        allArrayList.add(new All("What are you buying?","Woretɔ dɛn?","", "", "",""));
+        allArrayList.add(new All("What should I buy?","Dɛn na mentɔ?","", "", "",""));
+        allArrayList.add(new All("What would you like to buy?","Dɛn na wopɛ sɛ wotɔ?","", "", "",""));
+        allArrayList.add(new All("Buy for me","Tɔ ma me","", "", "",""));
+        allArrayList.add(new All("I am buying...","Meretɔ...","", "", "",""));
+        allArrayList.add(new All("I am buying food","Meretɔ aduane","", "", "",""));
+        allArrayList.add(new All("I will buy","Mɛtɔ","", "", "",""));
+        allArrayList.add(new All("I will buy food","Mɛtɔ aduane","", "", "",""));
+        allArrayList.add(new All("I will not buy","Me ntɔ","", "", "",""));
+        allArrayList.add(new All("I will not buy food","Me ntɔ aduane","", "", "",""));
+        allArrayList.add(new All("How much will you buy?","Wobɛtɔ sɛn?","", "", "",""));
+        allArrayList.add(new All("Where can I buy...?","Ɛhe na menya...atɔ?","", "", "",""));
+        allArrayList.add(new All("Where can I buy water?","Ɛhe na menya nsuo atɔ?","", "", "",""));
+        allArrayList.add(new All("I want to buy..","Mepɛ sɛ metɔ...","", "", "",""));
+        allArrayList.add(new All("How many do you want to buy?","Ahe na wopɛ sɛ wotɔ?","", "", "",""));
+        allArrayList.add(new All("I will buy two?","Mɛtɔ mmienu","", "", "",""));
+
+
+        allArrayList.add(new All("It is expensive","Ne bo yɛ den","", "", "",""));
+        allArrayList.add(new All("It is too expensive","Ne bo yɛ den dodo","", "", "",""));
+        allArrayList.add(new All("I want discount","Mepɛ ntesoɔ","", "", "",""));
+        allArrayList.add(new All("Give me discount","Te me so","", "", "",""));
+
+        allArrayList.add(new All("Please reduce the price a little","Mesrɛ wo te so kakra","", "", "",""));
+        allArrayList.add(new All("I want you to give to me on credit","Mepɛ sɛ wode firi me","", "", "",""));
+
+
+        allArrayList.add(new All("It is cheap","Ɛyɛ fo","", "", "",""));
+        allArrayList.add(new All("It is too cheap","Ɛyɛ fo dodo","", "", "",""));
+        allArrayList.add(new All("My change","Me nsesa","", "", "",""));
+
+
+        allArrayList.add(new All("Sell","Tɔn","", "", "",""));
+        allArrayList.add(new All("I want to sell..","Mepɛ sɛ metɔn...","", "", "",""));
+        allArrayList.add(new All("I want to sell clothes","Mepɛ sɛ metɔn ntade","", "", "",""));
+        allArrayList.add(new All("How much is it?","Ɛyɛ sɛn","", "", "",""));
+        allArrayList.add(new All("It is fifty cedis?","Ɛyɛ cedis aduonum","", "", "",""));
+        allArrayList.add(new All("How much is this?","Wei yɛ sɛn?","", "", "",""));
+        allArrayList.add(new All("Do you sell...here?","Wotɔn...wɔ ha?","", "", "",""));
+        allArrayList.add(new All("Do you sell food here?","Wotɔn aduane wɔ ha?","", "", "",""));
+
+        allArrayList.add(new All("How much do you sell it?","Wotɔn no sɛn?","", "", "",""));
+        allArrayList.add(new All("Market (1)","Gua","", "", "",""));
+        allArrayList.add(new All("Market (2)","Dwaso","", "", "",""));
+        allArrayList.add(new All("I am going to the market","Merekɔ dwaso","", "", "",""));
+
+
+        allArrayList.add(new All("Give me money","Ma me sika","", "", "",""));
+        allArrayList.add(new All("Pay me","Tua me","", "", "",""));
+        allArrayList.add(new All("Pay","Tua","", "", "",""));
+        allArrayList.add(new All("Pay for me","Tua ma me","", "", "",""));
+        allArrayList.add(new All("Pay for it","Tua ka","", "", "",""));
+        allArrayList.add(new All("Can I pay tomorrow?","Metumi atua no ɔkyena?","", "", "",""));
+        allArrayList.add(new All("I can't pay","Mentumi ntua","", "", "",""));
+        allArrayList.add(new All("Who is selling?","Hena na ɔretɔn?","", "", "",""));
+
+        allArrayList.add(new All("Work","Adwuma","", "", "",""));
+        allArrayList.add(new All("Shop","Sotɔɔ","", "", "",""));
+        allArrayList.add(new All("Profit","Mfasoɔ","", "", "",""));
+        allArrayList.add(new All("I have made profit","Manya mfasoɔ","", "", "",""));
+        allArrayList.add(new All("I will make profit","Mɛnya mfasoɔ","", "", "",""));
+        allArrayList.add(new All("Loss","Ɛka","", "", "",""));
+        allArrayList.add(new All("I have made a loss","Mabɔ ka","", "", "",""));
+        allArrayList.add(new All("I will make a loss","Mɛbɔ ka","", "", "",""));
+
+
+
+
+
+
+
+
+
+
+
+
+        //AllAnimals
+
         allArrayList.add(new All("Bull","Nantwinini", "", "","",""));
         allArrayList.add(new All("Animal","Aboa", "", "","",""));
         allArrayList.add(new All("Animals","Mmoa", "", "","",""));
@@ -2255,7 +2337,7 @@ public class Home extends AppCompatActivity {
         allArrayList.add(new All("Years","Mfe","","", "", ""));
         allArrayList.add(new All("This year","Afe yi","","", "", ""));
         allArrayList.add(new All("Last year","Afe a etwaam","","", "", ""));
-        allArrayList.add(new All("A year by this All","Afe sesɛɛ","","", "", ""));
+        allArrayList.add(new All("A year by this time","Afe sesɛɛ","","", "", ""));
         allArrayList.add(new All("Next year (1)","Afedan","","", "", ""));
         allArrayList.add(new All("Next year (2)","Afe a yebesi mu","","", "", ""));
 

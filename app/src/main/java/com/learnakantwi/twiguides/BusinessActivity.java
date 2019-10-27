@@ -383,7 +383,8 @@ public class BusinessActivity extends AppCompatActivity {
             case R.id.videoCourse:
                 goToWeb();
             case R.id.quiz1:
-                goToQuizFood();
+                goToQuizBusiness();
+                return true;
             case R.id.downloadAudio:
                 downloadClick();
                 return true;
@@ -401,8 +402,8 @@ public class BusinessActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), Home.class);
         startActivity(intent);
     }
-    public void goToQuizFood() {
-        Intent intent = new Intent(getApplicationContext(), QuizFood.class);
+    public void goToQuizBusiness() {
+        Intent intent = new Intent(getApplicationContext(), QuizBusiness.class);
         startActivity(intent);
     }
 

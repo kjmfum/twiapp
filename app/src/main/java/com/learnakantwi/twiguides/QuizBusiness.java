@@ -39,12 +39,10 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.learnakantwi.twiguides.AllActivity.allArrayList;
-import static com.learnakantwi.twiguides.AnimalsActivity.animalsArrayList;
-import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
+import static com.learnakantwi.twiguides.BusinessActivity.businessArrayList;
 
 
-public class QuizFood extends AppCompatActivity {
+public class QuizBusiness extends AppCompatActivity {
 
     TextView correctAnswer;
     TextView correctWrong;
@@ -65,22 +63,17 @@ public class QuizFood extends AppCompatActivity {
     Button button5;
     ArrayList<String> answers;
     TextView questionText;
-    int chosenSize=(foodArrayList.size()-1);
+    int chosenSize=(businessArrayList.size()-1);
     int totalQuestions=30;
     int score;
     int counter;
     double scorePercent= ((score/totalQuestions)*100);
     AdView mAdView;
-
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
 
-
     Toast toast;
-
-    //toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
-
     boolean isRunning =false;
 
     public Runnable runnable = new Runnable() {
@@ -254,6 +247,7 @@ public class QuizFood extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
                         if (appearText.equals(twi1)) {
                             toast.setText(appearText + " -" + " " + "CORRECT!!!!");
                             toast.show();
@@ -262,6 +256,7 @@ public class QuizFood extends AppCompatActivity {
                             toast.setText(appearText);
                             toast.show();
                         }
+
                     }
                 });
             } else {
@@ -310,16 +305,10 @@ public class QuizFood extends AppCompatActivity {
     }
 
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //MenuInflater menuInflater = getMenuInflater();
         getMenuInflater().inflate(R.menu.quiz_menu, menu);
-
         return super.onCreateOptionsMenu(menu);
-
-
     }
 
     @Override
@@ -327,18 +316,8 @@ public class QuizFood extends AppCompatActivity {
         super.onOptionsItemSelected(item);
 
         switch (item.getItemId()) {
-           /*case R.id.settings:
-                Log.i("Menu Item Selected", "Settings");
-                playAll();
-                return true;
-            case R.id.alphabets:
-                Log.i("Menu Item Selected", "Alphabets");
-                return  true;*/
 
             case R.id.quiz11:
-                //Log.i("Menu Item Selected", "Alphabets");
-                // goToMain();
-                //disableSound(this);
                 goBack();
                 return true;
             case R.id.main:
@@ -369,9 +348,6 @@ public class QuizFood extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-
-
     public void resetQuiz(){
         counter =0;
         score=0;
@@ -379,7 +355,6 @@ public class QuizFood extends AppCompatActivity {
         scoreText.setText("");
         counterText.setText("");
         gradeText.setText("");
-
     }
 
     public void generateQuestion(){
@@ -389,12 +364,12 @@ public class QuizFood extends AppCompatActivity {
         answers = new ArrayList<>();
         answerLocation = random.nextInt(4);
 
-        randomChoiceQuestion = random.nextInt(foodArrayList.size()-1);
-        english1 = foodArrayList.get(randomChoiceQuestion).getEnglishFood();
+        randomChoiceQuestion = random.nextInt(businessArrayList.size()-1);
+        english1 = businessArrayList.get(randomChoiceQuestion).getEnglishBusiness();
 
         questionText.setText(english1);
 
-        twi1 = foodArrayList.get(randomChoiceQuestion).getTwiFood();
+        twi1 = businessArrayList.get(randomChoiceQuestion).getTwiBusiness();
 
 
 
@@ -405,9 +380,9 @@ public class QuizFood extends AppCompatActivity {
                 answers.add(twi1);
             }
             else {
-                while (foodArrayList.get(chosenSizeRand).getTwiFood().equals(twi1) || foodArrayList.get(chosenSizeRand).getEnglishFood().contains("(")){
+                while (businessArrayList.get(chosenSizeRand).getTwiBusiness().equals(twi1) || businessArrayList.get(chosenSizeRand).getEnglishBusiness().contains("(")){
                     chosenSizeRand = random.nextInt(chosenSize);}
-                answers.add(foodArrayList.get(chosenSizeRand).getTwiFood());
+                answers.add(businessArrayList.get(chosenSizeRand).getTwiBusiness());
 
            }
         }
@@ -417,6 +392,8 @@ public class QuizFood extends AppCompatActivity {
         button3.setText(answers.get(2));
         button4.setText(answers.get(3));
 
+        Log.i("Size", String.valueOf(businessArrayList.size()));
+       // Log.i("Size", String.valueOf(animalsArrayList.m);
 
     }
 
@@ -448,7 +425,7 @@ public class QuizFood extends AppCompatActivity {
         }
 
 
-        if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") | b.contains("?")) {
+        if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") | b.contains("?")| b.contains("...")) {
             b = b.replace(" ", "");
             b = b.replace("/", "");
             b= b.replace(",","");
@@ -456,12 +433,12 @@ public class QuizFood extends AppCompatActivity {
             b= b.replace(")","");
             b= b.replace("-","");
             b= b.replace("?","");
+            b= b.replace("...","");
         }
 
         playFromFileOrDownload(b,a);
 
     }
-
     public void hideStartButton(View v){
         button5.setVisibility(View.INVISIBLE);
         scoreText.setText("");
@@ -480,6 +457,7 @@ public class QuizFood extends AppCompatActivity {
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
+
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -490,6 +468,7 @@ public class QuizFood extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
 
+        storageReference = FirebaseStorage.getInstance().getReference();
 
 
         button1 = findViewById(R.id.button1);
@@ -500,43 +479,16 @@ public class QuizFood extends AppCompatActivity {
         questionText = findViewById(R.id.QuestionText);
         correctWrong = findViewById(R.id.CorrectWrongText);
         scoreText = findViewById(R.id.Score);
-        counterText=findViewById(R.id.counterText);
+        counterText = findViewById(R.id.counterText);
         gradeText = findViewById(R.id.grade);
 
 
         button5.setVisibility(View.INVISIBLE);
-        storageReference = FirebaseStorage.getInstance().getReference();
 
 
-           resetQuiz();
-           generateQuestion();
-
-
-
-
-
-       /* MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-
-
-        mAdView = findViewById(R.id.adView1);
-
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("1E42299CB1A3F8218629BA7531041D73")  // An example device ID
-                .build();
-
-        mAdView.loadAd(adRequest);
-*/
+        resetQuiz();
+        generateQuestion();
     }
-
-    /*@Override
-    public void onConfigurationChanged(Configuration newConfig){
-        super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.activity_quiz_animals);
-    }*/
 
 
 }
