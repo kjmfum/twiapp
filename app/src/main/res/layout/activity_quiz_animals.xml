@@ -21,6 +21,8 @@
         app:layout_constraintTop_toTopOf="@+id/gridlayout123" />
 
 
+
+
     <TextView
         android:id="@+id/QuestionText"
         android:layout_width="0dp"
@@ -63,11 +65,14 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
+        android:shadowColor="#F48FB1"
         android:text="0/0"
         app:layout_constraintBottom_toBottomOf="@+id/guideline5"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/grade"
@@ -217,14 +222,26 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
+   <!--
+      <ImageView
+        android:id="@+id/mute"
+        android:layout_width="115dp"
+        android:layout_height="31dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline7"
+        tools:srcCompat="@android:drawable/stat_notify_call_mute"
+        android:contentDescription="@string/mute" />
 
-
-   <!-- <com.google.android.gms.ads.AdView
+   <com.google.android.gms.ads.AdView
         android:id="@+id/adView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
         android:visibility="visible"
+        ca-app-pub-7384642419407303/7840050122
+        ca-app-pub-3940256099942544/6300978111
         app:adSize="SMART_BANNER"
         app:adUnitId="ca-app-pub-6999427576830667/9981230407"
         app:layout_constraintBottom_toBottomOf="parent"

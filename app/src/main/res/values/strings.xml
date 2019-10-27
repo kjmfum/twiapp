@@ -42,5 +42,6 @@
     <string name="correctanswers">CORRECT ANSWERS</string>
     <string name="search_all">Search All</string>
     <string name="share">Share App</string>
+    <string name="mute">Mute</string>
 
 </resources>

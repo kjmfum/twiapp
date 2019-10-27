@@ -375,7 +375,7 @@ public class AllActivity extends AppCompatActivity {
         }
 
 
-        if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") | b.contains("?")) {
+        if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") | b.contains("?")| b.contains("...")) {
             b = b.replace(" ", "");
             b = b.replace("/", "");
             b= b.replace(",","");
@@ -383,6 +383,7 @@ public class AllActivity extends AppCompatActivity {
             b= b.replace(")","");
             b= b.replace("-","");
             b= b.replace("?","");
+            b= b.replace("...","");
         }
 
 
@@ -485,15 +486,16 @@ public class AllActivity extends AppCompatActivity {
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
-    /* MobileAds.initialize(this, new OnInitializationCompleteListener() {
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-
-        mAdView = findViewById(R.id.adView1);
+        mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);*/
+        mAdView.loadAd(adRequest);
+
+
 
         //allArrayList = new ArrayList<>();
         allListView = findViewById(R.id.allListView);

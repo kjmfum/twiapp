@@ -422,7 +422,7 @@ public class QuizAll extends AppCompatActivity {
         }
 
 
-        if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") | b.contains("?")) {
+        if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") | b.contains("?")| b.contains("...")) {
             b = b.replace(" ", "");
             b = b.replace("/", "");
             b= b.replace(",","");
@@ -430,6 +430,8 @@ public class QuizAll extends AppCompatActivity {
             b= b.replace(")","");
             b= b.replace("-","");
             b= b.replace("?","");
+            b= b.replace("...","");
+
         }
 
         playFromFileOrDownload(b,a);

@@ -25,6 +25,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -41,6 +46,7 @@ import java.util.ArrayList;
 public class AlphabetsActivity extends AppCompatActivity {
 
     AlphabetAdapter twiAlphapetAdapter;
+    AdView mAdView;
 
     MediaPlayer mediaPlayer;
 
@@ -485,6 +491,17 @@ public class AlphabetsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alphabets);
 
         hasInternetAccess();
+
+        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         toast = Toast.makeText(getApplicationContext(), "" , Toast.LENGTH_SHORT);
 

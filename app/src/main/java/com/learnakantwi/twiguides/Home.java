@@ -144,6 +144,9 @@ public class Home extends AppCompatActivity {
                                 case "Weather":
                                     goToWeather();
                                     return;
+                                case "Business":
+                                    goToBusiness();
+                                    return;
                                 case "Search":
                                     goToAll();
                             }
@@ -221,6 +224,12 @@ public class Home extends AppCompatActivity {
     public void goToQuizAll() {
         Intent intent = new Intent(getApplicationContext(), QuizAll.class);
         startActivity(intent);
+    }
+
+    public void goToBusiness(){
+        Intent intent = new Intent(getApplicationContext(), BusinessActivity.class);
+        startActivity(intent);
+
     }
 
     public void goToWeb() {
@@ -315,7 +324,7 @@ public class Home extends AppCompatActivity {
 
 
         AppRate.with(this)
-                .setInstallDays(0)
+                .setInstallDays(1)
                 .setLaunchTimes(3)
                 .setRemindInterval(2)
                 .monitor();
@@ -327,22 +336,6 @@ public class Home extends AppCompatActivity {
 
 
         // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
-
-
-      /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-
-
-        mAdView = findViewById(R.id.adView1);
-
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("1E42299CB1A3F8218629BA7531041D73")  // An example device ID
-                .build();
-
-        mAdView.loadAd(adRequest); */
 
         homeButtonArrayList = new ArrayList<>();
         homeListView = findViewById(R.id.homeListView);
@@ -360,6 +353,7 @@ public class Home extends AppCompatActivity {
         homeButtonArrayList.add(new HomeButton("Expressions", R.drawable.expressionsimage));
         homeButtonArrayList.add(new HomeButton("Colours", R.drawable.colourimage));
         homeButtonArrayList.add(new HomeButton("Animals", R.drawable.animalsimage));
+        homeButtonArrayList.add(new HomeButton("Business", R.drawable.businessimage));
 
         //Collections.sort(this.homeButtonArrayList);
 
@@ -418,6 +412,9 @@ public class Home extends AppCompatActivity {
                     case "Weather":
                         goToWeather();
                         return;
+                    case "Business":
+                        goToBusiness();
+                        return;
                     case "Search":
                         goToAll();
                 }
@@ -430,8 +427,86 @@ public class Home extends AppCompatActivity {
 
         //MobileAds.initialize(this, "ca-app-pub-6999427576830667~6251296006");
 
+//BUSINESS ARRAY
+
+        businessArrayList = new ArrayList<>();
+        businessArrayList.add(new Business("Money","Sika"));
+        businessArrayList.add(new Business("I don't have money","Menni sika"));
+        businessArrayList.add(new Business("I have money","Mewɔ sika"));
+        businessArrayList.add(new Business("Bank","Sikakorabea"));
+        businessArrayList.add(new Business("Buy","Tɔ"));
+        businessArrayList.add(new Business("What are you buying?","Woretɔ dɛn?"));
+        businessArrayList.add(new Business("What should I buy?","Dɛn na mentɔ?"));
+        businessArrayList.add(new Business("What would you like to buy?","Dɛn na wopɛ sɛ wotɔ?"));
+        businessArrayList.add(new Business("Buy for me","Tɔ ma me"));
+        businessArrayList.add(new Business("I am buying...","Meretɔ..."));
+        businessArrayList.add(new Business("I am buying food","Meretɔ aduane"));
+        businessArrayList.add(new Business("I will buy","Mɛtɔ"));
+        businessArrayList.add(new Business("I will buy food","Mɛtɔ aduane"));
+        businessArrayList.add(new Business("I will not buy","Me ntɔ"));
+        businessArrayList.add(new Business("I will not buy food","Me ntɔ aduane"));
+        businessArrayList.add(new Business("How much will you buy?","Wobɛtɔ sɛn?"));
+        businessArrayList.add(new Business("Where can I buy...?","Ɛhe na menya...atɔ?"));
+        businessArrayList.add(new Business("Where can I buy water?","Ɛhe na menya nsuo atɔ?"));
+        businessArrayList.add(new Business("I want to buy..","Mepɛ sɛ metɔ..."));
+        businessArrayList.add(new Business("How many do you want to buy?","Ahe na wopɛ sɛ wotɔ?"));
+        businessArrayList.add(new Business("I will buy two?","Mɛtɔ mmienu"));
+
+
+        businessArrayList.add(new Business("It is expensive","Ne bo yɛ den"));
+        businessArrayList.add(new Business("It is too expensive","Ne bo yɛ den dodo"));
+        businessArrayList.add(new Business("I want discount","Mepɛ ntesoɔ"));
+        businessArrayList.add(new Business("Give me discount","Te me so"));
+
+        businessArrayList.add(new Business("Please reduce the price a little","Mesrɛ wo te so kakra"));
+        businessArrayList.add(new Business("I want you to give to me on credit","Mepɛ sɛ wode firi me"));
+
+
+        businessArrayList.add(new Business("It is cheap","Ɛyɛ fo"));
+        businessArrayList.add(new Business("It is too cheap","Ɛyɛ fo dodo"));
+        businessArrayList.add(new Business("My change","Me nsesa"));
+
+
+        businessArrayList.add(new Business("Sell","Tɔn"));
+        businessArrayList.add(new Business("I want to sell..","Mepɛ sɛ metɔn..."));
+        businessArrayList.add(new Business("I want to sell clothes","Mepɛ sɛ metɔn ntade"));
+        businessArrayList.add(new Business("How much is it?","Ɛyɛ sɛn"));
+        businessArrayList.add(new Business("It is fifty cedis?","Ɛyɛ cedis aduonum"));
+        businessArrayList.add(new Business("How much is this?","Wei yɛ sɛn?"));
+        businessArrayList.add(new Business("Do you sell...here?","Wotɔn...wɔ ha?"));
+        businessArrayList.add(new Business("Do you sell food here?","Wotɔn aduane wɔ ha?"));
+
+        businessArrayList.add(new Business("How much do you sell it?","Wotɔn no sɛn?"));
+        businessArrayList.add(new Business("Market (1)","Gua"));
+        businessArrayList.add(new Business("Market (2)","Dwaso"));
+        businessArrayList.add(new Business("I am going to the market","Merekɔ dwaso"));
+
+
+
+
+
+        businessArrayList.add(new Business("Give me money","Ma me sika"));
+        businessArrayList.add(new Business("Pay me","Tua me"));
+        businessArrayList.add(new Business("Pay","Tua"));
+        businessArrayList.add(new Business("Pay for me","Tua ma me"));
+        businessArrayList.add(new Business("Pay for it","Tua ka"));
+        businessArrayList.add(new Business("Can I pay tomorrow?","Metumi atua no ɔkyena?"));
+        businessArrayList.add(new Business("I can't pay","Mentumi ntua"));
+        businessArrayList.add(new Business("Who is selling?","Hena na ɔretɔn?"));
+
+        businessArrayList.add(new Business("Work","Adwuma"));
+        businessArrayList.add(new Business("Shop","Sotɔɔ"));
+        businessArrayList.add(new Business("Profit","Mfasoɔ"));
+        businessArrayList.add(new Business("I have made profit","Manya mfasoɔ"));
+        businessArrayList.add(new Business("I will make profit","Mɛnya mfasoɔ"));
+        businessArrayList.add(new Business("Loss","Ɛka"));
+        businessArrayList.add(new Business("I have made a loss","Mabɔ ka"));
+        businessArrayList.add(new Business("I will make a loss","Mɛbɔ ka"));
+
 
 // DAYS OF WEEK ARRAY
+
+
         daysOfWeeksArray = new ArrayList<>();
 
         daysOfWeeksArray.add(new DaysOfWeek("Monday", "Dwoada"));
@@ -509,7 +584,8 @@ public class Home extends AppCompatActivity {
         animalsArrayList.add(new Animals("Buffalo", "Ɛkoɔ"));
         animalsArrayList.add(new Animals("Worm", "Sonsono"));
         animalsArrayList.add(new Animals("Cattle", "Nantwie"));
-        animalsArrayList.add(new Animals("Fish", "Apataa"));
+        animalsArrayList.add(new Animals("Fish (1)", "Apataa"));
+        animalsArrayList.add(new Animals("Fish (2)", "Nsuomnam"));
 
         animalsArrayList.add(new Animals("Tsetsefly", "Ohurii"));
         animalsArrayList.add(new Animals("Red Tree Ant", "Nhohoa"));
@@ -1544,7 +1620,6 @@ public class Home extends AppCompatActivity {
 
         allArrayList.add(new All("Bull","Nantwinini", "", "","",""));
         allArrayList.add(new All("Animal","Aboa", "", "","",""));
-        allArrayList.add(new All("Animals","Mmoa" , "", "","",""));
         allArrayList.add(new All("Animals","Mmoa", "", "","",""));
         allArrayList.add(new All("Cow","Nantwibere","","", "",""));
         allArrayList.add(new All("Dog","Kraman","", "", "",""));
@@ -1608,7 +1683,6 @@ public class Home extends AppCompatActivity {
         allArrayList.add(new All("Buffalo","Ɛkoɔ","", "", "",""));
         allArrayList.add(new All("Worm","Sonsono","", "", "",""));
         allArrayList.add(new All("Cattle","Nantwie","", "", "",""));
-        allArrayList.add(new All("Fish","Apataa","", "", "",""));
 
         allArrayList.add(new All("Tsetsefly","Ohurii","", "", "",""));
         allArrayList.add(new All("Red Tree Ant","Nhohoa","", "", "",""));

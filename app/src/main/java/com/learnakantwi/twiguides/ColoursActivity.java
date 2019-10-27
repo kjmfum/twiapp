@@ -22,6 +22,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -43,6 +48,7 @@ public class ColoursActivity extends AppCompatActivity {
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
+    AdView mAdView;
 
 
     Toast toast;
@@ -457,34 +463,20 @@ public class ColoursActivity extends AppCompatActivity {
 
         hasInternetAccess();
 
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
 
         coloursListView = findViewById(R.id.coloursListView);
         storageReference= FirebaseStorage.getInstance().getReference();
-
-        coloursArrayList = new ArrayList<>();
-
-        coloursArrayList.add(new Colours("Colour (1)","Ahosu"));
-        coloursArrayList.add(new Colours("Colour (2)","Kɔla"));
-        coloursArrayList.add(new Colours("What colour is it?","Ɛyɛ kɔla bɛn?"));
-        coloursArrayList.add(new Colours("Red","Kɔkɔɔ"));
-        coloursArrayList.add(new Colours("Black","Tuntum"));
-        coloursArrayList.add(new Colours("White (1)","Fitaa"));
-        coloursArrayList.add(new Colours("White (2)","Fufuo"));
-        coloursArrayList.add(new Colours("Green","Ahabammono"));
-        coloursArrayList.add(new Colours("Blue","Bruu"));
-        coloursArrayList.add(new Colours("Brown","Dodowee"));
-        coloursArrayList.add(new Colours("Grey","Nsonso"));
-        coloursArrayList.add(new Colours("Ash","Nsonso"));
-        coloursArrayList.add(new Colours("Yellow","Akokɔsrade"));
-        coloursArrayList.add(new Colours("Spotted","Nsisimu"));
-        coloursArrayList.add(new Colours("Purple (1)","Beredum"));
-        coloursArrayList.add(new Colours("Purple (2)","Afasebiri"));
-        coloursArrayList.add(new Colours("Pink","Memen"));
-        coloursArrayList.add(new Colours("Dark","Sum"));
-
-
 
 
         ColoursAdapter coloursAdapter = new ColoursAdapter(this,coloursArrayList);

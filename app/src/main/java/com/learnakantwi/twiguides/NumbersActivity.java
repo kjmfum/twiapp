@@ -25,6 +25,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -47,6 +52,8 @@ public class NumbersActivity extends AppCompatActivity {
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
+
+    AdView mAdView;
 
 
     Toast toast;
@@ -461,6 +468,15 @@ public class NumbersActivity extends AppCompatActivity {
         hasInternetAccess();
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         numbersListView = findViewById(R.id.myList1);
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -750,11 +766,6 @@ public class NumbersActivity extends AppCompatActivity {
         NumbersAdapter numbersAdapter = new NumbersAdapter(this, numbersArrayList);
         numbersListView.setAdapter(numbersAdapter);
 
-        System.out.println("Got count "+ numbersListView.getAdapter().getItemId(0));
-
-        System.out.println("Got "+numbersArrayList.get(0).getNumberWord());
-
-        numbersListView.getAdapter().getItemId(0);
     }
 
 }

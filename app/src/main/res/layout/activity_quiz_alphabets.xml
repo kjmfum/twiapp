@@ -220,8 +220,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-
-
    <!-- <com.google.android.gms.ads.AdView
         android:id="@+id/adView1"
         android:layout_width="wrap_content"
@@ -229,7 +227,10 @@
         android:layout_marginBottom="2dp"
         android:visibility="visible"
         app:adSize="SMART_BANNER"
+        correct : ca-app-pub-7384642419407303/7840050122
+        test : ca-app-pub-3940256099942544/6300978111
         app:adUnitId="ca-app-pub-6999427576830667/9981230407"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.ads.AdView>
 
