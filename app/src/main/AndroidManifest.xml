@@ -3,22 +3,30 @@
     package="com.learnakantwi.twiguides">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+
+
 
 
     <application
-        android:name=".TwiGuideNotification"
-        android:resizeableActivity="true"
+
+    android:name=".AppStartClass"
         android:allowBackup="true"
         android:icon="@drawable/learnakantwiimage"
         android:label="@string/app_name"
+        android:resizeableActivity="true"
         android:roundIcon="@drawable/learnakantwiimage"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".QuizAnimals"
+        <activity
+            android:name=".QuizAnimals"
             android:resizeableActivity="true"
-            android:supportsPictureInPicture="true"/>
+            android:supportsPictureInPicture="true" />
         <activity android:name=".Quiz1" />
         <activity android:name=".QuizAlphabet" />
         <activity android:name=".QuizFood" />
@@ -49,20 +57,28 @@
         <activity android:name=".BusinessActivity" />
         <activity android:name=".AnimalsActivity" />
         <activity android:name=".AlphabetsActivity" />
+        <activity android:name="Repeating_activity"/>
         <activity android:name=".MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
 
-         <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
-       <meta-data
+        <receiver android:name=".Notification_receiver"  android:exported="true"/>
+
+        <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+        <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-7384642419407303~6578212997" />
-<!-- ca-app-pub-6999427576830667~6251296006   ca-app-pub-6999427576830667/9998969325   ca-app-pub-6999427576830667/9981230407-->
     </application>
+
+
+
+
 
 </manifest>

@@ -55,6 +55,13 @@ public class DaysOfWeekActivity extends AppCompatActivity {
 
     Toast toast;
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
     boolean isRunning =false;
 
     public Runnable runnable = new Runnable() {
@@ -77,7 +84,7 @@ public class DaysOfWeekActivity extends AppCompatActivity {
         }
     };
     public void downloadOnly(final String filename){
-        if (isRunning){
+        if (isNetworkAvailable()){
 
             final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
             musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -101,18 +108,12 @@ public class DaysOfWeekActivity extends AppCompatActivity {
         }
     }
 
-    public boolean hasInternetAccess() {
-
-        Thread myThread = new Thread(runnable);
-        myThread.start();
-        return isRunning;
-    }
 
     public void downloadClick () {
         int counter = 0;
         int counter1 =0;
 
-        if (hasInternetAccess()) {
+        if (isNetworkAvailable()) {
             for (int j = 0; j < daysOfWeeksArray.size(); j++) {
 
                 String bb = daysOfWeeksArray.get(j).getNameTwi();
@@ -169,7 +170,7 @@ public class DaysOfWeekActivity extends AppCompatActivity {
 
                     File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + b + ".m4a");
                     if (!myFile.exists()) {
-                        if (isRunning){
+                        if (isNetworkAvailable()){
                             downloadOnly(b);
                         }
                         else{
@@ -196,7 +197,7 @@ public class DaysOfWeekActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        if (hasInternetAccess()) {
+        if (isNetworkAvailable()) {
 
             try {
                 final File localFile = File.createTempFile("aduonu", "m4a");
@@ -278,7 +279,7 @@ public class DaysOfWeekActivity extends AppCompatActivity {
         }
         else {
 
-            if (hasInternetAccess()){
+            if (isNetworkAvailable()){
                 final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
                 musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
@@ -312,7 +313,7 @@ public class DaysOfWeekActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        if (hasInternetAccess()) {
+        if (isNetworkAvailable()) {
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
@@ -444,7 +445,7 @@ public class DaysOfWeekActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_days_of_week);
 
-        hasInternetAccess();
+        isNetworkAvailable();
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override

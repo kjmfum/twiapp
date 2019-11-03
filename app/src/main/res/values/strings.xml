@@ -43,5 +43,7 @@
     <string name="search_all">Search All</string>
     <string name="share">Share App</string>
     <string name="mute">Mute</string>
+    <string name="your_twi_for_the_day">Your Twi For The Day</string>
+    <string name="turn_on_daily_twi">Turn On Daily Twi</string>
 
 </resources>

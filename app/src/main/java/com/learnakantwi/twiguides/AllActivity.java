@@ -64,6 +64,12 @@ public class AllActivity extends AppCompatActivity {
 
     Toast toast;
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
 
     boolean isRunning =false;
 
@@ -87,8 +93,7 @@ public class AllActivity extends AppCompatActivity {
         }
     };
     public void downloadOnly(final String filename){
-        if (isRunning){
-
+        if (isNetworkAvailable()){
             final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
             musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
@@ -111,17 +116,17 @@ public class AllActivity extends AppCompatActivity {
         }
     }
 
-    public boolean hasInternetAccess() {
+    /*public boolean hasInternetAccess() {
 
         Thread myThread = new Thread(runnable);
         myThread.start();
         return isRunning;
-    }
+    }*/
 
     public void downloadClick () {
         int counter = 1;
 
-        if (hasInternetAccess()) {
+        if (isNetworkAvailable()) {
             for (int j = 0; j < allArrayList.size(); j++) {
 
                 String bb = allArrayList.get(j).getTwiMain();
@@ -178,7 +183,7 @@ public class AllActivity extends AppCompatActivity {
 
                     File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + b + ".m4a");
                     if (!myFile.exists()) {
-                        if (isRunning){
+                        if (isNetworkAvailable()){
                             downloadOnly(b);
                         }
                         else{
@@ -205,7 +210,7 @@ public class AllActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        if (hasInternetAccess()) {
+        if (isNetworkAvailable()) {
 
             try {
                 final File localFile = File.createTempFile("aduonu", "m4a");
@@ -287,7 +292,7 @@ public class AllActivity extends AppCompatActivity {
         }
         else {
 
-            if (hasInternetAccess()){
+            if (isNetworkAvailable()){
                 final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
                 musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
@@ -321,7 +326,7 @@ public class AllActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        if (hasInternetAccess()) {
+        if (isNetworkAvailable()) {
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
@@ -448,7 +453,6 @@ public class AllActivity extends AppCompatActivity {
                 return  true;
             case R.id.downloadAllAudio:
                downloadClick();
-                    //hasInternetAccess();
                 return true;
             case R.id.videoCourse:
                 //Log.i("Menu Item Selected", "Alphabets");
@@ -482,7 +486,7 @@ public class AllActivity extends AppCompatActivity {
 
         context = this;
 
-        hasInternetAccess();
+        isNetworkAvailable();
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 

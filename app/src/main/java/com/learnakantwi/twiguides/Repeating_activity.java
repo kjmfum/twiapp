@@ -1,30 +1,36 @@
 package com.learnakantwi.twiguides;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-//import android.support.v7.app.AppCompatActivity;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.SearchView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -40,29 +46,29 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Calendar;
+import java.util.Random;
 
-public class BodypartsActivity extends AppCompatActivity {
+import static com.learnakantwi.twiguides.AllActivity.allArrayList;
 
-    public static ArrayList <Bodyparts> bodypartsArrayList;
-    ListView bodypartsListView;
+public class Repeating_activity extends AppCompatActivity {
 
+    Random random;
+    TextView textView;
+    TextView textTwi;
+    //Switch dailyTwiSwitch;
+    CheckBox dailyTwiSwitch;
+    ArrayList<DaysOfWeek> answers;
+    int randomChoiceQuestion;
+    String english1;
+    String twi1;
     StorageReference storageReference;
-    MediaPlayer playFromDevice;
     MediaPlayer mp1;
+    MediaPlayer playFromDevice;
     AdView mAdView;
-
+    AdView mAdView1;
     Toast toast;
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null;
-    }
-
-    boolean isRunning =false;
-
+    boolean isRunning = false;
     public Runnable runnable = new Runnable() {
 
         @Override
@@ -74,16 +80,25 @@ public class BodypartsActivity extends AppCompatActivity {
                 isRunning = true;
                 System.out.println("Internet is now connected");
             } catch (MalformedURLException e) {
-                isRunning =false;
+                isRunning = false;
                 //System.out.println("Internet is now not connected 1");
             } catch (IOException e) {
-                isRunning=false;
+                isRunning = false;
                 //System.out.println("Internet is now not connected 2");
             }
         }
     };
-    public void downloadOnly(final String filename){
-        if (isNetworkAvailable()){
+    private InterstitialAd mInterstitialAd;
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
+    public void downloadOnly(final String filename) {
+        if (isRunning) {
 
             final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
             musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -100,23 +115,21 @@ public class BodypartsActivity extends AppCompatActivity {
                     toast.show();
                 }
             });
-        }
-        else {
+        } else {
             toast.setText("Please connect to Internet to download audio");
             toast.show();
         }
     }
 
 
-    public void downloadClick () {
-        int counter = 0;
-        int counter1 =0;
+    public void downloadClick() {
+        int counter = 1;
 
         if (isNetworkAvailable()) {
-            for (int j = 0; j < bodypartsArrayList.size(); j++) {
+            for (int j = 0; j < allArrayList.size(); j++) {
 
-                String bb = bodypartsArrayList.get(j).getTwiBodyparts();
-                bb= bb.toLowerCase();
+                String bb = allArrayList.get(j).getTwiMain();
+                bb = bb.toLowerCase();
                 boolean dd = bb.contains("ɔ");
                 boolean ee = bb.contains("ɛ");
                 if (dd || ee) {
@@ -139,7 +152,7 @@ public class BodypartsActivity extends AppCompatActivity {
                     counter++;
                 }
             }
-            if (counter == bodypartsArrayList.size()) {
+            if (counter == allArrayList.size()) {
                 toast.setText("All downloaded");
                 toast.show();
 
@@ -147,8 +160,8 @@ public class BodypartsActivity extends AppCompatActivity {
                 toast.setText("Downloading...");
                 toast.show();
 
-                for (int i = 0; i < bodypartsArrayList.size(); i++) {
-                    String b = bodypartsArrayList.get(i).getTwiBodyparts().toLowerCase();
+                for (int i = 0; i < allArrayList.size(); i++) {
+                    String b = allArrayList.get(i).getTwiMain().toLowerCase();
                     boolean d = b.contains("ɔ");
                     boolean e = b.contains("ɛ");
                     if (d || e) {
@@ -169,10 +182,9 @@ public class BodypartsActivity extends AppCompatActivity {
 
                     File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + b + ".m4a");
                     if (!myFile.exists()) {
-                        if (isNetworkAvailable()){
+                        if (isRunning) {
                             downloadOnly(b);
-                        }
-                        else{
+                        } else {
                             toast.setText("Please connect to the Internet");
                             toast.show();
                             break;
@@ -183,8 +195,7 @@ public class BodypartsActivity extends AppCompatActivity {
                 }
 
             }
-        }
-        else{
+        } else {
             toast.setText("Please connect to the Internet to download audio");
             toast.show();
         }
@@ -241,21 +252,19 @@ public class BodypartsActivity extends AppCompatActivity {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }
-
-        else {
+        } else {
             toast.setText("Please Connect to the Internet");
             toast.show();
         }
 
     }
 
-    public void playFromFileOrDownload(final String filename, final String appearText){
-        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
-        if (myFile.exists()){
+    public void playFromFileOrDownload(final String filename, final String appearText) {
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + filename + ".m4a");
+        if (myFile.exists()) {
 
             try {
-                if (playFromDevice != null){
+                if (playFromDevice != null) {
                     playFromDevice.stop();
                     playFromDevice.reset();
                     playFromDevice.release();
@@ -275,10 +284,9 @@ public class BodypartsActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
 
-            if (isNetworkAvailable()){
+            if (isNetworkAvailable()) {
                 final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
                 musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
@@ -296,10 +304,14 @@ public class BodypartsActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
                     }
                 });
-            }
-            else {
+            } else {
                 toast.setText("Please connect to Internet to download audio");
                 toast.show();
+                if (playFromDevice != null) {
+                    playFromDevice.stop();
+                    playFromDevice.reset();
+                    playFromDevice.release();
+                }
             }
 
 
@@ -326,91 +338,17 @@ public class BodypartsActivity extends AppCompatActivity {
             };
             Thread myThread = new Thread(runnable);
             myThread.start();
-        }
-        else
-        {
+        } else {
             toast.setText("No Internet");
             toast.show();
 
         }
     }
 
-
-
-
-
-
-    public void log2(View view) {
-        int idview = view.getId();
-
-        TextView blabla = view.findViewById(idview);
-        String a = (String) blabla.getText();
-        toast.setText(a);
-        toast.show();
-    }
-
-    public void timeClick(View view){
-
-        int idview= view.getId();
-
-        TextView blabla = view.findViewById(idview);
-        String a = (String) blabla.getText();
-
-        String b = a.toLowerCase();
-
-        boolean d = b.contains("ɔ");
-        boolean e = b.contains("ɛ");
-
-        if (d || e ){
-            b= b.replace("ɔ","x");
-            b= b.replace("ɛ","q");
-        }
-
-
-        if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") | b.contains("?")) {
-            b = b.replace(" ", "");
-            b = b.replace("/", "");
-            b= b.replace(",","");
-            b= b.replace("(","");
-            b= b.replace(")","");
-            b= b.replace("-","");
-            b= b.replace("?","");
-        }
-
-       playFromFileOrDownload(b, a);
-
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //MenuInflater menuInflater = getMenuInflater();
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-
-        final MenuItem item = menu.findItem(R.id.menusearch);
-        SearchView searchView = (SearchView) item.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getApplicationContext(), query, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                ArrayList<Bodyparts> results = new ArrayList<>();
-                for (Bodyparts x: bodypartsArrayList ){
-
-                    if(x.getEnglishBodyparts().toLowerCase().contains(newText.toLowerCase()) || x.getTwiBodyparts().toLowerCase().contains(newText.toLowerCase())){
-                        results.add(x);
-                    }
-
-                    ((BodypartsAdapter)bodypartsListView.getAdapter()).update(results);
-                }
-
-
-                return false;
-            }
-        });
-
+        getMenuInflater().inflate(R.menu.main_menu_wordoftheday, menu);
         return super.onCreateOptionsMenu(menu);
 
 
@@ -420,24 +358,82 @@ public class BodypartsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
+
             case R.id.main:
+                //Log.i("Menu Item Selected", "Alphabets");
                 goToMain();
-                return  true;
+                return true;
             case R.id.quiz1:
                 //Log.i("Menu Item Selected", "Alphabets");
-                goToQuizBodyParts();
-                return  true;
+                goToQuizAll();
+                return true;
+            case R.id.advert:
+                advert();
+                return true;
             case R.id.videoCourse:
                 //Log.i("Menu Item Selected", "Alphabets");
                 goToWeb();
-                return  true;
-            case R.id.downloadAudio:
-                downloadClick();
                 return true;
             default:
                 return false;
         }
+    }
+
+    public void goToWeb() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?couponCode=FDISCOUNT1"));
+        startActivity(intent);
+    }
+
+    public void advert() {
+
+
+        final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
+       // sharedPreferences.edit().putString("AdvertPreference", "No").apply();
+        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
+
+
+        assert advertPreference != null;
+        if (!advertPreference.equals("Yes")) {
+            new AlertDialog.Builder(this)
+                    .setIcon(R.drawable.learnakantwiimage)
+                    .setTitle("We need your support")
+                    .setMessage("Would You Like To View An Advert To Support Us?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sharedPreferences.edit().putString("AdvertPreference", "Yes").apply();
+                            toast.setText("THANK YOU");
+                            if (mInterstitialAd.isLoaded()) {
+                                mInterstitialAd.show();
+                            } else {
+                                Log.d("TAG", "The interstitial wasn't loaded yet.");
+                            }
+                            toast.setText("THANK YOU");
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    sharedPreferences.edit().putString("AdvertPreference", "No").apply();
+                                }
+                            }
+                    )
+                    .show();
+        } else {
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+
+            } else {
+                toast.setText("Please connect to the Internet");
+                Log.d("TAG", "The interstitial wasn't loaded yet.");
+
+            }
+        }
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
 
@@ -446,23 +442,149 @@ public class BodypartsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToQuizBodyParts(){
-        Intent intent = new Intent(getApplicationContext(), QuizBodyParts.class);
+    public void goToQuizAll() {
+        Intent intent = new Intent(getApplicationContext(), QuizAll.class);
         startActivity(intent);
     }
 
-    public void goToWeb() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?couponCode=FDISCOUNT1"));
-        startActivity(intent);
+
+    public void generateQuestion(){
+
+        random = new Random();
+        answers = new ArrayList<>();
+
+        randomChoiceQuestion = random.nextInt(allArrayList.size()-1);
+
+        english1 = allArrayList.get(randomChoiceQuestion).getEnglishmain();
+
+
+        twi1 = allArrayList.get(randomChoiceQuestion).getTwiMain();
+
+
+        textView.setText(english1);
+        textTwi.setText(twi1);
+
+    }
+
+    private void notificationPreference(){
+
+        final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
+
+        String dailyTwiPreference = sharedPreferences.getString("DailyTwiPreference", "Yes");
+        sharedPreferences.edit().putString("DailyTwiPreference", "No").apply();
+
+        //assert dailyTwiPreference != null;
+        //if (!dailyTwiPreference.equals("Yes")) {
+            new AlertDialog.Builder(this)
+                    .setIcon(R.drawable.learnakantwiimage)
+                    .setTitle("Daily Twi")
+                    .setMessage("Would You Like to Receive Daily Twi Alerts to Enhance Your Vocabulary?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sharedPreferences.edit().putString("DailyTwiPreference", "Yes").apply();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    sharedPreferences.edit().putString("DailyTwiPreference", "No").apply();
+                                }
+                            }
+                    )
+                   .show();
     }
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bodyparts);
+        setContentView(R.layout.activity_wordoftheday);
 
         isNetworkAvailable();
+
+
+
+        toast = Toast.makeText(getApplicationContext(), "Twi for the day. Tap to Listen", Toast.LENGTH_SHORT);
+        toast.show();
+
+        textView = findViewById(R.id.randomText);
+        textTwi= findViewById(R.id.randomText1);
+        dailyTwiSwitch = findViewById(R.id.dailyTwiSwitch);
+
+
+        dailyTwiSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                notificationPreference();
+            }
+        });
+
+
+
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+        textTwi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int idview= view.getId();
+
+                TextView blabla = view.findViewById(idview);
+                String a = (String) blabla.getText();
+
+                String b = a.toLowerCase();
+
+                boolean d = b.contains("ɔ");
+                boolean e = b.contains("ɛ");
+
+                if (d || e ){
+                    b= b.replace("ɔ","x");
+                    b= b.replace("ɛ","q");
+                }
+
+
+                if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") | b.contains("?")| b.contains("...")) {
+                    b = b.replace(" ", "");
+                    b = b.replace("/", "");
+                    b= b.replace(",","");
+                    b= b.replace("(","");
+                    b= b.replace(")","");
+                    b= b.replace("-","");
+                    b= b.replace("?","");
+                    b= b.replace("...","");
+                }
+                playFromFileOrDownload(b, a);
+            }
+        });
+
+        generateQuestion();
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        //ca-app-pub-7384642419407303/9880404420 correct
+        //ca-app-pub-3940256099942544/1033173712 test
+
+      findViewById(R.id.generate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToMain();
+
+                //notificationPreference();
+
+       /* if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }*/
+    }
+
+           /* public void onClick(View v) {
+                generateQuestion();
+            }*/
+        });
+
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -473,15 +595,15 @@ public class BodypartsActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
-
-        bodypartsListView = findViewById(R.id.bodypartsListView);
-        storageReference = FirebaseStorage.getInstance().getReference();
-
-
-        BodypartsAdapter bodypartsAdapter = new BodypartsAdapter(this,bodypartsArrayList);
-        bodypartsListView.setAdapter(bodypartsAdapter);
-
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView1 = findViewById(R.id.adView1);
+        AdRequest adRequest1 = new AdRequest.Builder().build();
+        mAdView1.loadAd(adRequest1);
     }
+
 }

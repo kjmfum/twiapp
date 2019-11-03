@@ -5,6 +5,8 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -77,6 +79,13 @@ public class QuizAll extends AppCompatActivity {
 
     boolean isRunning =false;
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
     public Runnable runnable = new Runnable() {
 
         @Override
@@ -95,12 +104,6 @@ public class QuizAll extends AppCompatActivity {
         }
     };
 
-    public boolean hasInternetAccess() {
-
-        Thread myThread = new Thread(runnable);
-        myThread.start();
-        return isRunning;
-    }
 
     public void playFromFirebase(StorageReference musicRef) {
 
@@ -108,7 +111,7 @@ public class QuizAll extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        if (hasInternetAccess()) {
+        if (isNetworkAvailable()) {
 
             try {
                 final File localFile = File.createTempFile("aduonu", "m4a");
@@ -227,7 +230,7 @@ public class QuizAll extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } else if (hasInternetAccess()) {
+            } else if (isNetworkAvailable()) {
                 final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
                 musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
@@ -280,7 +283,7 @@ public class QuizAll extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        if (hasInternetAccess()) {
+        if (isNetworkAvailable()) {
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {

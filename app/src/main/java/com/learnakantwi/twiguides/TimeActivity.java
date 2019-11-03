@@ -54,6 +54,8 @@ public class TimeActivity extends AppCompatActivity {
     AdView mAdView;
 
     Toast toast;
+
+
     boolean isRunning =false;
 
     public Runnable runnable = new Runnable() {
@@ -76,7 +78,7 @@ public class TimeActivity extends AppCompatActivity {
         }
     };
     public void downloadOnly(final String filename){
-        if (isRunning){
+        if (isNetworkAvailable()){
 
             final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
             musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -100,18 +102,12 @@ public class TimeActivity extends AppCompatActivity {
         }
     }
 
-    public boolean hasInternetAccess() {
-
-        Thread myThread = new Thread(runnable);
-        myThread.start();
-        return isRunning;
-    }
 
     public void downloadClick () {
         int counter = 0;
         int counter1 =0;
 
-        if (hasInternetAccess()) {
+        if (isNetworkAvailable()) {
             for (int j = 0; j < timeArrayList.size(); j++) {
 
                 String bb = timeArrayList.get(j).getTwiTime();
@@ -143,7 +139,7 @@ public class TimeActivity extends AppCompatActivity {
                 toast.show();
 
             } else {
-                toast.setText("Downloading");
+                toast.setText("Downloading...");
                 toast.show();
 
                 for (int i = 0; i < timeArrayList.size(); i++) {
@@ -168,7 +164,7 @@ public class TimeActivity extends AppCompatActivity {
 
                     File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + b + ".m4a");
                     if (!myFile.exists()) {
-                        if (isRunning){
+                        if (isNetworkAvailable()){
                             downloadOnly(b);
                         }
                         else{
@@ -195,7 +191,7 @@ public class TimeActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        if (hasInternetAccess()) {
+        if (isNetworkAvailable()) {
 
             try {
                 final File localFile = File.createTempFile("aduonu", "m4a");
@@ -277,7 +273,7 @@ public class TimeActivity extends AppCompatActivity {
         }
         else {
 
-            if (hasInternetAccess()){
+            if (isNetworkAvailable()){
                 final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
                 musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
@@ -311,7 +307,7 @@ public class TimeActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        if (hasInternetAccess()) {
+        if (isNetworkAvailable()) {
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
@@ -459,7 +455,7 @@ public class TimeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time);
 
-        hasInternetAccess();
+        isNetworkAvailable();
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 

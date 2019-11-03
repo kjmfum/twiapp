@@ -62,6 +62,14 @@ public class AlphabetsActivity extends AppCompatActivity {
     ArrayList<String> tempArray;
 
     Toast toast;
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
     //toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
     boolean isRunning =false;
 
@@ -86,7 +94,7 @@ public class AlphabetsActivity extends AppCompatActivity {
         }
     };
     public void downloadOnly(final String filename){
-        if (isRunning){
+        if (isNetworkAvailable()){
 
             final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
             musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -108,16 +116,16 @@ public class AlphabetsActivity extends AppCompatActivity {
         }
     }
 
-    public boolean hasInternetAccess() {
+   /* public boolean hasInternetAccess() {
 
         Thread myThread = new Thread(runnable);
         myThread.start();
         return isRunning;
-    }
+    }*/
 
     public void downloadClick () {
         int counter = 0;
-        if (hasInternetAccess()) {
+        if (isNetworkAvailable()) {
             for (int j = 0; j < alphabetArray.size(); j++) {
 
                 String bb = alphabetArray.get(j).getLower();
@@ -148,7 +156,7 @@ public class AlphabetsActivity extends AppCompatActivity {
                 Toast.makeText(this, "All downloaded ", Toast.LENGTH_SHORT).show();
             } else {
 
-                Toast.makeText(this, "Downloading", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Downloading...", Toast.LENGTH_SHORT).show();
 
                 for (int i = 0; i < alphabetArray.size(); i++) {
                     String b = alphabetArray.get(i).getLower();
@@ -173,7 +181,7 @@ public class AlphabetsActivity extends AppCompatActivity {
                     // Toast.makeText(this, , Toast.LENGTH_SHORT).show();
                     File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + b + ".m4a");
                     if (!myFile.exists()) {
-                        if (isRunning){
+                        if (isNetworkAvailable()){
                             downloadOnly(b);
                         }
                         else{
@@ -198,7 +206,7 @@ public class AlphabetsActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        if (hasInternetAccess()) {
+        if (isNetworkAvailable()) {
 
             try {
                 final File localFile = File.createTempFile("aduonu", "m4a");
@@ -279,7 +287,7 @@ public class AlphabetsActivity extends AppCompatActivity {
         }
         else {
 
-            if (hasInternetAccess()){
+            if (isNetworkAvailable()){
                 //Toast.makeText(this, "I'm available", Toast.LENGTH_SHORT).show();
 
                 final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
@@ -317,7 +325,7 @@ public class AlphabetsActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        if (hasInternetAccess()) {
+        if (isNetworkAvailable()) {
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
@@ -490,7 +498,7 @@ public class AlphabetsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alphabets);
 
-        hasInternetAccess();
+        isNetworkAvailable();
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
