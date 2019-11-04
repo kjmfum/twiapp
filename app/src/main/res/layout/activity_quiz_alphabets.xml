@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:background="@color/design_default_color_primary"
         android:onClick="hideStartButton"
-        android:text="@string/button"
+        android:text="@string/start_quiz"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="@+id/gridlayout123"
         app:layout_constraintEnd_toEndOf="@+id/gridlayout123"
@@ -36,6 +36,21 @@
         app:layout_constraintTop_toTopOf="@+id/guideline5"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@android:drawable/ic_btn_speak_now" />
+
+    <TextView
+        android:id="@+id/QuestionText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/speakAlphabetName"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/gridlayout123"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline5"
+        app:layout_constraintVertical_bias="0.0"
+        />
 
     <TextView
         android:id="@+id/CorrectWrongText"
@@ -202,6 +217,7 @@
             app:layout_row="1"
             app:layout_rowWeight="0.5"
             tools:text="GOOD EVENING" />
+
 
 
     </androidx.gridlayout.widget.GridLayout>

@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,10 +64,11 @@ public class QuizAlphabet extends AppCompatActivity {
     Button button3;
     Button button4;
     Button button5;
+    ImageView speakerIcon;
     ArrayList<String> answers;
-    TextView questionText;
+    TextView questionText =null;
     int chosenSize = (alphabetArray.size() - 1);
-    int totalQuestions = 25;
+    int totalQuestions = 22;
     int score;
     int counter;
     double scorePercent = ((score / totalQuestions) * 100);
@@ -177,8 +179,10 @@ public class QuizAlphabet extends AppCompatActivity {
 
         if (counter == totalQuestions) {
 
-            button5.setVisibility(View.VISIBLE);
+           questionText.setVisibility(View.VISIBLE);
+           button5.setVisibility(View.VISIBLE);
             button5.setText(getString(R.string.playagain));
+            speakerIcon.setVisibility(View.INVISIBLE);
 
             double d1 = (double) score;
             double d2 = (double) totalQuestions;
@@ -187,7 +191,7 @@ public class QuizAlphabet extends AppCompatActivity {
 
             StringBuilder sb = new StringBuilder();
             sb.append("YOU HAD ").append(scorePercent).append("%");
-            // questionText.setText("FINAL SCORE= " + String.valueOf(scorePercent)+"%");
+             questionText.setText("FINAL SCORE= " + scorePercent +"%");
             questionText.setText(sb);
 
             if (scorePercent > 90) {
@@ -535,6 +539,9 @@ public class QuizAlphabet extends AppCompatActivity {
         button5.setVisibility(View.INVISIBLE);
         scoreText.setText("");
         counterText.setText("");
+        questionText.setVisibility(View.INVISIBLE);
+        speakerIcon.setVisibility(View.VISIBLE);
+
         resetQuiz();
         generateQuestion();
 
@@ -571,13 +578,17 @@ public class QuizAlphabet extends AppCompatActivity {
         scoreText = findViewById(R.id.Score);
         counterText=findViewById(R.id.counterText);
         gradeText = findViewById(R.id.grade);
+        questionText =findViewById(R.id.QuestionText);
+        speakerIcon =findViewById(R.id.speakerIcon);
 
 
-        button5.setVisibility(View.INVISIBLE);
 
+        button5.setVisibility(View.VISIBLE);
+        questionText.setVisibility(View.INVISIBLE);
+        speakerIcon.setVisibility(View.VISIBLE);
 
-           resetQuiz();
-           generateQuestion();
+          // resetQuiz();
+           //generateQuestion();
 
 
     }
