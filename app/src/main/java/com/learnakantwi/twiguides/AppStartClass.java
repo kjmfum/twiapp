@@ -3,6 +3,7 @@ package com.learnakantwi.twiguides;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.app.DownloadManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,17 +11,27 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.learnakantwi.twiguides.AllActivity.allArrayList;
 import static com.learnakantwi.twiguides.AlphabetsActivity.alphabetArray;
 import static com.learnakantwi.twiguides.AnimalsActivity.animalsArrayList;
@@ -34,10 +45,14 @@ import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
 import static com.learnakantwi.twiguides.MonthsActivity.monthsArrayList;
 import static com.learnakantwi.twiguides.NumbersActivity.numbersArrayList;
 import static com.learnakantwi.twiguides.PronounsActivity.pronounsArrayList;
+import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
 import static com.learnakantwi.twiguides.TimeActivity.timeArrayList;
 import static com.learnakantwi.twiguides.WeatherActivity.weatherArray;
 
 public class AppStartClass extends Application {
+
+    StorageReference storageReference;
+
     public static final String CHANNEL_1_ID = "channel1";
     public static final String CHANNEL_2_ID = "channel2";
 
@@ -88,11 +103,53 @@ public class AppStartClass extends Application {
 
         }
 
+        public void downloadEssential(final String a){
+
+            File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + a + ".m4a");
+            if (!myFiles.exists()) {
+                final StorageReference musicRef = storageReference.child("/raw/" +a + ".m4a");
+                musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        final String url = uri.toString();
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                DownloadManager downloadManager = (DownloadManager) getApplicationContext().getSystemService(Context.DOWNLOAD_SERVICE);
+                                Uri uri = Uri.parse(url);
+                                DownloadManager.Request request = new DownloadManager.Request(uri);
+                                request.setVisibleInDownloadsUi(false);
+                                request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, a + ".m4a");
+                                downloadManager.enqueue(request);
+                            }
+                        };
+                        Thread myThread = new Thread(runnable);
+                        myThread.start();
+                        Log.e(TAG, "onSuccess: Downloadede",null );
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "onFailure: No",null );
+                    }
+                });
+            }
+            else {
+                Log.e(TAG, "onAlreadyThere: Yes",null );
+            }
+
+        }
+
 
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        storageReference = FirebaseStorage.getInstance().getReference();
+        downloadEssential("excellentsound");
+
+
         createNotificationChannels();
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
@@ -538,8 +595,8 @@ public class AppStartClass extends Application {
         familyArrayList.add(new Family("Parents", "Awofo"));
         familyArrayList.add(new Family("Child (1)", "Abofra"));
         familyArrayList.add(new Family("Child (2)", "Akwadaa"));
-        familyArrayList.add(new Family("Children (1)", "mma"));
-        familyArrayList.add(new Family("Children (2)", "mmofra"));
+        familyArrayList.add(new Family("Children (1)", "Mma"));
+        familyArrayList.add(new Family("Children (2)", "Mmofra"));
         familyArrayList.add(new Family("Baby", "Abofra"));
 
         familyArrayList.add(new Family("Firstborn (1)", "Abakan"));
@@ -596,8 +653,10 @@ public class AppStartClass extends Application {
         familyArrayList.add(new Family("Maternal Aunt (2)", "Maame"));
         familyArrayList.add(new Family("My maternal Aunt", "Me maame nuabaa"));
 
-        familyArrayList.add(new Family("Niece", "Wɔfaase"));
-        familyArrayList.add(new Family("Nephew", "Wɔfaase"));
+
+        familyArrayList.add(new Family("Niece", "Wɔfaase baa"));
+        familyArrayList.add(new Family("Nephew", "Wɔfaase barima"));
+        familyArrayList.add(new Family("Niece/Nephew", "Wɔfaase"));
 
         familyArrayList.add(new Family("Cousin (1)", "Nua"));
         familyArrayList.add(new Family("Cousin (2)", "Wɔfa ba"));
@@ -1792,8 +1851,8 @@ public class AppStartClass extends Application {
         allArrayList.add(new All("Parents", "Awofo","","", "", ""));
         allArrayList.add(new All("Child (1)", "Abofra","","", "", ""));
         allArrayList.add(new All("Child (2)", "Akwadaa","","", "", ""));
-        allArrayList.add(new All("Children (1)", "mma","","", "", ""));
-        allArrayList.add(new All("Children (2)", "mmofra","","", "", ""));
+        allArrayList.add(new All("Children (1)", "Mma","","", "", ""));
+        allArrayList.add(new All("Children (2)", "Mmofra","","", "", ""));
         allArrayList.add(new All("Baby", "Abofra","","", "", ""));
 
         allArrayList.add(new All("Firstborn (1)", "Abakan","","", "", ""));
@@ -1850,8 +1909,9 @@ public class AppStartClass extends Application {
         allArrayList.add(new All("Maternal Aunt (2)", "Maame","","", "", ""));
         allArrayList.add(new All("My maternal Aunt", "Me maame nuabaa","","", "", ""));
 
-        allArrayList.add(new All("Niece", "Wɔfaase","","", "", ""));
-        allArrayList.add(new All("Nephew", "Wɔfaase","","", "", ""));
+        allArrayList.add(new All("Niece", "Wɔfaase baa","","", "", ""));
+        allArrayList.add(new All("Nephew", "Wɔfaase barima","","", "", ""));
+        allArrayList.add(new All("Niece/Nephew", "Wɔfaase","","", "", ""));
 
         allArrayList.add(new All("Cousin (1)", "Nua","","", "", ""));
         allArrayList.add(new All("Cousin (2)", "Wɔfa ba","","", "", ""));
@@ -2446,6 +2506,63 @@ public class AppStartClass extends Application {
 
         /////////////////////////////////ALL ARRAY LIST  END///////////////////////////
 
+
+
+        //////PROVERBS///////////////
+
+        // proverbsArrayList.add(new Proverbs());
+
+        proverbsArrayList.add(new Proverbs("Woforo dua pa a ɛnna yepia woɔ","If you climb a the good tree, gets a push","If you start something good you will attract people to help"));
+        proverbsArrayList.add(new Proverbs("Wusie nni ahoɔden wɔ mframa kurom","The smoke has no power in the city of the wind","The stranger has no power in a strange land"));
+        proverbsArrayList.add(new Proverbs("Nokware di etuo", "The truth gets a gun","Speaking the truth boldly can at times end your life as if you called for to be shot by a gun"));
+        proverbsArrayList.add(new Proverbs("Sɛnea sekan te no saa ara na ne bɔha nso te","The shape of the sword is the same as its scabbard","Your behaviour tells where you come from"));
+        proverbsArrayList.add(new Proverbs("Aboa aserewa hwɛ ne kɛse ho na wanwene ne buo", "The silverbird weaves its nest according to its size", "Do what you can do and avoid trying to do things beyond your ability in order to please others"));
+        proverbsArrayList.add(new Proverbs("Abofra bɔ nnwa na ɔmmɔ akyekyedeɛ","A child breaks the shell of a crab and not the tortoise", "A child must know his limit. Some things are for adults"));
+        proverbsArrayList.add(new Proverbs("Aboa bi bɛka wo a, na ofiri wo ntoma mu","If an animal will bite you, it is the one hidden in your clothes", "It is people close to you that will hurt you"));
+        proverbsArrayList.add(new Proverbs("Ɔba nyansafo, yebu no bɛ, yɛnnka no asɛm","We speak in proverbs to a wise son, we do not use direct statements","Just a proverb can be used to instruct a wise person. No need to explain things in detail to a wise person"));
+    proverbsArrayList.add(new Proverbs("Ti koro nkɔ agyina","One head does not consult","It is better to consult with others before making a decision"));
+        proverbsArrayList.add(new Proverbs("Anomaa antu a, obua da","If a bird does not fly, it starves to death","If you don't take action and work you will not gain anything and will die as a result. Laziness produces nothing"));
+        proverbsArrayList.add(new Proverbs("Obi nnim oberempɔn ahyɛase","No one knows the beginning of a great man","You cannot always tell how great a man will be by his current state. A poor person can become a great man in the future"));
+    proverbsArrayList.add(new Proverbs("Agya bi wu a, agya bi te ase","If a father dies, another father lives","If a parent dies, you can find someone who will look after you like your parent"));
+       proverbsArrayList.add(new Proverbs("Animguase mfata Akanni ba","To be disgraced is not deserving of an Akan", "If you have respect for yourself then it is better to die than to be disgraced"));
+        proverbsArrayList.add(new Proverbs("Agorɔ bɛsɔ a, efiri anɔpa","You can tell from the morning if the play will be nice","You can tell from the beginning of a venture how successfull it will be in the future"));
+        proverbsArrayList.add(new Proverbs("Kwaterekwa se ɔbɛma wo ntoma a, tie ne din","If a naked person says that he will give you a cloth, listen to his name","Be careful when someone who is in need of something himself promises to give you that thing. Dont trust all promises. Take into consideratoin the calibre of a person who promises you something"));
+        proverbsArrayList.add(new Proverbs("Yɛsoma onyansafo, ɛnyɛ anamɔntenten","It is the wise person that we send on errand but not a person with long steps","Speed should not override efficiency. Getting things done properly is better than getting it done fast but not properly."));
+        proverbsArrayList.add(new Proverbs("Aboa a onni dua no, Nyame na ɔpra ne ho","An animal without a tail is cleaned by God","God provides for those who have no means of catering for themselves"));
+        proverbsArrayList.add(new Proverbs("Borɔferɛ a ɛyɛ dɛ na abaa da ase","You will find a stick beneath the pawpaw tree which has tasty fruits","If you see people flocking to a particular venture it is because it is profitable"));
+        proverbsArrayList.add(new Proverbs("Prayɛ, sɛ wuyi baako a na ebu, woka bom a emmu","If you remove one broomstick it will break but if you put all the broomsticks together it will not break","We are stronger when we are united. It is hard to defeat a united people than a single person"));
+        proverbsArrayList.add(new Proverbs("Nsateaa nyinaa nnyɛ pɛ","All fingers are not the same","We all have different abilities"));
+        proverbsArrayList.add(new Proverbs("Obi nnim a, obi kyerɛ","If one does not know, another teaches","You should allow others to teach you things you don't konw. You should listen to advice"));
+        proverbsArrayList.add(new Proverbs("Abofra hunu ne nsa hohoro a ɔne mpanyimfoɔ didi","If a child learns how to wash his hands, he will eat with adults","If a person learns and applies the customs and traditions, people in higher positions will work with him. "));
+        proverbsArrayList.add(new Proverbs("Yɛwo wo to esie so a, wo nnkyɛ tenten yɛ","If you are born onto an anthill, you become tall quickly","If you have a good foundation in life, it is easy for you to succeed in life. If your family is rich, you are able to make money early in life"));
+        proverbsArrayList.add(new Proverbs("Ayɔnko gorɔ nti na ɔkɔtɔ annya ti","It is because of mingling with friends that the crab has no head","Too many friends can make you lose a lot. Choose friends wisely"));
+        proverbsArrayList.add(new Proverbs("Wo nsa akyi bɛyɛ wo dɛ a ɛnte sɛ wo nsa yam","The back of your hand can be sweet but it will not be as your palm or inner surface of your hand","The original is always better than imitation"));
+
+        proverbsArrayList.add(new Proverbs("Obi fom kum a, yɛn mfom ndwa","If one kills by mistake, we do not cut up by mistake","We do not deliberately repay someone with a bad deed for their unintentional mistake "));
+        proverbsArrayList.add(new Proverbs("Wuhu sɛ wo yɔnko abɔdwesɛ rehye a na wasa nsuo asi wo de ho","If you see that the beard of a friend is on fire, fetch water and put by your beard","If something bad happens to a neighbour, plan on how you will deal it with if it happens to you next"));
+        proverbsArrayList.add(new Proverbs("Dua a enya wo a ɛbɛwɔ w'ani no, yetu ase; yɛnsensene ano","A tree which is likely to pierce your eye must be uprooted, not merely pruned","If a problem has the potential to harm you, we do not solve it partially but rather we solve it completely. Eliminate completely anything that can harm you"));
+        proverbsArrayList.add(new Proverbs("Nyansapɔ wɔsane no badwemma","A discerning man loosens a hard tight know","It takes a wise person to solve hard riddles. One who solves a complex problem is wise"));
+        proverbsArrayList.add(new Proverbs("Ahunu bi pɛn nti na aserewa regyegye ne ba agorɔ a na wayi n'ani ato nkyɛn","When playing with its child, the silverbird looks away because of what it has seen before","The behaviour of some people are as a result of the bad experiences they have encountered in their lives"));
+        proverbsArrayList.add(new Proverbs("Abaa a yɛde bɔ Takyi no yɛde bɛbɔ Baa","The cane which is used on Takyi will also be used on Baa","The punishment given to someone for a crime will be the same punishment for another who commits the same crime. What is done to someone will be the same that will happen to you if you act like him"));
+        proverbsArrayList.add(new Proverbs("Abɛ bi rebewu a na ɛsɔ","When some palm trees are about to die, its wine tastes good","Some people get to their best when they are about to retire or in their old age. The aged are the most experienced"));
+        proverbsArrayList.add(new Proverbs("Nea ɔwɔ aka no pɛn no suro sonsono","He who has been bitten by a snake before, fears the worm", "A bad experience with a particular venture makes one afraid of anything resembling it"));
+        proverbsArrayList.add(new Proverbs("Efie biara Mensah wɔ mu","Every household has a third born","In every community there will be people whose opinion are totally different which might result in problems"));
+        proverbsArrayList.add(new Proverbs("Abofra a ɔmma ne maame nna no, bentoa mpa ne to da","The enema will not depart from the buttucks of ea child who doesn't let his mother sleep", "If you make trouble for your leaders who cater for you, you will also not have peace"));
+        proverbsArrayList.add(new Proverbs("Hu m'ani so ma me nti na atwe mmienu nam","Deers walk in pairs so that one can blow the eye of the other if needed","It is good to have a partner so that he will support you when you are in need"));
+        proverbsArrayList.add(new Proverbs("Obi nnom aduro mma ɔyarefo","One does not take medicine for a sick person", "Don't expect someone to handle your responsibilities for you. There are some responsibilities you cannot do for another person"));
+        proverbsArrayList.add(new Proverbs("Akokɔbere nim adekyee nanso otie firi akokɔ nini ano","The hen knows of the new day but it listens to the announcement from the cock","Even though you might be knowledgeable in something it is always good to listen to the elderly and wait for direction"));
+        proverbsArrayList.add(new Proverbs("Ano da hɔ kwa a, ɛkeka nsɛm","A mouth which is idle will say many things","Those who have nothing to do becomes gossipers or commit crimes"));
+        proverbsArrayList.add(new Proverbs("Ɔsansa fa adeɛ a ɔde kyerɛ amansan","When the hawk picks up something it shows it to the universe","An honest person will not hide his works"));
+        proverbsArrayList.add(new Proverbs("Ɛtoa na ɛpɛ na ahoma da ne kɔn mu","The bottle likes it that is why there is a rope around its neck","It is your fault if you allow your enemies to trap you"));
+        proverbsArrayList.add(new Proverbs("Dadeɛ bi twa dadeɛ bi","An iron can cut another iron or can sharpen another iron","There is someone or something stronger than you. Even if you are strong it doesn't mean that you are unbeatable"));
+        proverbsArrayList.add(new Proverbs("Obi atifi nso yɛ obi anaafoɔ","Your north is someone's south","What you see as new maybe old to someone. "));
+        proverbsArrayList.add(new Proverbs("Abosomakoterɛ se ntɛm yɛ, brɛbrɛ nso yɛ","The chameleon claims that to be fast is good and to be slow is also good","If you do anything in good faith it is good"));
+        proverbsArrayList.add(new Proverbs("Wo sum borɔdeɛ a, sum kwadu","You should take good care of the banana just as you take good care of the plantain","Give the same attention to those you see as good and those you see as bad because you don't know when they will be useful to you"));
+        proverbsArrayList.add(new Proverbs("Nea ɔte fam no nsuro ahweaseɛ","The one who is sitting down does not fear falling","If you have done all that is required of you, you don't fear what will come. If you are at your lowest point, you do not fear humiliation"));
+        proverbsArrayList.add(new Proverbs("Abɔdwesɛ bɛtoo ani ntɔn nhwi","The eyebrow was there before the beard came","No matter how high your current position is, you have to give respect to the elderly"));
+        proverbsArrayList.add(new Proverbs("Koterɛ nnkɔdi mako mma mfifire nkɔfiri apɔnkyerɛni", "If the lizard consumes pepper, it's not the frog that sweats","The one who commits a crime must bear his own punishment"));
+        proverbsArrayList.add(new Proverbs("Obi ntɔn n'akokɔ bedeɛ kwa","No one sells his laying hen for nothing","There is no action without cause. If there is nothing wrong, no one will sell his valuable property"));
+        proverbsArrayList.add(new Proverbs("Abaa nna hɔ mma kraman nnka nipa","The stick should not lie idle while a dog bites a human","Use your resources for your good. Don't keep money and end up dying from a minor ailment"));
     }
 
 

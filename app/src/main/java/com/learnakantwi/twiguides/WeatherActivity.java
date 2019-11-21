@@ -44,6 +44,7 @@ import java.util.ArrayList;
 
 public class WeatherActivity extends AppCompatActivity {
 
+
     ListView weatherListView;
     static ArrayList<Weather> weatherArray;
 

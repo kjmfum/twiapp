@@ -17,6 +17,11 @@
         android:title="@string/main_menu">
     </item>
 
+    <item
+        android:id="@+id/dailyNotification"
+        android:title="@string/turn_off_daily_twi">
+    </item>
+
   <!--  <item
         android:id="@+id/quiz1"
         android:title="@string/Quiz">

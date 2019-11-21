@@ -104,7 +104,6 @@ public class AllActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-
                     toast.setText("Lost Internet Connection");
                     toast.show();
                 }
@@ -124,7 +123,7 @@ public class AllActivity extends AppCompatActivity {
     }*/
 
     public void downloadClick () {
-        int counter = 1;
+        int counter = 0;
 
         if (isNetworkAvailable()) {
             for (int j = 0; j < allArrayList.size(); j++) {
@@ -138,7 +137,7 @@ public class AllActivity extends AppCompatActivity {
                     bb = bb.replace("ɛ", "q");
                 }
 
-                if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'")) {
+                if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'") | bb.contains("...")) {
                     bb = bb.replace(" ", "");
                     bb = bb.replace("/", "");
                     bb = bb.replace(",", "");
@@ -147,19 +146,24 @@ public class AllActivity extends AppCompatActivity {
                     bb = bb.replace("-", "");
                     bb = bb.replace("?", "");
                     bb = bb.replace("'", "");
+                    bb= bb.replace("...","");
                 }
                 File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
                 if (myFiles.exists()) {
                     counter++;
                 }
+
             }
             if (counter == allArrayList.size()) {
                 toast.setText("All downloaded");
                 toast.show();
 
             } else {
-                toast.setText("Downloading...");
-                toast.show();
+               toast.setText("Downloading...");
+               toast.show();
+
+               // toast.setText(counter + " -- "+ allArrayList.size());
+               // toast.show();
 
                 for (int i = 0; i < allArrayList.size(); i++) {
                     String b = allArrayList.get(i).getTwiMain().toLowerCase();
@@ -170,14 +174,15 @@ public class AllActivity extends AppCompatActivity {
                         b = b.replace("ɛ", "q");
                     }
 
-                    if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") || b.contains("?") || b.contains("'")) {
+                    if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") || b.contains("?")|| b.contains("...")|| b.contains("'")) {
                         b = b.replace(" ", "");
                         b = b.replace("/", "");
-                        b = b.replace(",", "");
-                        b = b.replace("(", "");
-                        b = b.replace(")", "");
-                        b = b.replace("-", "");
-                        b = b.replace("?", "");
+                        b= b.replace(",","");
+                        b= b.replace("(","");
+                        b= b.replace(")","");
+                        b= b.replace("-","");
+                        b= b.replace("?","");
+                        b= b.replace("...","");
                         b = b.replace("'", "");
                     }
 

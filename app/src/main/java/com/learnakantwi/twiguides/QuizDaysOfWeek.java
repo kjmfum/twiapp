@@ -84,27 +84,31 @@ public class QuizDaysOfWeek extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null;
     }
-    boolean isRunning =false;
+    public void ExcellentSound() {
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + "excellentsound" + ".m4a");
+        if (myFile.exists()) {
 
-    public Runnable runnable = new Runnable() {
-
-        @Override
-        public void run() {
             try {
-                URL url = new URL("http://www.google.com");
-                URLConnection connection = url.openConnection();
-                connection.connect();
-                isRunning = true;
-                System.out.println("Internet is now connected");
-            } catch (MalformedURLException e) {
-                isRunning =false;
-                //System.out.println("Internet is now not connected 1");
+                if (playFromDevice != null) {
+                    playFromDevice.stop();
+                    playFromDevice.reset();
+                    playFromDevice.release();
+                }
+                playFromDevice = new MediaPlayer();
+
+                playFromDevice.setDataSource(myFile.toString());
+                playFromDevice.prepareAsync();
+                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.start();
+                    }
+                });
             } catch (IOException e) {
-                isRunning=false;
-                //System.out.println("Internet is now not connected 2");
+                e.printStackTrace();
             }
         }
-    };
+    }
 
 
     public void playFromFirebase(StorageReference musicRef) {
@@ -193,6 +197,7 @@ public class QuizDaysOfWeek extends AppCompatActivity {
 
             if (scorePercent > 90) {
                 gradeText.setText(getString(R.string.excellent));
+                ExcellentSound();
             } else if (scorePercent > 40 && scorePercent < 90) {
                 gradeText.setText(getString(R.string.welldone));
             } else if (scorePercent > 20 && scorePercent < 40) {
@@ -366,6 +371,8 @@ public class QuizDaysOfWeek extends AppCompatActivity {
 
 
     public void resetQuiz(){
+
+
         counter =0;
         score=0;
         correctWrong.setText("");

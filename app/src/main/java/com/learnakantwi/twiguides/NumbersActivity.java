@@ -64,27 +64,7 @@ public class NumbersActivity extends AppCompatActivity {
         return activeNetworkInfo != null;
     }
 
-    boolean isRunning =false;
 
-    public Runnable runnable = new Runnable() {
-
-        @Override
-        public void run() {
-            try {
-                URL url = new URL("http://www.google.com");
-                URLConnection connection = url.openConnection();
-                connection.connect();
-                isRunning = true;
-                System.out.println("Internet is now connected");
-            } catch (MalformedURLException e) {
-                isRunning =false;
-                //System.out.println("Internet is now not connected 1");
-            } catch (IOException e) {
-                isRunning=false;
-                //System.out.println("Internet is now not connected 2");
-            }
-        }
-    };
     public void downloadOnly(final String filename){
         if (isNetworkAvailable()){
 
@@ -94,11 +74,12 @@ public class NumbersActivity extends AppCompatActivity {
                 public void onSuccess(Uri uri) {
                     String url = uri.toString();
                     downloadFile(getApplicationContext(), filename, ".m4a", url);
+                    toast.setText("Downloaded");
+                    toast.show();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-
                     toast.setText("Lost Internet Connection");
                     toast.show();
                 }
@@ -109,7 +90,6 @@ public class NumbersActivity extends AppCompatActivity {
             toast.show();
         }
     }
-
 
     public void downloadClick () {
         int counter = 0;

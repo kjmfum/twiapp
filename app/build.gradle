@@ -17,8 +17,8 @@ android {
         applicationId "com.learnakantwi.twiguides"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 21
-        versionName "1.21"
+        versionCode 24
+        versionName "1.24"
         //multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.releaseme
@@ -42,6 +42,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.1.0'
     //   implementation 'com.google.firebase:firebase-auth:19.0.0'
     // implementation 'com.google.firebase:firebase-firestore:21.1.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.navigation:navigation-fragment:2.0.0'
+    implementation 'androidx.navigation:navigation-ui:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     testImplementation 'junit:junit:4.13-beta-3'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

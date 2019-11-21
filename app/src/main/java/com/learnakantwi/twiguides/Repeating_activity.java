@@ -57,7 +57,7 @@ public class Repeating_activity extends AppCompatActivity {
     TextView textView;
     TextView textTwi;
     //Switch dailyTwiSwitch;
-    CheckBox dailyTwiSwitch;
+    //CheckBox dailyTwiSwitch;
     ArrayList<DaysOfWeek> answers;
     int randomChoiceQuestion;
     String english1;
@@ -68,26 +68,8 @@ public class Repeating_activity extends AppCompatActivity {
     AdView mAdView;
     AdView mAdView1;
     Toast toast;
-    boolean isRunning = false;
-    public Runnable runnable = new Runnable() {
 
-        @Override
-        public void run() {
-            try {
-                URL url = new URL("http://www.google.com");
-                URLConnection connection = url.openConnection();
-                connection.connect();
-                isRunning = true;
-                System.out.println("Internet is now connected");
-            } catch (MalformedURLException e) {
-                isRunning = false;
-                //System.out.println("Internet is now not connected 1");
-            } catch (IOException e) {
-                isRunning = false;
-                //System.out.println("Internet is now not connected 2");
-            }
-        }
-    };
+
     private InterstitialAd mInterstitialAd;
 
     private boolean isNetworkAvailable() {
@@ -98,7 +80,7 @@ public class Repeating_activity extends AppCompatActivity {
     }
 
     public void downloadOnly(final String filename) {
-        if (isRunning) {
+        if (isNetworkAvailable()) {
 
             final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
             musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -137,7 +119,7 @@ public class Repeating_activity extends AppCompatActivity {
                     bb = bb.replace("ɛ", "q");
                 }
 
-                if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'")) {
+                if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'") | bb.contains("...")) {
                     bb = bb.replace(" ", "");
                     bb = bb.replace("/", "");
                     bb = bb.replace(",", "");
@@ -146,7 +128,9 @@ public class Repeating_activity extends AppCompatActivity {
                     bb = bb.replace("-", "");
                     bb = bb.replace("?", "");
                     bb = bb.replace("'", "");
+                    bb = bb.replace("...", "");
                 }
+
                 File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
                 if (myFiles.exists()) {
                     counter++;
@@ -169,20 +153,21 @@ public class Repeating_activity extends AppCompatActivity {
                         b = b.replace("ɛ", "q");
                     }
 
-                    if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") || b.contains("?") || b.contains("'")) {
+                    if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") || b.contains("?")|| b.contains("...")|| b.contains("'")) {
                         b = b.replace(" ", "");
                         b = b.replace("/", "");
-                        b = b.replace(",", "");
-                        b = b.replace("(", "");
-                        b = b.replace(")", "");
-                        b = b.replace("-", "");
-                        b = b.replace("?", "");
+                        b= b.replace(",","");
+                        b= b.replace("(","");
+                        b= b.replace(")","");
+                        b= b.replace("-","");
+                        b= b.replace("?","");
+                        b= b.replace("...","");
                         b = b.replace("'", "");
                     }
 
                     File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + b + ".m4a");
                     if (!myFile.exists()) {
-                        if (isRunning) {
+                        if (isNetworkAvailable()) {
                             downloadOnly(b);
                         } else {
                             toast.setText("Please connect to the Internet");
@@ -375,6 +360,10 @@ public class Repeating_activity extends AppCompatActivity {
                 //Log.i("Menu Item Selected", "Alphabets");
                 goToWeb();
                 return true;
+            case R.id.dailyNotification:
+                //Log.i("Menu Item Selected", "Alphabets");
+                notificationPreference();
+                return true;
             default:
                 return false;
         }
@@ -510,16 +499,16 @@ public class Repeating_activity extends AppCompatActivity {
 
         textView = findViewById(R.id.randomText);
         textTwi= findViewById(R.id.randomText1);
-        dailyTwiSwitch = findViewById(R.id.dailyTwiSwitch);
+//        dailyTwiSwitch = findViewById(R.id.dailyTwiSwitch);
 
 
-        dailyTwiSwitch.setOnClickListener(new View.OnClickListener() {
+      /*  dailyTwiSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 notificationPreference();
             }
         });
-
+*/
 
 
         storageReference = FirebaseStorage.getInstance().getReference();

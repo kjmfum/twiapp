@@ -62,27 +62,7 @@ public class DaysOfWeekActivity extends AppCompatActivity {
         return activeNetworkInfo != null;
     }
 
-    boolean isRunning =false;
 
-    public Runnable runnable = new Runnable() {
-
-        @Override
-        public void run() {
-            try {
-                URL url = new URL("http://www.google.com");
-                URLConnection connection = url.openConnection();
-                connection.connect();
-                isRunning = true;
-                System.out.println("Internet is now connected");
-            } catch (MalformedURLException e) {
-                isRunning =false;
-                //System.out.println("Internet is now not connected 1");
-            } catch (IOException e) {
-                isRunning=false;
-                //System.out.println("Internet is now not connected 2");
-            }
-        }
-    };
     public void downloadOnly(final String filename){
         if (isNetworkAvailable()){
 
@@ -145,7 +125,7 @@ public class DaysOfWeekActivity extends AppCompatActivity {
                 toast.show();
 
             } else {
-                toast.setText("Downloading");
+                toast.setText("Downloading...");
                 toast.show();
 
                 for (int i = 0; i < daysOfWeeksArray.size(); i++) {

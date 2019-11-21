@@ -9,4 +9,15 @@
     <color name= "red"> #FF0000 </color>
     <color name= "yellow"> #FFF000 </color>
     <color name= "blue"> #0000FF </color>
+
+    <color name= "blue1"> #00FFFF </color>
+    <color name= "blue2"> #F000FF </color>
+    <color name= "blue3">#F0FFF0</color>
+
+    <color name= "yellow1"> #FFF00F </color>
+    <color name= "yellow2"> #FFFF80 </color>
+    <color name="colorAccent1">#D81B70</color>
+
+
+
 </resources>

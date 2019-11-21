@@ -56,6 +56,7 @@ public class AnimalsActivity extends AppCompatActivity {
 
 
 
+
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -154,7 +155,7 @@ public class AnimalsActivity extends AppCompatActivity {
                 toast.show();
 
             } else {
-                toast.setText("Downloading");
+                toast.setText("Downloading...");
                 toast.show();
 
                 for (int i = 0; i < animalsArrayList.size(); i++) {
@@ -437,6 +438,8 @@ public class AnimalsActivity extends AppCompatActivity {
 
     }
 
+
+
     public void goToWeb() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?couponCode=FDISCOUNT1"));
         startActivity(intent);
@@ -459,6 +462,7 @@ public class AnimalsActivity extends AppCompatActivity {
             case R.id.videoCourse:
                 //Log.i("Menu Item Selected", "Alphabets");
                 goToWeb();
+                return true;
             case R.id.downloadAudio:
                 downloadClick();
                 return true;

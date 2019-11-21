@@ -104,6 +104,32 @@ public class QuizAll extends AppCompatActivity {
         }
     };
 
+    public void ExcellentSound() {
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + "excellentsound" + ".m4a");
+        if (myFile.exists()) {
+
+            try {
+                if (playFromDevice != null) {
+                    playFromDevice.stop();
+                    playFromDevice.reset();
+                    playFromDevice.release();
+                }
+                playFromDevice = new MediaPlayer();
+
+                playFromDevice.setDataSource(myFile.toString());
+                playFromDevice.prepareAsync();
+                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.start();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public void playFromFirebase(StorageReference musicRef) {
 
@@ -190,6 +216,7 @@ public class QuizAll extends AppCompatActivity {
 
             if (scorePercent > 90) {
                 gradeText.setText(getString(R.string.excellent));
+                ExcellentSound();
             } else if (scorePercent > 40 && scorePercent < 90) {
                 gradeText.setText(getString(R.string.welldone));
             } else if (scorePercent > 20 && scorePercent < 40) {

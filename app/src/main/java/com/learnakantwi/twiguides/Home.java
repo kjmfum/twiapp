@@ -12,6 +12,7 @@ import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -78,6 +80,7 @@ public class Home extends AppCompatActivity {
     static ArrayList<HomeButton> homeButtonArrayList;
     ListView homeListView;
     AdView mAdView;
+    AdView mAdView1;
     public InterstitialAd mInterstitialAd;
     MediaPlayer mediaPlayer;
 
@@ -119,6 +122,12 @@ public class Home extends AppCompatActivity {
                             switch (me1){
                                 case "Alphabets":
                                     goToAlphabets();
+                                    return;
+                                case "Proverbs":
+                                    goToProverbs();
+                                    return;
+                                case "Children":
+                                    goToChildren();
                                     return;
                                 case "Animals":
                                     goToAnimals();
@@ -232,12 +241,14 @@ public class Home extends AppCompatActivity {
         }
     }
 
-    public void goToQuiz1() {
-        Intent intent = new Intent(getApplicationContext(), Quiz1.class);
-        startActivity(intent);
-    }
+
     public void goToQuizAll() {
         Intent intent = new Intent(getApplicationContext(), QuizAll.class);
+        startActivity(intent);
+    }
+
+    public void goToProverbs() {
+        Intent intent = new Intent(getApplicationContext(), ProverbsActivity.class);
         startActivity(intent);
     }
 
@@ -322,6 +333,12 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToChildren() {
+       // Intent intent = new Intent(getApplicationContext(), ChildrenNumberCount.class);
+        Intent intent = new Intent(getApplicationContext(), ChildrenHome.class);
+        startActivity(intent);
+    }
+
     public void tunOnDailyTwi() {
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
         String dailyTwiPreference = sharedPreferences.getString("DailyTwiPreference", "Yes");
@@ -403,7 +420,7 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home1);
+        setContentView(R.layout.activity_vocabularyhome);
 
         // Function to check and request permission
        // checkPermission(INTERNET, 100);
@@ -442,6 +459,16 @@ public class Home extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView1 = findViewById(R.id.adView1);
+        AdRequest adRequest1 = new AdRequest.Builder().build();
+        mAdView1.loadAd(adRequest1);
+
+
 
         AppRate.with(this)
                 .setInstallDays(0)
@@ -465,6 +492,8 @@ public class Home extends AppCompatActivity {
         homeListView = findViewById(R.id.homeListView);
 
         homeButtonArrayList.add(new HomeButton("Family", R.drawable.familyimage));
+       // homeButtonArrayList.add(new HomeButton("Proverbs", R.drawable.proverbsimage));
+        //homeButtonArrayList.add(new HomeButton("Children", R.drawable.childrenimage));
         homeButtonArrayList.add(new HomeButton("Food", R.drawable.foodimage));
         homeButtonArrayList.add(new HomeButton("Alphabets", R.drawable.alphabetsimage));
         homeButtonArrayList.add(new HomeButton("Time", R.drawable.time));
@@ -499,6 +528,12 @@ public class Home extends AppCompatActivity {
                 switch (me1){
                     case "Alphabets":
                         goToAlphabets();
+                        return;
+                    case "Proverbs":
+                        goToProverbs();
+                        return;
+                    case "Children":
+                        goToChildren();
                         return;
                     case "Animals":
                         goToAnimals();

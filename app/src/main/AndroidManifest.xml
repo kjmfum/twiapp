@@ -5,17 +5,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.SET_ALARM"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
-
-
-
+    <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-
-    android:name=".AppStartClass"
+        android:name=".AppStartClass"
         android:allowBackup="true"
         android:icon="@drawable/learnakantwiimage"
         android:label="@string/app_name"
@@ -23,6 +18,15 @@
         android:roundIcon="@drawable/learnakantwiimage"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ProverbsActivity"></activity>
+        <activity android:name=".ChildrenAlphabet" />
+        <activity
+            android:name=".ChildrenHome"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".QuizAnimals"
             android:resizeableActivity="true"
@@ -31,6 +35,10 @@
         <activity android:name=".QuizAlphabet" />
         <activity android:name=".QuizFood" />
         <activity android:name=".QuizFamily" />
+        <activity
+            android:name=".ChildrenNumberCount"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".QuizTime" />
         <activity android:name=".QuizDaysOfWeek" />
         <activity android:name=".QuizNumbers" />
@@ -41,6 +49,7 @@
         <activity android:name=".QuizColours" />
         <activity android:name=".QuizBusiness" />
         <activity android:name=".QuizAll" />
+        <activity android:name=".QuizHome" />
         <activity android:name=".AllActivity" />
         <activity android:name=".WeatherActivity" />
         <activity android:name=".TimeActivity" />
@@ -48,6 +57,7 @@
         <activity android:name=".NumbersActivity" />
         <activity android:name=".MonthsActivity" />
         <activity android:name=".Home" />
+        <activity android:name=".HomeMainActivity" />
         <activity android:name=".FoodActivity" />
         <activity android:name=".FamilyActivity" />
         <activity android:name=".DaysOfWeekActivity" />
@@ -57,9 +67,8 @@
         <activity android:name=".BusinessActivity" />
         <activity android:name=".AnimalsActivity" />
         <activity android:name=".AlphabetsActivity" />
-        <activity android:name="Repeating_activity"/>
+        <activity android:name=".Repeating_activity" />
         <activity android:name=".MainActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -69,16 +78,12 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".Notification_receiver"  android:exported="true"/>
-
-        <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+        <receiver
+            android:name=".Notification_receiver"
+            android:exported="true" /> <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-7384642419407303~6578212997" />
     </application>
-
-
-
-
 
 </manifest>

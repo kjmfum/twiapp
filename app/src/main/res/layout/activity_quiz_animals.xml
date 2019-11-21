@@ -7,6 +7,19 @@
     tools:context=".QuizAnimals">
 
 
+    <Button
+        android:id="@+id/playAgain"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/design_default_color_primary"
+        android:onClick="hideStartButton"
+        android:text="Button"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/gridlayout123"
+        app:layout_constraintEnd_toEndOf="@+id/gridlayout123"
+        app:layout_constraintStart_toStartOf="@+id/gridlayout123"
+        app:layout_constraintTop_toTopOf="@+id/gridlayout123" />
+
 
     <TextView
         android:id="@+id/QuestionText"
@@ -37,7 +50,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:text="@string/scoretext"
+        android:text="Score"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/guideline5"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
@@ -51,7 +64,7 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:shadowColor="#F48FB1"
-        android:text="@string/number_zero"
+        android:text="0/0"
         app:layout_constraintBottom_toBottomOf="@+id/guideline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

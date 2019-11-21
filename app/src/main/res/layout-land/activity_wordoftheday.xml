@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WordofthedayActivity">
+    tools:context=".Repeating_activity">
 
 
     <TextView
@@ -35,10 +35,10 @@
 
     <Button
         android:id="@+id/generate"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black"
-        android:text="@string/your_twi_for_the_day"
+       android:text="@string/main_menu"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guideline16"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +59,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline19"
         app:layout_constraintVertical_bias="0.774" />
 
-    <CheckBox
+  <!--  <CheckBox
         android:id="@+id/dailyTwiSwitch"
         android:layout_width="122dp"
         android:layout_height="48dp"
@@ -69,6 +69,7 @@
         app:layout_constraintEnd_toEndOf="@id/guideline25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/adView1" />
+        -->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline16"
