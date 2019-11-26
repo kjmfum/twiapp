@@ -69,7 +69,7 @@ public class ChildrenNumberCount extends AppCompatActivity {
     }
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), Home.class);
+        Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
         startActivity(intent);
     }
 
@@ -183,7 +183,7 @@ public class ChildrenNumberCount extends AppCompatActivity {
                         b = b.replace("'", "");
                     }
 
-                    File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + b + ".m4a");
+                    File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/CHILDREN" + b + ".m4a");
                     if (!myFile.exists()) {
                         if (isNetworkAvailable()){
                             downloadOnly(b);
@@ -267,7 +267,7 @@ public class ChildrenNumberCount extends AppCompatActivity {
     }
 
     public void playFromFileOrDownload(final String filename){
-        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/CHILDREN"+filename+ ".m4a");
         if (myFile.exists()){
 
 
@@ -349,7 +349,7 @@ public class ChildrenNumberCount extends AppCompatActivity {
                     Uri uri = Uri.parse(url);
                     DownloadManager.Request request = new DownloadManager.Request(uri);
                     request.setVisibleInDownloadsUi(false);
-                    request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                    request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC + "/CHILDREN", filename + fileExtension);
                     downloadManager.enqueue(request);
                 }
             };

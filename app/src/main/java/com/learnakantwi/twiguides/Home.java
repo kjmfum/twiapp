@@ -1,25 +1,17 @@
 package com.learnakantwi.twiguides;
 
 import android.Manifest;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.DownloadManager;
-import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,14 +20,9 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -43,36 +30,10 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-
-import hotchemi.android.rate.AppRate;
 
 import static android.Manifest.permission.INTERNET;
-import static com.learnakantwi.twiguides.AllActivity.allArrayList;
-import static com.learnakantwi.twiguides.AlphabetsActivity.alphabetArray;
-import static com.learnakantwi.twiguides.AnimalsActivity.animalsArrayList;
-import static com.learnakantwi.twiguides.BodypartsActivity.bodypartsArrayList;
-import static com.learnakantwi.twiguides.ColoursActivity.coloursArrayList;
-import static com.learnakantwi.twiguides.CommonExpressionsaActivity.commonExpressionsAArrayList;
-import static com.learnakantwi.twiguides.DaysOfWeekActivity.daysOfWeeksArray;
-import static com.learnakantwi.twiguides.FamilyActivity.familyArrayList;
-import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
-import static com.learnakantwi.twiguides.MonthsActivity.monthsArrayList;
-import static com.learnakantwi.twiguides.NumbersActivity.numbersArrayList;
-import static com.learnakantwi.twiguides.PronounsActivity.pronounsArrayList;
-import static com.learnakantwi.twiguides.TimeActivity.timeArrayList;
-import static com.learnakantwi.twiguides.WeatherActivity.weatherArray;
-import static com.learnakantwi.twiguides.BusinessActivity.businessArrayList;
 
 public class Home extends AppCompatActivity {
     //  app:adUnitId="ca-app-pub-6999427576830667~6251296006"
@@ -88,7 +49,7 @@ public class Home extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //MenuInflater menuInflater = getMenuInflater();
-        getMenuInflater().inflate(R.menu.home_menu, menu);
+        getMenuInflater().inflate(R.menu.vocabulary_menu, menu);
 
         final MenuItem item = menu.findItem(R.id.menusearch);
         SearchView searchView = (SearchView) item.getActionView();
@@ -198,8 +159,8 @@ public class Home extends AppCompatActivity {
                 Log.i("Menu Item Selected", "Alphabets");
                 return  true;*/
 
-            case R.id.quiz1:
-                goToQuizAll();
+            case R.id.main:
+                goToMain();
                 return true;
             case R.id.searchAll:
                 goToAll();
@@ -242,8 +203,8 @@ public class Home extends AppCompatActivity {
     }
 
 
-    public void goToQuizAll() {
-        Intent intent = new Intent(getApplicationContext(), QuizAll.class);
+    public void goToMain(){
+        Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
         startActivity(intent);
     }
 
@@ -420,7 +381,10 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vocabularyhome);
+        setContentView(R.layout.activity_quizhome);
+
+        ImageView topImage = findViewById(R.id.homeAdvertButton);
+        topImage.setImageResource(R.drawable.vocabularyimage);
 
         // Function to check and request permission
        // checkPermission(INTERNET, 100);
@@ -459,7 +423,7 @@ public class Home extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+      /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
@@ -467,23 +431,23 @@ public class Home extends AppCompatActivity {
         mAdView1 = findViewById(R.id.adView1);
         AdRequest adRequest1 = new AdRequest.Builder().build();
         mAdView1.loadAd(adRequest1);
+*/
 
 
-
-        AppRate.with(this)
+        /*AppRate.with(this)
                 .setInstallDays(0)
                 .setLaunchTimes(3)
                 .setRemindInterval(2)
                 .monitor();
 
-        AppRate.showRateDialogIfMeetsConditions(this);
+        AppRate.showRateDialogIfMeetsConditions(this);*/
 
-        findViewById(R.id.homeAdvertButton).setOnClickListener(new View.OnClickListener() {
+      /*  findViewById(R.id.homeAdvertButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 advert();
             }
-        });
+        });*/
 
 
         // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713

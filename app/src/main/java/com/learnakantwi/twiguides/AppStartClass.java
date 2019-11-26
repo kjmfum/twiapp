@@ -48,6 +48,7 @@ import static com.learnakantwi.twiguides.PronounsActivity.pronounsArrayList;
 import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
 import static com.learnakantwi.twiguides.TimeActivity.timeArrayList;
 import static com.learnakantwi.twiguides.WeatherActivity.weatherArray;
+import static com.learnakantwi.twiguides.ChildrenHome.childrenArray;
 
 public class AppStartClass extends Application {
 
@@ -159,6 +160,32 @@ public class AppStartClass extends Application {
         if (dailyTwiPreference.equals("Yes")) {
             showDaily();
         }
+
+        //ChildrenArray
+
+        childrenArray = new ArrayList<>();
+
+        childrenArray.add(new Children("1"));
+        childrenArray.add(new Children("0"));
+        childrenArray.add(new Children("2"));
+        childrenArray.add(new Children("3"));
+        childrenArray.add(new Children("4"));
+        childrenArray.add(new Children("5"));
+        childrenArray.add(new Children("6"));
+        childrenArray.add(new Children("7"));
+        childrenArray.add(new Children("8"));
+        childrenArray.add(new Children("9"));
+        childrenArray.add(new Children("10"));
+        childrenArray.add(new Children("11"));
+        childrenArray.add(new Children("12"));
+        childrenArray.add(new Children("13"));
+        childrenArray.add(new Children("14"));
+        childrenArray.add(new Children("15"));
+        childrenArray.add(new Children("16"));
+        childrenArray.add(new Children("17"));
+        childrenArray.add(new Children("18"));
+        childrenArray.add(new Children("19"));
+        childrenArray.add(new Children("20"));
 
 
 //BUSINESS ARRAY
@@ -2512,7 +2539,7 @@ public class AppStartClass extends Application {
 
         // proverbsArrayList.add(new Proverbs());
 
-        proverbsArrayList.add(new Proverbs("Woforo dua pa a ɛnna yepia woɔ","If you climb a the good tree, gets a push","If you start something good you will attract people to help"));
+        proverbsArrayList.add(new Proverbs("Woforo dua pa a ɛnna yepia woɔ","If you climb a good tree, you get a push","If you start something good you will attract people to help"));
         proverbsArrayList.add(new Proverbs("Wusie nni ahoɔden wɔ mframa kurom","The smoke has no power in the city of the wind","The stranger has no power in a strange land"));
         proverbsArrayList.add(new Proverbs("Nokware di etuo", "The truth gets a gun","Speaking the truth boldly can at times end your life as if you called for to be shot by a gun"));
         proverbsArrayList.add(new Proverbs("Sɛnea sekan te no saa ara na ne bɔha nso te","The shape of the sword is the same as its scabbard","Your behaviour tells where you come from"));
@@ -2526,17 +2553,17 @@ public class AppStartClass extends Application {
     proverbsArrayList.add(new Proverbs("Agya bi wu a, agya bi te ase","If a father dies, another father lives","If a parent dies, you can find someone who will look after you like your parent"));
        proverbsArrayList.add(new Proverbs("Animguase mfata Akanni ba","To be disgraced is not deserving of an Akan", "If you have respect for yourself then it is better to die than to be disgraced"));
         proverbsArrayList.add(new Proverbs("Agorɔ bɛsɔ a, efiri anɔpa","You can tell from the morning if the play will be nice","You can tell from the beginning of a venture how successfull it will be in the future"));
-        proverbsArrayList.add(new Proverbs("Kwaterekwa se ɔbɛma wo ntoma a, tie ne din","If a naked person says that he will give you a cloth, listen to his name","Be careful when someone who is in need of something himself promises to give you that thing. Dont trust all promises. Take into consideratoin the calibre of a person who promises you something"));
+        proverbsArrayList.add(new Proverbs("Kwaterekwa se ɔbɛma wo ntoma a, tie ne din","If a naked person says that he will give you a cloth, listen to his name","Be careful when someone who is himself in need of something promises to give you that thing. Dont trust all promises. Take into consideratoin the calibre of a person who promises you something"));
         proverbsArrayList.add(new Proverbs("Yɛsoma onyansafo, ɛnyɛ anamɔntenten","It is the wise person that we send on errand but not a person with long steps","Speed should not override efficiency. Getting things done properly is better than getting it done fast but not properly."));
         proverbsArrayList.add(new Proverbs("Aboa a onni dua no, Nyame na ɔpra ne ho","An animal without a tail is cleaned by God","God provides for those who have no means of catering for themselves"));
-        proverbsArrayList.add(new Proverbs("Borɔferɛ a ɛyɛ dɛ na abaa da ase","You will find a stick beneath the pawpaw tree which has tasty fruits","If you see people flocking to a particular venture it is because it is profitable"));
+        proverbsArrayList.add(new Proverbs("Borɔferɛ a ɛyɛ dɛ na abaa da ase","It is the pawpaw tree which has tasty fruits that you will find a stick beneath it","If you see people flocking to a particular venture it is because it is profitable"));
         proverbsArrayList.add(new Proverbs("Prayɛ, sɛ wuyi baako a na ebu, woka bom a emmu","If you remove one broomstick it will break but if you put all the broomsticks together it will not break","We are stronger when we are united. It is hard to defeat a united people than a single person"));
         proverbsArrayList.add(new Proverbs("Nsateaa nyinaa nnyɛ pɛ","All fingers are not the same","We all have different abilities"));
-        proverbsArrayList.add(new Proverbs("Obi nnim a, obi kyerɛ","If one does not know, another teaches","You should allow others to teach you things you don't konw. You should listen to advice"));
+        proverbsArrayList.add(new Proverbs("Obi nnim a, obi kyerɛ","If one does not know, another teaches","You should allow others to teach you things you don't know. You should listen to advice"));
         proverbsArrayList.add(new Proverbs("Abofra hunu ne nsa hohoro a ɔne mpanyimfoɔ didi","If a child learns how to wash his hands, he will eat with adults","If a person learns and applies the customs and traditions, people in higher positions will work with him. "));
         proverbsArrayList.add(new Proverbs("Yɛwo wo to esie so a, wo nnkyɛ tenten yɛ","If you are born onto an anthill, you become tall quickly","If you have a good foundation in life, it is easy for you to succeed in life. If your family is rich, you are able to make money early in life"));
-        proverbsArrayList.add(new Proverbs("Ayɔnko gorɔ nti na ɔkɔtɔ annya ti","It is because of mingling with friends that the crab has no head","Too many friends can make you lose a lot. Choose friends wisely"));
-        proverbsArrayList.add(new Proverbs("Wo nsa akyi bɛyɛ wo dɛ a ɛnte sɛ wo nsa yam","The back of your hand can be sweet but it will not be as your palm or inner surface of your hand","The original is always better than imitation"));
+        proverbsArrayList.add(new Proverbs("Ayɔnko gorɔ nti na ɔkɔtɔ annya ti","It is because of mingling with friends that the crab has no head","Too many friends can make you lose a lot life. Choose friends wisely"));
+        proverbsArrayList.add(new Proverbs("Wo nsa akyi bɛyɛ wo dɛ a ɛnte sɛ wo nsa yam","The back of your hand can be sweet but it will not be as sweet as your palm or inner surface of your hand","The original is always better than imitation"));
 
         proverbsArrayList.add(new Proverbs("Obi fom kum a, yɛn mfom ndwa","If one kills by mistake, we do not cut up by mistake","We do not deliberately repay someone with a bad deed for their unintentional mistake "));
         proverbsArrayList.add(new Proverbs("Wuhu sɛ wo yɔnko abɔdwesɛ rehye a na wasa nsuo asi wo de ho","If you see that the beard of a friend is on fire, fetch water and put by your beard","If something bad happens to a neighbour, plan on how you will deal it with if it happens to you next"));
@@ -2547,11 +2574,11 @@ public class AppStartClass extends Application {
         proverbsArrayList.add(new Proverbs("Abɛ bi rebewu a na ɛsɔ","When some palm trees are about to die, its wine tastes good","Some people get to their best when they are about to retire or in their old age. The aged are the most experienced"));
         proverbsArrayList.add(new Proverbs("Nea ɔwɔ aka no pɛn no suro sonsono","He who has been bitten by a snake before, fears the worm", "A bad experience with a particular venture makes one afraid of anything resembling it"));
         proverbsArrayList.add(new Proverbs("Efie biara Mensah wɔ mu","Every household has a third born","In every community there will be people whose opinion are totally different which might result in problems"));
-        proverbsArrayList.add(new Proverbs("Abofra a ɔmma ne maame nna no, bentoa mpa ne to da","The enema will not depart from the buttucks of ea child who doesn't let his mother sleep", "If you make trouble for your leaders who cater for you, you will also not have peace"));
+        proverbsArrayList.add(new Proverbs("Abofra a ɔmma ne maame nna no, bentoa mpa ne to da","The enema will not depart from the buttocks of a child who doesn't let his mother sleep", "If you make trouble for your leaders who cater for you, you will also not have peace"));
         proverbsArrayList.add(new Proverbs("Hu m'ani so ma me nti na atwe mmienu nam","Deers walk in pairs so that one can blow the eye of the other if needed","It is good to have a partner so that he will support you when you are in need"));
         proverbsArrayList.add(new Proverbs("Obi nnom aduro mma ɔyarefo","One does not take medicine for a sick person", "Don't expect someone to handle your responsibilities for you. There are some responsibilities you cannot do for another person"));
         proverbsArrayList.add(new Proverbs("Akokɔbere nim adekyee nanso otie firi akokɔ nini ano","The hen knows of the new day but it listens to the announcement from the cock","Even though you might be knowledgeable in something it is always good to listen to the elderly and wait for direction"));
-        proverbsArrayList.add(new Proverbs("Ano da hɔ kwa a, ɛkeka nsɛm","A mouth which is idle will say many things","Those who have nothing to do becomes gossipers or commit crimes"));
+        proverbsArrayList.add(new Proverbs("Ano da hɔ kwa a, ɛkeka nsɛm","A mouth which is idle will say many things","Those who have nothing to do become gossipers or commit crimes"));
         proverbsArrayList.add(new Proverbs("Ɔsansa fa adeɛ a ɔde kyerɛ amansan","When the hawk picks up something it shows it to the universe","An honest person will not hide his works"));
         proverbsArrayList.add(new Proverbs("Ɛtoa na ɛpɛ na ahoma da ne kɔn mu","The bottle likes it that is why there is a rope around its neck","It is your fault if you allow your enemies to trap you"));
         proverbsArrayList.add(new Proverbs("Dadeɛ bi twa dadeɛ bi","An iron can cut another iron or can sharpen another iron","There is someone or something stronger than you. Even if you are strong it doesn't mean that you are unbeatable"));

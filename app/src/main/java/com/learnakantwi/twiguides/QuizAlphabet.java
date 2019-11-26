@@ -168,6 +168,32 @@ public class QuizAlphabet extends AppCompatActivity {
         }
 
     }
+
+    public void ExcellentSound() {
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + "excellentsound" + ".m4a");
+        if (myFile.exists()) {
+
+            try {
+                if (playFromDevice != null) {
+                    playFromDevice.stop();
+                    playFromDevice.reset();
+                    playFromDevice.release();
+                }
+                playFromDevice = new MediaPlayer();
+
+                playFromDevice.setDataSource(myFile.toString());
+                playFromDevice.prepareAsync();
+                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.start();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public void playFromFileOrDownload(final String filename, final String appearText) {
 
         if (appearText.equals(twi1)) {
@@ -196,6 +222,7 @@ public class QuizAlphabet extends AppCompatActivity {
 
             if (scorePercent > 90) {
                 gradeText.setText(getString(R.string.excellent));
+                ExcellentSound();
             } else if (scorePercent > 40 && scorePercent < 90) {
                 gradeText.setText(getString(R.string.welldone));
             } else if (scorePercent > 20 && scorePercent < 40) {
@@ -412,7 +439,7 @@ public class QuizAlphabet extends AppCompatActivity {
     }
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), Home.class);
+        Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
         startActivity(intent);
     }
 

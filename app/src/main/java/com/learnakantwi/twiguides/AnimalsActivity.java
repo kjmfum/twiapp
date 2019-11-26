@@ -478,7 +478,7 @@ public class AnimalsActivity extends AppCompatActivity {
     }
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), Home.class);
+        Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
         startActivity(intent);
     }
 

@@ -21,9 +21,6 @@
         <activity android:name=".ProverbsActivity"></activity>
         <activity android:name=".ChildrenAlphabet" />
         <activity
-            android:name=".ChildrenHome"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -31,7 +28,6 @@
             android:name=".QuizAnimals"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true" />
-        <activity android:name=".Quiz1" />
         <activity android:name=".QuizAlphabet" />
         <activity android:name=".QuizFood" />
         <activity android:name=".QuizFamily" />
@@ -51,6 +47,7 @@
         <activity android:name=".QuizAll" />
         <activity android:name=".QuizHome" />
         <activity android:name=".AllActivity" />
+        <activity android:name=".ChildrenHome" />
         <activity android:name=".WeatherActivity" />
         <activity android:name=".TimeActivity" />
         <activity android:name=".PronounsActivity" />
@@ -58,6 +55,7 @@
         <activity android:name=".MonthsActivity" />
         <activity android:name=".Home" />
         <activity android:name=".HomeMainActivity" />
+        <activity android:name=".ProverbsHome" />
         <activity android:name=".FoodActivity" />
         <activity android:name=".FamilyActivity" />
         <activity android:name=".DaysOfWeekActivity" />

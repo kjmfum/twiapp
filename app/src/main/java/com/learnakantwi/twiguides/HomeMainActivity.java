@@ -50,7 +50,7 @@ public class HomeMainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //MenuInflater menuInflater = getMenuInflater();
-        getMenuInflater().inflate(R.menu.home_menu, menu);
+        getMenuInflater().inflate(R.menu.vocabulary_menu, menu);
 
         final MenuItem item = menu.findItem(R.id.menusearch);
         SearchView searchView = (SearchView) item.getActionView();
@@ -221,7 +221,7 @@ public class HomeMainActivity extends AppCompatActivity {
     }
 
     public void goToProverbs() {
-        Intent intent = new Intent(getApplicationContext(), ProverbsActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ProverbsHome.class);
         startActivity(intent);
     }
 
@@ -434,20 +434,20 @@ public class HomeMainActivity extends AppCompatActivity {
 
 
         AppRate.with(this)
-                .setInstallDays(0)
+                .setInstallDays(1)
                 .setLaunchTimes(3)
                 .setRemindInterval(2)
                 .monitor();
 
         AppRate.showRateDialogIfMeetsConditions(this);
 
-        findViewById(R.id.homeAdvertButton).setOnClickListener(new View.OnClickListener() {
+       /* findViewById(R.id.homeAdvertButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 advert();
             }
         });
-
+*/
 
         // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
 

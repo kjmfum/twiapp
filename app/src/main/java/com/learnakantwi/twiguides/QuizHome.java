@@ -51,7 +51,7 @@ public class QuizHome extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //MenuInflater menuInflater = getMenuInflater();
-        getMenuInflater().inflate(R.menu.home_menu, menu);
+        getMenuInflater().inflate(R.menu.quiz_home, menu);
 
         final MenuItem item = menu.findItem(R.id.menusearch);
         SearchView searchView = (SearchView) item.getActionView();
@@ -152,8 +152,8 @@ public class QuizHome extends AppCompatActivity {
                 Log.i("Menu Item Selected", "Alphabets");
                 return  true;*/
 
-            case R.id.quiz1:
-                goToQuizAll();
+            case R.id.main:
+                goToMain();
                 return true;
             case R.id.searchAll:
                 goToAll();
@@ -201,6 +201,10 @@ public class QuizHome extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToMain(){
+        Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+        startActivity(intent);
+    }
 
     public void goToBusiness(){
         Intent intent = new Intent(getApplicationContext(), QuizBusiness.class);
@@ -279,7 +283,7 @@ public class QuizHome extends AppCompatActivity {
     }
 
     public void goToAll() {
-        Intent intent = new Intent(getApplicationContext(), AllActivity.class);
+        Intent intent = new Intent(getApplicationContext(), QuizAll.class);
         startActivity(intent);
     }
 
@@ -410,7 +414,7 @@ public class QuizHome extends AppCompatActivity {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-        mAdView1 = findViewById(R.id.adView1);
+      /*  mAdView1 = findViewById(R.id.adView1);
         AdRequest adRequest1 = new AdRequest.Builder().build();
         mAdView1.loadAd(adRequest1);
 
@@ -421,15 +425,15 @@ public class QuizHome extends AppCompatActivity {
                 .setRemindInterval(2)
                 .monitor();
 
-        AppRate.showRateDialogIfMeetsConditions(this);
+        AppRate.showRateDialogIfMeetsConditions(this);*/
 
-        findViewById(R.id.homeAdvertButton).setOnClickListener(new View.OnClickListener() {
+      /*  findViewById(R.id.homeAdvertButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 advert();
             }
         });
-
+*/
 
         // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
 
@@ -455,7 +459,7 @@ public class QuizHome extends AppCompatActivity {
 
         //Collections.sort(this.homeButtonArrayList);
 
-        homeButtonArrayList.add(new HomeButton("Search", R.drawable.allimage));
+        homeButtonArrayList.add(new HomeButton("All", R.drawable.allimage));
 
         HomeAdapter homeAdapter = new HomeAdapter(this, homeButtonArrayList);
         homeListView.setAdapter(homeAdapter);
@@ -510,7 +514,7 @@ public class QuizHome extends AppCompatActivity {
                     case "Business":
                         goToBusiness();
                         return;
-                    case "Search":
+                    case "All":
                         goToAll();
                 }
             }

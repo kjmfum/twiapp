@@ -40,7 +40,7 @@ import java.util.ArrayList;
 public class ProverbsActivity extends AppCompatActivity {
 
     static ArrayList<Proverbs> proverbsArrayList = new ArrayList<>();
-    AdView mAdView;
+   // AdView mAdView;
     AdView mAdView1;
     AdapterViewFlipper proverbsViewFlipper;
     StorageReference storageReference;
@@ -237,8 +237,8 @@ public class ProverbsActivity extends AppCompatActivity {
             b= b.replace(";","");
         }
 
-        toast.setText(b);
-        toast.show();
+       // toast.setText(b);
+        //toast.show();
 
         playFromFileOrDownload(b, a);
 
@@ -323,7 +323,7 @@ public class ProverbsActivity extends AppCompatActivity {
 
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), Home.class);
+        Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
         startActivity(intent);
     }
 
@@ -348,7 +348,7 @@ public class ProverbsActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+      /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
@@ -356,7 +356,7 @@ public class ProverbsActivity extends AppCompatActivity {
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
+*/
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -388,9 +388,12 @@ public class ProverbsActivity extends AppCompatActivity {
 
 
 
+
         ProverbsAdapter proverbsAdapter = new ProverbsAdapter(this, proverbsArrayList);
 
         proverbsViewFlipper.setAdapter(proverbsAdapter);
+
+
 
 
 

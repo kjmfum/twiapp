@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/menusearch"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always"
+        >
+
+    </item>
+
+
+    <item
+        android:id="@+id/main"
+        android:title="@string/main_menu">
+    </item>
+
+    <item
+        android:id="@+id/searchAll"
+        android:title="@string/search_all">
+    </item>
+
+    <item
+        android:id="@+id/videoCourse"
+        android:title="@string/buy_video_course">
+    </item>
+
+
+    <item
+        android:id="@+id/rate"
+        android:title="@string/rate">
+    </item>
+
+    <item
+        android:id="@+id/share"
+        android:title="@string/share">
+    </item>
+
+    <item
+        android:id="@+id/dailyTwiAlert"
+        android:title="@string/turn_on_daily_twi">
+    </item>
+</menu>
