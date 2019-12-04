@@ -219,15 +219,19 @@ public class QuizFood extends AppCompatActivity {
             // questionText.setText("FINAL SCORE= " + String.valueOf(scorePercent)+"%");
             questionText.setText(sb);
 
-            if (scorePercent > 90) {
+            if (scorePercent >= 90) {
                 gradeText.setText(getString(R.string.excellent));
                 ExcellentSound();
             } else if (scorePercent > 40 && scorePercent < 90) {
                 gradeText.setText(getString(R.string.welldone));
-            } else if (scorePercent > 20 && scorePercent < 40) {
+            } else if (scorePercent > 20 && scorePercent <= 40) {
                 gradeText.setText(getString(R.string.nicetry));
-            } else {
+            } else if (scorePercent <= 20){
                 gradeText.setText(getString(R.string.fail));
+            }
+            else
+            {
+                gradeText.setText(getString(R.string.keeptrying));
             }
 
         } else {
