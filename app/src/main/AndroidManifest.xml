@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:name=".AppStartClass"
@@ -18,7 +19,7 @@
         android:roundIcon="@drawable/learnakantwiimage"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProverbsActivity"></activity>
+        <activity android:name=".ProverbsActivity" />
         <activity android:name=".ChildrenAlphabet" />
         <activity
             android:name=".Main2Activity"

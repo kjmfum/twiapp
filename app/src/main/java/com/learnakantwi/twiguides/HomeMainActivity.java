@@ -434,7 +434,7 @@ public class HomeMainActivity extends AppCompatActivity {
 
 
         AppRate.with(this)
-                .setInstallDays(1)
+                .setInstallDays(0)
                 .setLaunchTimes(3)
                 .setRemindInterval(2)
                 .monitor();

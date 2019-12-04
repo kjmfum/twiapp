@@ -4,9 +4,9 @@ android {
     signingConfigs {
         releaseme {
             storeFile file('/Users/obaapa/FinalApp/TwiGuide1FinalUpload/UploadOfTwiGuides/Twiguides')
-            storePassword 'Justbabe2345'
+            storePassword 'Justbabe23456'
             keyAlias = 'Twi'
-            keyPassword 'Bajcool7456'
+            keyPassword 'Bajcool7123'
         }
     }
 
@@ -17,8 +17,8 @@ android {
         applicationId "com.learnakantwi.twiguides"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 29
-        versionName "1.29"
+        versionCode 32
+        versionName "1.32"
         //multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.releaseme
@@ -33,6 +33,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.billingclient:billing:2.0.3'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'

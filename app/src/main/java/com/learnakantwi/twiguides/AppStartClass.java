@@ -156,6 +156,10 @@ public class AppStartClass extends Application {
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
         String dailyTwiPreference = sharedPreferences.getString("DailyTwiPreference", "Yes");
 
+        SharedPreferences sharedPreferences1 = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
+        sharedPreferences1.edit().putString("Downloading", "No").apply();
+
+
         assert dailyTwiPreference != null;
         if (dailyTwiPreference.equals("Yes")) {
             showDaily();
