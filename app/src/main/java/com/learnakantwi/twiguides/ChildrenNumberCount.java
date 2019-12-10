@@ -51,10 +51,11 @@ public class ChildrenNumberCount extends AppCompatActivity {
     MediaPlayer mp1;
     AdView mAdView;
     boolean musicPlaying =true;
+    String b;
 
 
     public void goToWeb() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?couponCode=FDISCOUNT1"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
         startActivity(intent);
     }
 
@@ -267,9 +268,11 @@ public class ChildrenNumberCount extends AppCompatActivity {
     }
 
     public void playFromFileOrDownload(final String filename){
-        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/CHILDREN"+filename+ ".m4a");
-        if (myFile.exists()){
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/CHILDREN/"+filename+ ".m4a");
+        toast.setText(filename);
+        toast.show();
 
+        if (myFile.exists()){
 
 
             try {
@@ -398,9 +401,6 @@ public class ChildrenNumberCount extends AppCompatActivity {
 
     public void animation(View view){
 
-
-       String b;
-
         int idview= view.getId();
         TextView blabla = view.findViewById(idview);
        b = (String) blabla.getText();
@@ -408,25 +408,15 @@ public class ChildrenNumberCount extends AppCompatActivity {
 
         view.startAnimation(shake);
 
-        playFromFileOrDownload(b);
 
-       // view.animate().rotation(360).setDuration(2000);
 
-      /* if (view.getTag()=="hi"){
-           view.animate().alpha(1f).setDuration(2000);
-        }
-       else
-       {
-           view.animate().alpha(0).setDuration(2000);
-
-       };
-
-*/
 
 
         //Toast.makeText(this, b, Toast.LENGTH_SHORT).show();
         toast.setText(b);
         toast.show();
+
+        playFromFileOrDownload(b);
 
        // view.animate().alpha(1f).setDuration(6000);
 

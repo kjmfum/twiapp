@@ -406,7 +406,7 @@ public class CommonExpressionsaActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void goToWeb() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?couponCode=FDISCOUNT1"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
         startActivity(intent);
     }
 
@@ -473,72 +473,6 @@ public class CommonExpressionsaActivity extends AppCompatActivity {
 
         commonExpressionaListView = findViewById(R.id.commonExpressionsaListView);
         storageReference= FirebaseStorage.getInstance().getReference();
-
-        commonExpressionsAArrayList = new ArrayList<>();
-
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Good morning (1)","Maakye"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Good morning (2)","Mema wo akye"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Good afternoon (1)","Maaha"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Good afternoon (2)","Mema wo aha"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Good evening (1)","Maadwo"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Good evening (2)","Mema wo adwo"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Good night","Da yie"));
-
-        commonExpressionsAArrayList.add(new CommonExpressionsA("How are you?","Wo ho te sɛn?"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("How is your mother?","Wo maame ho te sɛn?"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("How is your wife?","Wo yere ho te sɛn?"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("I am fine","Me ho yɛ"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("How are they doing?","Wɔn ho te sɛn?"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("I am not feeling well (1)","Me ho mfa me"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("I am not feeling well (2)","Mente apɔ"));
-
-        commonExpressionsAArrayList.add(new CommonExpressionsA("She is fine","Ne ho yɛ"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("He is fine","Ne ho yɛ"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("They are fine","Wɔn ho yɛ"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("They are all fine","Wɔn nyinaa ho yɛ"));
-
-
-        commonExpressionsAArrayList.add(new CommonExpressionsA("I am happy to meet you","M'ani agye sɛ mahyia wo"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Welcome","Akwaaba"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("I bid you welcome","Mema wo akwaaba"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("I am happy","M'ani agye"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("I am sad","Me werɛ ahow"));
-
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Stop crying","Gyae su"));
-
-
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Please (1)","Mepa wo kyɛw"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Please (2)","Mesrɛ wo"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Thank you (1)","Medaase"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Thank you (2)","Me da wo ase"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("I miss you","Mafe wo"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("I will miss you","Mɛfe wo"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("We will miss you","Yɛbɛfe wo"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("We will miss you (Plural)","Yɛbɛfe mo"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Love","Ɔdɔ"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("I love you","Me dɔ wo"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("We love you","Yɛdɔ mo"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Do you love me?","Wo dɔ me?"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Yes","Aane"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("No","Dabi"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("My name is Kwaku (1)","Yɛfrɛ me Kwaku"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("My name is Kwaku (2)","Me din de Kwaku"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("What is your name? (1)","Yɛfrɛ wo sɛn?"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("What is your name? (2)","Wo din de sɛn?"));
-
-        commonExpressionsAArrayList.add(new CommonExpressionsA("How old are you?","Wadi mfe sɛn?"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("I am 30 years old","Madi mfe aduasa"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Call me","Frɛ me"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Do you speak English?","Wo ka borɔfo?"));
-
-        commonExpressionsAArrayList.add(new CommonExpressionsA("I am sick","Me yare"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("I need money","Me hia sika"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Do you have money","Wowɔ sika?"));
-
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Congratulations","Ayekoo"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("See you soon","Ɛrenkyɛ mehu wo"));
-        commonExpressionsAArrayList.add(new CommonExpressionsA("Give me a hug","Yɛ me atuu"));
-
 
         CommonExpressionsAdapterA commonExpressionsAdapterA = new CommonExpressionsAdapterA(this,commonExpressionsAArrayList);
         commonExpressionaListView.setAdapter(commonExpressionsAdapterA);

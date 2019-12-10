@@ -284,6 +284,10 @@ public class AppStartClass extends Application {
         daysOfWeeksArray.add(new DaysOfWeek("Friday", "Fiada"));
         daysOfWeeksArray.add(new DaysOfWeek("Saturday", "Memeneda"));
         daysOfWeeksArray.add(new DaysOfWeek("Sunday", "Kwasiada"));
+        //daysOfWeeksArray.add(new DaysOfWeek("--Other Days--", ""));
+        daysOfWeeksArray.add(new DaysOfWeek("Holiday (1)", "Nnapɔnna"));
+        daysOfWeeksArray.add(new DaysOfWeek("Holiday (2)", "Afofieda"));
+        daysOfWeeksArray.add(new DaysOfWeek("Birthday", "Awoda"));
 
 
         // ANIMALS ARRAY
@@ -590,7 +594,22 @@ public class AppStartClass extends Application {
         commonExpressionsAArrayList.add(new CommonExpressionsA("Call me","Frɛ me"));
         commonExpressionsAArrayList.add(new CommonExpressionsA("Do you speak English?","Wo ka borɔfo?"));
 
+
+        commonExpressionsAArrayList.add(new CommonExpressionsA("Do you understand English?","Wo te borɔfo?"));
+        commonExpressionsAArrayList.add(new CommonExpressionsA("Say it in English","Ka no borɔfo?"));
+        commonExpressionsAArrayList.add(new CommonExpressionsA("I am lost","Mayera"));
+        commonExpressionsAArrayList.add(new CommonExpressionsA("Show me the way","Kyerɛ me kwan no"));
+        commonExpressionsAArrayList.add(new CommonExpressionsA("Where is the toilet?","Agyananbea no wɔ he?"));
+
+
         commonExpressionsAArrayList.add(new CommonExpressionsA("I am sick","Me yare"));
+        commonExpressionsAArrayList.add(new CommonExpressionsA("Help me","Boa me"));
+        commonExpressionsAArrayList.add(new CommonExpressionsA("Help us","Boa yɛn"));
+        commonExpressionsAArrayList.add(new CommonExpressionsA("I need help","Me hia mmoa"));
+        commonExpressionsAArrayList.add(new CommonExpressionsA("Sorry (1)","Kafra"));
+        commonExpressionsAArrayList.add(new CommonExpressionsA("Sorry (2)","Kosɛ"));
+
+
         commonExpressionsAArrayList.add(new CommonExpressionsA("I need money","Me hia sika"));
         commonExpressionsAArrayList.add(new CommonExpressionsA("Do you have money","Wowɔ sika?"));
 
@@ -771,7 +790,8 @@ public class AppStartClass extends Application {
         foodArrayList.add(new Food("Fish (1)", "Apataa"));
         foodArrayList.add(new Food("Fish (2)", "Nsuomnam"));
         foodArrayList.add(new Food("Pork", "Prakonam"));
-        foodArrayList.add(new Food("Meat", "Nam"));
+        foodArrayList.add(new Food("Meat (1)", "Nam"));
+        foodArrayList.add(new Food("Meat (2)", "Mogyanam"));
         foodArrayList.add(new Food("Mutton", "Odwannam"));
         foodArrayList.add(new Food("Lamb", "Odwannam"));
         foodArrayList.add(new Food("Sugar", "Asikyire"));
@@ -1249,6 +1269,13 @@ public class AppStartClass extends Application {
         timeArrayList.add(new Time("A year by this time","Afe sesɛɛ"));
         timeArrayList.add(new Time("Next year (1)","Afedan"));
         timeArrayList.add(new Time("Next year (2)","Afe a yebesi mu"));
+
+
+        timeArrayList.add(new Time("Christmas","Buronya"));
+        timeArrayList.add(new Time("Christmas day","Buronya da"));
+        timeArrayList.add(new Time("Christmas time","Buronya bere"));
+        timeArrayList.add(new Time("New Year","Afe foforo"));
+
 
 
         timeArrayList.add(new Time("Today","Nnɛ"));
@@ -1840,7 +1867,8 @@ public class AppStartClass extends Application {
         allArrayList.add(new All("Fish (1)", "Apataa","","", "", ""));
         allArrayList.add(new All("Fish (2)", "Nsuomnam","","", "", ""));
         allArrayList.add(new All("Pork", "Prakonam","","", "", ""));
-        allArrayList.add(new All("Meat", "Nam","","", "", ""));
+        allArrayList.add(new All("Meat (1)", "Nam","","", "", ""));
+        allArrayList.add(new All("Meat (2)", "Mogyanam","","", "", ""));
         allArrayList.add(new All("Mutton", "Odwannam","","", "", ""));
         allArrayList.add(new All("Lamb", "Odwannam","","", "", ""));
         allArrayList.add(new All("Sugar", "Asikyire","","", "", ""));
@@ -2018,7 +2046,21 @@ public class AppStartClass extends Application {
         allArrayList.add(new All("Call me","Frɛ me","","", "", ""));
         allArrayList.add(new All("Do you speak English?","Wo ka borɔfo?","","", "", ""));
 
+
+        allArrayList.add(new All("Do you understand English?","Wo te borɔfo?","","", "", ""));
+        allArrayList.add(new All("Say it in English","Ka no borɔfo","","", "", ""));
+        allArrayList.add(new All("I am lost", "Mayera","","", "", ""));
+        allArrayList.add(new All("Show me the way","Kyerɛ me kwan no","","", "", ""));
+        allArrayList.add(new All("Where is the toilet?","Agyananbea no wɔ he?","","", "", ""));
+
         allArrayList.add(new All("I am sick","Me yare","","", "", ""));
+        allArrayList.add(new All("Help me","Boa me","","", "", ""));
+        allArrayList.add(new All("Help us","Boa yɛn","","", "", ""));
+        allArrayList.add(new All("I need help","Me hia mmoa","","", "", ""));
+        allArrayList.add(new All("Sorry (1)","Kafra","","", "", ""));
+        allArrayList.add(new All("Sorry (2)","Kosɛ","","", "", ""));
+
+
         allArrayList.add(new All("I need money","Me hia sika","","", "", ""));
         allArrayList.add(new All("Do you have money","Wowɔ sika?","","", "", ""));
 
@@ -2533,6 +2575,13 @@ public class AppStartClass extends Application {
 
         allArrayList.add(new All("1 000 000 000", "Ɔpepepem baako","","", "", ""));
 
+        //////////ALL UNCATEGORIZES///////////
+
+        allArrayList.add(new All("Christmas", "Buronya","","", "", ""));
+        allArrayList.add(new All("Christmas day", "Buronya da","","", "", ""));
+        allArrayList.add(new All("Christmas Time", "Buronya bere","","", "", ""));
+        allArrayList.add(new All("New Year", "Afe foforo","","", "", ""));
+
 
 
         /////////////////////////////////ALL ARRAY LIST  END///////////////////////////
@@ -2622,7 +2671,7 @@ public class AppStartClass extends Application {
         proverbsArrayList.add(new Proverbs("Mogya mu yɛ du sen nsuo","Blood is thicker than water","Your blood relatives are more dear to you than your friends"));
         proverbsArrayList.add(new Proverbs("Wuhu nea ɔbɛsɛe wo maame ayie a, na wode ayie no ahyɛ ne nsa","If you notice someone who will make trouble at your mum's funeral, let that person handle the funeral arrangements","If you suspect someone of sabotaging or stealing something, it is best to make that person responsible for that thing"));
         proverbsArrayList.add(new Proverbs("Baabi a ɔsono bɛfa biara yɛ kwan","Where ever the elephant passes is a way","A powerful person can make a way where there seems to be no way"));
-        proverbsArrayList.add(new Proverbs("Dua koro yi a, sɛ woforo si a wasi na wote hwe nso a wasi","This same tree, if you climb up and climb down, you are down and similarly if you fall down from the tree you are also down","The end of a matter is what matters most"));
+        proverbsArrayList.add(new Proverbs("Dua koro yi ara, sɛ woforo si a wasi na wote hwe nso a wasi","This same tree, if you climb up and climb down, you are down and similarly if you fall down from the tree you are also down","The end of a matter is what matters most"));
 
         //proverbsArrayList.add(new Proverbs("Sɛ wo fie bɛn nsamanpɔw a, ɛnkyerɛ sɛ wubewu kan","",""));
 

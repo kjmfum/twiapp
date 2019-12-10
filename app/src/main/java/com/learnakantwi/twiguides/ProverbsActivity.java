@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.AdapterViewFlipper;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -247,7 +249,7 @@ public class ProverbsActivity extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         //MenuInflater menuInflater = getMenuInflater();
-        getMenuInflater().inflate(R.menu.main_menu_all, menu);
+        getMenuInflater().inflate(R.menu.main_menu_proverbs1, menu);
 
         final MenuItem item = menu.findItem(R.id.menusearch);
         SearchView searchView = (SearchView) item.getActionView();
@@ -299,13 +301,12 @@ public class ProverbsActivity extends AppCompatActivity {
                 //Log.i("Menu Item Selected", "Alphabets");
                 goToMain();
                 return  true;
-         /*   case R.id.quiz1:
-                //Log.i("Menu Item Selected", "Alphabets");
-                goToQuizAll();
+          case R.id.proverbsSlideShow:
+                slideshow();
                 return  true;
             case R.id.downloadAllAudio:
                 downloadClick();
-                return true;*/
+                return true;
             case R.id.videoCourse:
                 //Log.i("Menu Item Selected", "Alphabets");
                 goToWeb();
@@ -316,8 +317,169 @@ public class ProverbsActivity extends AppCompatActivity {
     }
 
     public void goToWeb() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?couponCode=FDISCOUNT1"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
         startActivity(intent);
+    }
+
+    public void downloadClick () {
+        int counter = 0;
+
+        toast.setText("Got here");
+        toast.show();
+
+        if (isNetworkAvailable()) {
+            for (int j = 0; j < proverbsArrayList.size(); j++) {
+
+                String bb = proverbsArrayList.get(j).getTwiProverb();
+                bb= bb.toLowerCase();
+                boolean dd = bb.contains("ɔ");
+                boolean ee = bb.contains("ɛ");
+                if (dd || ee) {
+                    bb = bb.replace("ɔ", "x");
+                    bb = bb.replace("ɛ", "q");
+                }
+
+                if (bb.contains(" ") ||bb.contains("twi:") || bb.contains("/") || bb.contains(";")|| bb.contains("'")|| bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") | bb.contains("?")| bb.contains("...")) {
+                    bb = bb.replace(" ", "");
+                    bb = bb.replace("/", "");
+                    bb= bb.replace(",","");
+                    bb= bb.replace("(","");
+                    bb= bb.replace(")","");
+                    bb= bb.replace("-","");
+                    bb= bb.replace("?","");
+                    bb= bb.replace("...","");
+                    bb= bb.replace("twi:","");
+                    bb= bb.replace("'","");
+                    bb= bb.replace(";","");
+                }
+                File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/"+bb+ ".m4a");
+                if (myFiles.exists()) {
+                    counter++;
+                }
+
+            }
+            if (counter == proverbsArrayList.size()) {
+                toast.setText("All downloaded");
+                toast.show();
+
+            } else {
+                toast.setText("Downloading...");
+                toast.show();
+
+                // toast.setText(counter + " -- "+ allArrayList.size());
+                // toast.show();
+
+                for (int i = 0; i < proverbsArrayList.size(); i++) {
+                    String b = proverbsArrayList.get(i).getTwiProverb().toLowerCase();
+                    boolean d = b.contains("ɔ");
+                    boolean e = b.contains("ɛ");
+                    if (d || e) {
+                        b = b.replace("ɔ", "x");
+                        b = b.replace("ɛ", "q");
+                    }
+
+                    if (b.contains(" ") ||b.contains("twi:") || b.contains("/") || b.contains(";")|| b.contains("'")|| b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") | b.contains("?")| b.contains("...")) {
+                        b = b.replace(" ", "");
+                        b = b.replace("/", "");
+                        b= b.replace(",","");
+                        b= b.replace("(","");
+                        b= b.replace(")","");
+                        b= b.replace("-","");
+                        b= b.replace("?","");
+                        b= b.replace("...","");
+                        b= b.replace("twi:","");
+                        b= b.replace("'","");
+                        b= b.replace(";","");
+                    }
+
+                    File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS" + b + ".m4a");
+                    if (!myFile.exists()) {
+                        if (isNetworkAvailable()){
+                            downloadOnly(b);
+                        }
+                        else{
+                            toast.setText("Please connect to the Internet");
+                            toast.show();
+                            break;
+                        }
+
+                    }
+
+                }
+
+            }
+        }
+        else{
+            toast.setText("Please connect to the Internet to download audio");
+            toast.show();
+        }
+    }
+
+    public void downloadOnly(final String filename){
+        if (isNetworkAvailable()){
+            final StorageReference musicRef = storageReference.child("/Proverbs/" + filename + ".m4a");
+            musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    String url = uri.toString();
+                    downloadFile(getApplicationContext(), filename, ".m4a", url);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    toast.setText("Lost Internet Connection");
+                    toast.show();
+                }
+            });
+        }
+        else {
+            toast.setText("Please connect to Internet to download audio");
+            toast.show();
+        }
+        checkFileinFolder();
+    }
+    public boolean checkFileinFolder() {
+
+        int counter = 0;
+
+        for (int j = 0; j < proverbsArrayList.size(); j++) {
+
+            String bb = proverbsArrayList.get(j).getTwiProverb();
+            bb = bb.toLowerCase();
+            boolean dd = bb.contains("ɔ");
+            boolean ee = bb.contains("ɛ");
+            if (dd || ee) {
+                bb = bb.replace("ɔ", "x");
+                bb = bb.replace("ɛ", "q");
+            }
+
+            if (bb.contains(" ") || bb.contains("twi:") || bb.contains("/") || bb.contains(";") || bb.contains("'") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") | bb.contains("?") | bb.contains("...")) {
+                bb = bb.replace(" ", "");
+                bb = bb.replace("/", "");
+                bb = bb.replace(",", "");
+                bb = bb.replace("(", "");
+                bb = bb.replace(")", "");
+                bb = bb.replace("-", "");
+                bb = bb.replace("?", "");
+                bb = bb.replace("...", "");
+                bb = bb.replace("twi:", "");
+                bb = bb.replace("'", "");
+                bb = bb.replace(";", "");
+            }
+            File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/"+bb+ ".m4a");
+            if (myFiles.exists()) {
+                counter++;
+            }
+
+        }
+        if (counter == proverbsArrayList.size()) {
+            toast.setText("Download Completed");
+            toast.show();
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 
@@ -329,11 +491,39 @@ public class ProverbsActivity extends AppCompatActivity {
 
 
    public void next(View view){
-       proverbsViewFlipper.showNext();
+       //proverbsViewFlipper.stopFlipping();
+        proverbsViewFlipper.showNext();
+       // int yes = proverbsViewFlipper.indexOfChild(proverbsViewFlipper.getCurrentView());
    }
 
     public void previous (View view){
         proverbsViewFlipper.showPrevious();
+    }
+
+    public void slideshow() {
+        proverbsViewFlipper.showNext();
+        proverbsViewFlipper.startFlipping();
+        proverbsViewFlipper.setFlipInterval(5000);
+
+        //proverbsViewFlipper.getChildCount();
+    }
+
+    public void slideshow(View view) {
+        proverbsViewFlipper.showNext();
+        proverbsViewFlipper.startFlipping();
+        proverbsViewFlipper.setFlipInterval(6000);
+        toast.setText("Proverbs change after 6 seconds");
+        toast.show();
+
+        //proverbsViewFlipper.getChildCount();
+    }
+
+    public void pauseSlideshow(View view) {
+        if (proverbsViewFlipper.isFlipping()){
+            proverbsViewFlipper.stopFlipping();
+        }
+
+        //proverbsViewFlipper.getChildCount();
     }
 
 
@@ -348,6 +538,8 @@ public class ProverbsActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
+        toast = Toast.makeText(getApplicationContext(), "Tap Twi to Listen", Toast.LENGTH_SHORT);
+        toast.show();
       /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {

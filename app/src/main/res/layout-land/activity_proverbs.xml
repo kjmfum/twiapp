@@ -36,7 +36,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.8" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="center"
@@ -49,7 +49,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guidelinehor80"/>
 
-    <TextView
+    <Button
         android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -57,11 +57,36 @@
         android:onClick="next"
         android:padding="5dp"
         android:text="NEXT"
-        android:textSize="25dp"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline70"
         app:layout_constraintTop_toTopOf="@id/guidelinehor80"/>
+
+    <ImageButton
+        android:id="@+id/pauseButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="pauseSlideshow"
+        android:padding="10dp"
+        android:src="@drawable/ic_pause_circle_outline_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline50"
+        app:layout_constraintStart_toStartOf="@id/guideline30"
+        app:layout_constraintTop_toTopOf="@id/guidelinehor80" />
+
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="slideshow"
+        android:padding="10dp"
+        android:src="@drawable/ic_play_circle_outline_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline70"
+        app:layout_constraintStart_toStartOf="@id/guideline50"
+        app:layout_constraintTop_toTopOf="@id/guidelinehor80" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline30"
@@ -76,6 +101,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.7" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
     <!--1 <com.google.android.gms.ads.AdView
 
