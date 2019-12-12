@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <group android:checkableBehavior="single">
+
+    <item android:id="@+id/db" android:icon="@drawable/icondownload"  android:title="dashboard"/>
+    <item android:id="@+id/event" android:icon="@drawable/quizimage" android:title="Events"/>
+    <item android:id="@+id/search" android:icon="@drawable/ic_arrow_downward_black_24dp" android:title="Search"/>
+
+    </group>
+
+    <item android:title="Others">
+
+    <menu>
+
+    <item android:id="@+id/setting" android:icon="@drawable/ic_videogame" android:title="Settings"/>
+    <item android:id="@+id/activity" android:icon="@drawable/ic_arrow_downward_black_24dp" android:title="Activities"/>
+    <item android:id="@+id/logout" android:icon="@drawable/icondownload" android:title="Logout"/>
+
+    </menu>
+
+    </item>
+
+</menu>

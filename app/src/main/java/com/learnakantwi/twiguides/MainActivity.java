@@ -82,14 +82,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       new Handler().postDelayed(new Runnable() {
+  /*     new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                 startActivity(homeIntent);
                 finish();
             }
+        },SPLASH_TIME_OUT);*/
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
+                startActivity(homeIntent);
+                finish();
+            }
         },SPLASH_TIME_OUT);
+
+
     }
 
 
