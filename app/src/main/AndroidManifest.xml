@@ -19,6 +19,8 @@
         android:roundIcon="@drawable/learnakantwiimage"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".InAppActivity">
+        </activity>
         <activity android:name=".ProverbsActivity" />
         <activity android:name=".ChildrenAlphabet" />
         <activity

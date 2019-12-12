@@ -116,4 +116,10 @@
     <string name="TwiCourseUdemy">"https://www.udemy.com/course/learn-akan-twi/?couponCode=FDISCOUNT1"</string>
 
 
+    <!-- Drawer Layout -->
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+
 </resources>
