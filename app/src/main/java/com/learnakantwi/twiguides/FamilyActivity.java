@@ -477,6 +477,7 @@ public class FamilyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family);
 
+
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
         isNetworkAvailable();

@@ -153,6 +153,9 @@ public class AppStartClass extends Application {
 
         createNotificationChannels();
 
+        SharedPreferences subscriptionStatePreference = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
+        String subscriptionState  = subscriptionStatePreference.getString("Subscription", "No");
+
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
         String dailyTwiPreference = sharedPreferences.getString("DailyTwiPreference", "Yes");
 
@@ -618,6 +621,7 @@ public class AppStartClass extends Application {
         commonExpressionsAArrayList.add(new CommonExpressionsA("Give me a hug","Yɛ me atuu"));
 
         //FAMILY ARRAY LIST
+
 
         familyArrayList = new ArrayList<>();
 

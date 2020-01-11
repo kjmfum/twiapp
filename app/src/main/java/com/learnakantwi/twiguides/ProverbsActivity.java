@@ -4,9 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -26,6 +29,7 @@ import android.widget.ViewFlipper;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -38,6 +42,7 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ProverbsActivity extends AppCompatActivity {
 
@@ -52,6 +57,112 @@ public class ProverbsActivity extends AppCompatActivity {
     ArrayList<Proverbs> results = new ArrayList<>();
     ArrayList<Proverbs> results1 = new ArrayList<>();
 
+    public InterstitialAd mInterstitialAd;
+    Random random;
+
+    int showAdProbability;
+
+
+
+
+    public void advert() {
+
+        final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
+        //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
+        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
+
+        assert advertPreference != null;
+        if (!advertPreference.equals("Yes")) {
+            new AlertDialog.Builder(this)
+                    .setIcon(R.drawable.learnakantwiimage)
+                    .setTitle("Please support us")
+                    .setMessage("Would You Like To View An Advert To Support Us?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sharedPreferences.edit().putString("AdvertPreference", "Yes").apply();
+                            if (mInterstitialAd.isLoaded()) {
+                                mInterstitialAd.show();
+                            } else {
+                                Log.d("TAG", "The interstitial wasn't loaded yet.");
+                            }
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    sharedPreferences.edit().putString("AdvertPreference", "No").apply();
+                                }
+                            }
+                    )
+                    .show();
+        } else {
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+
+            } else {
+                Log.d("TAG", "The interstitial wasn't loaded yet.");
+
+            }
+        }
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+    }
+
+    public void advert1() {
+
+        final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
+        //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
+        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
+
+        assert advertPreference != null;
+        if (advertPreference.equals("Yes")) {
+
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            } else {
+                Log.d("TAG", "The interstitial wasn't loaded yet.");
+            }
+
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        }
+    }
+
+    public void advertDialog() {
+
+        final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
+        //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
+        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
+
+        assert advertPreference != null;
+        if (!advertPreference.equals("Yes")) {
+            new AlertDialog.Builder(this)
+                    .setIcon(R.drawable.learnakantwiimage)
+                    .setTitle("Please support us")
+                    .setMessage("Would You Like To View An Advert Later To Support Us?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sharedPreferences.edit().putString("AdvertPreference", "Yes").apply();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    sharedPreferences.edit().putString("AdvertPreference", "No").apply();
+                                }
+                            }
+                    )
+                    .show();
+        }
+
+       // sharedPreferences.edit().putString("AdvertPreference", "No").apply();
+
+    }
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -512,7 +623,7 @@ public class ProverbsActivity extends AppCompatActivity {
         proverbsViewFlipper.showNext();
         proverbsViewFlipper.startFlipping();
         proverbsViewFlipper.setFlipInterval(6000);
-        toast.setText("Proverbs change after 6 seconds");
+        toast.setText("Slides change every 6 seconds");
         toast.show();
 
         //proverbsViewFlipper.getChildCount();
@@ -527,19 +638,89 @@ public class ProverbsActivity extends AppCompatActivity {
     }
 
 
+    public void deleteDuplicatelDownload(){
+
+        File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/");
+
+
+        File [] files1 = myFiles.listFiles();
+
+
+        for (int j = 0; j < files1.length; j++) {
+
+            // toast.setText(String.valueOf(files1.length));
+            //toast.show();
+
+            File file = files1[j];
+            if (file.getName().contains("-")){
+                file.delete();
+                //toast.setText("Deleted");
+                //toast.show();
+
+            /*String bb = allArrayList.get(j).getTwiMain();
+            bb= bb.toLowerCase();
+            boolean dd = bb.contains("ɔ");
+            boolean ee = bb.contains("ɛ");
+            if (dd || ee) {
+                bb = bb.replace("ɔ", "x");
+                bb = bb.replace("ɛ", "q");
+            }
+
+            if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'") | bb.contains("...")) {
+                bb = bb.replace(" ", "");
+                bb = bb.replace("/", "");
+                bb = bb.replace(",", "");
+                bb = bb.replace("(", "");
+                bb = bb.replace(")", "");
+                bb = bb.replace("-", "");
+                bb = bb.replace("?", "");
+                bb = bb.replace("'", "");
+                bb= bb.replace("...","");*/
+            }
+           /* File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
+           * if (myFiles.exists()) {
+                myFiles.delete();
+            }*/
+
+
+
+            /*for (File f: myFiles.listFiles()){
+                long space= f.getTotalSpace();
+
+                //f.delete();
+            }
+*/
+        }
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proverbs);
 
+        random = new Random();
+        showAdProbability = random.nextInt(10);
 
+        advertDialog();
+
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
 
         storageReference = FirebaseStorage.getInstance().getReference();
-        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
+        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_LONG);
 
-        toast = Toast.makeText(getApplicationContext(), "Tap Twi to Listen", Toast.LENGTH_SHORT);
+
+        toast = Toast.makeText(getApplicationContext(), "Tap Twi to Listen", Toast.LENGTH_LONG);
         toast.show();
+
+       // toast.setText(Integer.toString(showAdProbability));
+        //toast.show();
+
       /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -592,4 +773,28 @@ public class ProverbsActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onResume() {
+        deleteDuplicatelDownload();
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (showAdProbability<=5){
+            advert();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onUserLeaveHint() {
+        if (showAdProbability>=7){
+            advert1();
+        }
+        super.onUserLeaveHint();
+    }
 }
+
+

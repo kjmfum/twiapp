@@ -46,6 +46,8 @@ public class MonthsActivity extends AppCompatActivity {
     static ArrayList <Months> monthsArrayList ;
     ListView monthsListView;
 
+
+
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
@@ -341,6 +343,8 @@ public class MonthsActivity extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
 
+
+
         final MenuItem item = menu.findItem(R.id.menusearch);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -458,6 +462,9 @@ public class MonthsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_months);
+
+
+        monthsArrayList.add(new Months("New Month","Bosome foforo"));
 
         isNetworkAvailable();
 

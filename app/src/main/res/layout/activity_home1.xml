@@ -12,22 +12,27 @@
         android:layout_height="0dp"
         android:contentDescription="@string/ghanaflag"
         app:layout_constraintEnd_toEndOf="@+id/guideline21"
-        app:layout_constraintBottom_toTopOf="@id/homeListView"
-        app:layout_constraintStart_toStartOf="@id/guideline20"
+        app:layout_constraintBottom_toTopOf="@id/guideline15"
+        app:layout_constraintStart_toStartOf="@id/guideline30"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
         app:srcCompat="@drawable/learnakantwi" />
 
-    <ListView
-        android:id="@+id/homeListView"
+  <!--  <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
-        android:background="@android:color/background_light"
-        app:layout_constraintBottom_toTopOf="@id/adView"
+        app:layout_constraintTop_toTopOf="@id/guideline15"
+        app:layout_constraintBottom_toBottomOf="@id/guideline20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline15" />
+        android:textStyle="bold|italic"
+        android:text="SUBSCRIBE FOR MORE CONTENT"
+        android:gravity="center"
+        android:background="@color/colorGreen"
+        android:onClick="goToSubscriptionPage"
+        />
+
+        -->
 
 
     <!--  <Button
@@ -45,12 +50,32 @@
         -->
 
 
+    <ListView
+        android:id="@+id/homeListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:background="@android:color/background_light"
+        app:layout_constraintBottom_toTopOf="@id/adView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline15" />
+    <!-- app:layout_constraintTop_toTopOf="@+id/guideline20" -->
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.20" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline15"
@@ -73,7 +98,7 @@
         app:layout_constraintTop_toBottomOf="@id/homeListView" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline20"
+        android:id="@+id/guideline30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -92,7 +117,8 @@
         android:layout_height="wrap_content"
         app:adSize="SMART_BANNER"
         ca-app-pub-7384642419407303/7840050122
-        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        test: app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        correct: ca-app-pub-7384642419407303/7840050122
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/homeListView">

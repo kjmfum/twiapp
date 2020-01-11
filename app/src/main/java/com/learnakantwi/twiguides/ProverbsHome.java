@@ -274,6 +274,7 @@ public class ProverbsHome extends AppCompatActivity {
 
 
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //MenuInflater menuInflater = getMenuInflater();
@@ -561,7 +562,61 @@ public class ProverbsHome extends AppCompatActivity {
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
-//In your case, you do not need the LinearLayout and ImageView at all. Just add android:drawableLeft="@drawable/up_count_big" to your TextView.
+    public void deleteDuplicatelDownload(){
+
+        File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/");
+
+
+        File [] files1 = myFiles.listFiles();
+
+
+        for (int j = 0; j < files1.length; j++) {
+
+            // toast.setText(String.valueOf(files1.length));
+            //toast.show();
+
+            File file = files1[j];
+            if (file.getName().contains("-")){
+                file.delete();
+                //toast.setText("Deleted");
+                //toast.show();
+
+            /*String bb = allArrayList.get(j).getTwiMain();
+            bb= bb.toLowerCase();
+            boolean dd = bb.contains("ɔ");
+            boolean ee = bb.contains("ɛ");
+            if (dd || ee) {
+                bb = bb.replace("ɔ", "x");
+                bb = bb.replace("ɛ", "q");
+            }
+
+            if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'") | bb.contains("...")) {
+                bb = bb.replace(" ", "");
+                bb = bb.replace("/", "");
+                bb = bb.replace(",", "");
+                bb = bb.replace("(", "");
+                bb = bb.replace(")", "");
+                bb = bb.replace("-", "");
+                bb = bb.replace("?", "");
+                bb = bb.replace("'", "");
+                bb= bb.replace("...","");*/
+            }
+           /* File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
+           * if (myFiles.exists()) {
+                myFiles.delete();
+            }*/
+
+
+
+            /*for (File f: myFiles.listFiles()){
+                long space= f.getTotalSpace();
+
+                //f.delete();
+            }
+*/
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -572,6 +627,8 @@ public class ProverbsHome extends AppCompatActivity {
         topImage.setImageResource(R.drawable.proverbsimage);
 
         toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+
+        deleteDuplicatelDownload();
 
 
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -672,6 +729,12 @@ public class ProverbsHome extends AppCompatActivity {
         //MobileAds.initialize(this, "ca-app-pub-6999427576830667~6251296006");
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        deleteDuplicatelDownload();
+        super.onResume();
     }
 }
 

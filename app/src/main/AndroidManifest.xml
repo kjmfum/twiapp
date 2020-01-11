@@ -19,14 +19,20 @@
         android:roundIcon="@drawable/learnakantwiimage"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InAppActivity">
-        </activity>
+        <activity android:name=".SubPFoodActivity" />
+        <activity android:name=".SubPMonthsActivity" />
+        <activity android:name=".SubPFamilyActivity" />
+        <activity android:name=".SubPHomeMainActivity" />
+        <activity android:name=".SubPProverbsHome" />
+        <activity android:name=".SubPProverbsActivity" />
+        <activity android:name=".SubPTimeActivity" />
+        <activity android:name=".SubPHomeVocabulary" />
+        <activity android:name=".InAppActivity" />
         <activity android:name=".ProverbsActivity" />
         <activity android:name=".ChildrenAlphabet" />
         <activity
             android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_main2" /> <!-- android:theme="@style/AppTheme.NoActionBar" -->
         <activity
             android:name=".QuizAnimals"
             android:resizeableActivity="true"
@@ -36,8 +42,7 @@
         <activity android:name=".QuizFamily" />
         <activity
             android:name=".ChildrenNumberCount"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:screenOrientation="landscape" /> <!-- android:theme="@style/AppTheme.NoActionBar" -->
         <activity android:name=".QuizTime" />
         <activity android:name=".QuizDaysOfWeek" />
         <activity android:name=".QuizNumbers" />

@@ -11,11 +11,9 @@ import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,17 +35,11 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-import java.util.concurrent.ExecutionException;
-
-import static com.learnakantwi.twiguides.DaysOfWeekActivity.daysOfWeeksArray;
-import static com.learnakantwi.twiguides.Home.homeButtonArrayList;
+import java.util.Arrays;
 
 public class AllActivity extends AppCompatActivity {
 
@@ -122,6 +114,69 @@ public class AllActivity extends AppCompatActivity {
         return isRunning;
     }*/
 
+    public void deleteAllDownload(){
+
+        File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/");
+
+        String[] files = myFiles.list();
+        String name1= myFiles.getName();
+
+        File [] files1 = myFiles.listFiles();
+
+        //System.out.println(Arrays.toString(files));
+        System.out.println("Hey "+ name1);
+
+        ArrayList<String[]> filesArray = new ArrayList<>();
+        filesArray.add(files);
+
+
+        for (int j = 0; j < files1.length; j++) {
+
+            toast.setText(String.valueOf(files1.length));
+            toast.show();
+
+            File file = files1[j];
+            if (file.getName().contains("-")){
+                file.delete();
+                //toast.setText("Deleted");
+                //toast.show();
+
+            /*String bb = allArrayList.get(j).getTwiMain();
+            bb= bb.toLowerCase();
+            boolean dd = bb.contains("ɔ");
+            boolean ee = bb.contains("ɛ");
+            if (dd || ee) {
+                bb = bb.replace("ɔ", "x");
+                bb = bb.replace("ɛ", "q");
+            }
+
+            if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'") | bb.contains("...")) {
+                bb = bb.replace(" ", "");
+                bb = bb.replace("/", "");
+                bb = bb.replace(",", "");
+                bb = bb.replace("(", "");
+                bb = bb.replace(")", "");
+                bb = bb.replace("-", "");
+                bb = bb.replace("?", "");
+                bb = bb.replace("'", "");
+                bb= bb.replace("...","");*/
+            }
+           /* File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
+           * if (myFiles.exists()) {
+                myFiles.delete();
+            }*/
+
+
+
+            /*for (File f: myFiles.listFiles()){
+                long space= f.getTotalSpace();
+
+                //f.delete();
+            }
+*/
+        }
+
+    }
     public void downloadClick () {
         int counter = 0;
 
@@ -457,7 +512,8 @@ public class AllActivity extends AppCompatActivity {
                 goToQuizAll();
                 return  true;
             case R.id.downloadAllAudio:
-               downloadClick();
+              // downloadClick();
+                deleteAllDownload();
                 return true;
             case R.id.videoCourse:
                 //Log.i("Menu Item Selected", "Alphabets");
@@ -475,7 +531,7 @@ public class AllActivity extends AppCompatActivity {
 
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), Home.class);
+        Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
         startActivity(intent);
     }
 
@@ -493,7 +549,7 @@ public class AllActivity extends AppCompatActivity {
 
         isNetworkAvailable();
 
-        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
+        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_LONG);
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override

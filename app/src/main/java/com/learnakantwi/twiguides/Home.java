@@ -651,6 +651,70 @@ public class Home extends AppCompatActivity {
     }*/
 //In your case, you do not need the LinearLayout and ImageView at all. Just add android:drawableLeft="@drawable/up_count_big" to your TextView.
 
+    public void deleteDuplicatelDownload(){
+
+        File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/");
+
+        String[] files = myFiles.list();
+        String name1= myFiles.getName();
+
+        File [] files1 = myFiles.listFiles();
+
+        //System.out.println(Arrays.toString(files));
+        System.out.println("Hey "+ name1);
+
+        ArrayList<String[]> filesArray = new ArrayList<>();
+        filesArray.add(files);
+
+
+        for (int j = 0; j < files1.length; j++) {
+
+            //toast.setText(String.valueOf(files1.length));
+            //toast.show();
+
+            File file = files1[j];
+            if (file.getName().contains("-")){
+                file.delete();
+                //toast.setText("Deleted");
+                //toast.show();
+
+            /*String bb = allArrayList.get(j).getTwiMain();
+            bb= bb.toLowerCase();
+            boolean dd = bb.contains("ɔ");
+            boolean ee = bb.contains("ɛ");
+            if (dd || ee) {
+                bb = bb.replace("ɔ", "x");
+                bb = bb.replace("ɛ", "q");
+            }
+
+            if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'") | bb.contains("...")) {
+                bb = bb.replace(" ", "");
+                bb = bb.replace("/", "");
+                bb = bb.replace(",", "");
+                bb = bb.replace("(", "");
+                bb = bb.replace(")", "");
+                bb = bb.replace("-", "");
+                bb = bb.replace("?", "");
+                bb = bb.replace("'", "");
+                bb= bb.replace("...","");*/
+            }
+           /* File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
+           * if (myFiles.exists()) {
+                myFiles.delete();
+            }*/
+
+
+
+            /*for (File f: myFiles.listFiles()){
+                long space= f.getTotalSpace();
+
+                //f.delete();
+            }
+*/
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -665,7 +729,6 @@ public class Home extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference();
         toast= Toast.makeText(this, "", Toast.LENGTH_SHORT);
-
 
 
         ImageView topImage = findViewById(R.id.homeAdvertButton);
@@ -844,7 +907,17 @@ public class Home extends AppCompatActivity {
 
 
     }
+
+
+    @Override
+    protected void onResume() {
+       // deleteDuplicatelDownload();
+        super.onResume();
+    }
 }
+
+
+
 
 
 

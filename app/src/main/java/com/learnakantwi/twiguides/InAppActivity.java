@@ -5,8 +5,14 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,17 +28,24 @@ import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
 import com.android.billingclient.api.BillingResult;
 import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.Purchase.PurchasesResult;
+import com.android.billingclient.api.PurchaseHistoryRecord;
+import com.android.billingclient.api.PurchaseHistoryResponseListener;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.android.billingclient.util.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.learnakantwi.twiguides.FamilyActivity.familyArrayList;
 
-public class InAppActivity extends AppCompatActivity implements PurchasesUpdatedListener {
+public class InAppActivity extends AppCompatActivity implements PurchasesUpdatedListener, PurchaseHistoryResponseListener {
 
 
     BillingClient billingClient;
@@ -43,6 +56,12 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
     AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener;
+    SharedPreferences subscriptionStatePreference;
+    Toast toast;
+    private AppBarConfiguration mAppBarConfiguration;
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -125,9 +144,13 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
             }
         } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
             // Handle an error caused by a user cancelling the purchase flow.
-            Toast.makeText(this, "You didn't buy It. Shame", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You cancelled the Purchase", Toast.LENGTH_SHORT).show();
+            billingClient.endConnection();}
+        else if(billingResult.getResponseCode()== BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED){
+                Toast.makeText(this, "Already Purchased", Toast.LENGTH_SHORT).show();
         } else {
             // Handle any other error codes.
+            Toast.makeText(this,"Could not complete purchase", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -135,24 +158,39 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
     void handlePurchase(Purchase purchase) {
         if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
             // Grant entitlement to the user.
-            Toast.makeText(this, "You bought It", Toast.LENGTH_SHORT).show();
-
+            //Toast.makeText(this, "You bought It", Toast.LENGTH_SHORT).show();
+            subscriptionStatePreference.edit().putBoolean("Paid", true).apply();
             // Acknowledge the purchase if it hasn't already been acknowledged.
             if (!purchase.isAcknowledged()) {
                 AcknowledgePurchaseParams acknowledgePurchaseParams =
                         AcknowledgePurchaseParams.newBuilder()
                                 .setPurchaseToken(purchase.getPurchaseToken())
                                 .build();
+                AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener = new AcknowledgePurchaseResponseListener() {
+                    @Override
+                    public void onAcknowledgePurchaseResponse(BillingResult billingResult) {
+
+                        toast.setText("Acknowleged");
+                        toast.show();
+                    }
+
+                };
+
+
                 billingClient.acknowledgePurchase(acknowledgePurchaseParams, acknowledgePurchaseResponseListener);
-                Toast.makeText(this, "Acknowledged", Toast.LENGTH_SHORT).show();
+
             }
         }
     }
 
 
+//    void queryPurchaseHistoryAsync( String skuType, PurchaseHistoryResponseListener listener){
+//
+//        skuType = billingClient.querySkuDetailsAsync(listener);
+//    }
 
     public void buyMe() {
-        setUpBilling();
+        setUpBillingClient();
     }
 
         /*BillingFlowParams flowParams = BillingFlowParams.newBuilder()
@@ -162,16 +200,21 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
        // int responseCode = billingClient.launchBillingFlow(flowParams);
     }*/
 
-    public void setUpBilling() {
+    public void setUpBillingClient() {
         billingClient = BillingClient.newBuilder(this)
                 .setListener(this)
                 .enablePendingPurchases()
                 .build();
+        setUpBilling();
+    }
+
+        public void setUpBilling(){
         billingClient.startConnection(new BillingClientStateListener() {
             @Override
             public void onBillingSetupFinished(BillingResult billingResult) {
                 if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                     // The BillingClient is ready. You can query purchases here.
+
 
                     List<String> skuList = new ArrayList<>();
                     skuList.add("reading_club");
@@ -183,6 +226,12 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
                                 @Override
                                 public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> skuDetailsList) {
                                     // Process the result.
+
+                                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
+                                        toast.setText("Already Purchased 1");
+                                        toast.show();
+
+                                    } else{
                                     if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
                                         for (SkuDetails skuDetails : skuDetailsList) {
                                             String sku = skuDetails.getSku();
@@ -192,11 +241,13 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
                                                 BillingFlowParams flowParams = BillingFlowParams.newBuilder()
                                                         .setSkuDetails(skuDetails)
                                                         .build();
-                                                BillingResult responseCode = billingClient.launchBillingFlow(InAppActivity.this,flowParams);
-                                                Toast.makeText(InAppActivity.this, "I got it done", Toast.LENGTH_SHORT).show();
-                                            } /*else if ("gas".equals(sku)) {
+                                                    billingClient.launchBillingFlow(InAppActivity.this, flowParams);
+                                                    // BillingResult responseCode = billingClient.launchBillingFlow(InAppActivity.this,flowParams);
+                                                    Toast.makeText(InAppActivity.this, "I got it done", Toast.LENGTH_SHORT).show();
+                                                } /*else if ("gas".equals(sku)) {
                                                 gasPrice = price;
                                             }*/
+                                            }
                                         }
                                     }
 
@@ -211,8 +262,12 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
                 Toast.makeText(InAppActivity.this, "I got disconnected", Toast.LENGTH_SHORT).show();
                 // Try to restart the connection on the next request to
                 // Google Play by calling the startConnection() method.
+                setUpBillingClient();
             }
+
+
         });
+        //billingClient.endConnection();
     }
 
 
@@ -229,6 +284,38 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_app);
 
+
+       toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+  /*      FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });*/
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
+                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
+                .setDrawerLayout(drawer)
+                .build();
+/*        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);*/
+
+        subscriptionStatePreference = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
+
+
+
+/*
         toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
@@ -237,58 +324,8 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       */
 
-
-       /* BillingFlowParams flowParams = BillingFlowParams.newBuilder()
-                .setSkuDetails(skuDetails)
-                .build();
-        int responseCode = billingClient.launchBillingFlow(flowParams);*/
-
-        //setUpBilling();
-
-
-      /* billingClient = BillingClient.newBuilder(this).setListener(this).build();
-        billingClient.startConnection(new BillingClientStateListener() {
-            @Override
-            public void onBillingSetupFinished(BillingResult billingResult) {
-                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                    // The BillingClient is ready. You can query purchases here.
-
-                    List<String> skuList = new ArrayList<>();
-                    skuList.add("reading_club");
-                    // skuList.add("gas");
-                    SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
-                    params.setSkusList(skuList).setType(BillingClient.SkuType.SUBS);
-                    billingClient.querySkuDetailsAsync(params.build(),
-                            new SkuDetailsResponseListener() {
-                                @Override
-                                public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> skuDetailsList) {
-                                    // Process the result.
-                                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
-                                        for (SkuDetails skuDetails : skuDetailsList) {
-                                            String sku = skuDetails.getSku();
-                                            String price = skuDetails.getPrice();
-                                            if ("reading_club".equals(sku)) {
-                                                premiumUpgradePrice = price;
-                                                Toast.makeText(InAppActivity.this, "I got it done", Toast.LENGTH_SHORT).show();
-                                            } *//*else if ("gas".equals(sku)) {
-                                                gasPrice = price;
-                                            }*//*
-                                        }
-                                    }
-
-
-
-                                }
-                            });
-                }
-            }
-            @Override
-            public void onBillingServiceDisconnected() {
-                // Try to restart the connection on the next request to
-                // Google Play by calling the startConnection() method.
-            }
-        });*/
 
         buyButton= findViewById(R.id.buy);
 
@@ -302,6 +339,8 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
     }
 
 
+    @Override
+    public void onPurchaseHistoryResponse(BillingResult billingResult, List<PurchaseHistoryRecord> list) {
 
-
+    }
 }

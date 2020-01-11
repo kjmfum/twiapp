@@ -16,12 +16,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.BillingFlowParams;
+import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.PurchasesUpdatedListener;
+import com.android.billingclient.api.SkuDetails;
+import com.android.billingclient.api.SkuDetailsParams;
+import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -29,7 +40,9 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import hotchemi.android.rate.AppRate;
 
@@ -37,14 +50,27 @@ import static android.Manifest.permission.INTERNET;
 
 //import android.support.v7.app.AppCompatActivity;
 
-public class HomeMainActivity extends AppCompatActivity {
-    //  app:adUnitId="ca-app-pub-6999427576830667~6251296006"
+public class HomeMainActivity extends AppCompatActivity implements PurchasesUpdatedListener {
+    //  app:adUnitId="ca-app-pub-6999427576830667~6251296006"ˆ
+
+    BillingClient billingClient;
+    String premiumUpgradePrice;
+    Button buyButton;
+    Toast toast;
+
+
+
+
+
 
     static ArrayList<HomeMainButton> homeMainButtonArrayList;
     public InterstitialAd mInterstitialAd;
     ListView homeListView;
     AdView mAdView;
     MediaPlayer mediaPlayer;
+    SharedPreferences subscriptionStatePreference;
+    boolean subscriptionState;
+    File myFiles;
 
 
     @Override
@@ -319,7 +345,13 @@ public class HomeMainActivity extends AppCompatActivity {
         Toast.makeText(this, "Daily Twi Alerts Turned On", Toast.LENGTH_SHORT).show();
     }
 
-    public void advert() {
+    public void goToSubscriptionPage (View v){
+        Toast.makeText(this, String.valueOf(subscriptionState), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), InAppActivity.class);
+        startActivity(intent);
+    }
+
+    /*public void advert() {
 
 
         final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
@@ -331,7 +363,7 @@ public class HomeMainActivity extends AppCompatActivity {
         if (!advertPreference.equals("Yes")) {
             new AlertDialog.Builder(this)
                     .setIcon(R.drawable.learnakantwiimage)
-                    .setTitle("We need your support")
+                    .setTitle("Please support us")
                     .setMessage("Would You Like To View An Advert To Support Us?")
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
@@ -366,6 +398,7 @@ public class HomeMainActivity extends AppCompatActivity {
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
+*/
 
    /* public void checkPermission(String permission, int requestCode)
     {
@@ -390,10 +423,206 @@ public class HomeMainActivity extends AppCompatActivity {
     }*/
 //In your case, you do not need the LinearLayout and ImageView at all. Just add android:drawableLeft="@drawable/up_count_big" to your TextView.
 
+    public void buyMe() {
+        setUpBillingClient();
+    }
+
+        /*BillingFlowParams flowParams = BillingFlowParams.newBuilder()
+                .setSkuDetails(skuDetails)
+                .build();
+        BillingResult responseCode = billingClient.launchBillingFlow(InAppActivity.this, flowParams);
+       // int responseCode = billingClient.launchBillingFlow(flowParams);
+    }*/
+
+    public void setUpBillingClient() {
+        billingClient = BillingClient.newBuilder(this)
+                .setListener(this)
+                .enablePendingPurchases()
+                .build();
+        setUpBilling();
+    }
+
+    public void setUpBilling(){
+
+
+        billingClient.startConnection(new BillingClientStateListener() {
+            @Override
+            public void onBillingSetupFinished(BillingResult billingResult) {
+                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                    // The BillingClient is ready. You can query purchases here.
+                        //
+
+
+                    List<String> skuList = new ArrayList<>();
+                    skuList.add("reading_club");
+                    // skuList.add("gas");
+                    SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
+                    params.setSkusList(skuList).setType(BillingClient.SkuType.SUBS);
+
+
+
+                    billingClient.querySkuDetailsAsync(params.build(),
+                            new SkuDetailsResponseListener() {
+                                @Override
+                                public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> skuDetailsList) {
+                                    // Process the result.
+
+                                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
+                                        toast.setText("Already Purchased 1");
+                                        toast.show();
+
+                                    } else{
+                                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
+                                            for (SkuDetails skuDetails : skuDetailsList) {
+                                                String sku = skuDetails.getSku();
+                                                String price = skuDetails.getPrice();
+                                                if ("reading_club".equals(sku)) {
+                                                    premiumUpgradePrice = price;
+
+
+                                                    Purchase.PurchasesResult purchasesResult = billingClient.queryPurchases(BillingClient.SkuType.SUBS);
+                                                    List<Purchase> purchasesList = purchasesResult.getPurchasesList();
+                                                    //
+
+
+                                                    if (purchasesList !=null && !purchasesList.isEmpty()){
+                                                        String me1 = purchasesList.get(0).getOrderId();
+                                                        int me2 = purchasesList.get(0).getPurchaseState();
+                                                        int me3=  purchasesList.size();
+
+                                                        //toast.setText(Integer.toString(me3));
+                                                        toast.setText(me1);
+                                                        toast.show();
+
+                                                    }
+                                                    else{
+                                                        toast.setText("nothing subscribed");
+                                                        toast.show();
+                                                        goToAll();
+                                                    }
+
+
+                                                    //purchase.getOrderId();
+
+//                                                    billingClient.queryPurchases(sku);
+//                                                    Purchase.PurchasesResult purchasesResult = billingClient.queryPurchases(BillingClient.SkuType.SUBS);
+//                                                    purchasesResult.getPurchasesList();
+
+                                                } /*else if ("gas".equals(sku)) {
+                                                gasPrice = price;
+                                            }*/
+                                            }
+                                        }
+                                    }
+
+
+
+                                }
+                            });
+                }
+            }
+            @Override
+            public void onBillingServiceDisconnected() {
+                Toast.makeText(HomeMainActivity.this, "I got disconnected", Toast.LENGTH_SHORT).show();
+                // Try to restart the connection on the next request to
+                // Google Play by calling the startConnection() method.
+                setUpBillingClient();
+            }
+
+
+        });
+        //billingClient.endConnection();
+    }
+
+
+    public void deleteDuplicatelDownload(){
+
+        myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/");
+
+
+        File [] files1 = myFiles.listFiles();
+
+        if (files1.length>0){
+        for (File file : files1) {
+
+            //for (int j = 0; j < files1.length; j++)
+            // toast.setText(String.valueOf(files1.length));
+            //toast.show();
+            if (file.getName().contains("-")) {
+
+                boolean wasDeleted = file.delete();
+
+
+                if (!wasDeleted){
+                    System.out.println("Was not deleted");
+                }
+
+
+                //toast.setText("Deleted");
+                //toast.show();
+            }
+
+            /*String bb = allArrayList.get(j).getTwiMain();
+            bb= bb.toLowerCase();
+            boolean dd = bb.contains("ɔ");
+            boolean ee = bb.contains("ɛ");
+            if (dd || ee) {
+                bb = bb.replace("ɔ", "x");
+                bb = bb.replace("ɛ", "q");
+            }
+
+            if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'") | bb.contains("...")) {
+                bb = bb.replace(" ", "");
+                bb = bb.replace("/", "");
+                bb = bb.replace(",", "");
+                bb = bb.replace("(", "");
+                bb = bb.replace(")", "");
+                bb = bb.replace("-", "");
+                bb = bb.replace("?", "");
+                bb = bb.replace("'", "");
+                bb= bb.replace("...","");*/
+            }
+           /* File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
+           * if (myFiles.exists()) {
+                myFiles.delete();
+            }*/
+
+
+
+            /*for (File f: myFiles.listFiles()){
+                long space= f.getTotalSpace();
+
+                //f.delete();
+            }
+*/
+        }
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home1);
+
+
+
+        toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+
+        deleteDuplicatelDownload();
+
+
+        subscriptionStatePreference = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
+        subscriptionState = subscriptionStatePreference.getBoolean("Paid",false);
+
+
+//        String subscriptionState  = subscriptionStatePreference.getString("Subscription", "No");
+//
+//        SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
+//        String dailyTwiPreference = sharedPreferences.getString("DailyTwiPreference", "Yes");
+//
+//        SharedPreferences sharedPreferences1 = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
+//        sharedPreferences1.edit().putString("Downloading", "No").apply();
 
         // Function to check and request permission
        // checkPermission(INTERNET, 100);
@@ -411,11 +640,8 @@ public class HomeMainActivity extends AppCompatActivity {
             }
         }
 
-
-
-
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
 
@@ -441,18 +667,20 @@ public class HomeMainActivity extends AppCompatActivity {
 
         AppRate.showRateDialogIfMeetsConditions(this);
 
+        /////////////
        /* findViewById(R.id.homeAdvertButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 advert();
             }
-        });
-*/
+        });*/
+/////////////
 
         // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
 
         homeMainButtonArrayList = new ArrayList<>();
         homeListView = findViewById(R.id.homeListView);
+
 
         homeMainButtonArrayList.add(new HomeMainButton("Vocabulary", R.drawable.vocabularyimage));
         homeMainButtonArrayList.add(new HomeMainButton("Quiz", R.drawable.quizimage));
@@ -539,6 +767,27 @@ public class HomeMainActivity extends AppCompatActivity {
         //MobileAds.initialize(this, "ca-app-pub-6999427576830667~6251296006");
 
 
+    }
+
+
+
+
+    @Override
+    public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {
+        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK
+                && purchases != null) {
+           toast.setText("Okay1");
+           toast.show();
+        } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
+            // Handle an error caused by a user cancelling the purchase flow.
+            Toast.makeText(this, "You cancelled the Purchase", Toast.LENGTH_SHORT).show();
+            billingClient.endConnection();}
+        else if(billingResult.getResponseCode()== BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED){
+            Toast.makeText(this, "Already Purchased", Toast.LENGTH_SHORT).show();
+        } else {
+            // Handle any other error codes.
+            Toast.makeText(this,"Could not complete purchase", Toast.LENGTH_LONG).show();
+        }
     }
 }
 
