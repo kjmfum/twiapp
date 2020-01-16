@@ -50,6 +50,7 @@ public class FamilyActivity extends AppCompatActivity {
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
     AdView mAdView;
+    boolean playsoon = true;
 
 
     Toast toast;
@@ -196,6 +197,7 @@ public class FamilyActivity extends AppCompatActivity {
     }
 
     public void playFromFirebase(StorageReference musicRef) {
+        playsoon =true;
 
         if (Build.VERSION.SDK_INT > 22) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
@@ -212,19 +214,23 @@ public class FamilyActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
 
+
                                     if (mp1 != null) {
                                         mp1.stop();
                                         mp1.reset();
                                         mp1.release();
                                     }
                                     mp1 = new MediaPlayer();
+
                                     try {
                                         mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
                                         mp1.prepareAsync();
                                         mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                                             @Override
                                             public void onPrepared(MediaPlayer mp) {
-                                                mp.start();
+                                                if (!mp1.isPlaying() && !playFromDevice.isPlaying()) {
+                                                    mp.start();
+                                                }
                                             }
                                         });
                                     } catch (IOException ex) {
@@ -236,6 +242,7 @@ public class FamilyActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception exception) {
                             // Handle failed download
                             // ...
+                            toast.setText("Unable to download now. Please try later");
                         }
                     });
                 } else {
@@ -255,16 +262,21 @@ public class FamilyActivity extends AppCompatActivity {
 
     }
 
+
+
     public void playFromFileOrDownload(final String filename, final String appearText){
         File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
         if (myFile.exists()){
 
+
+
             try {
                 if (playFromDevice != null){
-                    playFromDevice.stop();
+                    playFromDevice.pause();
                     playFromDevice.reset();
                     playFromDevice.release();
                 }
+
                 playFromDevice = new MediaPlayer();
 
                 playFromDevice.setDataSource(myFile.toString());
@@ -282,17 +294,19 @@ public class FamilyActivity extends AppCompatActivity {
             }
         }
         else {
-
             if (isNetworkAvailable()){
                 final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
                 musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        String url = uri.toString();
-                        playFromFirebase(musicRef);
-                        downloadFile(getApplicationContext(), filename, ".m4a", url);
-                        toast.setText(appearText);
-                        toast.show();
+
+                            String url = uri.toString();
+                            playFromFirebase(musicRef);
+                            //downloadFile(getApplicationContext(), filename, ".m4a", url);
+
+                            toast.setText(appearText);
+                            toast.show();
+
                         //Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -477,8 +491,12 @@ public class FamilyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family);
 
+        playFromDevice = new MediaPlayer();
+        mp1 = new MediaPlayer();
 
-        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
+
+        toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
+        toast.show();
 
         isNetworkAvailable();
 
@@ -518,4 +536,63 @@ public class FamilyActivity extends AppCompatActivity {
         listView.setAdapter(familyAdapter);
 
     }
+
+
+    public void stopPlay () {
+
+        toast.cancel();
+
+        if (!playsoon){
+
+        }
+
+            if (playFromDevice.isPlaying()) {
+
+                playFromDevice.pause();
+                playFromDevice.reset();
+                playFromDevice.release();
+            }
+
+
+        if (mp1.isPlaying()) {
+            mp1.pause();
+            mp1.reset();
+            mp1.release();
+        }
+    }
+      /*  catch (NullPointerException e){
+            System.out.println("Null Pointer 1");
+        }*/
+
+
+    @Override
+    protected void onDestroy() {
+        stopPlay();
+        super.onDestroy();
+    }
+
+
+   /* public void stopPlay (){
+
+        toast.cancel();
+        if (playFromDevice != null) {
+            playFromDevice.release();
+        }
+
+        if (mp1 != null) {
+            mp1.release();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopPlay();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onUserLeaveHint() {
+        stopPlay();
+        super.onUserLeaveHint();
+    }*/
 }

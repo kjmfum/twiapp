@@ -547,5 +547,7 @@ public class AlphabetsActivity extends AppCompatActivity {
         myListView.setAdapter(twiAlphapetAdapter);
     }
 
+
+
 }
 

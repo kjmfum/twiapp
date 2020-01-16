@@ -436,7 +436,8 @@ public class DaysOfWeekActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
+        toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
+        toast.show();
 
         daysOfWeekListView = findViewById(R.id.lvdaysofweek);
         storageReference= FirebaseStorage.getInstance().getReference();
@@ -458,7 +459,6 @@ public class DaysOfWeekActivity extends AppCompatActivity {
         myAdapterDaysOfWk = new DaysOfWeekAdapter(this, daysOfWeeksArray);
         daysOfWeekListView.setAdapter(myAdapterDaysOfWk);
     }
-
 
 
 

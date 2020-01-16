@@ -485,7 +485,8 @@ public class FoodActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
+        toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
+        toast.show();
 
         foodListView = findViewById(R.id.familyListView);
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -494,5 +495,6 @@ public class FoodActivity extends AppCompatActivity {
         foodListView.setAdapter(foodAdapter);
 
     }
+
 }
 

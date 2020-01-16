@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,6 +40,17 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -70,7 +82,10 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
     MediaPlayer mediaPlayer;
     SharedPreferences subscriptionStatePreference;
     boolean subscriptionState;
-    File myFiles;
+   /* FirebaseDatabase firebaseDatabase;
+    FirebaseAuth firebaseAuth;
+    DatabaseReference myRef;*/
+
 
 
     @Override
@@ -537,7 +552,7 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
     public void deleteDuplicatelDownload(){
 
-        myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/");
+        File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/");
 
 
         File [] files1 = myFiles.listFiles();
@@ -605,11 +620,17 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home1);
 
+        //firebaseAuth = FirebaseAuth.getInstance();
 
 
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
-        deleteDuplicatelDownload();
+        try {
+            deleteDuplicatelDownload();
+        }
+        catch (NullPointerException e){
+            System.out.println("Error Null");
+        }
 
 
         subscriptionStatePreference = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
@@ -768,9 +789,6 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
 
     }
-
-
-
 
     @Override
     public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {

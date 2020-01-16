@@ -47,7 +47,7 @@ import java.util.Random;
 public class ProverbsActivity extends AppCompatActivity {
 
     static ArrayList<Proverbs> proverbsArrayList = new ArrayList<>();
-   // AdView mAdView;
+    // AdView mAdView;
     AdView mAdView1;
     AdapterViewFlipper proverbsViewFlipper;
     StorageReference storageReference;
@@ -61,8 +61,6 @@ public class ProverbsActivity extends AppCompatActivity {
     Random random;
 
     int showAdProbability;
-
-
 
 
     public void advert() {
@@ -113,24 +111,27 @@ public class ProverbsActivity extends AppCompatActivity {
 
     public void advert1() {
 
-        final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
+        /*final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
         //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
         String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
 
         assert advertPreference != null;
-        if (advertPreference.equals("Yes")) {
+        if (advertPreference.equals("Yes")) {*/
 
-            if (mInterstitialAd.isLoaded()) {
-                mInterstitialAd.show();
-            } else {
-                Log.d("TAG", "The interstitial wasn't loaded yet.");
-            }
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
 
             mInterstitialAd = new InterstitialAd(this);
             mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
             mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        }
+
+        //ca-app-pub-7384642419407303/9880404420
+        //ca-app-pub-3940256099942544/1033173712 test
     }
+
 
     public void advertDialog() {
 
@@ -622,8 +623,8 @@ public class ProverbsActivity extends AppCompatActivity {
     public void slideshow(View view) {
         proverbsViewFlipper.showNext();
         proverbsViewFlipper.startFlipping();
-        proverbsViewFlipper.setFlipInterval(6000);
-        toast.setText("Slides change every 6 seconds");
+        proverbsViewFlipper.setFlipInterval(5000);
+        toast.setText("Slides change every 5 seconds");
         toast.show();
 
         //proverbsViewFlipper.getChildCount();
@@ -640,57 +641,26 @@ public class ProverbsActivity extends AppCompatActivity {
 
     public void deleteDuplicatelDownload(){
 
+
         File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/");
 
 
         File [] files1 = myFiles.listFiles();
 
+        if (files1.length>0){
+            for (File file : files1) {
 
-        for (int j = 0; j < files1.length; j++) {
+                if (file.getName().contains("-")) {
 
-            // toast.setText(String.valueOf(files1.length));
-            //toast.show();
+                    boolean wasDeleted = file.delete();
 
-            File file = files1[j];
-            if (file.getName().contains("-")){
-                file.delete();
-                //toast.setText("Deleted");
-                //toast.show();
 
-            /*String bb = allArrayList.get(j).getTwiMain();
-            bb= bb.toLowerCase();
-            boolean dd = bb.contains("ɔ");
-            boolean ee = bb.contains("ɛ");
-            if (dd || ee) {
-                bb = bb.replace("ɔ", "x");
-                bb = bb.replace("ɛ", "q");
+                    if (!wasDeleted) {
+                        System.out.println("Was not deleted");
+                    }
+                }
             }
-
-            if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'") | bb.contains("...")) {
-                bb = bb.replace(" ", "");
-                bb = bb.replace("/", "");
-                bb = bb.replace(",", "");
-                bb = bb.replace("(", "");
-                bb = bb.replace(")", "");
-                bb = bb.replace("-", "");
-                bb = bb.replace("?", "");
-                bb = bb.replace("'", "");
-                bb= bb.replace("...","");*/
             }
-           /* File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
-           * if (myFiles.exists()) {
-                myFiles.delete();
-            }*/
-
-
-
-            /*for (File f: myFiles.listFiles()){
-                long space= f.getTotalSpace();
-
-                //f.delete();
-            }
-*/
-        }
 
     }
 
@@ -703,12 +673,16 @@ public class ProverbsActivity extends AppCompatActivity {
         random = new Random();
         showAdProbability = random.nextInt(10);
 
-        advertDialog();
+       // advertDialog();
 
 
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+
+        //ca-app-pub-7384642419407303/9880404420
+        //ca-app-pub-3940256099942544/1033173712 test
 
 
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -776,21 +750,52 @@ public class ProverbsActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        deleteDuplicatelDownload();
+
+        try {
+            deleteDuplicatelDownload();
+        }
+        catch (NullPointerException e){
+            System.out.println("Error Null");
+        }
+
         super.onResume();
     }
 
+   public void stopPlay (){
+       toast.cancel();
+       if (playFromDevice != null) {
+           //toast.setText("Not Null");
+           //toast.show();
+           //playFromDevice.stop();
+           //playFromDevice.reset();
+           playFromDevice.release();
+       }
+
+       if (mp1 != null) {
+          // mp1.stop();
+           //mp1.reset();
+           mp1.release();
+       }
+   }
+
     @Override
     protected void onDestroy() {
+
+       // stopPlay();
+
         if (showAdProbability<=5){
-            advert();
+       stopPlay();
+            advert1();
+
         }
         super.onDestroy();
     }
 
     @Override
     protected void onUserLeaveHint() {
+
         if (showAdProbability>=7){
+            stopPlay();
             advert1();
         }
         super.onUserLeaveHint();

@@ -469,7 +469,8 @@ public class CommonExpressionsaActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
+        toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
+        toast.show();
 
         commonExpressionaListView = findViewById(R.id.commonExpressionsaListView);
         storageReference= FirebaseStorage.getInstance().getReference();
@@ -478,4 +479,5 @@ public class CommonExpressionsaActivity extends AppCompatActivity {
         commonExpressionaListView.setAdapter(commonExpressionsAdapterA);
 
     }
+
 }

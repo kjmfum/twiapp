@@ -651,7 +651,7 @@ public class Home extends AppCompatActivity {
     }*/
 //In your case, you do not need the LinearLayout and ImageView at all. Just add android:drawableLeft="@drawable/up_count_big" to your TextView.
 
-    public void deleteDuplicatelDownload(){
+   /* public void deleteDuplicatelDownload(){
 
         File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/");
 
@@ -677,6 +677,70 @@ public class Home extends AppCompatActivity {
                 file.delete();
                 //toast.setText("Deleted");
                 //toast.show();
+
+            *//*String bb = allArrayList.get(j).getTwiMain();
+            bb= bb.toLowerCase();
+            boolean dd = bb.contains("ɔ");
+            boolean ee = bb.contains("ɛ");
+            if (dd || ee) {
+                bb = bb.replace("ɔ", "x");
+                bb = bb.replace("ɛ", "q");
+            }
+
+            if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'") | bb.contains("...")) {
+                bb = bb.replace(" ", "");
+                bb = bb.replace("/", "");
+                bb = bb.replace(",", "");
+                bb = bb.replace("(", "");
+                bb = bb.replace(")", "");
+                bb = bb.replace("-", "");
+                bb = bb.replace("?", "");
+                bb = bb.replace("'", "");
+                bb= bb.replace("...","");*//*
+            }
+           *//* File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
+           * if (myFiles.exists()) {
+                myFiles.delete();
+            }*//*
+
+
+
+            *//*for (File f: myFiles.listFiles()){
+                long space= f.getTotalSpace();
+
+                //f.delete();
+            }
+*//*
+        }
+
+    }*/
+
+    public void deleteDuplicatelDownload(){
+
+        File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/");
+
+
+        File [] files1 = myFiles.listFiles();
+
+        if (files1.length>0){
+            for (File file : files1) {
+
+                //for (int j = 0; j < files1.length; j++)
+                // toast.setText(String.valueOf(files1.length));
+                //toast.show();
+                if (file.getName().contains("-")) {
+
+                    boolean wasDeleted = file.delete();
+
+
+                    if (!wasDeleted){
+                        System.out.println("Was not deleted");
+                    }
+
+
+                    //toast.setText("Deleted");
+                    //toast.show();
+                }
 
             /*String bb = allArrayList.get(j).getTwiMain();
             bb= bb.toLowerCase();
@@ -894,7 +958,6 @@ public class Home extends AppCompatActivity {
                         return;
                     case "Download All Audio":
                         downloadAll();
-                        return;
                 }
             }
         });
@@ -911,7 +974,12 @@ public class Home extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-       // deleteDuplicatelDownload();
+        try {
+            deleteDuplicatelDownload();
+        }
+        catch (NullPointerException e){
+            System.out.println("Error Null");
+        }
         super.onResume();
     }
 }

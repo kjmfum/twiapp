@@ -624,4 +624,28 @@ public class QuizAlphabet extends AppCompatActivity {
 
     }
 
+    /*public void stopPlay (){
+
+        toast.cancel();
+        if (playFromDevice != null) {
+            playFromDevice.release();
+        }
+
+        if (mp1 != null) {
+            mp1.release();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopPlay();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onUserLeaveHint() {
+        stopPlay();
+        super.onUserLeaveHint();
+    }*/
+
 }

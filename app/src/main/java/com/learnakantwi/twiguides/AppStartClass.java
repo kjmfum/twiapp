@@ -106,9 +106,11 @@ public class AppStartClass extends Application {
 
         public void downloadEssential(final String a){
 
+        try {
+
             File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + a + ".m4a");
             if (!myFiles.exists()) {
-                final StorageReference musicRef = storageReference.child("/raw/" +a + ".m4a");
+                final StorageReference musicRef = storageReference.child("/raw/" + a + ".m4a");
                 musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
@@ -126,18 +128,20 @@ public class AppStartClass extends Application {
                         };
                         Thread myThread = new Thread(runnable);
                         myThread.start();
-                        Log.e(TAG, "onSuccess: Downloadede",null );
+                        Log.e(TAG, "onSuccess: Downloadede", null);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "onFailure: No",null );
+                        Log.e(TAG, "onFailure: No", null);
                     }
                 });
+            } else {
+                Log.e(TAG, "onAlreadyThere: Yes", null);
             }
-            else {
-                Log.e(TAG, "onAlreadyThere: Yes",null );
-            }
+        }catch (IllegalStateException e){
+            Log.e(TAG, "illegal state exception "+ e, null);
+        }
 
         }
 

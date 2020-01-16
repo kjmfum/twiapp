@@ -478,7 +478,8 @@ public class ColoursActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
+        toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
+        toast.show();
 
 
         coloursListView = findViewById(R.id.coloursListView);
@@ -489,4 +490,5 @@ public class ColoursActivity extends AppCompatActivity {
         coloursListView.setAdapter(coloursAdapter);
 
     }
+
 }

@@ -453,23 +453,8 @@ public class ChildrenNumberCount extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //playFromDevice1.stop();
-       // playFromDevice1.setLooping(false);
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        //loopSound();
-    }
 }
 
 

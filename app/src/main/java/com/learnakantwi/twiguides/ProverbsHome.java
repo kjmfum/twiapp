@@ -569,51 +569,19 @@ public class ProverbsHome extends AppCompatActivity {
 
         File [] files1 = myFiles.listFiles();
 
+        if (files1.length>0){
+            for (File file : files1) {
 
-        for (int j = 0; j < files1.length; j++) {
+                if (file.getName().contains("-")) {
 
-            // toast.setText(String.valueOf(files1.length));
-            //toast.show();
+                    boolean wasDeleted = file.delete();
 
-            File file = files1[j];
-            if (file.getName().contains("-")){
-                file.delete();
-                //toast.setText("Deleted");
-                //toast.show();
 
-            /*String bb = allArrayList.get(j).getTwiMain();
-            bb= bb.toLowerCase();
-            boolean dd = bb.contains("ɔ");
-            boolean ee = bb.contains("ɛ");
-            if (dd || ee) {
-                bb = bb.replace("ɔ", "x");
-                bb = bb.replace("ɛ", "q");
+                    if (!wasDeleted) {
+                        System.out.println("Was not deleted");
+                    }
+                }
             }
-
-            if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'") | bb.contains("...")) {
-                bb = bb.replace(" ", "");
-                bb = bb.replace("/", "");
-                bb = bb.replace(",", "");
-                bb = bb.replace("(", "");
-                bb = bb.replace(")", "");
-                bb = bb.replace("-", "");
-                bb = bb.replace("?", "");
-                bb = bb.replace("'", "");
-                bb= bb.replace("...","");*/
-            }
-           /* File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
-           * if (myFiles.exists()) {
-                myFiles.delete();
-            }*/
-
-
-
-            /*for (File f: myFiles.listFiles()){
-                long space= f.getTotalSpace();
-
-                //f.delete();
-            }
-*/
         }
 
     }
@@ -628,7 +596,12 @@ public class ProverbsHome extends AppCompatActivity {
 
         toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
 
-        deleteDuplicatelDownload();
+        try {
+            deleteDuplicatelDownload();
+        }
+        catch (NullPointerException e){
+            System.out.println("Error Null");
+        }
 
 
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -733,7 +706,12 @@ public class ProverbsHome extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        deleteDuplicatelDownload();
+        try {
+            deleteDuplicatelDownload();
+        }
+        catch (NullPointerException e){
+            System.out.println("Error Null");
+        }
         super.onResume();
     }
 }

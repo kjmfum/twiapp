@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                     else{
                                                         //toast.setText("nothing subscribed");
                                                         //toast.show();
+                                                        //Intent homeIntent = new Intent(getApplicationContext(), SignInActivity.class);
                                                         Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                                                         startActivity(homeIntent);
                                                         finish();
@@ -143,10 +144,13 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
             }
             @Override
             public void onBillingServiceDisconnected() {
-                Toast.makeText(MainActivity.this, "I got disconnected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "I got disconnected", Toast.LENGTH_SHORT).show();
                 // Try to restart the connection on the next request to
                 // Google Play by calling the startConnection() method.
-                setUpBillingClient();
+               // setUpBillingClient();
+                Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
+                startActivity(homeIntent);
+                finish();
             }
 
 

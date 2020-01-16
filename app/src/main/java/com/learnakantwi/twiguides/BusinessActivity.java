@@ -456,7 +456,8 @@ public class BusinessActivity extends AppCompatActivity {
 
         isNetworkAvailable();
 
-        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
+        toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
+        toast.show();
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -475,5 +476,6 @@ public class BusinessActivity extends AppCompatActivity {
         businessListView.setAdapter(businessAdapter);
 
     }
+
 }
 
