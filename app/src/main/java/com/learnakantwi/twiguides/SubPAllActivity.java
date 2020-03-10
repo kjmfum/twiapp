@@ -7,6 +7,7 @@ import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,9 +15,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -54,6 +57,11 @@ public class SubPAllActivity extends AppCompatActivity {
 
 
     Toast toast;
+
+    String b;
+    PlayFromFirebase playFromFirebase;
+
+
     boolean isRunning =false;
     public Runnable runnable = new Runnable() {
 
@@ -322,7 +330,7 @@ public class SubPAllActivity extends AppCompatActivity {
 
     }
 
-    public void playFromFileOrDownload(final String filename, final String appearText){
+    public void playFromFileOrDownload(final String filename){
         File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
         if (myFile.exists()){
 
@@ -340,8 +348,8 @@ public class SubPAllActivity extends AppCompatActivity {
                     @Override
                     public void onPrepared(MediaPlayer mp) {
                         mp.start();
-                        toast.setText(appearText);
-                        toast.show();
+                        /*toast.setText(appearText);
+                        toast.show();*/
                     }
                 });
             } catch (IOException e) {
@@ -358,8 +366,8 @@ public class SubPAllActivity extends AppCompatActivity {
                         String url = uri.toString();
                         playFromFirebase(musicRef);
                         downloadFile(getApplicationContext(), filename, ".m4a", url);
-                        toast.setText(appearText);
-                        toast.show();
+                       /* toast.setText(appearText);
+                        toast.show();*/
                         //Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -450,7 +458,7 @@ public class SubPAllActivity extends AppCompatActivity {
         }
 
 
-        playFromFileOrDownload(b, a);
+        playFromFileOrDownload(b);
 
     }
     @Override
@@ -469,7 +477,7 @@ public class SubPAllActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<All> results = new ArrayList<>();
+                final ArrayList<All> results = new ArrayList<>();
                 for (All x: allArrayList ){
 
                     if(x.getEnglishmain().toLowerCase().contains(newText.toLowerCase()) || x.getTwiMain().toLowerCase().contains(newText.toLowerCase())
@@ -484,6 +492,44 @@ public class SubPAllActivity extends AppCompatActivity {
 
                     ((AllAdapter)allListView.getAdapter()).update(results);
                 }
+
+                allListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+
+                        view.setBackgroundColor(Color.GREEN);
+                        String a;
+
+                        a = results.get(position).getTwiMain();
+
+
+                        String c;
+                        c= results.get(position).getEnglishmain();
+                        StringBuilder sb = new StringBuilder();
+
+                       // sb = sb.append(c).append(" is:\n").append(a);
+                        sb = sb.append("English: ").append(c).append("\n").append("Twi: ").append(a);
+                        // sb= sb.append(b.substring(0,1)).append("   ").append(b.charAt(1)).append("\n\t").append(b);
+                        // c= b.substring(0,1) + "  "+ Character.toString(b.charAt(1)) +"   :"+ b.substring(0,2);
+
+                        b=  playFromFirebase.viewTextConvert(a);
+
+                        // Toast.makeText(ReadingActivityTwoLetters.this, sb, Toast.LENGTH_SHORT).show();
+
+                        toast.setText(sb);
+                        toast.show();
+                        playFromFileOrDownload(b);
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                view.setBackgroundColor(Color.WHITE);
+                            }
+                        }, 3000);
+
+
+                    }
+                });
 
 
                 return false;
@@ -544,11 +590,13 @@ public class SubPAllActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sub_pall);
 
         context = this;
+        playFromFirebase = new PlayFromFirebase();
 
         isNetworkAvailable();
 
         toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
         toast.show();
+
 
 
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -557,11 +605,50 @@ public class SubPAllActivity extends AppCompatActivity {
         AllAdapter allAdapter= new AllAdapter(this, allArrayList);
         allListView.setAdapter(allAdapter);
 
+        allListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+
+                view.setBackgroundColor(Color.GREEN);
+                String a;
+
+                a = allArrayList.get(position).getTwiMain();
+
+
+                String c;
+                c= allArrayList.get(position).getEnglishmain();
+                StringBuilder sb = new StringBuilder();
+
+                sb = sb.append("English: ").append(c).append("\n").append("Twi: ").append(a);
+               // sb= sb.append(b.substring(0,1)).append("   ").append(b.charAt(1)).append("\n\t").append(b);
+                // c= b.substring(0,1) + "  "+ Character.toString(b.charAt(1)) +"   :"+ b.substring(0,2);
+
+                b=  playFromFirebase.viewTextConvert(a);
+
+                // Toast.makeText(ReadingActivityTwoLetters.this, sb, Toast.LENGTH_SHORT).show();
+
+                toast.setText(sb);
+                toast.show();
+                playFromFileOrDownload(b);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.setBackgroundColor(Color.WHITE);
+                    }
+                }, 3000);
+
+
+            }
+        });
+
 
 
     }
 
-
-
-
+    @Override
+    protected void onDestroy() {
+        toast.cancel();
+        super.onDestroy();
+    }
 }

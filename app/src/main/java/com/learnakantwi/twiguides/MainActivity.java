@@ -267,17 +267,17 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
         toast = Toast.makeText(this, "", Toast.LENGTH_LONG);
 
-       Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+       //Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
        // Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
-        startActivity(homeIntent);
+        //startActivity(homeIntent);
 
-      /*new Handler().postDelayed(new Runnable() {
+      new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
                setUpBillingClient();
             }
-        }, SPLASH_TIME_OUT);*/
+        }, SPLASH_TIME_OUT);
 
        ///////////////////
 
@@ -296,20 +296,20 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     @Override
     protected void onResume() {
 
-      Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+     // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
        // Intent homeIntent = new Intent(getApplicationContext(), SettingsActivity.class);
       //  Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
-        startActivity(homeIntent);
-        super.onResume();
+        //startActivity(homeIntent);
+        //super.onResume();
 
-     /*new Handler().postDelayed(new Runnable() {
+     new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
                 setUpBillingClient();
             }
         }, SPLASH_TIME_OUT);
-        super.onResume();*/
+        super.onResume();
     }
 
     public void sendOnChannel1(View v) {
