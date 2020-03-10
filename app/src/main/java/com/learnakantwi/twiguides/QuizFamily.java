@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -73,6 +74,9 @@ public class QuizFamily extends AppCompatActivity {
     int counter;
     double scorePercent= ((score/totalQuestions)*100);
     AdView mAdView;
+    int showAdProbability;
+    InterstitialAd mInterstitialAd;
+    Random random1;
 
     StorageReference storageReference;
     MediaPlayer playFromDevice;
@@ -208,8 +212,8 @@ public class QuizFamily extends AppCompatActivity {
             button5.setVisibility(View.VISIBLE);
             button5.setText(getString(R.string.playagain));
 
-            double d1 = (double) score;
-            double d2 = (double) totalQuestions;
+            double d1 = score;
+            double d2 = totalQuestions;
             double scorePercent = ((d1 / d2) * 100);
             scorePercent = Math.round(scorePercent * 10.0) / 10.0;
 
@@ -550,12 +554,31 @@ public class QuizFamily extends AppCompatActivity {
 
     }
 
+    public void advert1() {
 
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_animals);
+
+        mInterstitialAd = new InterstitialAd(this);
+        // mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        random1 = new Random();
+        showAdProbability = random1.nextInt(10);
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
@@ -596,6 +619,13 @@ public class QuizFamily extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.activity_quiz_animals);
     }*/
+    @Override
+    protected void onDestroy() {
+        if (showAdProbability<=4){
+            advert1();
+        }
+        super.onDestroy();
+    }
 
 
 }

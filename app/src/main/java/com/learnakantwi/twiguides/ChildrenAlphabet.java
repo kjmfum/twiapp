@@ -7,6 +7,7 @@ import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -49,6 +50,7 @@ public class ChildrenAlphabet extends AppCompatActivity {
     //MediaPlayer playFromDevice1;
     MediaPlayer mp1;
     AdView mAdView;
+    int testShared;
 
 
     public void goToWeb() {
@@ -67,7 +69,7 @@ public class ChildrenAlphabet extends AppCompatActivity {
     }
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
 
@@ -433,14 +435,21 @@ public class ChildrenAlphabet extends AppCompatActivity {
 
         shake = AnimationUtils.loadAnimation(ChildrenAlphabet.this, R.anim.children_animation);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+
+
+        final SharedPreferences sharedPreferencesAds = this.getSharedPreferences("AdsDecision", MODE_PRIVATE);
+        testShared = sharedPreferencesAds.getInt("Ads", 5);
+
+        if (testShared != 0) {
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }
 
     }
 

@@ -1,9 +1,15 @@
 package com.learnakantwi.twiguides;
 
+import android.graphics.Color;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 public class Animals implements Comparable <Animals> {
 
     String englishAnimals;
     String twiAnimals;
+    TextView textView;
 
     public Animals(String englishAnimals, String twiAnimals) {
         this.englishAnimals = englishAnimals;
@@ -23,6 +29,7 @@ public class Animals implements Comparable <Animals> {
     public String getTwiAnimals() {
         return twiAnimals;
     }
+
 
     public void setTwiAnimals(String twiAnimals) {
         this.twiAnimals = twiAnimals;

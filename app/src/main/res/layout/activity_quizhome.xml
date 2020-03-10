@@ -79,6 +79,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         app:adSize="SMART_BANNER"
+        test adunit=  ca-app-pub-3940256099942544/6300978111
         app:adUnitId="ca-app-pub-7384642419407303/7840050122"
         app:layout_constraintBottom_toBottomOf="@id/guidelinehor10"
         app:layout_constraintEnd_toEndOf="parent"

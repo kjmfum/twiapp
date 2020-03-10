@@ -37,6 +37,7 @@ import static com.learnakantwi.twiguides.AlphabetsActivity.alphabetArray;
 import static com.learnakantwi.twiguides.AnimalsActivity.animalsArrayList;
 import static com.learnakantwi.twiguides.BodypartsActivity.bodypartsArrayList;
 import static com.learnakantwi.twiguides.BusinessActivity.businessArrayList;
+import static com.learnakantwi.twiguides.ChildrenAnimalActivity.childrenAnimalsArrayListFew;
 import static com.learnakantwi.twiguides.ColoursActivity.coloursArrayList;
 import static com.learnakantwi.twiguides.CommonExpressionsaActivity.commonExpressionsAArrayList;
 import static com.learnakantwi.twiguides.DaysOfWeekActivity.daysOfWeeksArray;
@@ -46,6 +47,7 @@ import static com.learnakantwi.twiguides.MonthsActivity.monthsArrayList;
 import static com.learnakantwi.twiguides.NumbersActivity.numbersArrayList;
 import static com.learnakantwi.twiguides.PronounsActivity.pronounsArrayList;
 import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
+import static com.learnakantwi.twiguides.SubConversationIntroductionActivity.conversationArrayList;
 import static com.learnakantwi.twiguides.TimeActivity.timeArrayList;
 import static com.learnakantwi.twiguides.WeatherActivity.weatherArray;
 import static com.learnakantwi.twiguides.ChildrenHome.childrenArray;
@@ -171,6 +173,29 @@ public class AppStartClass extends Application {
         if (dailyTwiPreference.equals("Yes")) {
             showDaily();
         }
+
+        conversationArrayList = new ArrayList<>();
+
+
+        ///ChildrenAnimalFew
+        childrenAnimalsArrayListFew = new ArrayList<>();
+
+        childrenAnimalsArrayListFew.add(new Animals("Bee", "Wowa"));
+        childrenAnimalsArrayListFew.add(new Animals("Cat", "Ɔkra"));
+        childrenAnimalsArrayListFew.add(new Animals("Cattle", "Nantwie"));
+        childrenAnimalsArrayListFew.add(new Animals("Cockroach", "Tɛfrɛ"));
+        childrenAnimalsArrayListFew.add(new Animals("Crab", "Kɔtɔ"));
+        childrenAnimalsArrayListFew.add(new Animals("Crocodile", "Ɔdɛnkyɛm"));
+        childrenAnimalsArrayListFew.add(new Animals("Dog", "Kraman"));
+        childrenAnimalsArrayListFew.add(new Animals("Donkey", "Afurum"));
+        childrenAnimalsArrayListFew.add(new Animals("Duck", "Dabodabo"));
+        childrenAnimalsArrayListFew.add(new Animals("Elephant", "Ɔsono"));
+        childrenAnimalsArrayListFew.add(new Animals("Fowl", "Akokɔ"));
+        childrenAnimalsArrayListFew.add(new Animals("Goat", "Apɔnkye"));
+        childrenAnimalsArrayListFew.add(new Animals("Horse", "Pɔnkɔ"));
+        childrenAnimalsArrayListFew.add(new Animals("Pig", "Prako"));
+        childrenAnimalsArrayListFew.add(new Animals("Lion", "Gyata"));
+        childrenAnimalsArrayListFew.add(new Animals("Butterfly", "Afofantɔ"));
 
         //ChildrenArray
 

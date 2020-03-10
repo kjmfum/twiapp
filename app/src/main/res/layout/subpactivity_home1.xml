@@ -20,19 +20,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/learnakantwi" />
 
-    <!-- <TextView
+     <TextView
+         android:id="@+id/tvSignIn"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="@id/guideline15"
         app:layout_constraintBottom_toBottomOf="@id/guideline20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:textStyle="bold|italic"
-        android:text="SUBSCRIBE FOR MORE CONTENT"
+        android:onClick="SignIn"
+        android:text="SIGN IN"
         android:gravity="center"
         android:background="@color/colorGreen"
-        android:onClick="goToSubscriptionPage"
-        /> -->
+        android:textStyle="bold"
+
+        />
 
 
     <!--  <Button

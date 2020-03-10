@@ -55,7 +55,7 @@ public class AnimalsAdapter extends BaseAdapter implements Filterable {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView= inflater.inflate(R.layout.custom_time, null);
 
-        TextView textView = (TextView) convertView.findViewById(R.id.speakEnglishTime);
+        TextView textView = convertView.findViewById(R.id.speakEnglishTime);
         TextView textView1 = convertView.findViewById(R.id.speakTwiTime);
 
         textView.setText(originalArray.get(position).getEnglishAnimals());
@@ -63,7 +63,18 @@ public class AnimalsAdapter extends BaseAdapter implements Filterable {
         //if image would have been --- setImageResource.
 
         return convertView;
+
+
+
+
+
     }
+
+
+
+
+
+
 
     @Override
     public Filter getFilter() {

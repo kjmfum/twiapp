@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -41,6 +42,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class WeatherActivity extends AppCompatActivity {
 
@@ -53,6 +55,9 @@ public class WeatherActivity extends AppCompatActivity {
     MediaPlayer mp1;
 
     AdView mAdView;
+    int showAdProbability;
+    InterstitialAd mInterstitialAd;
+    Random random;
 
     Toast toast;
 
@@ -459,6 +464,18 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
 
+    public void advert1() {
+
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -466,6 +483,14 @@ public class WeatherActivity extends AppCompatActivity {
 
 
         isNetworkAvailable();
+
+        mInterstitialAd = new InterstitialAd(this);
+        // mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        random = new Random();
+        showAdProbability = random.nextInt(10);
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -484,5 +509,12 @@ public class WeatherActivity extends AppCompatActivity {
         WeatherAdapter weatherAdapter = new WeatherAdapter(this, weatherArray);
         weatherListView.setAdapter(weatherAdapter);
 
+    }
+    @Override
+    protected void onDestroy() {
+        if (showAdProbability<=2){
+            advert1();
+        }
+        super.onDestroy();
     }
 }

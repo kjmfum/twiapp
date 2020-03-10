@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -53,6 +55,9 @@ public class AnimalsActivity extends AppCompatActivity {
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
     AdView mAdView;
+    int showAdProbability;
+    InterstitialAd mInterstitialAd;
+    Random random;
 
 
 
@@ -482,12 +487,32 @@ public class AnimalsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void advert1() {
+
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animals);
 
         isNetworkAvailable();
+        mInterstitialAd = new InterstitialAd(this);
+        // mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        random = new Random();
+        showAdProbability = random.nextInt(10);
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -609,9 +634,14 @@ public class AnimalsActivity extends AppCompatActivity {
 */
         animalsAdapter= new AnimalsAdapter(this, animalsArrayList);
         animalsListView.setAdapter(animalsAdapter);
+    }
 
-
-
+    @Override
+    protected void onDestroy() {
+        if (showAdProbability<=3){
+            advert1();
+        }
+        super.onDestroy();
     }
 
 

@@ -436,8 +436,8 @@ public class ProverbsActivity extends AppCompatActivity {
     public void downloadClick () {
         int counter = 0;
 
-        toast.setText("Got here");
-        toast.show();
+        /*toast.setText("Got here");
+        toast.show();*/
 
         if (isNetworkAvailable()) {
             for (int j = 0; j < proverbsArrayList.size(); j++) {
@@ -639,36 +639,48 @@ public class ProverbsActivity extends AppCompatActivity {
     }
 
 
-    public void deleteDuplicatelDownload(){
+    public void deleteDuplicateProverbs() {
+        File myFileProverbs = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/");
+        File[] files2 = myFileProverbs.listFiles();
 
 
-        File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/");
+        for (int i = 0; i < files2.length; i++) {
 
-
-        File [] files1 = myFiles.listFiles();
-
-        if (files1.length>0){
-            for (File file : files1) {
-
-                if (file.getName().contains("-")) {
-
-                    boolean wasDeleted = file.delete();
-
-
-                    if (!wasDeleted) {
-                        System.out.println("Was not deleted");
-                    }
-                }
+            File fileConversation = files2[i];
+            if (fileConversation.getName().contains("-")) {
+                fileConversation.delete();
             }
-            }
+        }
 
     }
+
+
+    /*public void deleteProverbsSection() {
+      //  File myFileProverbs = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/");
+        File myFileProverbs = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/");
+        File[] files2 = myFileProverbs.listFiles();
+
+
+        for (int i = 0; i < files2.length; i++) {
+
+            File fileConversation = files2[i];
+                fileConversation.delete();
+        }
+
+    }*/
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proverbs);
+
+        try {
+            deleteDuplicateProverbs();
+        }
+        catch (NullPointerException e){
+            System.out.println("Error Null");
+        }
 
         random = new Random();
         showAdProbability = random.nextInt(10);
@@ -752,7 +764,7 @@ public class ProverbsActivity extends AppCompatActivity {
     protected void onResume() {
 
         try {
-            deleteDuplicatelDownload();
+            deleteDuplicateProverbs();
         }
         catch (NullPointerException e){
             System.out.println("Error Null");
@@ -791,7 +803,7 @@ public class ProverbsActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    @Override
+    /*@Override
     protected void onUserLeaveHint() {
 
         if (showAdProbability>=7){
@@ -799,7 +811,7 @@ public class ProverbsActivity extends AppCompatActivity {
             advert1();
         }
         super.onUserLeaveHint();
-    }
+    }*/
 }
 
 

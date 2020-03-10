@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -42,6 +44,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class AlphabetsActivity extends AppCompatActivity {
 
@@ -62,6 +65,11 @@ public class AlphabetsActivity extends AppCompatActivity {
     ArrayList<String> tempArray;
 
     Toast toast;
+
+
+    int showAdProbability;
+    InterstitialAd mInterstitialAd;
+    Random random;
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -490,7 +498,18 @@ public class AlphabetsActivity extends AppCompatActivity {
 
 
 
+    public void advert1() {
 
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        }
 
     @SuppressLint("ShowToast")
     @Override
@@ -499,8 +518,13 @@ public class AlphabetsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alphabets);
 
         isNetworkAvailable();
+        mInterstitialAd = new InterstitialAd(this);
+        // mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
-        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
+        random = new Random();
+        showAdProbability = random.nextInt(10);
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -511,43 +535,27 @@ public class AlphabetsActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        toast = Toast.makeText(getApplicationContext(), "" , Toast.LENGTH_SHORT);
+        toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
+        toast.show();
 
         myListView = findViewById(R.id.myList);
         storageReference = FirebaseStorage.getInstance().getReference();
         tempArray = new ArrayList<>();
 
-      /*  alphabetArray = new ArrayList<>();
+      /*  alphabetArray = new ArrayList<>();*/
 
-        alphabetArray.add(new Alphabets("Aa" ,"A","a"));
-        alphabetArray.add(new Alphabets("Bb","B","b"));
-        alphabetArray.add(new Alphabets("Dd","D","d"));
-        alphabetArray.add(new Alphabets("Ee","E","e"));
-        alphabetArray.add(new Alphabets("Ɛɛ","Ɛ","ɛ"));
-        alphabetArray.add(new Alphabets("Ff","F","f"));
-        alphabetArray.add(new Alphabets("Gg","G","g"));
-        alphabetArray.add(new Alphabets("Hh","H","h"));
-        alphabetArray.add(new Alphabets("Ii","I","i"));
-        alphabetArray.add(new Alphabets("Kk","K","k"));
-        alphabetArray.add(new Alphabets("Ll","L","l"));
-        alphabetArray.add(new Alphabets("Mm","M","m"));
-        alphabetArray.add(new Alphabets("Nn","N","n"));
-        alphabetArray.add(new Alphabets("Oo","O","o"));
-        alphabetArray.add(new Alphabets("Ɔɔ","Ɔ","ɔ"));
-        alphabetArray.add(new Alphabets("Pp","P","p"));
-        alphabetArray.add(new Alphabets("Rr","R","r"));
-        alphabetArray.add(new Alphabets("Ss","S","s"));
-        alphabetArray.add(new Alphabets("Tt","T","t"));
-        alphabetArray.add(new Alphabets("Uu","U","u"));
-        alphabetArray.add(new Alphabets("Ww","W","w"));
-        alphabetArray.add(new Alphabets("Yy","Y","y"));
-*/
 
         twiAlphapetAdapter = new AlphabetAdapter(this, alphabetArray);
         myListView.setAdapter(twiAlphapetAdapter);
     }
 
-
-
+    @Override
+    protected void onDestroy() {
+        toast.cancel();
+        if (showAdProbability <= 2) {
+            advert1();
+        }
+        super.onDestroy();
+    }
 }
 

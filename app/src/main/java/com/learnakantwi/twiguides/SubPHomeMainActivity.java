@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -19,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -35,9 +37,7 @@ import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -46,6 +46,8 @@ import java.util.List;
 import hotchemi.android.rate.AppRate;
 
 import static android.Manifest.permission.INTERNET;
+import static com.learnakantwi.twiguides.SubChildrenAnimals.childrenAnimalsArrayList;
+import static com.learnakantwi.twiguides.SubConversationIntroductionActivity.conversationArrayList;
 
 //import android.support.v7.app.AppCompatActivity;
 
@@ -63,6 +65,10 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
     MediaPlayer mediaPlayer;
     SharedPreferences subscriptionStatePreference;
     boolean subscriptionState;
+
+    TextView tvSignIn;
+    FirebaseAuth mAuth;
+    String currentUser;
 
 
     @Override
@@ -100,56 +106,27 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
 
 
                             switch (me1){
-                                case "Alphabets":
-                                    goToAlphabets();
+                                case "Reading":
+                                    goToReading();
                                     return;
-                                case "Proverbs":
-                                    goToProverbs();
+                                case "Manage Storage":
+                                    goToSettings();
+                                    return;
+                                case "Conversation":
+                                    goToConversation();
+                                    return;
+                                case "Vocabulary":
+                                    goToMain();
                                     return;
                                 case "Children":
                                     goToChildren();
                                     return;
-                                case "Animals":
-                                    goToAnimals();
+                                case "Proverbs":
+                                    goToProverbs();
                                     return;
-                                case "Body Parts":
-                                    goToBodyparts();
+                                case "Quiz":
+                                    goToQuizHome();
                                     return;
-                                case "Colours":
-                                    goToColours();
-                                    return;
-                                case "Days of Week":
-                                    goToDaysOfWk();
-                                    return;
-                                case "Expressions":
-                                    goToCommonExpressionsa();
-                                    return;
-                                case "Family":
-                                    goToFamily();
-                                    return;
-                                case "Food":
-                                    goToFood();
-                                    return;
-                                case "Months":
-                                    goToMonths();
-                                    return;
-                                case "Numbers":
-                                    goToNumber();
-                                    return;
-                                case "Pronouns":
-                                    goToPronouns();
-                                    return;
-                                case "Time":
-                                    goToTime();
-                                    return;
-                                case "Weather":
-                                    goToWeather();
-                                    return;
-                                case "Business":
-                                    goToBusiness();
-                                    return;
-                                case "Search":
-                                    goToAll();
                             }
                         }
                     });
@@ -179,7 +156,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
                 return  true;*/
 
             case R.id.quiz1:
-                goToQuizAll();
+                goToQuizHome();
                 return true;
             case R.id.searchAll:
                 goToAll();
@@ -226,15 +203,30 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         startActivity(intent);
     }
 
+    public void goToSettings(){
+        Intent intent = new Intent(getApplicationContext(), SettingsAndTips.class);
+        startActivity(intent);
+    }
+
+    public void goToConversation(){
+        Intent intent = new Intent(getApplicationContext(), SubConversationIntroductionActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToReading(){
+        Intent intent = new Intent(getApplicationContext(), SubPReadingActivityMain.class);
+        startActivity(intent);
+    }
+
 
 
     public void goToQuizAll() {
-        Intent intent = new Intent(getApplicationContext(), QuizAll.class);
+        Intent intent = new Intent(getApplicationContext(), QuizSubHome.class);
         startActivity(intent);
     }
 
     public void goToQuizHome() {
-        Intent intent = new Intent(getApplicationContext(), QuizHome.class);
+        Intent intent = new Intent(getApplicationContext(), QuizSubHome.class);
         startActivity(intent);
     }
 
@@ -243,90 +235,20 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         startActivity(intent);
     }
 
-    public void goToBusiness(){
-        Intent intent = new Intent(getApplicationContext(), BusinessActivity.class);
-        startActivity(intent);
-
-    }
-
     public void goToWeb() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
         startActivity(intent);
     }
 
-    public void goToAlphabets() {
-        Intent intent = new Intent(getApplicationContext(), AlphabetsActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToNumber() {
-        Intent intent = new Intent(getApplicationContext(), NumbersActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToDaysOfWk() {
-        Intent intent = new Intent(getApplicationContext(), DaysOfWeekActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToTime() {
-        Intent intent = new Intent(getApplicationContext(), TimeActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToFamily() {
-        Intent intent = new Intent(getApplicationContext(), SubPFamilyActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToWeather() {
-        Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToMonths() {
-        Intent intent = new Intent(getApplicationContext(), SubPMonthsActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToPronouns() {
-        Intent intent = new Intent(getApplicationContext(), PronounsActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToColours() {
-        Intent intent = new Intent(getApplicationContext(), ColoursActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToAnimals() {
-        Intent intent = new Intent(getApplicationContext(), AnimalsActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToBodyparts() {
-        Intent intent = new Intent(getApplicationContext(), BodypartsActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToFood() {
-        Intent intent = new Intent(getApplicationContext(), SubPFoodActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToCommonExpressionsa() {
-        Intent intent = new Intent(getApplicationContext(), CommonExpressionsaActivity.class);
-        startActivity(intent);
-    }
 
     public void goToAll() {
-        Intent intent = new Intent(getApplicationContext(), AllActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPAllActivity.class);
         startActivity(intent);
     }
 
     public void goToChildren() {
        // Intent intent = new Intent(getApplicationContext(), ChildrenNumberCount.class);
-        Intent intent = new Intent(getApplicationContext(), ChildrenHome.class);
+        Intent intent = new Intent(getApplicationContext(), SubChildrenHome.class);
         startActivity(intent);
     }
 
@@ -525,24 +447,66 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         //billingClient.endConnection();
     }
 
-    public void deleteDuplicatelDownload(){
+    public void deleteDuplicateConversation() {
+        File myFileConversation = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/SUBCONVERSATION/");
+        File[] files2 = myFileConversation.listFiles();
 
+            for (int i = 0; i < files2.length; i++) {
+
+                File fileConversation = files2[i];
+                if (fileConversation.getName().contains("-")) {
+                    fileConversation.delete();
+                }
+            }
+    }
+
+    public void deleteDuplicateProverbs() {
+        File myFileProverbs = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/");
+        File[] files2 = myFileProverbs.listFiles();
+
+
+            for (int i = 0; i < files2.length; i++) {
+
+                File fileConversation = files2[i];
+                if (fileConversation.getName().contains("-")) {
+                    fileConversation.delete();
+                }
+            }
+
+    }
+
+    public void deleteDuplicateVocabulary() {
         File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/");
 
-
-        File [] files1 = myFiles.listFiles();
+        File[] files1 = myFiles.listFiles();
 
 
         for (int j = 0; j < files1.length; j++) {
-
-            toast.setText(String.valueOf(files1.length));
-            toast.show();
-
             File file = files1[j];
-            if (file.getName().contains("-")){
+            if (file.getName().contains("-")) {
                 file.delete();
                 //toast.setText("Deleted");
                 //toast.show();
+
+            }
+        }
+    }
+
+    public void deleteDuplicatelDownload(){
+
+        try {
+            deleteDuplicateVocabulary();
+            deleteDuplicateConversation();
+            deleteDuplicateProverbs();
+        }
+        catch (NullPointerException e){
+            System.out.println("Error Null");
+        }
+        catch(Exception any){
+            System.out.println("Strange Exception Caught");
+        }
+
+
 
             /*String bb = allArrayList.get(j).getTwiMain();
             bb= bb.toLowerCase();
@@ -577,9 +541,23 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
                 //f.delete();
             }
 */
-        }
 
+
+
+    public void SignIn(View view){
+        Intent homeIntent = new Intent(getApplicationContext(), SignInActivity.class);
+        startActivity(homeIntent);
     }
+
+    public void SignIn(){
+        Intent homeIntent = new Intent(getApplicationContext(), SignInActivity.class);
+        startActivity(homeIntent);
+    }
+
+   /* public void Transition(View v){
+        Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
+        startActivity(homeIntent);
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -588,29 +566,30 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
 
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
-        toast.setText("Hello Subscribed");
+        toast.setText("Akwaaba");
         toast.show();
+
+        mAuth = FirebaseAuth.getInstance();
+
+        tvSignIn = findViewById(R.id.tvSignIn);
+        tvSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tvSignIn.getText().toString().toLowerCase().contains("sign")){
+                    SignIn();
+                }
+
+            }
+        });
+
 
 
         deleteDuplicatelDownload();
 
 
-
-
         subscriptionStatePreference = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
         subscriptionState = subscriptionStatePreference.getBoolean("Paid",false);
 
-
-//        String subscriptionState  = subscriptionStatePreference.getString("Subscription", "No");
-//
-//        SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-//        String dailyTwiPreference = sharedPreferences.getString("DailyTwiPreference", "Yes");
-//
-//        SharedPreferences sharedPreferences1 = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-//        sharedPreferences1.edit().putString("Downloading", "No").apply();
-
-        // Function to check and request permission
-       // checkPermission(INTERNET, 100);
 
         if (Build.VERSION.SDK_INT > 22) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -626,27 +605,6 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         }
 
 
-
-
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-
-        //ca-app-pub-7384642419407303/9880404420
-        //ca-app-pub-3940256099942544/1033173712 test
-
-
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-
-
         AppRate.with(this)
                 .setInstallDays(0)
                 .setLaunchTimes(3)
@@ -655,32 +613,18 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
 
         AppRate.showRateDialogIfMeetsConditions(this);
 
-       /* findViewById(R.id.homeAdvertButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                advert();
-            }
-        });
-*/
-
-        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
-
         homeMainButtonArrayList = new ArrayList<>();
         homeListView = findViewById(R.id.homeListView);
 
 
+        homeMainButtonArrayList.add(new HomeMainButton("Manage Storage", R.drawable.ic_download_audio));
+        homeMainButtonArrayList.add(new HomeMainButton("Conversation", R.drawable.conversationimage));
         homeMainButtonArrayList.add(new HomeMainButton("Vocabulary", R.drawable.vocabularyimage));
         homeMainButtonArrayList.add(new HomeMainButton("Quiz", R.drawable.quizimage));
         homeMainButtonArrayList.add(new HomeMainButton("Proverbs", R.drawable.proverbsimage));
         homeMainButtonArrayList.add(new HomeMainButton("Children", R.drawable.childrenimage));
-       /* homeMainButtonArrayList.add(new HomeMainButton("Food", R.drawable.foodimage));
-        homeMainButtonArrayList.add(new HomeMainButton("Alphabets", R.drawable.alphabetsimage));
-        homeMainButtonArrayList.add(new HomeMainButton("Time", R.drawable.time));*/
+        homeMainButtonArrayList.add(new HomeMainButton("Reading", R.drawable.readingimage));
 
-
-        //Collections.sort(this.homeButtonArrayList);
-
-     //   homeButtonArrayList.add(new HomeButton("Search", R.drawable.allimage));
 
         HomeMainAdapter homeMainAdapter = new HomeMainAdapter(this, homeMainButtonArrayList);
         homeListView.setAdapter(homeMainAdapter);
@@ -696,6 +640,15 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
 
 
                 switch (me1){
+                    case "Reading":
+                        goToReading();
+                        return;
+                    case "Manage Storage":
+                        goToSettings();
+                        return;
+                    case "Conversation":
+                        goToConversation();
+                        return;
                     case "Vocabulary":
                         goToMain();
                         return;
@@ -708,59 +661,109 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
                     case "Quiz":
                         goToQuizHome();
                         return;
-                    case "Colours":
-                        goToColours();
-                        return;
-                    case "Days of Week":
-                        goToDaysOfWk();
-                        return;
-                    case "Expressions":
-                        goToCommonExpressionsa();
-                        return;
-                    case "Family":
-                        goToFamily();
-                        return;
-                    case "Food":
-                        goToFood();
-                        return;
-                    case "Months":
-                        goToMonths();
-                        return;
-                    case "Numbers":
-                        goToNumber();
-                        return;
-                    case "Pronouns":
-                        goToPronouns();
-                        return;
-                    case "Time":
-                        goToTime();
-                        return;
-                    case "Weather":
-                        goToWeather();
-                        return;
-                    case "Business":
-                        goToBusiness();
-                        return;
-                    case "Search":
-                        goToAll();
                 }
             }
         });
 
+        childrenAnimalsArrayList = new ArrayList<>();
+
+        childrenAnimalsArrayList.add(new Animals("Bee", "Wowa"));
+        childrenAnimalsArrayList.add(new Animals("Cat", "Ɔkra"));
+        childrenAnimalsArrayList.add(new Animals("Cattle", "Nantwie"));
+        childrenAnimalsArrayList.add(new Animals("Cockroach", "Tɛfrɛ"));
+        childrenAnimalsArrayList.add(new Animals("Crab", "Kɔtɔ"));
+        childrenAnimalsArrayList.add(new Animals("Crocodile", "Ɔdɛnkyɛm"));
+        childrenAnimalsArrayList.add(new Animals("Dog", "Kraman"));
+        childrenAnimalsArrayList.add(new Animals("Donkey", "Afurum"));
+        childrenAnimalsArrayList.add(new Animals("Duck", "Dabodabo"));
+        childrenAnimalsArrayList.add(new Animals("Elephant", "Ɔsono"));
+        childrenAnimalsArrayList.add(new Animals("Fowl", "Akokɔ"));
+        childrenAnimalsArrayList.add(new Animals("Goat", "Apɔnkye"));
+        childrenAnimalsArrayList.add(new Animals("Horse", "Pɔnkɔ"));
+        childrenAnimalsArrayList.add(new Animals("Pig", "Prako"));
+        childrenAnimalsArrayList.add(new Animals("Lion", "Gyata"));
+        childrenAnimalsArrayList.add(new Animals("Butterfly", "Afofantɔ"));
+
+
+        //myself
+        //conversationArrayList.add(new subConversation("Wo din de sɛn?", "What is your name?") );
+        //conversationArrayList.add(new subConversation("My name is Michael Kwaku Asante and all is care about is that I don't ever want to see you in my life. Take note it is not because I hate you but I love you and want us to be friends forever but I just cant stand what you are doing to me right now", "My name is Michael Kwaku Asante and all is care about is that I don't ever want to see you in my life. Take note it is not because I hate you but I love you and want us to be friends forever but I just cant stand what you are doing to me right now.") );
+        conversationArrayList.add(new subConversation("Me din de Michael Kwaku Asante", "My name is Michael Kwaku Asante") );
+        conversationArrayList.add(new subConversation("Wubetumi afrɛ me Kwaku", "You can call me Kwaku") );
+        conversationArrayList.add(new subConversation("Wo nso ɛ?", "What about you?") );
+        conversationArrayList.add(new subConversation("Wo din de sɛn?", "What is your name?") );
+        conversationArrayList.add(new subConversation("Yɛfrɛ wo sɛn?", "How are you called? (Lit.: How do they call you") );
+        conversationArrayList.add(new subConversation("Me fi Abuakwa", "I come from Abuakwa. (\"Come from\" as used here means my hometown)") );
+        conversationArrayList.add(new subConversation("Wufi kurow bɛn so?", "What is your hometown? (Lit.: Which town do you come from)") );
+        conversationArrayList.add(new subConversation("Me te Achimota", "I live at Achimota") );
+        conversationArrayList.add(new subConversation("Wote he?", "Where do you live?") );
+        conversationArrayList.add(new subConversation("Me kɔɔ ntoaso sukuu wɔ Achimota", "I attended Secondary School at Achimota") );
+        conversationArrayList.add(new subConversation("Wokɔɔ ntoaso sukuu wɔ he?", "Where did you attend Secondary School?") );
+
+        conversationArrayList.add(new subConversation("Me kɔ sukuu wɔ Legon Sukuupɔn mu", "I school at Legon University") );
+        conversationArrayList.add(new subConversation("Wo kɔ sukuu wɔ he?", "Where do you attend school?") );
+        conversationArrayList.add(new subConversation("Megyina gyinapɛn num", "I am in class five") );
+
+        conversationArrayList.add(new subConversation("Madi mfe aduonu", "I am twenty years old") );
+
+        conversationArrayList.add(new subConversation("Meyɛ tikyani", "I am a teacher") );
+        conversationArrayList.add(new subConversation("Woyɛ adwuma bɛn?", "What's your occupation (Lit.: What work do you do?)") );
+        conversationArrayList.add(new subConversation("Meyɛ okuani", "I am a farmer") );
+        conversationArrayList.add(new subConversation("Meyɛ adwuma wɔ Ghana Education Service", "I work at Ghana Education Service") );
+
+
+        conversationArrayList.add(new subConversation("Agorɔ a mepɛ paa ne \"basketball\" ", "My favorite game is basketball") );
+        conversationArrayList.add(new subConversation("Agorɔ bɛn na w'ani gye ho pa ara?", "What game do you like most?") );
+        conversationArrayList.add(new subConversation("M'ani gye nnwom ho pa ara", "I like music very much") );
+        conversationArrayList.add(new subConversation("M'ani gye akenkan ho", "I like reading") );
+        conversationArrayList.add(new subConversation("W'ani gye akenkan ho?", "Do you like reading?") );
+        conversationArrayList.add(new subConversation("M'ani nnye akenkan ho", "I do not like reading") );
+        conversationArrayList.add(new subConversation("M'ani gye sini ho?", "I like movies") );
+        conversationArrayList.add(new subConversation("M'ani gye sinihwɛ ho pa ara", "I like watching movies very much") );
+        conversationArrayList.add(new subConversation("Mempɛ sinihwɛ", "I don't like watching movies") );
+        conversationArrayList.add(new subConversation("Ade a mempɛ koraa ne ntɔkwa", "What I don't like at all is fighting") );
 
 
 
 
-        //MobileAds.initialize(this, "ca-app-pub-6999427576830667~6251296006");
 
+        conversationArrayList.add(new subConversation("Aduane a m\'ani gye ho pa ara ne fufuo ne nkate nkwan", "My favorite food is fufuo and groundnut soup") );
+        conversationArrayList.add(new subConversation("Aduane a mepɛ pa ara ne banku", "The food I like most is banku") );
+        conversationArrayList.add(new subConversation("Wopɛ fufuo?", "Do you like fufuo?") );
+        conversationArrayList.add(new subConversation("Fufuo nyɛ me dɛ", "Fufu does not taste sweet to me") );
+        conversationArrayList.add(new subConversation("Mempɛ fufuo", "I don't like fufuo") );
+        conversationArrayList.add(new subConversation("Mepɛ fufuo", "I like fufuo") );
+        conversationArrayList.add(new subConversation("Nkate nkwan yɛ dɛ", "Groundnut soup is sweet") );
+
+
+        //family
+        conversationArrayList.add(new subConversation("Wo aware anaa?", "Are you married?") );
+        conversationArrayList.add(new subConversation("Menwaree", "I am not married") );
+        conversationArrayList.add(new subConversation("Maware", "I am married") );
+        conversationArrayList.add(new subConversation("Me yɛ sigyani", "I am single") );
+        conversationArrayList.add(new subConversation("Meyɛ ɔbaa warefo", "I am a married woman") );
+        conversationArrayList.add(new subConversation("Me yɛ ɔbarima warefo", "I am a married man") );
+        conversationArrayList.add(new subConversation("Me kunu din de Kwame", "My husband's name is Kwame") );
+        conversationArrayList.add(new subConversation("Yɛfrɛ me kunu Kwame", "My husband is called Kwame") );
+        conversationArrayList.add(new subConversation("Me yere din de Abena", "My wife's name is Abena") );
+        conversationArrayList.add(new subConversation("Yɛfrɛ me yere Abena", "My wife is called Abena") );
+        conversationArrayList.add(new subConversation("Medɔ me yere ", "I love my wife") );
+        conversationArrayList.add(new subConversation("Me yere ho yɛ fɛ", "My wife is beautiful") );
+        conversationArrayList.add(new subConversation("Medɔ me kunu", "I love my husband") );
 
     }
 
-//    @Override
-//    protected void onResume() {
-//        setUpBillingClient();
-//        super.onResume();
-//    }
+    @Override
+    protected void onStart() {
+        if (mAuth.getCurrentUser()!=null){
+            currentUser = mAuth.getCurrentUser().getEmail();
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("Akwaaba: ").append(currentUser);
+            tvSignIn.setText(stringBuilder);
+            tvSignIn.setBackgroundColor(Color.WHITE);
+        }
+        super.onStart();
+    }
 
     @Override
     public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {
@@ -779,6 +782,10 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
             Toast.makeText(this,"Could not complete purchase", Toast.LENGTH_LONG).show();
         }
     }
+
+
+
+
 }
 
 

@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -41,6 +43,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class BodypartsActivity extends AppCompatActivity {
 
@@ -51,6 +54,9 @@ public class BodypartsActivity extends AppCompatActivity {
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
     AdView mAdView;
+    int showAdProbability;
+    InterstitialAd mInterstitialAd;
+    Random random;
 
     Toast toast;
 
@@ -457,12 +463,32 @@ public class BodypartsActivity extends AppCompatActivity {
     }
 
 
+    public void advert1() {
+
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bodyparts);
 
         isNetworkAvailable();
+
+        mInterstitialAd = new InterstitialAd(this);
+        // mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        random = new Random();
+        showAdProbability = random.nextInt(10);
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -484,6 +510,14 @@ public class BodypartsActivity extends AppCompatActivity {
         BodypartsAdapter bodypartsAdapter = new BodypartsAdapter(this,bodypartsArrayList);
         bodypartsListView.setAdapter(bodypartsAdapter);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (showAdProbability<=2){
+            advert1();
+        }
+        super.onDestroy();
     }
 
 

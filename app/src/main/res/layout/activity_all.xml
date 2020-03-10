@@ -40,6 +40,19 @@
          app:adUnitId="ca-app-pub-6999427576830667/9981230407"
          ></com.google.android.gms.ads.AdView> -->
 
+    <!-- <com.google.android.gms.ads.AdView
+       android:id="@+id/adView1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       app:adSize="SMART_BANNER"
+       ca-app-pub-7384642419407303/7840050122
+       app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@id/homeListView">
+
+   </com.google.android.gms.ads.AdView>
+-->
 
 
 

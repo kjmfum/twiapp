@@ -200,6 +200,7 @@ public class SubPHomeVocabulary extends AppCompatActivity {
                                 downloadAllClickCount++;
                                 toast.setText("Downloading in background. Please ");
                                 toast.show();
+
                                // sharedDownloadingOrNot = "Yes";
                                 downloadClick();
                                //Toast.makeText(Home.this, "Hi"+" "+ sharedDownloadingOrNot, Toast.LENGTH_LONG).show();
@@ -476,7 +477,7 @@ public class SubPHomeVocabulary extends AppCompatActivity {
 
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
         startActivity(intent);
     }
 
@@ -486,7 +487,7 @@ public class SubPHomeVocabulary extends AppCompatActivity {
     }
 
     public void goToBusiness(){
-        Intent intent = new Intent(getApplicationContext(), BusinessActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPBusinessActivity.class);
         startActivity(intent);
 
     }
@@ -497,17 +498,17 @@ public class SubPHomeVocabulary extends AppCompatActivity {
     }
 
     public void goToAlphabets() {
-        Intent intent = new Intent(getApplicationContext(), AlphabetsActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPAlphabetsActivity.class);
         startActivity(intent);
     }
 
     public void goToNumber() {
-        Intent intent = new Intent(getApplicationContext(), NumbersActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPNumbersActivity.class);
         startActivity(intent);
     }
 
     public void goToDaysOfWk() {
-        Intent intent = new Intent(getApplicationContext(), DaysOfWeekActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPDaysOfWeekActivity.class);
         startActivity(intent);
     }
 
@@ -522,7 +523,7 @@ public class SubPHomeVocabulary extends AppCompatActivity {
     }
 
     public void goToWeather() {
-        Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPWeatherActivity.class);
         startActivity(intent);
     }
 
@@ -532,22 +533,22 @@ public class SubPHomeVocabulary extends AppCompatActivity {
     }
 
     public void goToPronouns() {
-        Intent intent = new Intent(getApplicationContext(), PronounsActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPPronounsActivity.class);
         startActivity(intent);
     }
 
     public void goToColours() {
-        Intent intent = new Intent(getApplicationContext(), ColoursActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPColoursActivity.class);
         startActivity(intent);
     }
 
     public void goToAnimals() {
-        Intent intent = new Intent(getApplicationContext(), AnimalsActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPAnimalsActivity.class);
         startActivity(intent);
     }
 
     public void goToBodyparts() {
-        Intent intent = new Intent(getApplicationContext(), BodypartsActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPBodypartsActivity.class);
         startActivity(intent);
     }
 
@@ -557,18 +558,18 @@ public class SubPHomeVocabulary extends AppCompatActivity {
     }
 
     public void goToCommonExpressionsa() {
-        Intent intent = new Intent(getApplicationContext(), CommonExpressionsaActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPCommonExpressionsaActivity.class);
         startActivity(intent);
     }
 
     public void goToAll() {
-        Intent intent = new Intent(getApplicationContext(), AllActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPAllActivity.class);
         startActivity(intent);
     }
 
     public void goToChildren() {
        // Intent intent = new Intent(getApplicationContext(), ChildrenNumberCount.class);
-        Intent intent = new Intent(getApplicationContext(), ChildrenHome.class);
+        Intent intent = new Intent(getApplicationContext(), SubChildrenHome.class);
         startActivity(intent);
     }
 
@@ -579,88 +580,18 @@ public class SubPHomeVocabulary extends AppCompatActivity {
         Toast.makeText(this, "Daily Twi Alerts Turned On", Toast.LENGTH_SHORT).show();
     }
 
-    public void advert() {
 
-
-        final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-      //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
-
-
-        assert advertPreference != null;
-        if (!advertPreference.equals("Yes")) {
-            new AlertDialog.Builder(this)
-                    .setIcon(R.drawable.learnakantwiimage)
-                    .setTitle("We need your support")
-                    .setMessage("Would You Like To View An Advert To Support Us?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            sharedPreferences.edit().putString("AdvertPreference", "Yes").apply();
-                            if (mInterstitialAd.isLoaded()) {
-                                mInterstitialAd.show();
-                            } else {
-                                Log.d("TAG", "The interstitial wasn't loaded yet.");
-                            }
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-                                }
-                            }
-                    )
-                    .show();
-        } else {
-            if (mInterstitialAd.isLoaded()) {
-                mInterstitialAd.show();
-
-            } else {
-                Log.d("TAG", "The interstitial wasn't loaded yet.");
-
-            }
-        }
-
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-    }
-
-   /* public void checkPermission(String permission, int requestCode)
-    {
-        // Checking if permission is not granted
-        if (ContextCompat.checkSelfPermission(
-                Home.this,
-                permission)
-                == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat
-                    .requestPermissions(
-                            Home.this,
-                            new String[] {permission },
-                            100);
-        }
-        else {
-            Toast
-                    .makeText(Home.this,
-                            "Permission already granted",
-                            Toast.LENGTH_SHORT)
-                    .show();
-        }
-    }*/
-//In your case, you do not need the LinearLayout and ImageView at all. Just add android:drawableLeft="@drawable/up_count_big" to your TextView.
-
-    public void deleteDuplicatelDownload(){
+    public void deleteDuplicatelDownload() {
 
         File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/");
 
         String[] files = myFiles.list();
-        String name1= myFiles.getName();
+        String name1 = myFiles.getName();
 
-        File [] files1 = myFiles.listFiles();
+        File[] files1 = myFiles.listFiles();
 
         //System.out.println(Arrays.toString(files));
-        System.out.println("Hey "+ name1);
+        System.out.println("Hey " + name1);
 
         ArrayList<String[]> filesArray = new ArrayList<>();
         filesArray.add(files);
@@ -672,46 +603,13 @@ public class SubPHomeVocabulary extends AppCompatActivity {
             //toast.show();
 
             File file = files1[j];
-            if (file.getName().contains("-")){
+            if (file.getName().contains("-")) {
                 file.delete();
                 //toast.setText("Deleted");
                 //toast.show();
-
-            /*String bb = allArrayList.get(j).getTwiMain();
-            bb= bb.toLowerCase();
-            boolean dd = bb.contains("ɔ");
-            boolean ee = bb.contains("ɛ");
-            if (dd || ee) {
-                bb = bb.replace("ɔ", "x");
-                bb = bb.replace("ɛ", "q");
             }
 
-            if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'") | bb.contains("...")) {
-                bb = bb.replace(" ", "");
-                bb = bb.replace("/", "");
-                bb = bb.replace(",", "");
-                bb = bb.replace("(", "");
-                bb = bb.replace(")", "");
-                bb = bb.replace("-", "");
-                bb = bb.replace("?", "");
-                bb = bb.replace("'", "");
-                bb= bb.replace("...","");*/
-            }
-           /* File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
-           * if (myFiles.exists()) {
-                myFiles.delete();
-            }*/
-
-
-
-            /*for (File f: myFiles.listFiles()){
-                long space= f.getTotalSpace();
-
-                //f.delete();
-            }
-*/
         }
-
     }
 
     @Override
@@ -728,14 +626,12 @@ public class SubPHomeVocabulary extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference();
         toast= Toast.makeText(this, "", Toast.LENGTH_SHORT);
+        //toast.show();
 
 
 
         ImageView topImage = findViewById(R.id.homeAdvertButton);
         topImage.setImageResource(R.drawable.vocabularyimage);
-
-        // Function to check and request permission
-       // checkPermission(INTERNET, 100);
 
         if (Build.VERSION.SDK_INT > 22) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -750,55 +646,6 @@ public class SubPHomeVocabulary extends AppCompatActivity {
             }
         }
 
-
-
-
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-
-        //ca-app-pub-7384642419407303/9880404420
-        //ca-app-pub-3940256099942544/1033173712 test
-
-
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-
-      /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView1 = findViewById(R.id.adView1);
-        AdRequest adRequest1 = new AdRequest.Builder().build();
-        mAdView1.loadAd(adRequest1);
-*/
-
-
-        /*AppRate.with(this)
-                .setInstallDays(0)
-                .setLaunchTimes(3)
-                .setRemindInterval(2)
-                .monitor();
-
-        AppRate.showRateDialogIfMeetsConditions(this);*/
-
-      /*  findViewById(R.id.homeAdvertButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                advert();
-            }
-        });*/
-
-
-        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
 
         homeButtonArrayList = new ArrayList<>();
         homeListView = findViewById(R.id.homeListView);

@@ -105,6 +105,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline18" />
 
+
+    <!-- test adunit=  ca-app-pub-3940256099942544/6300978111
+        app:adUnitId="ca-app-pub-7384642419407303/7840050122" -->
+
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView1"
         android:layout_width="wrap_content"

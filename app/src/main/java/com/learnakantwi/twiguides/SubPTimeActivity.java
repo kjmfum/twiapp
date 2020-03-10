@@ -439,7 +439,7 @@ public class SubPTimeActivity extends AppCompatActivity {
     }
 
     public void goToQuizTime() {
-        Intent intent = new Intent(getApplicationContext(), QuizTime.class);
+        Intent intent = new Intent(getApplicationContext(), QuizSubTime.class);
         startActivity(intent);
     }
 
@@ -449,7 +449,7 @@ public class SubPTimeActivity extends AppCompatActivity {
     }
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), Home.class);
+        Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
         startActivity(intent);
     }
 
@@ -472,7 +472,6 @@ public class SubPTimeActivity extends AppCompatActivity {
 
 
 
-        timeArrayList.add(new Time("2 Seconds O","Anibu"));
         /* timeArrayList.add(new Time(" One second","Anibu baako"));
         timeArrayList.add(new Time(" Two seconds","Anibu mmienu"));
 

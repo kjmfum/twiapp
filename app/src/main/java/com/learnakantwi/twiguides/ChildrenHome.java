@@ -46,6 +46,7 @@ import hotchemi.android.rate.AppRate;
 
 import static android.Manifest.permission.INTERNET;
 import static com.learnakantwi.twiguides.AlphabetsActivity.alphabetArray;
+import static com.learnakantwi.twiguides.ChildrenAnimalActivity.childrenAnimalsArrayListFew;
 
 //import android.support.v7.app.AppCompatActivity;
 
@@ -62,39 +63,13 @@ public class ChildrenHome extends AppCompatActivity {
     StorageReference storageReference;
     Toast toast;
 
+    PlayFromFirebase playFromFirebaseChildren;
+
     public void downloadAllClick(){
         downloadClickAlphabet();
         downloadClick();
     }
 
-    public void downloadFileAlphabet(final Context context, final String filename, final String fileExtension, final String url) {
-
-        if (Build.VERSION.SDK_INT > 22) {
-            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-        }
-
-        if (isNetworkAvailable()) {
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-                    Uri uri = Uri.parse(url);
-                    DownloadManager.Request request = new DownloadManager.Request(uri);
-                    request.setVisibleInDownloadsUi(false);
-                    request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
-                    downloadManager.enqueue(request);
-                }
-            };
-            Thread myThread = new Thread(runnable);
-            myThread.start();
-        }
-        else
-        {
-            toast.setText("Please Connect to the Internet to Download Audio");
-            toast.show();
-
-        }
-    }
 
     public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
 
@@ -214,7 +189,7 @@ public class ChildrenHome extends AppCompatActivity {
                 }
             }
             if (counter == childrenArray.size()) {
-                Toast.makeText(this, "Numbers downloaded ", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this, "Numbers downloaded ", Toast.LENGTH_SHORT).show();
                 Log.i("Great1","Numbers downloaded");
             } else {
 
@@ -292,7 +267,8 @@ public class ChildrenHome extends AppCompatActivity {
                 }
             }
             if (counter == alphabetArray.size()) {
-                Toast.makeText(this, "Alphabets downloaded ", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Alphabets downloaded ", Toast.LENGTH_SHORT).show();
+                Log.i("Check","Alphabets downlaoded");
             } else {
 
                 Toast.makeText(this, "Downloading...", Toast.LENGTH_SHORT).show();
@@ -551,7 +527,7 @@ public class ChildrenHome extends AppCompatActivity {
     }
 
     public void goToAnimals() {
-        Intent intent = new Intent(getApplicationContext(), QuizAnimals.class);
+        Intent intent = new Intent(getApplicationContext(), ChildrenAnimalActivity.class);
         startActivity(intent);
     }
 
@@ -655,10 +631,124 @@ public class ChildrenHome extends AppCompatActivity {
     }*/
 //In your case, you do not need the LinearLayout and ImageView at all. Just add android:drawableLeft="@drawable/up_count_big" to your TextView.
 
+    public void downloadClickAnimals () {
+        int counter = 0;
+        String bb;
+
+        for (int j = 0; j < childrenAnimalsArrayListFew.size(); j++) {
+
+
+            bb = childrenAnimalsArrayListFew.get(j).getTwiAnimals();
+            bb = playFromFirebaseChildren.viewTextConvert(bb);
+
+            File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
+            if (myFiles.exists()) {
+                counter++;
+            }
+
+        }
+
+        if (counter == childrenAnimalsArrayListFew.size()) {
+            /*toast.setText("Animals Downloaded");
+            toast.show();*/
+            Log.i("Check", "Animals Downloaded");
+
+        } else {
+            if (isNetworkAvailable()) {
+                toast.setText("Downloading...");
+                toast.show();
+            }
+
+
+            if (isNetworkAvailable()) {
+
+                // toast.setText(counter + " -- "+ allArrayList.size());
+                // toast.show();
+
+                for (int i = 0; i < childrenAnimalsArrayListFew.size(); i++) {
+
+                    bb = childrenAnimalsArrayListFew.get(i).getTwiAnimals();
+                    bb = playFromFirebaseChildren.viewTextConvert(bb);
+
+                    File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
+                    if (!myFile.exists()) {
+                        if (isNetworkAvailable()) {
+                            downloadOnlyAnimals(bb);
+                        } else {
+                            toast.setText("Please connect to the Internet");
+                            toast.show();
+                            break;
+                        }
+
+                    }
+
+                }
+            } else {
+                toast.setText("Please connect to the Internet to download audio");
+                toast.show();
+            }
+        }
+    }
+    public void downloadOnlyAnimals(final String filename){
+        if (isNetworkAvailable()){
+
+            final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+            musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    String url = uri.toString();
+                    downloadFileAlphabet(getApplicationContext(), filename, ".m4a", url);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                    //Toast.makeText(getApplicationContext(), "Lost Internet Connection", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else {
+            Toast.makeText(this, "Please connect to Internet to download audio ", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void downloadFileAlphabet(final Context context, final String filename, final String fileExtension, final String url) {
+
+        if (Build.VERSION.SDK_INT > 22) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+        if (isNetworkAvailable()) {
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                    Uri uri = Uri.parse(url);
+                    DownloadManager.Request request = new DownloadManager.Request(uri);
+                    request.setVisibleInDownloadsUi(false);
+                    request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                    downloadManager.enqueue(request);
+                }
+            };
+            Thread myThread = new Thread(runnable);
+            myThread.start();
+        }
+        else
+        {
+            toast.setText("Please Connect to the Internet to Download Audio");
+            toast.show();
+
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quizhome);
+
+        playFromFirebaseChildren = new PlayFromFirebase();
+
+
 
         ImageView topImage = findViewById(R.id.homeAdvertButton);
         topImage.setImageResource(R.drawable.childrenimage);
@@ -667,8 +757,16 @@ public class ChildrenHome extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
-        downloadClickAlphabet();
-        downloadClick();
+        try {
+            downloadClickAlphabet();
+            downloadClick();
+            //downloadClickAnimals();
+        }catch (Exception E){
+            System.out.println("Errors: " + E);
+        }
+
+        downloadClickAnimals();
+
 
 
 
@@ -743,6 +841,7 @@ public class ChildrenHome extends AppCompatActivity {
         homeListView = findViewById(R.id.homeListView);
 
         homeButtonArrayList.add(new HomeButton("Alphabets", R.drawable.childrenalphabetimage));
+        homeButtonArrayList.add(new HomeButton("Animals", R.drawable.childrenanimalsimage));
         homeButtonArrayList.add(new HomeButton("Numbers", R.drawable.childrennumbersimage));
 
         //Collections.sort(this.homeButtonArrayList);

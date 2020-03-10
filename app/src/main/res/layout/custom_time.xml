@@ -34,7 +34,6 @@
             android:textSize="20sp" />
 
         <TextView
-
             android:onClick="timeClick"
             android:id="@+id/speakTwiTime"
             android:layout_width="match_parent"

@@ -531,45 +531,41 @@ public class SubPProverbsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proverbs);
 
-        Toast.makeText(this, "Subscribed Customer", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Subscribed Customer", Toast.LENGTH_SHORT).show();
 
         proverbsArrayList.add(new Proverbs("Ɛba a, ɛka oni", "If it comes it affects mother", "If trouble comes it affects your closest relatives"));
-        proverbsArrayList.add(new Proverbs("Ɛreba a, mɛbɔ ho ban, ne ɛtoto a, mɛsane, wɔn mu hena na wowɔ n'afa? Mewɔ ɛreba a, mɛbɔ ano ban afa.","hello","YEs"));
-        proverbsArrayList.add(new Proverbs("Yɛbaa mmebua a, anka yɛso nkuma", "If we had come to fell proverbs then we would be carrying axes", ""));
+      //  proverbsArrayList.add(new Proverbs("Ɛreba a, mɛbɔ ho ban, ne ɛtoto a, mɛsane, wɔn mu hena na wowɔ n'afa? Mewɔ ɛreba a, mɛbɔ ano ban afa.","hello","YEs"));
+        proverbsArrayList.add(new Proverbs("Yɛbaa mmebu a, anka yɛso nkuma", "If we had come to fell proverbs then we would be carrying axes", "We did not come to play. We mean business"));
         proverbsArrayList.add(new Proverbs("Bra bɛhwɛ bi nkyerɛ sɛ behunu sen me","Come and see some does not mean that come and see more than me","If you are offered something, you shouldn't take more than your fair share or more than the one who offered it to you"));
         proverbsArrayList.add(new Proverbs("Bra bɛhwɛ ne deɛ wahunu","Come and see is what you have seen","You can only talk about what you have seen or experienced"));
-        proverbsArrayList.add(new Proverbs("Aba a ɛtɔ nyinaa na efifi a, anka obi rennya dua ase kwan","If all seeds that fall grow, then there will be no way to pass under trees", "Not everyone will "));
-        proverbsArrayList.add(new Proverbs("Wo ba koro wu a, na wo kosua korɔ abɔ","a","b"));
-        proverbsArrayList.add(new Proverbs("Ɔba nsɛ oni a ɔsɛ ɔse","a","b"));
-        proverbsArrayList.add(new Proverbs("Ɔba nsu a, yɛma no nom","a","b"));
-        proverbsArrayList.add(new Proverbs("","a","b"));
-        proverbsArrayList.add(new Proverbs("Ɔbaakofoɔ nkyere bɔdamfo","a","b"));
-        proverbsArrayList.add(new Proverbs("","",""));
+        proverbsArrayList.add(new Proverbs("Aba a ɛtɔ nyinaa na efifi a, anka obi rennya dua ase kwan","If all seeds that fall grow, then there will be no way to pass under trees", "Not everyone or every endeavour will succeed. That will allow room for others to succeed"));
+        //proverbsArrayList.add(new Proverbs("Wo ba koro wu a, na wo kosua korɔ abɔ","a","b"));
+        proverbsArrayList.add(new Proverbs("Ɔba nsɛ oni a ɔsɛ ɔse","If a baby or child does not resemble its mother then it resembles its father","Traits that people exhibit are picked up from those closest to you especially your relatives"));
+        proverbsArrayList.add(new Proverbs("Ɔba nsu a, yɛma no nom","If a baby does not cry we let it drink","You don't have to wait for someone to cry or toil for something that you know he needs before giving it"));
+        proverbsArrayList.add(new Proverbs("Ɔbaakofoɔ nkyere bɔdamfo","One person does not arrest a mad person","We have to work together"));
+        // proverbsArrayList.add(new Proverbs("","",""));
+
+        proverbsArrayList.add(new Proverbs("Ɔbaa na ɔwo ɔbarima","It is a woman who gives birth to a man","A seemingly weak person can help a strong person to succeed"));
+        proverbsArrayList.add(new Proverbs("Ɔbaa ne ne kunu asɛm, obi nnim mu","No one knows the issues between a woman and her husband","Intimacy is required to know underlying issues. Marriage issues are best known to the couples only. Don't interfere in marital affairs of others"));
+        proverbsArrayList.add(new Proverbs("Ɔbaakofoɔ di awu a, ɔsoa ne funu","If one person kills, he carries the corpse","If you plot and commit a sin alone, you will suffer the consequence alone"));
+        proverbsArrayList.add(new Proverbs("Mmaapɛ mu wɔ ade a, anka ɔpapo da apakan mu","If there was something to be gained from being a womanizer the he-goat would ride in a palanquin","Look at womanizers and learn that their lifestyle do not make them chiefs. You will not gain profit by being a womanizer"));
+        proverbsArrayList.add(new Proverbs("Ɔbaatan na onim nea ne ba bedi","A mother knows what her child will eat","Someone who cares for your physical needs even before you ask can be considered your mother"));
+        proverbsArrayList.add(new Proverbs("Abaa a yɛde bɔ efie aboa no, yɛmfa mmɔ wuram aboa","The stick that is used to hit the domestic animal is not the same stick that is used to hit a wild animal","Friends should be treated differently from strangers (even if they all deserve to be punished)"));
+        proverbsArrayList.add(new Proverbs("Ɔbaa kɔ adware na ɔmma ntɛm a, na ɔresiesie ne ho","If a woman goes to the bathroom and she delays, she is tidying herself up","If someone or something is delaying maybe there is a good reason. Be patient when expecting good things. There is an underlying reason for each cause"));
+        proverbsArrayList.add(new Proverbs("Baabi dehyeɛ kɔsom a, wɔfrɛ no afenaa","When a royal goes to another place to serve others, she is called a slave","You can be regarded with great respect within your community or family but viewed as of little value by those of another community"));
+        proverbsArrayList.add(new Proverbs("Baabiara nni hɔ a wotena we atadwe a, ɛnyɛ dɛ","There is no place that if you sit and chew tiger nuts, the tiger nuts will become bitter","A good thing is good, no matter where it is located"));
+        proverbsArrayList.add(new Proverbs("Sɛ ababaa wu na yɛde aberewa di n'adeɛ a, na ayie no na yɛatu ahyɛ da","If a young lady dies and we make an old lady inherit her property then it is the funeral that we are postponing to another day","If you replace a good thing with a bad thing then you will have to replace it again very soon"));
+        proverbsArrayList.add(new Proverbs("Ɔbaa na onim ne kunu yam kɔm","A woman knows how hungry her husband is","Those closest to you are those who know what you are going through"));
+        proverbsArrayList.add(new Proverbs("Sɛ bafan nnim hwee mpo a, onim nsam bɔ","If a cripple knows nothing at all, he can clap his hands","Even if you are disabled or disadvantaged in a way, there is still something you can do"));
+        proverbsArrayList.add(new Proverbs("Ɔba kwasea rehonhono a, ɔse ɔreyɛ kɛse","If a stupid child (person) is developing a swollen body he says he is getting fat","A stupid person cannot see the truth in the reality of events"));
+       // proverbsArrayList.add(new Proverbs("Ɔbaa ","",""));
 
 
         storageReference = FirebaseStorage.getInstance().getReference();
-        toast = Toast.makeText(getApplicationContext(), "SUBscribed" , Toast.LENGTH_SHORT);
+        toast = Toast.makeText(getApplicationContext(), "Subscribed" , Toast.LENGTH_SHORT);
 
         toast = Toast.makeText(getApplicationContext(), "Tap Twi to Listen", Toast.LENGTH_SHORT);
         toast.show();
-      /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-*/
-
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView1 = findViewById(R.id.adView1);
-        AdRequest adRequest1 = new AdRequest.Builder().build();
-        mAdView1.loadAd(adRequest1);
 
 
         proverbsViewFlipper = findViewById(R.id.proverbsAdapterViewFlipper);

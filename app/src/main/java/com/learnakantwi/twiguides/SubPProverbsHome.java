@@ -146,9 +146,9 @@ public class SubPProverbsHome extends AppCompatActivity {
     public void downloadClick () {
         int counter = 0;
 
-        toast.setText("Got here");
+        /*toast.setText("Got here");
         toast.show();
-
+*/
         if (isNetworkAvailable()) {
             for (int j = 0; j < proverbsArrayList.size(); j++) {
 
@@ -314,38 +314,6 @@ public class SubPProverbsHome extends AppCompatActivity {
                                 case "Download Proverb Audio":
                                     downloadClick();
                                     return;
-                                case "Body Parts":
-                                    goToBodyparts();
-                                    return;
-                                case "Colours":
-                                    goToColours();
-                                    return;
-                                case "Days of Week":
-                                    goToDaysOfWk();
-                                    return;
-                                case "Expressions":
-                                    goToCommonExpressionsa();
-                                    return;
-                                case "Family":
-                                    goToFamily();
-                                    return;
-                                case "Food":
-                                    goToFood();
-                                    return;
-                                case "Months":
-                                    goToMonths();
-                                    return;
-                                case "Numbers":
-                                    goToNumber();
-                                    return;
-                                case "Time":
-                                    goToTime();
-                                    return;
-                                case "Weather":
-                                    goToWeather();
-                                    return;
-                                case "Search":
-                                    goToAll();
                             }
                         }
                     });
@@ -426,7 +394,7 @@ public class SubPProverbsHome extends AppCompatActivity {
 
         public void goToMainMenu()
         {
-            Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
             startActivity(intent);
         }
     public void goToProverbs() {
@@ -441,61 +409,6 @@ public class SubPProverbsHome extends AppCompatActivity {
 
     public void goToAlphabets() {
         Intent intent = new Intent(getApplicationContext(), QuizAlphabet.class);
-        startActivity(intent);
-    }
-
-    public void goToNumber() {
-        Intent intent = new Intent(getApplicationContext(), QuizNumbers.class);
-        startActivity(intent);
-    }
-
-    public void goToDaysOfWk() {
-        Intent intent = new Intent(getApplicationContext(), QuizDaysOfWeek.class);
-        startActivity(intent);
-    }
-
-    public void goToTime() {
-        Intent intent = new Intent(getApplicationContext(), QuizTime.class);
-        startActivity(intent);
-    }
-
-    public void goToFamily() {
-        Intent intent = new Intent(getApplicationContext(), QuizFamily.class);
-        startActivity(intent);
-    }
-
-    public void goToWeather() {
-        Intent intent = new Intent(getApplicationContext(), QuizWeather.class);
-        startActivity(intent);
-    }
-
-    public void goToMonths() {
-        Intent intent = new Intent(getApplicationContext(), QuizMonths.class);
-        startActivity(intent);
-    }
-
-    public void goToColours() {
-        Intent intent = new Intent(getApplicationContext(), QuizColours.class);
-        startActivity(intent);
-    }
-
-    public void goToAnimals() {
-        Intent intent = new Intent(getApplicationContext(), QuizAnimals.class);
-        startActivity(intent);
-    }
-
-    public void goToBodyparts() {
-        Intent intent = new Intent(getApplicationContext(), QuizBodyParts.class);
-        startActivity(intent);
-    }
-
-    public void goToFood() {
-        Intent intent = new Intent(getApplicationContext(), QuizFood.class);
-        startActivity(intent);
-    }
-
-    public void goToCommonExpressionsa() {
-        Intent intent = new Intent(getApplicationContext(), QuizCommonExpressionsa.class);
         startActivity(intent);
     }
 
@@ -591,48 +504,6 @@ public class SubPProverbsHome extends AppCompatActivity {
             }
         }
 
-
-
-
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-
-        //ca-app-pub-7384642419407303/9880404420
-        //ca-app-pub-3940256099942544/1033173712 test
-
-
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-
-
-      /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView1 = findViewById(R.id.adView1);
-        AdRequest adRequest1 = new AdRequest.Builder().build();
-        mAdView1.loadAd(adRequest1);*/
-
-
-/*
-        findViewById(R.id.homeAdvertButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                advert();
-            }
-        }); */
-
-
-        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
 
         homeButtonArrayList = new ArrayList<>();
         homeListView = findViewById(R.id.homeListView);

@@ -10,6 +10,10 @@ public class HomeButton implements Comparable<HomeButton> {
         this.imageOfActivity = imageOfActivity;
     }
 
+    public HomeButton(String nameofActivity){
+        this.nameofActivity = nameofActivity;
+    }
+
     public String getNameofActivity() {
         return nameofActivity;
     }
@@ -18,7 +22,7 @@ public class HomeButton implements Comparable<HomeButton> {
         this.nameofActivity = nameofActivity;
     }
 
-    public int getImageOfActivity() {
+    int getImageOfActivity() {
         return imageOfActivity;
     }
 

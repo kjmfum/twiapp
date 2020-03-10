@@ -479,33 +479,17 @@ public class SubPFamilyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sub_pfamily);
 
 
-        Toast.makeText(this, "SubFamily", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "SubFamily", Toast.LENGTH_SHORT).show();
 
-        familyArrayList.add(new Family("My dad","Me dada"));
+     /*   familyArrayList.add(new Family("My dad","Me dada"));
         familyArrayList.add(new Family("My mum paa","Me dada paa"));
         familyArrayList.add(new Family("My dad","Me dada"));
-        familyArrayList.add(new Family("My Big Maan","Me dada"));
+        familyArrayList.add(new Family("My Big Maan","Me dada"));*/
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
         isNetworkAvailable();
 
-       /* if (isNetworkAvailable()){
-            Toast.makeText(this, "There is Internet 1", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(this, "No Internet 1", Toast.LENGTH_SHORT).show();
-        }
-
-       if (isNetworkAvailable()){
-            toast.setText("There is Internet 2");
-            toast.show();
-        }
-       else{
-           toast.setText("No Internet 2");
-           toast.show();
-
-       }*/
 
 
 

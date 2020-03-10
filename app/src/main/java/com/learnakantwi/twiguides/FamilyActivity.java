@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -40,6 +42,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class FamilyActivity extends AppCompatActivity {
 
@@ -51,6 +54,10 @@ public class FamilyActivity extends AppCompatActivity {
     MediaPlayer mp1;
     AdView mAdView;
     boolean playsoon = true;
+
+    public InterstitialAd mInterstitialAd;
+    int showAdProbability;
+    Random random;
 
 
     Toast toast;
@@ -302,7 +309,7 @@ public class FamilyActivity extends AppCompatActivity {
 
                             String url = uri.toString();
                             playFromFirebase(musicRef);
-                            //downloadFile(getApplicationContext(), filename, ".m4a", url);
+                            downloadFile(getApplicationContext(), filename, ".m4a", url);
 
                             toast.setText(appearText);
                             toast.show();
@@ -486,10 +493,64 @@ public class FamilyActivity extends AppCompatActivity {
 
     }
 
+    /*public void advert1() {
+
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        int showAdProbability;
+        InterstitialAd mInterstitialAd;
+        Random random;
+
+        mInterstitialAd = new InterstitialAd(this);
+        // mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        random = new Random();
+        showAdProbability = random.nextInt(10);
+
+        @Override
+        protected void onDestroy() {
+            if (showAdProbability<=2){
+                advert1();
+            }
+            super.onDestroy();
+        }
+    }*/
+
+    public void advert1() {
+
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family);
+
+        mInterstitialAd = new InterstitialAd(this);
+        // mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        random = new Random();
+        showAdProbability = random.nextInt(10);
 
         playFromDevice = new MediaPlayer();
         mp1 = new MediaPlayer();
@@ -500,22 +561,6 @@ public class FamilyActivity extends AppCompatActivity {
 
         isNetworkAvailable();
 
-       /* if (isNetworkAvailable()){
-            Toast.makeText(this, "There is Internet 1", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(this, "No Internet 1", Toast.LENGTH_SHORT).show();
-        }
-
-       if (isNetworkAvailable()){
-            toast.setText("There is Internet 2");
-            toast.show();
-        }
-       else{
-           toast.setText("No Internet 2");
-           toast.show();
-
-       }*/
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -568,6 +613,9 @@ public class FamilyActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         stopPlay();
+        if (showAdProbability<=3){
+            advert1();
+        }
         super.onDestroy();
     }
 

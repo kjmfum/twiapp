@@ -123,56 +123,26 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
 
                             switch (me1){
-                                case "Alphabets":
-                                    goToAlphabets();
+                                case "Conversations":
+                                    goToPleaseSubPage();
                                     return;
-                                case "Proverbs":
-                                    goToProverbs();
+                                case "Settings":
+                                    goToSettings();
+                                    return;
+                                case "Vocabulary":
+                                    goToMain();
                                     return;
                                 case "Children":
                                     goToChildren();
                                     return;
-                                case "Animals":
-                                    goToAnimals();
+                                case "Proverbs":
+                                    goToProverbs();
                                     return;
-                                case "Body Parts":
-                                    goToBodyparts();
+                                case "Quiz":
+                                    goToQuizHome();
                                     return;
-                                case "Colours":
-                                    goToColours();
-                                    return;
-                                case "Days of Week":
-                                    goToDaysOfWk();
-                                    return;
-                                case "Expressions":
-                                    goToCommonExpressionsa();
-                                    return;
-                                case "Family":
-                                    goToFamily();
-                                    return;
-                                case "Food":
-                                    goToFood();
-                                    return;
-                                case "Months":
-                                    goToMonths();
-                                    return;
-                                case "Numbers":
-                                    goToNumber();
-                                    return;
-                                case "Pronouns":
-                                    goToPronouns();
-                                    return;
-                                case "Time":
-                                    goToTime();
-                                    return;
-                                case "Weather":
-                                    goToWeather();
-                                    return;
-                                case "Business":
-                                    goToBusiness();
-                                    return;
-                                case "Search":
-                                    goToAll();
+                                case "Reading":
+                                    goToReading();
                             }
                         }
                     });
@@ -266,81 +236,12 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
         startActivity(intent);
     }
 
-    public void goToBusiness(){
-        Intent intent = new Intent(getApplicationContext(), BusinessActivity.class);
-        startActivity(intent);
-
-    }
 
     public void goToWeb() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
         startActivity(intent);
     }
 
-    public void goToAlphabets() {
-        Intent intent = new Intent(getApplicationContext(), AlphabetsActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToNumber() {
-        Intent intent = new Intent(getApplicationContext(), NumbersActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToDaysOfWk() {
-        Intent intent = new Intent(getApplicationContext(), DaysOfWeekActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToTime() {
-        Intent intent = new Intent(getApplicationContext(), TimeActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToFamily() {
-        Intent intent = new Intent(getApplicationContext(), FamilyActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToWeather() {
-        Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToMonths() {
-        Intent intent = new Intent(getApplicationContext(), MonthsActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToPronouns() {
-        Intent intent = new Intent(getApplicationContext(), PronounsActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToColours() {
-        Intent intent = new Intent(getApplicationContext(), ColoursActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToAnimals() {
-        Intent intent = new Intent(getApplicationContext(), AnimalsActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToBodyparts() {
-        Intent intent = new Intent(getApplicationContext(), BodypartsActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToFood() {
-        Intent intent = new Intent(getApplicationContext(), FoodActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToCommonExpressionsa() {
-        Intent intent = new Intent(getApplicationContext(), CommonExpressionsaActivity.class);
-        startActivity(intent);
-    }
 
     public void goToAll() {
         Intent intent = new Intent(getApplicationContext(), AllActivity.class);
@@ -361,59 +262,11 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
     }
 
     public void goToSubscriptionPage (View v){
-        Toast.makeText(this, String.valueOf(subscriptionState), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, String.valueOf(subscriptionState), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), InAppActivity.class);
         startActivity(intent);
     }
 
-    /*public void advert() {
-
-
-        final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-      //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
-
-
-        assert advertPreference != null;
-        if (!advertPreference.equals("Yes")) {
-            new AlertDialog.Builder(this)
-                    .setIcon(R.drawable.learnakantwiimage)
-                    .setTitle("Please support us")
-                    .setMessage("Would You Like To View An Advert To Support Us?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            sharedPreferences.edit().putString("AdvertPreference", "Yes").apply();
-                            if (mInterstitialAd.isLoaded()) {
-                                mInterstitialAd.show();
-                            } else {
-                                Log.d("TAG", "The interstitial wasn't loaded yet.");
-                            }
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-                                }
-                            }
-                    )
-                    .show();
-        } else {
-            if (mInterstitialAd.isLoaded()) {
-                mInterstitialAd.show();
-
-            } else {
-                Log.d("TAG", "The interstitial wasn't loaded yet.");
-
-            }
-        }
-
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-    }
-*/
 
    /* public void checkPermission(String permission, int requestCode)
     {
@@ -506,8 +359,8 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
                                                         int me3=  purchasesList.size();
 
                                                         //toast.setText(Integer.toString(me3));
-                                                        toast.setText(me1);
-                                                        toast.show();
+                                                       /* toast.setText(me1);
+                                                        toast.show();*/
 
                                                     }
                                                     else{
@@ -614,6 +467,27 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
     }
 
+   /* public void Transition(View v){
+        Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+        startActivity(intent);
+
+    }*/
+
+   public void goToPleaseSubPage(){
+       Intent intent = new Intent(getApplicationContext(), PleaseSubscribePage.class);
+       startActivity(intent);
+   }
+
+    public void goToSettings(){
+        Intent intent = new Intent(getApplicationContext(), SettingsAndTips.class);
+        startActivity(intent);
+    }
+
+    public void goToReading(){
+        Intent intent = new Intent(getApplicationContext(), ReadingActivityMain.class);
+        startActivity(intent);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -624,6 +498,7 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
 
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+
 
         try {
             deleteDuplicatelDownload();
@@ -636,17 +511,6 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
         subscriptionStatePreference = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
         subscriptionState = subscriptionStatePreference.getBoolean("Paid",false);
 
-
-//        String subscriptionState  = subscriptionStatePreference.getString("Subscription", "No");
-//
-//        SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-//        String dailyTwiPreference = sharedPreferences.getString("DailyTwiPreference", "Yes");
-//
-//        SharedPreferences sharedPreferences1 = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-//        sharedPreferences1.edit().putString("Downloading", "No").apply();
-
-        // Function to check and request permission
-       // checkPermission(INTERNET, 100);
 
         if (Build.VERSION.SDK_INT > 22) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -702,11 +566,18 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
         homeMainButtonArrayList = new ArrayList<>();
         homeListView = findViewById(R.id.homeListView);
 
-
-        homeMainButtonArrayList.add(new HomeMainButton("Vocabulary", R.drawable.vocabularyimage));
-        homeMainButtonArrayList.add(new HomeMainButton("Quiz", R.drawable.quizimage));
+        homeMainButtonArrayList.add(new HomeMainButton("Manage Storage", R.drawable.ic_download_audio));
         homeMainButtonArrayList.add(new HomeMainButton("Proverbs", R.drawable.proverbsimage));
+        homeMainButtonArrayList.add(new HomeMainButton("Vocabulary", R.drawable.vocabularyimage));
         homeMainButtonArrayList.add(new HomeMainButton("Children", R.drawable.childrenimage));
+        homeMainButtonArrayList.add(new HomeMainButton("Quiz", R.drawable.quizimage));
+        homeMainButtonArrayList.add(new HomeMainButton("Conversations", R.drawable.conversationimage));
+        homeMainButtonArrayList.add(new HomeMainButton("Reading", R.drawable.readingimage));
+
+
+
+
+
        /* homeMainButtonArrayList.add(new HomeMainButton("Food", R.drawable.foodimage));
         homeMainButtonArrayList.add(new HomeMainButton("Alphabets", R.drawable.alphabetsimage));
         homeMainButtonArrayList.add(new HomeMainButton("Time", R.drawable.time));*/
@@ -730,6 +601,12 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
 
                 switch (me1){
+                    case "Conversations":
+                        goToPleaseSubPage();
+                        return;
+                    case "Manage Storage":
+                        goToSettings();
+                        return;
                     case "Vocabulary":
                         goToMain();
                         return;
@@ -742,41 +619,8 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
                     case "Quiz":
                         goToQuizHome();
                         return;
-                    case "Colours":
-                        goToColours();
-                        return;
-                    case "Days of Week":
-                        goToDaysOfWk();
-                        return;
-                    case "Expressions":
-                        goToCommonExpressionsa();
-                        return;
-                    case "Family":
-                        goToFamily();
-                        return;
-                    case "Food":
-                        goToFood();
-                        return;
-                    case "Months":
-                        goToMonths();
-                        return;
-                    case "Numbers":
-                        goToNumber();
-                        return;
-                    case "Pronouns":
-                        goToPronouns();
-                        return;
-                    case "Time":
-                        goToTime();
-                        return;
-                    case "Weather":
-                        goToWeather();
-                        return;
-                    case "Business":
-                        goToBusiness();
-                        return;
-                    case "Search":
-                        goToAll();
+                    case "Reading":
+                        goToReading();
                 }
             }
         });
@@ -807,6 +651,7 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
             Toast.makeText(this,"Could not complete purchase", Toast.LENGTH_LONG).show();
         }
     }
+
 }
 
 

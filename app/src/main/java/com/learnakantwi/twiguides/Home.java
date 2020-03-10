@@ -63,13 +63,12 @@ public class Home extends AppCompatActivity {
     int downloadAllClickCount;
     String sharedDownloadingOrNot;
 
+    int testShared;
 
 
 
-    public void downloadCompleteToast(){
-        toast.setText("Download Complete");
-        toast.show();
-    }
+
+
 
     public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
 
@@ -583,6 +582,7 @@ public class Home extends AppCompatActivity {
     public void advert() {
 
 
+
         final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
       //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
         String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
@@ -784,8 +784,21 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quizhome);
 
-        SharedPreferences sharedPreferences1 = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
+        try {
+            deleteDuplicatelDownload();
+        }
+        catch (NullPointerException e){
+            System.out.println("Error Null");
+        }
+        catch (Exception k){
+            System.out.println("Strange Null");
+        }
+
+        final SharedPreferences sharedPreferences1 = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
         sharedDownloadingOrNot = sharedPreferences1.getString("Downloading", "");
+
+
+
 
         downloadAllClickCount =0;
 
@@ -795,8 +808,34 @@ public class Home extends AppCompatActivity {
         toast= Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
 
+
+
         ImageView topImage = findViewById(R.id.homeAdvertButton);
         topImage.setImageResource(R.drawable.vocabularyimage);
+
+        /*topImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (testShared==0){
+                    SharedPreferences.Editor editor =sharedPreferencesAds.edit();
+                    editor.putInt("Ads",1);
+                    editor.apply();
+
+                    testShared = sharedPreferencesAds.getInt("Ads", 5);
+                    toast.setText(Integer.toString(testShared2));
+                    toast.show();
+                }
+                else {
+                    SharedPreferences.Editor editor =sharedPreferencesAds.edit();
+                    editor.putInt("Ads",0);
+                    editor.apply();
+                    testShared = sharedPreferencesAds.getInt("Ads", 5);
+                    toast.setText(Integer.toString(testShared));
+                    toast.show();
+                }
+
+            }
+        });*/
 
         // Function to check and request permission
        // checkPermission(INTERNET, 100);
@@ -825,15 +864,22 @@ public class Home extends AppCompatActivity {
         //ca-app-pub-7384642419407303/9880404420
         //ca-app-pub-3940256099942544/1033173712 test
 
+        final SharedPreferences sharedPreferencesAds = this.getSharedPreferences("AdsDecision", MODE_PRIVATE);
+        testShared = sharedPreferencesAds.getInt("Ads",5);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+
+        if( testShared != 0){
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }
+
+
 
       /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override

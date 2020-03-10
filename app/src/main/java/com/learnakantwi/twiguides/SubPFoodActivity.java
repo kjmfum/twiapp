@@ -473,8 +473,6 @@ public class SubPFoodActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_pfamily);
 
-        foodArrayList.add(new Food("1 Aduane","Good Food"));
-
         isNetworkAvailable();
 
 

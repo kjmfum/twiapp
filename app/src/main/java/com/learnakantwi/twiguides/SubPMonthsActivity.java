@@ -47,8 +47,6 @@ public class SubPMonthsActivity extends AppCompatActivity {
 
     ListView monthsListView;
 
-
-
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
@@ -56,7 +54,16 @@ public class SubPMonthsActivity extends AppCompatActivity {
 
 
     Toast toast;
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
     boolean isRunning =false;
+
     public Runnable runnable = new Runnable() {
 
         @Override
@@ -76,14 +83,6 @@ public class SubPMonthsActivity extends AppCompatActivity {
             }
         }
     };
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null;
-    }
-
     public void downloadOnly(final String filename){
         if (isNetworkAvailable()){
 
@@ -403,12 +402,12 @@ public class SubPMonthsActivity extends AppCompatActivity {
 
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
         startActivity(intent);
     }
 
     public void goToQuizMonths() {
-        Intent intent = new Intent(getApplicationContext(), QuizMonths.class);
+        Intent intent = new Intent(getApplicationContext(), QuizSubMonths.class);
         startActivity(intent);
     }
     public void goToWeb() {
@@ -461,20 +460,15 @@ public class SubPMonthsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub_pfamily);
-
-        Toast.makeText(this, "SubMonths", Toast.LENGTH_SHORT).show();
+        setContentView(R.layout.activity_sub_pmonths);
 
 
-        monthsArrayList.add(new Months("New Month","Bosome foforo"));
-        monthsArrayList.add(new Months("2 New Month","Bosome foforo"));
-        monthsArrayList.add(new Months("3 New Month","Bosome foforo"));
 
         isNetworkAvailable();
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
-        monthsListView = findViewById(R.id.subPFamilyListView);
+        monthsListView = findViewById(R.id.monthsListView);
         storageReference = FirebaseStorage.getInstance().getReference();
 
         MonthsAdapter monthsAdapter = new MonthsAdapter(this, monthsArrayList);

@@ -68,6 +68,7 @@ public class Repeating_activity extends AppCompatActivity {
     AdView mAdView;
     AdView mAdView1;
     Toast toast;
+    int testShared;
 
 
     private InterstitialAd mInterstitialAd;
@@ -427,7 +428,7 @@ public class Repeating_activity extends AppCompatActivity {
 
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
 
@@ -490,15 +491,17 @@ public class Repeating_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wordoftheday);
 
-        isNetworkAvailable();
+        //ca-app-pub-7384642419407303/9880404420
+        //ca-app-pub-3940256099942544/1033173712 test
 
+        isNetworkAvailable();
 
 
         toast = Toast.makeText(getApplicationContext(), "Twi for the day. Tap to Listen", Toast.LENGTH_SHORT);
         toast.show();
 
         textView = findViewById(R.id.randomText);
-        textTwi= findViewById(R.id.randomText1);
+        textTwi = findViewById(R.id.randomText1);
 //        dailyTwiSwitch = findViewById(R.id.dailyTwiSwitch);
 
 
@@ -516,7 +519,7 @@ public class Repeating_activity extends AppCompatActivity {
         textTwi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int idview= view.getId();
+                int idview = view.getId();
 
                 TextView blabla = view.findViewById(idview);
                 String a = (String) blabla.getText();
@@ -526,21 +529,21 @@ public class Repeating_activity extends AppCompatActivity {
                 boolean d = b.contains("ɔ");
                 boolean e = b.contains("ɛ");
 
-                if (d || e ){
-                    b= b.replace("ɔ","x");
-                    b= b.replace("ɛ","q");
+                if (d || e) {
+                    b = b.replace("ɔ", "x");
+                    b = b.replace("ɛ", "q");
                 }
 
 
-                if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") | b.contains("?")| b.contains("...")) {
+                if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") | b.contains("?") | b.contains("...")) {
                     b = b.replace(" ", "");
                     b = b.replace("/", "");
-                    b= b.replace(",","");
-                    b= b.replace("(","");
-                    b= b.replace(")","");
-                    b= b.replace("-","");
-                    b= b.replace("?","");
-                    b= b.replace("...","");
+                    b = b.replace(",", "");
+                    b = b.replace("(", "");
+                    b = b.replace(")", "");
+                    b = b.replace("-", "");
+                    b = b.replace("?", "");
+                    b = b.replace("...", "");
                 }
                 playFromFileOrDownload(b, a);
             }
@@ -555,7 +558,7 @@ public class Repeating_activity extends AppCompatActivity {
         //ca-app-pub-7384642419407303/9880404420 correct
         //ca-app-pub-3940256099942544/1033173712 test
 
-      findViewById(R.id.generate).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.generate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToMain();
@@ -567,25 +570,52 @@ public class Repeating_activity extends AppCompatActivity {
         } else {
             Log.d("TAG", "The interstitial wasn't loaded yet.");
         }*/
-    }
+            }
 
            /* public void onClick(View v) {
                 generateQuestion();
             }*/
         });
 
+        final SharedPreferences sharedPreferencesAds = this.getSharedPreferences("AdsDecision", MODE_PRIVATE);
+        testShared = sharedPreferencesAds.getInt("Ads", 5);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+
+        if (testShared != 0) {
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+
+            mAdView1 = findViewById(R.id.adView1);
+            AdRequest adRequest1 = new AdRequest.Builder().build();
+            mAdView1.loadAd(adRequest1);
+
+        }
+    }
+
+
+       /* MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);*/
 
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+        /*MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
@@ -593,6 +623,6 @@ public class Repeating_activity extends AppCompatActivity {
         mAdView1 = findViewById(R.id.adView1);
         AdRequest adRequest1 = new AdRequest.Builder().build();
         mAdView1.loadAd(adRequest1);
-    }
+    }*/
 
 }

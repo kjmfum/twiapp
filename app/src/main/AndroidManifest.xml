@@ -9,20 +9,80 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <application
         android:name=".AppStartClass"
         android:allowBackup="true"
+        android:configChanges="keyboard|keyboardHidden|orientation|uiMode|screenLayout|screenSize|smallestScreenSize"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/learnakantwiimage"
         android:label="@string/app_name"
         android:resizeableActivity="true"
         android:roundIcon="@drawable/learnakantwiimage"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".SignInActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".DownloadsActivity"/>
+        <activity android:name=".DeleteDownloadsActivity" />
+        <activity android:name=".SettingsAndTips" />
+        <activity android:name=".SubPReadingDigraphs" />
+        <activity android:name=".SubPReadingActivityDigraphMain" />
+        <activity android:name=".SubPReadingActivityTwoLettersMain" />
+        <activity android:name=".SubPReadingActivityTwoLetters" />
+        <activity android:name=".SubPReadingActivityMain" />
+        <activity android:name=".ReadingActivityTwoLetters" />
+        <activity android:name=".ReadingActivityMain" />
+        <activity android:name=".ReadingActivityTwoLettersMain" />
+        <activity android:name=".ChildrenAnimalActivity" />
+        <activity android:name=".PleaseSubscribePage" />
+        <activity android:name=".SubChildrenAnimals" />
+        <activity android:name=".QuizSubFood" />
+        <activity android:name=".QuizSubFamily" />
+        <activity android:name=".QuizSubAll" />
+        <activity android:name=".QuizSubBusiness" />
+        <activity android:name=".QuizSubAnimals" />
+        <activity android:name=".QuizSubColours" />
+        <activity android:name=".QuizSubCommonExpressionsa" />
+        <activity android:name=".QuizSubMonths" />
+        <activity android:name=".QuizSubBodyParts" />
+        <activity android:name=".QuizSubWeather" />
+        <activity android:name=".QuizSubPronouns" />
+        <activity android:name=".QuizSubNumbers" />
+        <activity android:name=".QuizSubDaysOfWeek" />
+        <activity android:name=".QuizSubTime" />
+        <activity android:name=".QuizSubAlphabet" />
+        <activity android:name=".SubPAllActivity" />
+        <activity android:name=".SubPBusinessActivity" />
+        <activity android:name=".SubPAnimalsActivity" />
+        <activity android:name=".SubPColoursActivity" />
+        <activity android:name=".SubPCommonExpressionsaActivity" />
+        <activity android:name=".SubPBodypartsActivity" />
+        <activity android:name=".SubPWeatherActivity" />
+        <activity android:name=".SubPPronounsActivity" />
+        <activity android:name=".SubPNumbersActivity" />
+        <activity android:name=".SubPDaysOfWeekActivity" />
+        <activity android:name=".SubPAlphabetsActivity" />
+        <activity android:name=".SubChildrenHome" />
+        <activity android:name=".QuizSubHome" />
         <activity
-            android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login" />
+            android:name=".QuizSubConversation"
+            android:screenOrientation="fullSensor" />
+        <activity android:name=".SubConversationIntroductionActivity" />
+        <activity android:name=".SubConversationHomeActivity" />
+        <activity android:name=".ForgotPassword" />
+        <activity android:name=".RealTimeDatabase" />
+        <activity android:name=".PlayFromFirebase" />
+        <activity
+            android:name=".SignUpActivity"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".SignInActivity"
+            android:screenOrientation="fullSensor" />
         <activity android:name=".SubPFoodActivity" />
         <activity android:name=".SubPMonthsActivity" />
         <activity android:name=".SubPFamilyActivity" />
@@ -31,7 +91,9 @@
         <activity android:name=".SubPProverbsActivity" />
         <activity android:name=".SubPTimeActivity" />
         <activity android:name=".SubPHomeVocabulary" />
-        <activity android:name=".InAppActivity" />
+        <activity
+            android:name=".InAppActivity"
+            android:screenOrientation="fullSensor" />
         <activity android:name=".ProverbsActivity" />
         <activity android:name=".ChildrenAlphabet" />
         <activity
@@ -46,7 +108,7 @@
         <activity android:name=".QuizFamily" />
         <activity
             android:name=".ChildrenNumberCount"
-            android:screenOrientation="landscape" /> <!-- android:theme="@style/AppTheme.NoActionBar" -->
+            android:screenOrientation="fullSensor" /> <!-- android:theme="@style/AppTheme.NoActionBar" -->
         <activity android:name=".QuizTime" />
         <activity android:name=".QuizDaysOfWeek" />
         <activity android:name=".QuizNumbers" />

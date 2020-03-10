@@ -346,6 +346,9 @@ public class QuizHome extends AppCompatActivity {
 
 
                             switch (me1){
+                                case "Conversations":
+                                    goToConversation();
+                                    return;
                                 case "Alphabets":
                                     goToAlphabets();
                                     return;
@@ -486,6 +489,11 @@ public class QuizHome extends AppCompatActivity {
 
     public void goToAlphabets() {
         Intent intent = new Intent(getApplicationContext(), QuizAlphabet.class);
+        startActivity(intent);
+    }
+
+    public void goToConversation() {
+        Intent intent = new Intent(getApplicationContext(), PleaseSubscribePage.class);
         startActivity(intent);
     }
 
@@ -713,10 +721,12 @@ public class QuizHome extends AppCompatActivity {
         homeListView = findViewById(R.id.homeListView);
 
         homeButtonArrayList.add(new HomeButton("Download All Audio", R.drawable.ic_download_audio));
+
         homeButtonArrayList.add(new HomeButton("Family", R.drawable.familyimage));
        // homeButtonArrayList.add(new HomeButton("Proverbs", R.drawable.proverbsimage));
         //homeButtonArrayList.add(new HomeButton("Children", R.drawable.childrenimage));
         homeButtonArrayList.add(new HomeButton("Food", R.drawable.foodimage));
+        homeButtonArrayList.add(new HomeButton("Conversations", R.drawable.conversationimage));
         homeButtonArrayList.add(new HomeButton("Alphabets", R.drawable.alphabetsimage));
         homeButtonArrayList.add(new HomeButton("Time", R.drawable.time));
         homeButtonArrayList.add(new HomeButton("Days of Week", R.drawable.monday));
@@ -748,6 +758,9 @@ public class QuizHome extends AppCompatActivity {
 
 
                 switch (me1){
+                    case "Conversations":
+                        goToConversation();
+                        return;
                     case "Alphabets":
                         goToAlphabets();
                         return;

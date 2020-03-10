@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -39,6 +41,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class TimeActivity extends AppCompatActivity {
 
@@ -54,6 +57,9 @@ public class TimeActivity extends AppCompatActivity {
     AdView mAdView;
 
     Toast toast;
+    int showAdProbability;
+    InterstitialAd mInterstitialAd;
+    Random random;
 
 
     boolean isRunning =false;
@@ -449,6 +455,19 @@ public class TimeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void advert1() {
+
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -456,6 +475,17 @@ public class TimeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_time);
 
         isNetworkAvailable();
+
+        mInterstitialAd = new InterstitialAd(this);
+        // mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        random = new Random();
+        showAdProbability = random.nextInt(10);
+
+
+
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
@@ -610,9 +640,13 @@ public class TimeActivity extends AppCompatActivity {
 
         timeListView.setAdapter(timeAdapter);
 
+    }
 
-
-
-
+    @Override
+    protected void onDestroy() {
+        if (showAdProbability<=2){
+            advert1();
+        }
+        super.onDestroy();
     }
 }

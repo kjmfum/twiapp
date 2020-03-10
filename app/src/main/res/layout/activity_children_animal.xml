@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChildrenAnimalActivity">
+
+
+    <ImageView
+        android:id="@+id/ivAnimal"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/horguideline50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horguideline50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <ListView
+        android:id="@+id/lvChildrenAnimals"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorGreen"
+        android:foregroundGravity="center"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@id/adView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horguideline50"/>
+
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="ca-app-pub-7384642419407303/7840050122"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lvChildrenAnimals"
+        />
+
+    <!-- <com.google.android.gms.ads.AdView
+       android:id="@+id/adView1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       app:adSize="SMART_BANNER"
+       ca-app-pub-7384642419407303/7840050122
+       test app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@id/homeListView">
+
+   </com.google.android.gms.ads.AdView>
+-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

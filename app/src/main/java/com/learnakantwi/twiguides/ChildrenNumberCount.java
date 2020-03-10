@@ -8,6 +8,7 @@ import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -52,6 +53,7 @@ public class ChildrenNumberCount extends AppCompatActivity {
     AdView mAdView;
     boolean musicPlaying =true;
     String b;
+    int testShared;
 
 
     public void goToWeb() {
@@ -65,12 +67,10 @@ public class ChildrenNumberCount extends AppCompatActivity {
         //MenuInflater menuInflater = getMenuInflater();
         getMenuInflater().inflate(R.menu.main_menu_children, menu);
         return super.onCreateOptionsMenu(menu);
-
-
     }
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
 
@@ -439,14 +439,19 @@ public class ChildrenNumberCount extends AppCompatActivity {
 
         shake = AnimationUtils.loadAnimation(ChildrenNumberCount.this, R.anim.children_animation);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        final SharedPreferences sharedPreferencesAds = this.getSharedPreferences("AdsDecision", MODE_PRIVATE);
+        testShared = sharedPreferencesAds.getInt("Ads", 5);
+
+        if (testShared != 0) {
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }
 
            // loopSound();
 
