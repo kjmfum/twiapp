@@ -3,12 +3,6 @@ apply plugin: 'com.android.application'
 android {
     viewBinding.enabled = true
     signingConfigs {
-        releaseme {
-            storeFile file('/Users/obaapa/FinalApp/TwiGuide1FinalUpload/UploadOfTwiGuides/Twiguides')
-            storePassword 'Justbabe23456'
-            keyAlias = 'Twi'
-            keyPassword 'Bajcool7123'
-        }
         packagingOptions {
             exclude 'AndroidManifest.xml'
         }
