@@ -150,8 +150,8 @@ public class ProverbsHome extends AppCompatActivity {
     public void downloadClick () {
         int counter = 0;
 
-        toast.setText("Got here");
-        toast.show();
+       // toast.setText("Got here");
+        //toast.show();
 
         if (isNetworkAvailable()) {
             for (int j = 0; j < proverbsArrayList.size(); j++) {
@@ -436,6 +436,11 @@ public class ProverbsHome extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToProverbsQuiz() {
+        Intent intent = new Intent(getApplicationContext(), ProverbsQuizActivity.class);
+        startActivity(intent);
+    }
+
     public void goToWeb() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?couponCode=FDISCOUNT1"));
         startActivity(intent);
@@ -669,6 +674,7 @@ public class ProverbsHome extends AppCompatActivity {
         homeListView = findViewById(R.id.homeListView);
 
         homeButtonArrayList.add(new HomeButton("Proverbs and Their Meaning", R.drawable.proverbsimage));
+        homeButtonArrayList.add(new HomeButton("Proverbs Quiz", R.drawable.quizimage));
         homeButtonArrayList.add(new HomeButton("Download Proverb Audio", R.drawable.ic_download_audio));
 
         HomeAdapter homeAdapter = new HomeAdapter(this, homeButtonArrayList);
@@ -690,6 +696,9 @@ public class ProverbsHome extends AppCompatActivity {
                         return;
                     case "Download Proverb Audio":
                         downloadClick();
+                        return;
+                    case "Proverbs Quiz":
+                        goToProverbsQuiz();
                         return;
                 }
             }

@@ -135,6 +135,26 @@ public class SubPReadingActivityMain extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToLesson(int number) {
+        // Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
+
+        Intent intent;
+        switch(number){
+            case 1:
+                intent = new Intent(this, ReadingLesson1.class);
+                startActivity(intent);
+                break;
+            case 2:
+               intent = new Intent(this, ReadingLesson2.class);
+                startActivity(intent);
+                break;
+
+        }
+
+       // Intent intent = new Intent(this, ReadingLessonTestRecycler.class);
+        //intent.putExtra("vowel", vowel);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,6 +167,8 @@ public class SubPReadingActivityMain extends AppCompatActivity {
         readingMainArray = new ArrayList<>();
         readingMainArray.add("Two Letter Words");
         readingMainArray.add("Digraphs (Three Letter Sounds)");
+        readingMainArray.add("Reading Lesson 1");
+        readingMainArray.add("Reading Lesson 2");
 
 
 //        tvLetterA = findViewById(R.id.tvVowelA);
@@ -172,6 +194,12 @@ public class SubPReadingActivityMain extends AppCompatActivity {
                         return;
                     case "Digraphs (Three Letter Sounds)":
                         goToDigraphMain();
+                        return;
+                    case "Reading Lesson 1":
+                        goToLesson(1);
+                        return;
+                    case "Reading Lesson 2":
+                        goToLesson(2);
                         return;
                 }
             }

@@ -36,6 +36,7 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
 
@@ -521,6 +522,8 @@ public class SubPProverbsActivity extends AppCompatActivity {
         if (proverbsViewFlipper.isFlipping()){
             proverbsViewFlipper.stopFlipping();
         }
+        toast.setText("Paused");
+        toast.show();
 
         //proverbsViewFlipper.getChildCount();
     }
@@ -533,7 +536,7 @@ public class SubPProverbsActivity extends AppCompatActivity {
 
        // Toast.makeText(this, "Subscribed Customer", Toast.LENGTH_SHORT).show();
 
-        proverbsArrayList.add(new Proverbs("Ɛba a, ɛka oni", "If it comes it affects mother", "If trouble comes it affects your closest relatives"));
+        /*proverbsArrayList.add(new Proverbs("Ɛba a, ɛka oni", "If it comes it affects mother", "If trouble comes it affects your closest relatives"));
       //  proverbsArrayList.add(new Proverbs("Ɛreba a, mɛbɔ ho ban, ne ɛtoto a, mɛsane, wɔn mu hena na wowɔ n'afa? Mewɔ ɛreba a, mɛbɔ ano ban afa.","hello","YEs"));
         proverbsArrayList.add(new Proverbs("Yɛbaa mmebu a, anka yɛso nkuma", "If we had come to fell proverbs then we would be carrying axes", "We did not come to play. We mean business"));
         proverbsArrayList.add(new Proverbs("Bra bɛhwɛ bi nkyerɛ sɛ behunu sen me","Come and see some does not mean that come and see more than me","If you are offered something, you shouldn't take more than your fair share or more than the one who offered it to you"));
@@ -560,6 +563,25 @@ public class SubPProverbsActivity extends AppCompatActivity {
         proverbsArrayList.add(new Proverbs("Ɔba kwasea rehonhono a, ɔse ɔreyɛ kɛse","If a stupid child (person) is developing a swollen body he says he is getting fat","A stupid person cannot see the truth in the reality of events"));
        // proverbsArrayList.add(new Proverbs("Ɔbaa ","",""));
 
+        proverbsArrayList.add(new Proverbs("Ɔbaako yɛ ya","One is painful","To be a alone hurts"));
+        proverbsArrayList.add(new Proverbs("Ɔbaakofo di ɛwoɔ a enyane ne yam","If one person eats honey alone it awakens his stomach","A greedy person will suffer. If one enjoys good things alone he will suffer"));
+        proverbsArrayList.add(new Proverbs("Ɔbaakofo nkyekyere kurow","One person does not build a city","You cannot achieve great things by working alone"));
+        proverbsArrayList.add(new Proverbs("Ɔbaakofo na ɔto tuo na ɛdɔm guo","One person shoots a gun and an army falls","One person's decision determines the outcome.(Usually said when one makes a wise suggestion"));
+        proverbsArrayList.add(new Proverbs("Ɔbaako nnante anadwo","One person does not walk alone at night","In blurry situations seek the company of others. Be careful and take care"));
+        proverbsArrayList.add(new Proverbs("Ɔbaakofo nsa nso nyame ani kata","One person's hand cannot cover god's eyes","You need help to be able to do something that seems impossible"));
+        proverbsArrayList.add(new Proverbs("Ɔbaako tirim nni adwen","There are no thoughts in the head of a single person","It is difficult to come up with wise thought if you don't consult others"));
+        proverbsArrayList.add(new Proverbs("Ɔdaadaafo na ɔsɛe adamfo","A deceitful person spoils a friend","It is the dishonesty of people that corrupts a friend"));
+        proverbsArrayList.add(new Proverbs("Dadeɛ, yɛse no boɔ so, na yɛnse no nku so","Iron, we sharpen it on a stone but not on cream","Use the right tools for the job at hand"));
+        proverbsArrayList.add(new Proverbs("W'adaka si aburokyire mpo a, nea ɛwɔ mu nyinaa wo nim","If your box is overseas, you still know it's contents","You know what is yours and its details no matter where it may be"));
+        proverbsArrayList.add(new Proverbs("Adamfoɔ, adamfoɔ ɛne me nnɛ","Friends, friends and this is me today","Being over friendly has made me lose a lot"));
+        proverbsArrayList.add(new Proverbs("Dammirifua firi tete, ɛmfiri nnɛ","Condolences are from ancient times, they ar not from today","The causes of bad events are from the remote past not from present situations"));
+        proverbsArrayList.add(new Proverbs("Ɛdan wɔ aso","Houses have ears","Others can hear you even when you think you are alone. Be careful of what you say if you don't want it to spread"));
+        proverbsArrayList.add(new Proverbs("Wodan wo na ka a, wokɔto w'agya deɛ","If you request your mother to pay you what she owes you, you go and meet that of your father","The boss pays the debt in the long run"));
+        proverbsArrayList.add(new Proverbs("Wodan kusie amoakua a, ɔrennane da","If you change a rat into a squirrel it won't change","It is impossible to change the real nature of a person"));
+*/
+
+
+        Collections.shuffle(proverbsArrayList);
 
         storageReference = FirebaseStorage.getInstance().getReference();
         toast = Toast.makeText(getApplicationContext(), "Subscribed" , Toast.LENGTH_SHORT);

@@ -408,10 +408,6 @@ public class ChildrenNumberCount extends AppCompatActivity {
 
         view.startAnimation(shake);
 
-
-
-
-
         //Toast.makeText(this, b, Toast.LENGTH_SHORT).show();
         toast.setText(b);
         toast.show();
@@ -452,8 +448,6 @@ public class ChildrenNumberCount extends AppCompatActivity {
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
         }
-
-           // loopSound();
 
     }
 

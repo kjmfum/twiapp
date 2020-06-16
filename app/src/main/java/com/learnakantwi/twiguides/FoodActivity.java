@@ -520,7 +520,7 @@ public class FoodActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (showAdProbability<=2){
+        if (showAdProbability<=5){
             advert1();
         }
         super.onDestroy();

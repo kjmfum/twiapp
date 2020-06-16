@@ -246,7 +246,7 @@ public class PlayFromFirebase {
 
     }
 
-    public String viewTextConvert (String b){
+    static public String viewTextConvert (String b){
         String a = b;
         b = b.toLowerCase();
 

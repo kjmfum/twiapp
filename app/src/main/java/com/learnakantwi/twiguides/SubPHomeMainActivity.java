@@ -25,6 +25,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
@@ -47,14 +50,17 @@ import hotchemi.android.rate.AppRate;
 
 import static android.Manifest.permission.INTERNET;
 import static com.learnakantwi.twiguides.SubChildrenAnimals.childrenAnimalsArrayList;
+import static com.learnakantwi.twiguides.SubConversationApologiesAndResponses.conversationsApologiesArrayList;
+import static com.learnakantwi.twiguides.SubConversationDirections.conversationDirections;
 import static com.learnakantwi.twiguides.SubConversationIntroductionActivity.conversationArrayList;
+import static com.learnakantwi.twiguides.SubConversationWelcomingOthers.conversationWelcomingOthersArrayList;
 
 //import android.support.v7.app.AppCompatActivity;
 
-public class SubPHomeMainActivity extends AppCompatActivity implements PurchasesUpdatedListener {
+public class SubPHomeMainActivity extends AppCompatActivity implements PurchasesUpdatedListener, RVHomeMainAdapter.onClickRecycle {
     //  app:adUnitId="ca-app-pub-6999427576830667~6251296006"ˆ
 
-    static ArrayList<HomeMainButton> homeMainButtonArrayList;
+   static ArrayList<HomeMainButton> homeMainButtonArrayList;
     public InterstitialAd mInterstitialAd;
     BillingClient billingClient;
     String premiumUpgradePrice;
@@ -69,6 +75,9 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
     TextView tvSignIn;
     FirebaseAuth mAuth;
     String currentUser;
+
+    RecyclerView recyclerView;
+    RVHomeMainAdapter rvHomeMainAdapter;
 
 
     @Override
@@ -87,7 +96,9 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                final ArrayList<HomeMainButton> results = new ArrayList<>();
+                rvHomeMainAdapter.getFilter().filter(newText);
+
+                /*final ArrayList<HomeMainButton> results = new ArrayList<>();
                 for (HomeMainButton x: homeMainButtonArrayList ){
 
                     if(x.getNameofActivity().toLowerCase().contains(newText.toLowerCase())
@@ -132,7 +143,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
                     });
                 }
 
-
+*/
                 return false;
             }
         });
@@ -209,7 +220,9 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
     }
 
     public void goToConversation(){
-        Intent intent = new Intent(getApplicationContext(), SubConversationIntroductionActivity.class);
+       // Intent intent = new Intent(getApplicationContext(), SubConversationIntroductionActivity.class);
+       // Intent intent = new Intent(getApplicationContext(), SubConversationMain.class);
+        Intent intent = new Intent(getApplicationContext(), SubConversationHomeActivity.class);
         startActivity(intent);
     }
 
@@ -313,39 +326,9 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
-   /* public void checkPermission(String permission, int requestCode)
-    {
-        // Checking if permission is not granted
-        if (ContextCompat.checkSelfPermission(
-                Home.this,
-                permission)
-                == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat
-                    .requestPermissions(
-                            Home.this,
-                            new String[] {permission },
-                            100);
-        }
-        else {
-            Toast
-                    .makeText(Home.this,
-                            "Permission already granted",
-                            Toast.LENGTH_SHORT)
-                    .show();
-        }
-    }*/
-//In your case, you do not need the LinearLayout and ImageView at all. Just add android:drawableLeft="@drawable/up_count_big" to your TextView.
-
     public void buyMe() {
         setUpBillingClient();
     }
-
-        /*BillingFlowParams flowParams = BillingFlowParams.newBuilder()
-                .setSkuDetails(skuDetails)
-                .build();
-        BillingResult responseCode = billingClient.launchBillingFlow(InAppActivity.this, flowParams);
-       // int responseCode = billingClient.launchBillingFlow(flowParams);
-    }*/
 
     public void setUpBillingClient() {
         billingClient = BillingClient.newBuilder(this)
@@ -404,8 +387,8 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
                                                         int me3=  purchasesList.size();
 
                                                         //toast.setText(Integer.toString(me3));
-                                                        toast.setText(me1);
-                                                        toast.show();
+                                                        /*toast.setText(me1);
+                                                        toast.show();*/
 
                                                     }
                                                     else{
@@ -492,57 +475,19 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         }
     }
 
-    public void deleteDuplicatelDownload(){
+    public void deleteDuplicatelDownload() {
 
         try {
             deleteDuplicateVocabulary();
             deleteDuplicateConversation();
             deleteDuplicateProverbs();
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Error Null");
-        }
-        catch(Exception any){
+        } catch (Exception any) {
             System.out.println("Strange Exception Caught");
         }
 
-
-
-            /*String bb = allArrayList.get(j).getTwiMain();
-            bb= bb.toLowerCase();
-            boolean dd = bb.contains("ɔ");
-            boolean ee = bb.contains("ɛ");
-            if (dd || ee) {
-                bb = bb.replace("ɔ", "x");
-                bb = bb.replace("ɛ", "q");
-            }
-
-            if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'") | bb.contains("...")) {
-                bb = bb.replace(" ", "");
-                bb = bb.replace("/", "");
-                bb = bb.replace(",", "");
-                bb = bb.replace("(", "");
-                bb = bb.replace(")", "");
-                bb = bb.replace("-", "");
-                bb = bb.replace("?", "");
-                bb = bb.replace("'", "");
-                bb= bb.replace("...","");*/
-            }
-           /* File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
-           * if (myFiles.exists()) {
-                myFiles.delete();
-            }*/
-
-
-
-            /*for (File f: myFiles.listFiles()){
-                long space= f.getTotalSpace();
-
-                //f.delete();
-            }
-*/
-
-
+    }
 
     public void SignIn(View view){
         Intent homeIntent = new Intent(getApplicationContext(), SignInActivity.class);
@@ -560,9 +505,42 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
     }*/
 
     @Override
+    public void onMyItemClick(int position, View view) {
+        String me1 = homeMainButtonArrayList.get(position).getNameofActivity();
+
+
+        switch (me1){
+            case "Reading":
+                goToReading();
+                return;
+            case "Manage Storage":
+                goToSettings();
+                return;
+            case "Conversation":
+                goToConversation();
+                return;
+            case "Vocabulary":
+                goToMain();
+                return;
+            case "Children":
+                goToChildren();
+                return;
+            case "Proverbs":
+                goToProverbs();
+                return;
+            case "Quiz":
+                goToQuizHome();
+                return;
+        }
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subpactivity_home1);
+
+        recyclerView = findViewById(R.id.recyclerView);
 
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
@@ -614,25 +592,33 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         AppRate.showRateDialogIfMeetsConditions(this);
 
         homeMainButtonArrayList = new ArrayList<>();
-        homeListView = findViewById(R.id.homeListView);
+//  correct      homeListView = findViewById(R.id.homeListView);
 
 
-        homeMainButtonArrayList.add(new HomeMainButton("Manage Storage", R.drawable.ic_download_audio));
+
         homeMainButtonArrayList.add(new HomeMainButton("Conversation", R.drawable.conversationimage));
         homeMainButtonArrayList.add(new HomeMainButton("Vocabulary", R.drawable.vocabularyimage));
         homeMainButtonArrayList.add(new HomeMainButton("Quiz", R.drawable.quizimage));
         homeMainButtonArrayList.add(new HomeMainButton("Proverbs", R.drawable.proverbsimage));
         homeMainButtonArrayList.add(new HomeMainButton("Children", R.drawable.childrenimage));
         homeMainButtonArrayList.add(new HomeMainButton("Reading", R.drawable.readingimage));
+        homeMainButtonArrayList.add(new HomeMainButton("Manage Storage", R.drawable.ic_download_audio));
 
 
         HomeMainAdapter homeMainAdapter = new HomeMainAdapter(this, homeMainButtonArrayList);
-        homeListView.setAdapter(homeMainAdapter);
+        //  correct homeListView.setAdapter(homeMainAdapter);
+
+
+        rvHomeMainAdapter = new RVHomeMainAdapter(this, homeMainButtonArrayList, this);
+       // recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(rvHomeMainAdapter);
 
 
 
 
-        homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       /* homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -663,26 +649,42 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
                         return;
                 }
             }
-        });
+        });*/
 
         childrenAnimalsArrayList = new ArrayList<>();
 
-        childrenAnimalsArrayList.add(new Animals("Bee", "Wowa"));
-        childrenAnimalsArrayList.add(new Animals("Cat", "Ɔkra"));
-        childrenAnimalsArrayList.add(new Animals("Cattle", "Nantwie"));
-        childrenAnimalsArrayList.add(new Animals("Cockroach", "Tɛfrɛ"));
-        childrenAnimalsArrayList.add(new Animals("Crab", "Kɔtɔ"));
-        childrenAnimalsArrayList.add(new Animals("Crocodile", "Ɔdɛnkyɛm"));
-        childrenAnimalsArrayList.add(new Animals("Dog", "Kraman"));
-        childrenAnimalsArrayList.add(new Animals("Donkey", "Afurum"));
-        childrenAnimalsArrayList.add(new Animals("Duck", "Dabodabo"));
-        childrenAnimalsArrayList.add(new Animals("Elephant", "Ɔsono"));
-        childrenAnimalsArrayList.add(new Animals("Fowl", "Akokɔ"));
-        childrenAnimalsArrayList.add(new Animals("Goat", "Apɔnkye"));
-        childrenAnimalsArrayList.add(new Animals("Horse", "Pɔnkɔ"));
-        childrenAnimalsArrayList.add(new Animals("Pig", "Prako"));
-        childrenAnimalsArrayList.add(new Animals("Lion", "Gyata"));
-        childrenAnimalsArrayList.add(new Animals("Butterfly", "Afofantɔ"));
+        childrenAnimalsArrayList.add(new Animals("Bee", "Wowa",1, R.drawable.wowa));
+        childrenAnimalsArrayList.add(new Animals("Cat", "Ɔkra",2,R.drawable.xkra));
+        childrenAnimalsArrayList.add(new Animals("Cattle", "Nantwie",3,R.drawable.nantwie));
+        childrenAnimalsArrayList.add(new Animals("Cockroach", "Tɛfrɛ",4,R.drawable.tqfrq));
+        childrenAnimalsArrayList.add(new Animals("Crab", "Kɔtɔ",5,R.drawable.kxtx));
+        childrenAnimalsArrayList.add(new Animals("Crocodile", "Ɔdɛnkyɛm",6,R.drawable.xdqnkyqm));
+        childrenAnimalsArrayList.add(new Animals("Dog", "Kraman",7,R.drawable.kraman));
+        childrenAnimalsArrayList.add(new Animals("Donkey", "Afurum",8,R.drawable.afurum));
+        childrenAnimalsArrayList.add(new Animals("Duck", "Dabodabo",9,R.drawable.dabodabo));
+        childrenAnimalsArrayList.add(new Animals("Elephant", "Ɔsono",10,R.drawable.xsono));
+        childrenAnimalsArrayList.add(new Animals("Fowl", "Akokɔ",11,R.drawable.akokx));
+        childrenAnimalsArrayList.add(new Animals("Goat", "Apɔnkye",12,R.drawable.apxnkye));
+        childrenAnimalsArrayList.add(new Animals("Horse", "Pɔnkɔ",13,R.drawable.pxnkx));
+        childrenAnimalsArrayList.add(new Animals("Pig", "Prako",14,R.drawable.prako));
+        childrenAnimalsArrayList.add(new Animals("Lion", "Gyata",15,R.drawable.gyata));
+        childrenAnimalsArrayList.add(new Animals("Butterfly", "Afofantɔ",16,R.drawable.afofantx));
+
+
+        childrenAnimalsArrayList.add(new Animals("Chameleon", "Abosomakoterɛ",17,R.drawable.abosomakoterq));
+        childrenAnimalsArrayList.add(new Animals("Mouse", "Akura",18,R.drawable.akura));
+        childrenAnimalsArrayList.add(new Animals("Tortoise", "Akyekyedeɛ",19,R.drawable.akyekyedeq));
+        childrenAnimalsArrayList.add(new Animals("Bird", "Anomaa",20,R.drawable.anomaa));
+        childrenAnimalsArrayList.add(new Animals("Fish", "Apataa",21,R.drawable.apataa));
+        childrenAnimalsArrayList.add(new Animals("Spider", "Ananse",22,R.drawable.ananse));
+        childrenAnimalsArrayList.add(new Animals("Porcupine", "Kɔtɔkɔ",23,R.drawable.kxtxkx));
+        childrenAnimalsArrayList.add(new Animals("Bear", "Sisire",24,R.drawable.sisire));
+        childrenAnimalsArrayList.add(new Animals("Snake", "Ɔwɔ",25,R.drawable.xwx));
+        childrenAnimalsArrayList.add(new Animals("Camel", "Yoma",26,R.drawable.yoma));
+
+
+
+
 
 
         //myself
@@ -692,7 +694,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         conversationArrayList.add(new subConversation("Wubetumi afrɛ me Kwaku", "You can call me Kwaku") );
         conversationArrayList.add(new subConversation("Wo nso ɛ?", "What about you?") );
         conversationArrayList.add(new subConversation("Wo din de sɛn?", "What is your name?") );
-        conversationArrayList.add(new subConversation("Yɛfrɛ wo sɛn?", "How are you called? (Lit.: How do they call you") );
+        conversationArrayList.add(new subConversation("Yɛfrɛ wo sɛn?", "How are you called? (Lit.: How do they call you)") );
         conversationArrayList.add(new subConversation("Me fi Abuakwa", "I come from Abuakwa. (\"Come from\" as used here means my hometown)") );
         conversationArrayList.add(new subConversation("Wufi kurow bɛn so?", "What is your hometown? (Lit.: Which town do you come from)") );
         conversationArrayList.add(new subConversation("Me te Achimota", "I live at Achimota") );
@@ -727,7 +729,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
 
 
 
-        conversationArrayList.add(new subConversation("Aduane a m\'ani gye ho pa ara ne fufuo ne nkate nkwan", "My favorite food is fufuo and groundnut soup") );
+        conversationArrayList.add(new subConversation("Aduane a m'ani gye ho pa ara ne fufuo ne nkate nkwan", "My favorite food is fufuo and groundnut soup") );
         conversationArrayList.add(new subConversation("Aduane a mepɛ pa ara ne banku", "The food I like most is banku") );
         conversationArrayList.add(new subConversation("Wopɛ fufuo?", "Do you like fufuo?") );
         conversationArrayList.add(new subConversation("Fufuo nyɛ me dɛ", "Fufu does not taste sweet to me") );
@@ -750,6 +752,121 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         conversationArrayList.add(new subConversation("Medɔ me yere ", "I love my wife") );
         conversationArrayList.add(new subConversation("Me yere ho yɛ fɛ", "My wife is beautiful") );
         conversationArrayList.add(new subConversation("Medɔ me kunu", "I love my husband") );
+
+
+
+
+        //Welcoming Others
+        conversationWelcomingOthersArrayList = new ArrayList<>();
+        conversationWelcomingOthersArrayList.add(new subConversation("Agoo", "Knock Knock") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Amee", "Response to Knock Knock") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Bra mu", "Come in") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Akwaaba", "Welcome") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Yɛma wo akwaaba", "We welcome you") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Me pa wo kyɛw, akonnwa wɔ hɔ", "Please, there is a chair (1)") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Me pa wo kyɛw, adwa wɔ hɔ", "Please, there is a chair (2)") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Memma wo nsuo?", "Should I give you water?") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Me nya nsuo a anka m'ani begye paa", "I would be very grateful if I get water") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Me nom bi nkyɛe medaase", "I drank some not long ago, thank you") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Ɛyɛ medaase", "It's alright, thank you") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Mesrɛ wo, dɛn na wobɛnom?", "Please what will you drink?") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Dɛn na wobɛnom?", "What will you drink?") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Ɛkwan so ɛ?", "How was your journey?") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Yoo, medaase menkura no bɔne", "Okay, thank you. I come in peace") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Akonnwa wɔ hɔ", "There is a chair") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Ɛha bɔkɔɔ", "There is peace here") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Ɛkwan so bɔkɔɔ", "My journey was smooth") );
+        conversationWelcomingOthersArrayList.add(new subConversation("Ɛha bɔkɔɔ, wo na wonam", "There is peace here, you are the traveller") );
+
+        //conversationWelcomingOthersArrayList.add(new subConversation("Me", "There is a chair") );
+
+        ///Apologies
+
+        conversationsApologiesArrayList = new ArrayList<>();
+
+        conversationsApologiesArrayList.add(new subConversation("Mepa wo kyɛw","Please"));
+        conversationsApologiesArrayList.add(new subConversation("Mesrɛ wo","I beg you"));
+        conversationsApologiesArrayList.add(new subConversation("Manu me ho","I have regretted"));
+        conversationsApologiesArrayList.add(new subConversation("Fa kyɛ me","Forgive me"));
+        conversationsApologiesArrayList.add(new subConversation("Kosɛ","Sorry"));
+        conversationsApologiesArrayList.add(new subConversation("Kafra","Sorry"));
+        conversationsApologiesArrayList.add(new subConversation("Na ɛsɛ sɛ mefrɛ wo","I should have called you"));
+        conversationsApologiesArrayList.add(new subConversation("Mekoto srɛ wo","I kneel before you in apology"));
+        conversationsApologiesArrayList.add(new subConversation("Ɛyɛ me ara me mfomsoɔ","It is solely my fault"));
+        conversationsApologiesArrayList.add(new subConversation("Me mfomsoɔ","My mistake"));
+        conversationsApologiesArrayList.add(new subConversation("Mafom wo","I have wronged you"));
+        conversationsApologiesArrayList.add(new subConversation("Mayɛ wo bɔne","I have sinned against you"));
+        conversationsApologiesArrayList.add(new subConversation("Wodi bem","You are right"));
+        conversationsApologiesArrayList.add(new subConversation("Medi fɔ","I am wrong"));
+        conversationsApologiesArrayList.add(new subConversation("Manhyɛ da","It wasn't deliberate"));
+        conversationsApologiesArrayList.add(new subConversation("M'ani awu","I'm ashamed"));
+        conversationsApologiesArrayList.add(new subConversation("Ɛnsi bio","It won't happen again"));
+        conversationsApologiesArrayList.add(new subConversation("Menyɛ saa bio","I won't do that again"));
+        conversationsApologiesArrayList.add(new subConversation("Ɛyɛ","It's okay"));
+        conversationsApologiesArrayList.add(new subConversation("Ɛnyɛ hwee","It is nothing. It's alright"));
+       // conversationsApologiesArrayList.add(new subConversation("Ɛsi","It happens"));
+        conversationsApologiesArrayList.add(new subConversation("Esi daa","It happens all the time"));
+        conversationsApologiesArrayList.add(new subConversation("Ɛtaa si","It always happens"));
+        conversationsApologiesArrayList.add(new subConversation("Ɛnha wo ho","Don't worry yourself"));
+        conversationsApologiesArrayList.add(new subConversation("Ɛnnwene ho","Don't think about it. Don't worry"));
+        conversationsApologiesArrayList.add(new subConversation("Ɛnnwene ho koraa","Don't worry about it at all"));
+        conversationsApologiesArrayList.add(new subConversation("Mede akyɛ wo","I have forgiven you. I forgive you"));
+        conversationsApologiesArrayList.add(new subConversation("Me mfa nkyɛ wo","I won't forgive you"));
+        conversationsApologiesArrayList.add(new subConversation("Ɛnyɛ saa bio","Don't do that again"));
+        conversationsApologiesArrayList.add(new subConversation("Magyae ama aka","I've left it to rest. I won't pursue any further"));
+        conversationsApologiesArrayList.add(new subConversation("Ɛho nhia","It's not important"));
+        conversationsApologiesArrayList.add(new subConversation("Magye wo kyɛwpa no atom","I have accepted your apology"));
+        conversationsApologiesArrayList.add(new subConversation("Mennim nea ɛbaa me so","I don't know what came over me"));
+        conversationsApologiesArrayList.add(new subConversation("Menhu nea menka mpo","I don't even know what to say"));
+        conversationsApologiesArrayList.add(new subConversation("Masua me nyansa","I have learnt my lesson. I have learnt wisdom"));
+        conversationsApologiesArrayList.add(new subConversation("Ɛnyɛ saa na mete o","That's not how I am o"));
+        conversationsApologiesArrayList.add(new subConversation("Manka no yie, fa kyɛ me","I didn't say it well. Forgive me"));
+       // conversationsApologiesArrayList.add(new subConversation("",""));
+
+
+        /// Asking and Giving Directions
+        conversationDirections = new ArrayList<>();
+        conversationDirections.add(new subConversation("Meyɛ ɔhɔhoɔ","I'm a stranger (1)"));
+        conversationDirections.add(new subConversation("Meyɛ ɔhɔhoɔ","I'm a guest (2)"));
+        conversationDirections.add(new subConversation("Ɛhe na bɔs \"stop\" no wɔ?","Where is the bus stop"));
+        conversationDirections.add(new subConversation("Ɛhe na menya kar akɔ Kumasi","Where can I board a car to Kumasi"));
+        conversationDirections.add(new subConversation("Ɛhe na ayaresabea no wɔ?","Where is the hospital located?"));
+        conversationDirections.add(new subConversation("Merehwehwɛ ayaresabea","I'm looking for a hospital"));
+        conversationDirections.add(new subConversation("Merehwehwɛ...","I'm looking for..."));
+        conversationDirections.add(new subConversation("Merekɔ mpoano","I'm going to the beach"));
+        conversationDirections.add(new subConversation("Ɛkwan bɛn na ɛkɔ mpoano hɔ?","Which road(way) leads to the beach?"));
+        conversationDirections.add(new subConversation("Ɛhe na keteke gyinabea wɔ?","Where is the train station?"));
+        conversationDirections.add(new subConversation("Kyerɛ me kwan no","Show me the way"));
+        conversationDirections.add(new subConversation("Me mfa he?","Where should I pass?"));
+        conversationDirections.add(new subConversation("Fa Benkum","Take left"));
+        conversationDirections.add(new subConversation("Fa nifa","Take Right"));
+        conversationDirections.add(new subConversation("Dan wo ho na fa nifa","Turn and take Right"));
+        conversationDirections.add(new subConversation("Kɔ w'anim","Go straight"));
+        conversationDirections.add(new subConversation("Kɔ w'akyi","Go back"));
+        conversationDirections.add(new subConversation("Fa dua no nkyɛn","Pass by the tree"));
+        conversationDirections.add(new subConversation("Wadu Accra","You have arrived at Accra"));
+        conversationDirections.add(new subConversation("Aka kakra na wadu hɔ","You will get there in a short period of time"));
+        conversationDirections.add(new subConversation("Hwɛ w'akyi","Look back"));
+        conversationDirections.add(new subConversation("Ɛha yɛ he?","Which place is this?"));
+        conversationDirections.add(new subConversation("Kyerɛ me kwan kɔ Achimota","Show me the way(give me directions) to Achimota"));
+        conversationDirections.add(new subConversation("Ɛkwan no wa","It(the road) is far from here"));
+        conversationDirections.add(new subConversation("Ɛkwan no wa anaa?","Is it far from here?"));
+        conversationDirections.add(new subConversation("Wo ntumi nnante nkɔ","You cannot walk to the place"));
+        conversationDirections.add(new subConversation("Gye sɛ wofa kar","Unless you use a car"));
+        conversationDirections.add(new subConversation("Di m'akyi","Follow me"));
+        conversationDirections.add(new subConversation("Di ahyɛnsode no akyi","Follow the signs"));
+        conversationDirections.add(new subConversation("Bisa","Ask"));
+        conversationDirections.add(new subConversation("Wo duru hɔ a, bisa obiara","When you reach there ask anyone"));
+        conversationDirections.add(new subConversation("Me nnim hɔ","I don't know the place"));
+        conversationDirections.add(new subConversation("Me nim hɔ","I know the place"));
+        conversationDirections.add(new subConversation("Ɛhe na wopɛ sɛ wokɔ?","Where do you want to go?"));
+        conversationDirections.add(new subConversation("Fa me kɔ wimhyɛn gyinabea","Take me to the airport"));
+        conversationDirections.add(new subConversation("Mepɛ sɛ mekɔ fie","I want to go home"));
+        conversationDirections.add(new subConversation("Ɛhe na wote?","Where do you stay?"));
+        conversationDirections.add(new subConversation("Mete Dansoman","I stay at Dansoman"));
+
+
+
 
     }
 
@@ -782,8 +899,6 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
             Toast.makeText(this,"Could not complete purchase", Toast.LENGTH_LONG).show();
         }
     }
-
-
 
 
 }

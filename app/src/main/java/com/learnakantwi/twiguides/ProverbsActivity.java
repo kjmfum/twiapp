@@ -42,6 +42,8 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 
 public class ProverbsActivity extends AppCompatActivity {
@@ -429,7 +431,8 @@ public class ProverbsActivity extends AppCompatActivity {
     }
 
     public void goToWeb() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
+        //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.udemy_course)));
         startActivity(intent);
     }
 
@@ -746,16 +749,11 @@ public class ProverbsActivity extends AppCompatActivity {
         });
 
 
-
+        Collections.shuffle(proverbsArrayList);
 
         ProverbsAdapter proverbsAdapter = new ProverbsAdapter(this, proverbsArrayList);
 
         proverbsViewFlipper.setAdapter(proverbsAdapter);
-
-
-
-
-
 
 
     }

@@ -552,7 +552,7 @@ public class AlphabetsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         toast.cancel();
-        if (showAdProbability <= 2) {
+        if (showAdProbability <= 5) {
             advert1();
         }
         super.onDestroy();

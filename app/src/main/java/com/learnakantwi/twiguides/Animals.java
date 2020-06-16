@@ -11,9 +11,25 @@ public class Animals implements Comparable <Animals> {
     String twiAnimals;
     TextView textView;
 
+    int imageID;
+    int drawableID;
+
     public Animals(String englishAnimals, String twiAnimals) {
         this.englishAnimals = englishAnimals;
         this.twiAnimals = twiAnimals;
+    }
+
+    public Animals(String englishAnimals, String twiAnimals, int imageID) {
+        this.englishAnimals = englishAnimals;
+        this.twiAnimals = twiAnimals;
+        this.imageID= imageID;
+    }
+
+    public Animals(String englishAnimals, String twiAnimals, int imageID, int drawableID) {
+        this.englishAnimals = englishAnimals;
+        this.twiAnimals = twiAnimals;
+        this.imageID= imageID;
+        this.drawableID= drawableID;
     }
 
 

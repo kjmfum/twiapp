@@ -1,17 +1,14 @@
 package com.learnakantwi.twiguides;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,13 +18,14 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
-import com.android.billingclient.api.BillingFlowParams;
 import com.android.billingclient.api.BillingResult;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
@@ -40,17 +38,6 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -62,7 +49,7 @@ import static android.Manifest.permission.INTERNET;
 
 //import android.support.v7.app.AppCompatActivity;
 
-public class HomeMainActivity extends AppCompatActivity implements PurchasesUpdatedListener {
+public class HomeMainActivity extends AppCompatActivity implements PurchasesUpdatedListener, RVHomeMainAdapter.onClickRecycle {
     //  app:adUnitId="ca-app-pub-6999427576830667~6251296006"ˆ
 
     BillingClient billingClient;
@@ -70,10 +57,7 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
     Button buyButton;
     Toast toast;
 
-
-
-
-
+    DrawerLayout drawerLayout;
 
     static ArrayList<HomeMainButton> homeMainButtonArrayList;
     public InterstitialAd mInterstitialAd;
@@ -85,6 +69,9 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
    /* FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
     DatabaseReference myRef;*/
+
+    RecyclerView recyclerView;
+    RVHomeMainAdapter rvHomeMainAdapter;
 
 
 
@@ -490,13 +477,42 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
 
     @Override
+    public void onMyItemClick(int position, View view) {
+        String me1 = homeMainButtonArrayList.get(position).getNameofActivity();
+
+
+        switch (me1){
+            case "Reading":
+                goToReading();
+                return;
+            case "Manage Storage":
+                goToSettings();
+                return;
+            case "Conversations":
+                goToPleaseSubPage();
+                return;
+            case "Vocabulary":
+                goToMain();
+                return;
+            case "Children":
+                goToChildren();
+                return;
+            case "Proverbs":
+                goToProverbs();
+                return;
+            case "Quiz":
+                goToQuizHome();
+                return;
+        }
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home1);
 
         //firebaseAuth = FirebaseAuth.getInstance();
 
-
+       // Toast.makeText(this, "Testing1", Toast.LENGTH_SHORT).show();
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
 
@@ -566,13 +582,13 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
         homeMainButtonArrayList = new ArrayList<>();
         homeListView = findViewById(R.id.homeListView);
 
-        homeMainButtonArrayList.add(new HomeMainButton("Manage Storage", R.drawable.ic_download_audio));
         homeMainButtonArrayList.add(new HomeMainButton("Proverbs", R.drawable.proverbsimage));
+        homeMainButtonArrayList.add(new HomeMainButton("Quiz", R.drawable.quizimage));
         homeMainButtonArrayList.add(new HomeMainButton("Vocabulary", R.drawable.vocabularyimage));
         homeMainButtonArrayList.add(new HomeMainButton("Children", R.drawable.childrenimage));
-        homeMainButtonArrayList.add(new HomeMainButton("Quiz", R.drawable.quizimage));
         homeMainButtonArrayList.add(new HomeMainButton("Conversations", R.drawable.conversationimage));
         homeMainButtonArrayList.add(new HomeMainButton("Reading", R.drawable.readingimage));
+        homeMainButtonArrayList.add(new HomeMainButton("Manage Storage", R.drawable.ic_download_audio));
 
 
 
@@ -587,45 +603,15 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
      //   homeButtonArrayList.add(new HomeButton("Search", R.drawable.allimage));
 
-        HomeMainAdapter homeMainAdapter = new HomeMainAdapter(this, homeMainButtonArrayList);
-        homeListView.setAdapter(homeMainAdapter);
+        //HomeMainAdapter homeMainAdapter = new HomeMainAdapter(this, homeMainButtonArrayList);
+        //homeListView.setAdapter(homeMainAdapter);
 
-
-
-
-        homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                String me1 = homeMainButtonArrayList.get(position).getNameofActivity();
-
-
-                switch (me1){
-                    case "Conversations":
-                        goToPleaseSubPage();
-                        return;
-                    case "Manage Storage":
-                        goToSettings();
-                        return;
-                    case "Vocabulary":
-                        goToMain();
-                        return;
-                    case "Children":
-                        goToChildren();
-                        return;
-                    case "Proverbs":
-                        goToProverbs();
-                        return;
-                    case "Quiz":
-                        goToQuizHome();
-                        return;
-                    case "Reading":
-                        goToReading();
-                }
-            }
-        });
-
-
+        recyclerView = findViewById(R.id.recyclerView);
+        rvHomeMainAdapter = new RVHomeMainAdapter(this, homeMainButtonArrayList, this);
+        // recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(rvHomeMainAdapter);
 
 
 
@@ -651,7 +637,6 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
             Toast.makeText(this,"Could not complete purchase", Toast.LENGTH_LONG).show();
         }
     }
-
 }
 
 

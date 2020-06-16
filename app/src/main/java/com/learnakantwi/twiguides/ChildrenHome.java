@@ -487,7 +487,8 @@ public class ChildrenHome extends AppCompatActivity {
     }
 
     public void goToNumber() {
-        Intent intent = new Intent(getApplicationContext(), ChildrenNumberCount.class);
+        Intent intent = new Intent(getApplicationContext(), ChildrenNumbersActivityRV.class);
+        //Intent intent = new Intent(getApplicationContext(), ChildrenNumberCount.class);
         startActivity(intent);
     }
 
@@ -528,6 +529,7 @@ public class ChildrenHome extends AppCompatActivity {
 
     public void goToAnimals() {
         Intent intent = new Intent(getApplicationContext(), ChildrenAnimalActivity.class);
+       // Intent intent = new Intent(getApplicationContext(), ReadingLessonTestRecycler.class);
         startActivity(intent);
     }
 
@@ -639,7 +641,7 @@ public class ChildrenHome extends AppCompatActivity {
 
 
             bb = childrenAnimalsArrayListFew.get(j).getTwiAnimals();
-            bb = playFromFirebaseChildren.viewTextConvert(bb);
+            bb = PlayFromFirebase.viewTextConvert(bb);
 
             File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
             if (myFiles.exists()) {
@@ -668,7 +670,7 @@ public class ChildrenHome extends AppCompatActivity {
                 for (int i = 0; i < childrenAnimalsArrayListFew.size(); i++) {
 
                     bb = childrenAnimalsArrayListFew.get(i).getTwiAnimals();
-                    bb = playFromFirebaseChildren.viewTextConvert(bb);
+                    bb = PlayFromFirebase.viewTextConvert(bb);
 
                     File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
                     if (!myFile.exists()) {

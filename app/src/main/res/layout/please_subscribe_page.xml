@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/colorGreen"
-        android:text="Subscribe To Enjoy This Content \n And Other Features\n Updated Regulary"
+        android:text="Purchase Lifetime Access or \n Subscribe To Enjoy This Content \n And Other Features\n Updated Regulary"
         android:textAllCaps="false"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/guideline39"

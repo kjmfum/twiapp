@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.learnakantwi.twiguides">
+    package="com.learnakantwi.twiguides" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.android.vending.BILLING" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
@@ -26,8 +25,37 @@
         android:roundIcon="@drawable/learnakantwiimage"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".DownloadsActivity"/>
+        android:usesCleartextTraffic="true" >
+        <activity
+            android:name=".HomeMainActivity"
+            android:label="@string/title_activity_home_main"
+            android:theme="@style/AppTheme.NoActionBar" >
+          <!--  <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+        <activity android:name=".ReadingLesson1" />
+        <activity android:name=".ReadingLesson2" />
+        <activity android:name=".RepeatingActivityProverbs" />
+        <activity
+            android:name=".QuizTimedChildrenAnimals"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProverbsQuizActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".QuizHighScoresHome" />
+        <activity android:name=".QuizTimedHome" />
+        <activity android:name=".QuizTimedAllFinishPage" />
+        <activity
+            android:name=".QuizTimedAll"
+            android:screenOrientation="portrait" />
+        <activity android:name=".SubChildrenAnimalQuiz" />
+        <activity android:name=".SubChildrenAnimalsRecyclerView" />
+        <activity android:name=".SubConversationWelcomingOthers" />
+        <activity android:name=".SubConversationDirections" />
+        <activity android:name=".DownloadsActivity" />
         <activity android:name=".DeleteDownloadsActivity" />
         <activity android:name=".SettingsAndTips" />
         <activity android:name=".SubPReadingDigraphs" />
@@ -39,6 +67,7 @@
         <activity android:name=".ReadingActivityMain" />
         <activity android:name=".ReadingActivityTwoLettersMain" />
         <activity android:name=".ChildrenAnimalActivity" />
+        <activity android:name=".ChildrenNumbersActivityRV" />
         <activity android:name=".PleaseSubscribePage" />
         <activity android:name=".SubChildrenAnimals" />
         <activity android:name=".QuizSubFood" />
@@ -74,6 +103,7 @@
             android:screenOrientation="fullSensor" />
         <activity android:name=".SubConversationIntroductionActivity" />
         <activity android:name=".SubConversationHomeActivity" />
+        <activity android:name=".SubConversationApologiesAndResponses" />
         <activity android:name=".ForgotPassword" />
         <activity android:name=".RealTimeDatabase" />
         <activity android:name=".PlayFromFirebase" />
@@ -93,7 +123,7 @@
         <activity android:name=".SubPHomeVocabulary" />
         <activity
             android:name=".InAppActivity"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="portrait" />
         <activity android:name=".ProverbsActivity" />
         <activity android:name=".ChildrenAlphabet" />
         <activity
@@ -128,7 +158,6 @@
         <activity android:name=".NumbersActivity" />
         <activity android:name=".MonthsActivity" />
         <activity android:name=".Home" />
-        <activity android:name=".HomeMainActivity" />
         <activity android:name=".ProverbsHome" />
         <activity android:name=".FoodActivity" />
         <activity android:name=".FamilyActivity" />
@@ -140,18 +169,20 @@
         <activity android:name=".AnimalsActivity" />
         <activity android:name=".AlphabetsActivity" />
         <activity android:name=".Repeating_activity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ReadingLessonTestRecycler" />
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
 
         <receiver
             android:name=".Notification_receiver"
+            android:exported="true" />
+        <receiver
+            android:name=".Notification_receiver_Proverbs"
             android:exported="true" /> <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

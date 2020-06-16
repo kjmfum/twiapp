@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -190,6 +192,19 @@ public class QuizColours extends AppCompatActivity {
             }
         }
     }
+    public void handleCorrectAnswer(){
+        questionText.setTextColor(Color.GREEN);
+        //Toast.makeText(QuizSubBusiness.this, "CORRECT", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                generateQuestion();
+                //correctWrong.setText("");
+                questionText.setTextColor(Color.GRAY);
+                correctWrong.setTextColor(Color.GRAY);
+            }
+        },4000);
+    }
     public void playFromFileOrDownload(final String filename, final String appearText) {
 
         if (appearText.equals(twi1)) {
@@ -204,8 +219,8 @@ public class QuizColours extends AppCompatActivity {
             button5.setVisibility(View.VISIBLE);
             button5.setText(getString(R.string.playagain));
 
-            double d1 = (double) score;
-            double d2 = (double) totalQuestions;
+            double d1 = score;
+            double d2 = totalQuestions;
             double scorePercent = ((d1 / d2) * 100);
             scorePercent = Math.round(scorePercent * 10.0) / 10.0;
 
@@ -251,7 +266,7 @@ public class QuizColours extends AppCompatActivity {
                             if (appearText.equals(twi1)) {
                                 toast.setText(appearText + " -" + " " + "CORRECT!!!!");
                                 toast.show();
-                                generateQuestion();
+                                handleCorrectAnswer();
                             } else {
                                 toast.setText(appearText);
                                 toast.show();
@@ -272,7 +287,7 @@ public class QuizColours extends AppCompatActivity {
                         if (appearText.equals(twi1)) {
                             toast.setText(appearText + " -" + " " + "CORRECT!!!!");
                             toast.show();
-                            generateQuestion();
+                            handleCorrectAnswer();
                         } else {
                             toast.setText(appearText);
                             toast.show();
@@ -285,7 +300,7 @@ public class QuizColours extends AppCompatActivity {
                         if (appearText.equals(twi1)) {
                             toast.setText(appearText + " -" + " " + "CORRECT!!!!");
                             toast.show();
-                            generateQuestion();
+                            handleCorrectAnswer();
                         } else {
                             toast.setText(appearText);
                             toast.show();
@@ -297,7 +312,7 @@ public class QuizColours extends AppCompatActivity {
                 if (appearText.equals(twi1)) {
                     toast.setText(appearText + " -" + " " + "CORRECT!!!!");
                     toast.show();
-                    generateQuestion();
+                    handleCorrectAnswer();
                 } else {
                     toast.setText(appearText);
                     toast.show();

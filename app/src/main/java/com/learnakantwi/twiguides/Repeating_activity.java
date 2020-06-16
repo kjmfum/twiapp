@@ -371,7 +371,7 @@ public class Repeating_activity extends AppCompatActivity {
     }
 
     public void goToWeb() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.udemy_course)));
         startActivity(intent);
     }
 
@@ -490,9 +490,6 @@ public class Repeating_activity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wordoftheday);
-
-        //ca-app-pub-7384642419407303/9880404420
-        //ca-app-pub-3940256099942544/1033173712 test
 
         isNetworkAvailable();
 

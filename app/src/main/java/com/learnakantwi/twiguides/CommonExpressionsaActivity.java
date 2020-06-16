@@ -508,7 +508,7 @@ public class CommonExpressionsaActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (showAdProbability<=4){
+        if (showAdProbability<=5){
             advert1();
         }
         super.onDestroy();

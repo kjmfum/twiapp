@@ -1,4 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="udemy_course">https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F</string>
+    <string name="AdUnitIDInterstitial">ca-app-pub-7384642419407303/9880404420</string>
+    <string name="AdUnitTestIDInterstitial">ca-app-pub-3940256099942544/1033173712</string>
+
+    <string name="AdUnitBanner">ca-app-pub-7384642419407303/7840050122</string>
+    <string name="AdUnitTestBanner">ca-app-pub-3940256099942544/6300978111</string>
+
+
+
     <string name="app_name">Twi guide</string>
     <string name="alphabets">Alphabets</string>
     <string name="numbers">Numbers</string>
@@ -17,7 +27,7 @@
     <string name="learn_akan_twi">Learn Akan Twi</string>
     <string name="communicate">Communicate</string>
     <string name="Quiz">Quiz</string>
-    <string name="QuestionText">TextView</string>
+    <string name="QuestionText">QuestionText</string>
     <string name="buy_video_course">Video Course</string>
     <string name="nicetry">Nice Try</string>
     <string name="fail">Fail. You can do better</string>
@@ -135,9 +145,10 @@
     <!-- Subscription -->
 
     <string name="MonthlySubBenefits"> Benefits: \n 1. Ad free \n 2. Regular Updates \n 3. More Vocabulary \n 4. More Features \n 5. Billed Monthly</string>
-    <string name="HalfYearSubBenefits"> Subscribe and Learn Faster: \n 1. Ad free \n 2. Regular Updates  \n 3. More Vocabulary and Proverbs \n 4. More Fun Features to let you enjoy learning Twi </string>
+    <string name="HalfYearSubBenefits"> Purchase and keep for a Lifetime or Subscribe: \n 1. Ad free \n 2. Regular Updates  \n 3. More Vocabulary and Proverbs \n 4. More Fun Features to let you enjoy learning Twi </string>
     <string name="AnnualSubBenefits" tools:ignore="DuplicateDefinition"> Benefits: \n 1. Ad free \n 2. Regular Updates \n 3. More Vocabulary \n 4. More Features \n 5. Billed Annually </string>
     <string name="title_activity_settings">LearnAkanTwi</string>
+    <string name="purchase_or_subscribe_banner">PURCHASE OR SUBSCRIBE FOR MORE CONTENT</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Hello</string>
@@ -159,5 +170,6 @@
 
     <string name="deleteActivityText">Free up space by deleting some audio files.\n When you delete audio for a particular category you will not be able play the sound while offline. \n You will need to be connected to the internet to download again</string>
     <string name="downloadActivityText">Select any category below to download the audio files for offline playback</string>
+    <string name="title_activity_home_main">HomeMainActivity</string>
 
 </resources>

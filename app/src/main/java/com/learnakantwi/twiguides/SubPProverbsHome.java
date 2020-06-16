@@ -276,8 +276,6 @@ public class SubPProverbsHome extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu_proverbs, menu);
 
 
-
-
         final MenuItem item = menu.findItem(R.id.menusearch);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -313,6 +311,9 @@ public class SubPProverbsHome extends AppCompatActivity {
                                     return;
                                 case "Download Proverb Audio":
                                     downloadClick();
+                                    return;
+                                case "Proverbs Quiz":
+                                    goToProverbsQuiz();
                                     return;
                             }
                         }
@@ -388,6 +389,11 @@ public class SubPProverbsHome extends AppCompatActivity {
 
     public void goToQuizAll() {
         Intent intent = new Intent(getApplicationContext(), QuizAll.class);
+        startActivity(intent);
+    }
+
+    public void goToProverbsQuiz() {
+        Intent intent = new Intent(getApplicationContext(), ProverbsQuizActivity.class);
         startActivity(intent);
     }
 
@@ -509,6 +515,7 @@ public class SubPProverbsHome extends AppCompatActivity {
         homeListView = findViewById(R.id.homeListView);
 
         homeButtonArrayList.add(new HomeButton("Proverbs and Their Meaning", R.drawable.proverbsimage));
+        homeButtonArrayList.add(new HomeButton("Proverbs Quiz", R.drawable.quizimage));
         homeButtonArrayList.add(new HomeButton("Download Proverb Audio", R.drawable.ic_download_audio));
 
         HomeAdapter homeAdapter = new HomeAdapter(this, homeButtonArrayList);
@@ -530,6 +537,9 @@ public class SubPProverbsHome extends AppCompatActivity {
                         return;
                     case "Download Proverb Audio":
                         downloadClick();
+                        return;
+                    case "Proverbs Quiz":
+                        goToProverbsQuiz();
                         return;
                 }
             }

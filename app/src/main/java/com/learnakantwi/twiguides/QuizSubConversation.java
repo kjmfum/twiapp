@@ -604,7 +604,6 @@ public class QuizSubConversation extends AppCompatActivity {
                 ivUnMute.setVisibility(View.INVISIBLE);
                 toast.setText("Sound Unmuted");
                 muteNumber=1;
-
             }
         });
 

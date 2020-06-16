@@ -189,8 +189,8 @@ public class SubChildrenAnimals extends AppCompatActivity {
 
     public void getImage(final String filename) {
 
-        myImage = BitmapFactory.decodeFile("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + filename + ".png");
-        imageView.setImageBitmap(myImage);
+        //myImage = BitmapFactory.decodeFile("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + filename + ".png");
+        //imageView.setImageBitmap(myImage);
 
         int play1 = getResources().getIdentifier(filename, "drawable","com.learnakantwi.twiguides");
        // Toast.makeText(getApplicationContext(), filename + "= No Internet", Toast.LENGTH_SHORT).show();
@@ -445,9 +445,6 @@ public class SubChildrenAnimals extends AppCompatActivity {
                         toast.setText(sb1);
                         toast.show();
                     }
-
-
-
                 }catch (Exception e){
                     System.out.println("Errors: "+ e);
                 }
@@ -575,9 +572,8 @@ public class SubChildrenAnimals extends AppCompatActivity {
 
                //log5(view);
 
-
-                PlayFromFirebase playFromFirebase = new PlayFromFirebase();
-                String b = playFromFirebase.viewTextConvert(a);
+                //PlayFromFirebase playFromFirebase = new PlayFromFirebase();
+                String b = PlayFromFirebase.viewTextConvert(a);
 
                 getImage(b);
 

@@ -216,7 +216,7 @@ public class SubChildrenHome extends AppCompatActivity {
                     for (int i = 0; i < childrenArray.size(); i++) {
 
                         bb = childrenArray.get(i).getTwiChildren();
-                        bb = playFromFirebaseChildren.viewTextConvert(bb);
+                        bb = PlayFromFirebase.viewTextConvert(bb);
                         File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/CHILDREN/" + bb + ".m4a");
                         if (!myFile.exists()) {
                             if (isNetworkAvailable()){
@@ -327,7 +327,7 @@ public class SubChildrenHome extends AppCompatActivity {
 
 
             bb = childrenAnimalsArrayList.get(j).getTwiAnimals();
-            bb = playFromFirebaseChildren.viewTextConvert(bb);
+            bb = PlayFromFirebase.viewTextConvert(bb);
 
             File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
             if (myFiles.exists()) {
@@ -356,7 +356,7 @@ public class SubChildrenHome extends AppCompatActivity {
                 for (int i = 0; i < childrenAnimalsArrayList.size(); i++) {
 
                     bb = childrenAnimalsArrayList.get(i).getTwiAnimals();
-                    bb = playFromFirebaseChildren.viewTextConvert(bb);
+                    bb = PlayFromFirebase.viewTextConvert(bb);
 
                     File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
                     if (!myFile.exists()) {
@@ -557,7 +557,7 @@ public class SubChildrenHome extends AppCompatActivity {
 
 
     public void goToBusiness(){
-        Intent intent = new Intent(getApplicationContext(), QuizBusiness.class);
+        Intent intent = new Intent(getApplicationContext(), SubChildrenAnimalQuiz.class);
         startActivity(intent);
 
     }
@@ -573,7 +573,8 @@ public class SubChildrenHome extends AppCompatActivity {
     }
 
     public void goToNumber() {
-        Intent intent = new Intent(getApplicationContext(), ChildrenNumberCount.class);
+        //Intent intent = new Intent(getApplicationContext(), ChildrenNumberCount.class);
+        Intent intent = new Intent(getApplicationContext(), ChildrenNumbersActivityRV.class);
         startActivity(intent);
     }
 
@@ -613,7 +614,9 @@ public class SubChildrenHome extends AppCompatActivity {
     }
 
     public void goToAnimals() {
-        Intent intent = new Intent(getApplicationContext(), SubChildrenAnimals.class);
+       // Intent intent = new Intent(getApplicationContext(), SubChildrenAnimals.class);
+       // Intent intent = new Intent(getApplicationContext(), ReadingLessonTestRecycler.class);
+        Intent intent = new Intent(getApplicationContext(), SubChildrenAnimalsRecyclerView.class);
         startActivity(intent);
     }
 
@@ -694,6 +697,7 @@ public class SubChildrenHome extends AppCompatActivity {
 
         homeButtonArrayList.add(new HomeButton("Alphabets", R.drawable.childrenalphabetimage));
         homeButtonArrayList.add(new HomeButton("Animals", R.drawable.childrenanimalsimage));
+        homeButtonArrayList.add(new HomeButton("Animals Quiz", R.drawable.childrenanimalsimage));
         homeButtonArrayList.add(new HomeButton("Numbers", R.drawable.childrennumbersimage));
 
 
@@ -724,7 +728,7 @@ public class SubChildrenHome extends AppCompatActivity {
                     case "Weather":
                         goToWeather();
                         return;
-                    case "Business":
+                    case "Animals Quiz":
                         goToBusiness();
                         return;
                     case "All":

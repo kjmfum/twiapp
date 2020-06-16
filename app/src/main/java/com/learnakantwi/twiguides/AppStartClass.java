@@ -14,11 +14,20 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.SkuDetails;
+import com.android.billingclient.api.SkuDetailsParams;
+import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,6 +39,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.List;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.learnakantwi.twiguides.AllActivity.allArrayList;
@@ -55,11 +65,13 @@ import static com.learnakantwi.twiguides.ChildrenHome.childrenArray;
 public class AppStartClass extends Application {
 
     StorageReference storageReference;
+    BillingClient billingClient;
 
     public static final String CHANNEL_1_ID = "channel1";
     public static final String CHANNEL_2_ID = "channel2";
 
     //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
+
 
 
     private void createNotificationChannels() {
@@ -88,10 +100,12 @@ public class AppStartClass extends Application {
 
         public void showDaily() {
             Calendar calendar = Calendar.getInstance();
-            //calendar.add(Calendar.SECOND, 5);
-           calendar.set(Calendar.HOUR_OF_DAY, 23);
+           // calendar.add(Calendar.SECOND, 5);
+          calendar.set(Calendar.HOUR_OF_DAY, 23);
             calendar.set(Calendar.MINUTE, 30);
             //calendar.set(Calendar.SECOND,1);
+
+
 
             Intent intent = new Intent(getApplicationContext(), Notification_receiver.class);
             //Intent intent = new Intent(getApplicationContext(), Home.class);
@@ -102,14 +116,42 @@ public class AppStartClass extends Application {
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             //alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
 
+            //correct one below
             alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
 
         }
 
+    public void showProverbDaily() {
+        Calendar calendar = Calendar.getInstance();
+
+        //calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 35);
+
+        ///////
+       // calendar.set(Calendar.HOUR_OF_DAY, 16);
+        //calendar.set(Calendar.MINUTE, 50);
+        ////////
+
+        //calendar.set(Calendar.SECOND,5);
+
+        Intent intent = new Intent(getApplicationContext(), Notification_receiver_Proverbs.class);
+        //Intent intent = new Intent(getApplicationContext(), Home.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        //alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+
+        //correct one below
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+
+
+    }
+
         public void downloadEssential(final String a){
 
         try {
-
             File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + a + ".m4a");
             if (!myFiles.exists()) {
                 final StorageReference musicRef = storageReference.child("/raw/" + a + ".m4a");
@@ -153,11 +195,19 @@ public class AppStartClass extends Application {
     public void onCreate() {
         super.onCreate();
 
+
+
         storageReference = FirebaseStorage.getInstance().getReference();
         downloadEssential("excellentsound");
+        downloadEssential("correctsound");
+        downloadEssential("wrongsound");
 
 
         createNotificationChannels();
+
+     /*   SharedPreferences subscribe = getSharedPreferences("AdsDecision",MODE_PRIVATE);
+        int sub =  subscribe.getInt("Sub",0);*/
+
 
         SharedPreferences subscriptionStatePreference = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
         String subscriptionState  = subscriptionStatePreference.getString("Subscription", "No");
@@ -173,6 +223,9 @@ public class AppStartClass extends Application {
         if (dailyTwiPreference.equals("Yes")) {
             showDaily();
         }
+
+        showProverbDaily();
+
 
         conversationArrayList = new ArrayList<>();
 
@@ -227,6 +280,7 @@ public class AppStartClass extends Application {
 //BUSINESS ARRAY
 
         businessArrayList = new ArrayList<>();
+
         businessArrayList.add(new Business("Money","Sika"));
         businessArrayList.add(new Business("I don't have money","Menni sika"));
         businessArrayList.add(new Business("I have money","Mewɔ sika"));
@@ -349,6 +403,7 @@ public class AppStartClass extends Application {
         animalsArrayList.add(new Animals("Wolf (2)", "Sakraman"));
         animalsArrayList.add(new Animals("Leopard", "Ɔsebɔ"));
         animalsArrayList.add(new Animals("Lion", "Gyata"));
+
         animalsArrayList.add(new Animals("Rat", "Kusie"));
         animalsArrayList.add(new Animals("Spider", "Ananse"));
         animalsArrayList.add(new Animals("Snake", "Ɔwɔ"));
@@ -2691,6 +2746,7 @@ public class AppStartClass extends Application {
         proverbsArrayList.add(new Proverbs("Sɛ yɛhwɛ nea etuo ayɛ a, anka yenni ano nam da","If we consider what guns have caused then we would never eat an animal that has been brought down by a gun","If you take into consideration all the bad that a person has committed you will not take any good from him so at times we have to forget the evil others have done"));
         proverbsArrayList.add(new Proverbs("Sɛ tipae ba kurom a, kɔtɔ nka ho","If there is headahe in town, the crab is not part","If there is a case to be investigated, it is only suspects who should be interrogated"));
         proverbsArrayList.add(new Proverbs("Sɛ wokɔto aboa kraman wɔ dua so a, na ɛnyɛ ɔno ara na ɔforoe na mmom ɔdesani na apagyaw no asi so","If you see a dog on top of a tree, it did not climb the tree by itself but rather a human put it there","If someone is able to do something he does not have access to, then someone who has access to it is involved."));
+
         proverbsArrayList.add(new Proverbs("Sɛ nsuo fa wo a, wunnyae nsuo nom","If you get drowned in water, you do not stop drinking water","A bad experience with something(or someone) does not mean you should not use it again if there are benefits"));
         proverbsArrayList.add(new Proverbs("Nea ade yɛ ne dea no ɔde benkum na ɛgye","He who owns something collects it with his left hand","The one owns something does not need to thank you if you return it. He has the right to get it from you anyway he wishes"));
         proverbsArrayList.add(new Proverbs("Nea odi akyiri sua nea odi kan nanteɛ","He one behind learns the walking style of the one in front","The young learns their traits and habits from the old who trained them"));
@@ -2707,6 +2763,13 @@ public class AppStartClass extends Application {
         proverbsArrayList.add(new Proverbs("Dua koro yi ara, sɛ woforo si a wasi na wote hwe nso a wasi","This same tree, if you climb up and climb down, you are down and similarly if you fall down from the tree you are also down","The end of a matter is what matters most"));
 
         //proverbsArrayList.add(new Proverbs("Sɛ wo fie bɛn nsamanpɔw a, ɛnkyerɛ sɛ wubewu kan","",""));
+
+       /* SharedPreferences sharedPreferencesAds1 = getSharedPreferences("AdsDecision",MODE_PRIVATE);
+        //SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+       // int Lifetime = sharedPreferencesAds.getInt("Lifetime",0);
+        MainActivity.Lifetime = sharedPreferencesAds1.getInt("Lifetime",0);
+       // MainActivity.Subscribed = sharedPreferencesAds1.getInt("Sub", 5);*/
+
 
 
 

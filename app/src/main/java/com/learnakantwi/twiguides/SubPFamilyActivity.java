@@ -2,6 +2,8 @@ package com.learnakantwi.twiguides;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.DownloadManager;
@@ -121,9 +123,13 @@ public class SubPFamilyActivity extends AppCompatActivity {
         if (isNetworkAvailable()) {
             for (int j = 0; j < familyArrayList.size(); j++) {
 
-                String bb = familyArrayList.get(j).getTwiFamily();
-                bb= bb.toLowerCase();
-                boolean dd = bb.contains("ɔ");
+                /*String bb = familyArrayList.get(j).getTwiFamily();
+                bb= bb.toLowerCase();*/
+
+                String c = familyArrayList.get(j).getTwiFamily().toLowerCase();
+
+                String bb= PlayFromFirebase.viewTextConvert(c);
+             /*   boolean dd = bb.contains("ɔ");
                 boolean ee = bb.contains("ɛ");
                 if (dd || ee) {
                     bb = bb.replace("ɔ", "x");
@@ -139,7 +145,7 @@ public class SubPFamilyActivity extends AppCompatActivity {
                     bb = bb.replace("-", "");
                     bb = bb.replace("?", "");
                     bb = bb.replace("'", "");
-                }
+                }*/
                 File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
                 if (myFiles.exists()) {
                     counter++;
@@ -154,24 +160,9 @@ public class SubPFamilyActivity extends AppCompatActivity {
                 toast.show();
 
                 for (int i = 0; i < familyArrayList.size(); i++) {
-                    String b = familyArrayList.get(i).getTwiFamily().toLowerCase();
-                    boolean d = b.contains("ɔ");
-                    boolean e = b.contains("ɛ");
-                    if (d || e) {
-                        b = b.replace("ɔ", "x");
-                        b = b.replace("ɛ", "q");
-                    }
+                    String c = familyArrayList.get(i).getTwiFamily().toLowerCase();
 
-                    if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") || b.contains("?") || b.contains("'")) {
-                        b = b.replace(" ", "");
-                        b = b.replace("/", "");
-                        b = b.replace(",", "");
-                        b = b.replace("(", "");
-                        b = b.replace(")", "");
-                        b = b.replace("-", "");
-                        b = b.replace("?", "");
-                        b = b.replace("'", "");
-                    }
+                    String b= PlayFromFirebase.viewTextConvert(c);
 
                     File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + b + ".m4a");
                     if (!myFile.exists()) {
@@ -479,13 +470,6 @@ public class SubPFamilyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sub_pfamily);
 
 
-        //Toast.makeText(this, "SubFamily", Toast.LENGTH_SHORT).show();
-
-     /*   familyArrayList.add(new Family("My dad","Me dada"));
-        familyArrayList.add(new Family("My mum paa","Me dada paa"));
-        familyArrayList.add(new Family("My dad","Me dada"));
-        familyArrayList.add(new Family("My Big Maan","Me dada"));*/
-
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
         isNetworkAvailable();
@@ -500,6 +484,8 @@ public class SubPFamilyActivity extends AppCompatActivity {
 
         FamilyAdapter familyAdapter = new FamilyAdapter(this, familyArrayList);
         listView.setAdapter(familyAdapter);
+
+
 
     }
 }

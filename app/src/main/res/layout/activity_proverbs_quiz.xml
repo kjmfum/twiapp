@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProverbsQuizActivity">
+        <!--
+         correctWrong = findViewById(R.id.CorrectWrongText);
+            scoreText = findViewById(R.id.Score);
+            counterText=findViewById(R.id.counterText);
+            gradeText = findViewById(R.id.grade);
+            -->
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/Verguideline30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3" />
+
+    <TextView
+        android:id="@+id/tvSubscribe"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorGreen"
+        android:gravity="center"
+        android:onClick="goToSubscriptionPage"
+        android:text="@string/purchase_or_subscribe_banner"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@id/guideline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/Verguideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/Verguideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.05" />
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:weightSum="10"
+        app:layout_constraintBottom_toBottomOf="@id/guideline15"
+        app:layout_constraintEnd_toEndOf="@id/Verguideline30"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline5">
+
+
+
+        <TextView
+            android:id="@+id/tvCorrectWrongText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:gravity="start"
+            android:text=""
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/tvScore"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:gravity="start"
+            android:text=""
+            android:textSize="20sp" />
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/verguideline70"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.7" />
+
+
+
+
+        <TextView
+            android:id="@+id/tvCounterText"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="Hello"
+            app:layout_constraintBottom_toBottomOf="@id/guideline15"
+            app:layout_constraintEnd_toEndOf="@id/verguideline70"
+            app:layout_constraintStart_toStartOf="@id/Verguideline30"
+            app:layout_constraintTop_toTopOf="@+id/guideline10"/>
+
+
+
+
+
+
+
+    <Button
+        android:id="@+id/btReset"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:background="@color/red"
+        android:padding="5dp"
+        android:text="Reset"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/verguideline70"
+        app:layout_constraintTop_toBottomOf="@+id/guideline5"/>
+
+
+        <ImageView
+            android:id="@+id/tvgrade"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_unmute"
+            app:layout_constraintBottom_toTopOf="@+id/guideline10"
+            app:layout_constraintEnd_toEndOf="@id/verguideline70"
+            app:layout_constraintStart_toStartOf="@+id/Verguideline30"
+            app:layout_constraintTop_toTopOf="@id/guideline5" />
+
+        <ImageView
+            android:id="@+id/ivUnMute"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_mute"
+            app:layout_constraintBottom_toTopOf="@+id/guideline10"
+            app:layout_constraintEnd_toEndOf="@id/verguideline70"
+            app:layout_constraintStart_toStartOf="@+id/Verguideline30"
+            app:layout_constraintTop_toTopOf="@id/guideline5" />
+
+
+        <!--   <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="How will you say:"
+            app:layout_constraintBottom_toTopOf="@+id/guideline15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center_horizontal"/>
+            -->
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.15" />
+
+
+        <TextView
+            android:id="@+id/tvQuizQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="Are You Ready?"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@id/guideline35"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline15" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline35"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.40" />
+
+        <!-- <TextView
+            android:id="@+id/tvInTwi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In Twi?"
+            app:layout_constraintTop_toBottomOf="@id/tvQuizQuestion"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center_horizontal"/>
+            -->
+
+        <TextView
+            android:id="@+id/tvPossibleA1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#A5D6A7"
+            android:gravity="center"
+            android:onClick="quizClickSound"
+            android:paddingStart="7dp"
+            android:text="In Twi?"
+            app:layout_constraintBottom_toTopOf="@id/guideline50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline35" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.55" />
+
+        <TextView
+            android:id="@+id/tvPossibleA2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#E6EE9C"
+            android:gravity="center"
+            android:onClick="quizClickSound"
+            android:paddingStart="7dp"
+            android:text="In Twi?"
+            app:layout_constraintBottom_toTopOf="@id/guideline70"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline50" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline70"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.7" />
+
+        <TextView
+            android:id="@+id/tvPossibleA3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#80DEEA"
+            android:gravity="center"
+            android:onClick="quizClickSound"
+            android:paddingStart="7dp"
+            android:text="In Twi?"
+            app:layout_constraintBottom_toTopOf="@id/guideline85"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline70" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline85"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.85" />
+
+        <Button
+            android:id="@+id/btPlayStartAgain"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/design_default_color_primary"
+            android:onClick="hideStartButton"
+            android:text="Start Quiz"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline85"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline35" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="ca-app-pub-7384642419407303/7840050122"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,49 @@ public class Proverbs {
      private String twiProverb;
     private String proverbLiteral;
      private String proverbMeaning;
+     private String proverbQuiz;
+    private String pQuizA;
+    private String pQuizB;
+    private String pQuizC;
+
+    public Proverbs (String proverbQuiz,String a, String b, String c, String twiProverb,String proverbLiteral, String proverbMeaning){
+        this.twiProverb = twiProverb;
+        this.proverbQuiz = proverbQuiz;
+        this.proverbMeaning = proverbMeaning;
+        this.proverbLiteral=proverbLiteral;
+        this.pQuizA=a;
+        this.pQuizB=b;
+        this.pQuizC=c;
+    }
+
+    public String getProverbQuiz() {
+        return proverbQuiz;
+    }
+
+    public void setProverbQuiz(String proverbQuiz) {
+        this.proverbQuiz = proverbQuiz;
+    }
+
+    public String getpQuizA() {
+        return pQuizA;
+    }
+
+    public void setpQuizA(String pQuizA) {
+        this.pQuizA = pQuizA;
+    }
+
+    public String getpQuizB() {
+        return pQuizB;
+    }
+
+    public void setpQuizB(String pQuizB) {
+        this.pQuizB = pQuizB;
+    }
+
+    public String getpQuizC() {
+        return pQuizC;
+    }
+
 
     public Proverbs(String twiProverb, String proverbLiteral, String proverbMeaning) {
         this.twiProverb = twiProverb;
@@ -15,6 +58,10 @@ public class Proverbs {
     public Proverbs(String twiProverb, String proverbLiteral) {
         this.twiProverb = twiProverb;
         this.proverbLiteral = proverbLiteral;
+    }
+
+    public void setpQuizC(String pQuizC) {
+        this.pQuizC = pQuizC;
     }
 
     public String getTwiProverb() {

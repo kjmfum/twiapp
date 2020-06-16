@@ -71,7 +71,7 @@
             android:background="@color/blue"
             android:clickable="true"
             android:onClick="BuyMe"
-            android:text="Restore Purchase"
+            android:text="Restore Subscriptions"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="25sp"
@@ -79,6 +79,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/guideline85" />
+
+        <Button
+            android:id="@+id/btLifetimeAccess"
+            style="@style/Base.CardView"
+            android:layout_width="268dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@color/yellow"
+            android:gravity="center"
+            android:onClick="BuyMe"
+            android:text="LIFETIME FULL ACCESS \n ONE TIME PURCHASE "
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline45" />
 
     <Button
         android:id="@+id/buyAnnual"
@@ -91,12 +108,14 @@
         android:gravity="center"
         android:onClick="BuyMe"
         android:text="ANNUAL SUBSCRIPTION"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/guideline60"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline45" />
+//////
+
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline60"
@@ -121,10 +140,9 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:background="@color/colorGreen"
-        android:elevation="200dp"
         android:onClick="BuyMe"
         android:text="6 MONTHS SUBSCRIPTION"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@id/guideline82"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,7 +161,7 @@
         android:clickable="true"
         android:onClick="BuyMe"
         android:text="BUY MONTHLY SUBSCRIPTION"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -178,21 +196,27 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.84" />
 
-    <TextView
-        android:id="@+id/tvBuyHalfYear"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:paddingTop="10dp"
-        android:text="@string/HalfYearSubBenefits"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@id/guideline47"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline25"
-        tools:layout_editor_absoluteY="146dp" />
+
+
+
+        <TextView
+            android:id="@+id/tvBuyHalfYear"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="@string/HalfYearSubBenefits"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@id/guideline47"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline25"
+            />
+
+
+
 
 
 

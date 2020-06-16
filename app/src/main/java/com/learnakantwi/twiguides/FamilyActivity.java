@@ -613,7 +613,7 @@ public class FamilyActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         stopPlay();
-        if (showAdProbability<=3){
+        if (showAdProbability<=5){
             advert1();
         }
         super.onDestroy();

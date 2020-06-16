@@ -7,6 +7,7 @@ import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,6 +15,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -186,6 +188,20 @@ public class QuizSubBusiness extends AppCompatActivity {
             }
         }
     }
+
+    public void handleCorrectAnswer(){
+        questionText.setTextColor(Color.GREEN);
+        //Toast.makeText(QuizSubBusiness.this, "CORRECT", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                generateQuestion();
+                //correctWrong.setText("");
+                questionText.setTextColor(Color.GRAY);
+                correctWrong.setTextColor(Color.GRAY);
+            }
+        },4000);
+    }
     public void playFromFileOrDownload(final String filename, final String appearText) {
 
         if (appearText.equals(twi1)) {
@@ -247,7 +263,7 @@ public class QuizSubBusiness extends AppCompatActivity {
                             if (appearText.equals(twi1)) {
                                 toast.setText(appearText + " -" + " " + "CORRECT!!!!");
                                 toast.show();
-                                generateQuestion();
+                                handleCorrectAnswer();
                             } else {
                                 toast.setText(appearText);
                                 toast.show();
@@ -268,7 +284,7 @@ public class QuizSubBusiness extends AppCompatActivity {
                         if (appearText.equals(twi1)) {
                             toast.setText(appearText + " -" + " " + "CORRECT!!!!");
                             toast.show();
-                            generateQuestion();
+                            handleCorrectAnswer();
                         } else {
                             toast.setText(appearText);
                             toast.show();
@@ -295,7 +311,7 @@ public class QuizSubBusiness extends AppCompatActivity {
                 if (appearText.equals(twi1)) {
                     toast.setText(appearText + " -" + " " + "CORRECT!!!!");
                     toast.show();
-                    generateQuestion();
+                    handleCorrectAnswer();
                 } else {
                     toast.setText(appearText);
                     toast.show();

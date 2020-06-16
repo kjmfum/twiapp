@@ -451,7 +451,7 @@ public class ChildrenAnimalActivity extends AppCompatActivity {
 
 
             bb = childrenAnimalsArrayListFew.get(j).getTwiAnimals();
-            bb = playFromFirebaseChildren.viewTextConvert(bb);
+            bb = PlayFromFirebase.viewTextConvert(bb);
 
             File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
             if (myFiles.exists()) {
@@ -480,7 +480,7 @@ public class ChildrenAnimalActivity extends AppCompatActivity {
                 for (int i = 0; i < childrenAnimalsArrayListFew.size(); i++) {
 
                     bb = childrenAnimalsArrayListFew.get(i).getTwiAnimals();
-                    bb = playFromFirebaseChildren.viewTextConvert(bb);
+                    bb = PlayFromFirebase.viewTextConvert(bb);
 
                     File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
                     if (!myFile.exists()) {
@@ -578,7 +578,7 @@ public class ChildrenAnimalActivity extends AppCompatActivity {
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
-                Toast.makeText(ChildrenAnimalActivity.this, "I'm here o", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ChildrenAnimalActivity.this, "I'm here o", Toast.LENGTH_SHORT).show();
             }
         });
         mAdView1 = findViewById(R.id.adView1);
@@ -692,7 +692,7 @@ public class ChildrenAnimalActivity extends AppCompatActivity {
 
 
                 PlayFromFirebase playFromFirebase = new PlayFromFirebase();
-                String b = playFromFirebase.viewTextConvert(a);
+                String b = PlayFromFirebase.viewTextConvert(a);
 
                 getImage(b);
 

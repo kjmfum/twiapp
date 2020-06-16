@@ -638,7 +638,7 @@ public class AnimalsActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (showAdProbability<=3){
+        if (showAdProbability<=5){
             advert1();
         }
         super.onDestroy();

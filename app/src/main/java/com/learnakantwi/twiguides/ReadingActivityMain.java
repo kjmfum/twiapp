@@ -168,6 +168,8 @@ public class ReadingActivityMain extends AppCompatActivity {
         readingMainArray = new ArrayList<>();
         readingMainArray.add("Two Letter Words");
         readingMainArray.add("Digraphs (Three Letter Sounds)");
+        readingMainArray.add("Reading Lesson 1");
+        readingMainArray.add("Reading Lesson 2");
 
 
 //        tvLetterA = findViewById(R.id.tvVowelA);
@@ -194,6 +196,7 @@ public class ReadingActivityMain extends AppCompatActivity {
                     case "Digraphs (Three Letter Sounds)":
                         goToPleaseSubPage();
                         return;
+                    default: goToPleaseSubPage();
                 }
                // goToTwoLetters();
 

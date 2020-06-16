@@ -590,7 +590,7 @@ public class AllActivity extends AppCompatActivity {
 
                         //Toast.makeText(context, sb, Toast.LENGTH_SHORT).show();
 
-                        b = playFromFirebase.viewTextConvert(b);
+                        b = PlayFromFirebase.viewTextConvert(b);
 
                         playFromFileOrDownloadA(b, a);
 
@@ -612,7 +612,7 @@ public class AllActivity extends AppCompatActivity {
                         StringBuilder sb = new StringBuilder();
                         sb = sb.append(a).append(" is:\n\t").append(b);
 
-                        b = playFromFirebase.viewTextConvert(b);
+                        b = PlayFromFirebase.viewTextConvert(b);
 
 
                         Toast.makeText(context, sb, Toast.LENGTH_SHORT).show();
@@ -769,7 +769,7 @@ public class AllActivity extends AppCompatActivity {
 
 
 
-                b = playFromFirebase.viewTextConvert(b);
+                b = PlayFromFirebase.viewTextConvert(b);
 
                 playFromFileOrDownloadA(b, a);
 
@@ -790,7 +790,7 @@ allListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         StringBuilder sb = new StringBuilder();
         sb = sb.append(a).append(" is:\n\t").append(b);
 
-        b = playFromFirebase.viewTextConvert(b);
+        b = PlayFromFirebase.viewTextConvert(b);
 
 
         Toast.makeText(context, sb, Toast.LENGTH_SHORT).show();
@@ -833,7 +833,7 @@ allListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 */
    @Override
    protected void onDestroy() {
-       if (showAdProbability<=2){
+       if (showAdProbability<=5){
            advert1();
        }
        super.onDestroy();

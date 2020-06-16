@@ -346,6 +346,9 @@ public class QuizHome extends AppCompatActivity {
 
 
                             switch (me1){
+                                case "Timed Quiz":
+                                    goToTimedQuiz();
+                                    return;
                                 case "Conversations":
                                     goToConversation();
                                     return;
@@ -355,11 +358,15 @@ public class QuizHome extends AppCompatActivity {
                                 case "Animals":
                                     goToAnimals();
                                     return;
+
                                 case "Body Parts":
                                     goToBodyparts();
                                     return;
                                 case "Colours":
                                     goToColours();
+                                    return;
+                                case "Children Animals":
+                                    goToChildrenAnimals();
                                     return;
                                 case "Days of Week":
                                     goToDaysOfWk();
@@ -492,7 +499,18 @@ public class QuizHome extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToTimedQuiz(){
+        Intent intent = new Intent(getApplicationContext(), QuizTimedHome.class);
+        intent.putExtra("Ads","Ads");
+        startActivity(intent);
+    }
+
     public void goToConversation() {
+        Intent intent = new Intent(getApplicationContext(), PleaseSubscribePage.class);
+        startActivity(intent);
+    }
+
+    public void goToChildrenAnimals(){
         Intent intent = new Intent(getApplicationContext(), PleaseSubscribePage.class);
         startActivity(intent);
     }
@@ -722,6 +740,7 @@ public class QuizHome extends AppCompatActivity {
 
         homeButtonArrayList.add(new HomeButton("Download All Audio", R.drawable.ic_download_audio));
 
+        homeButtonArrayList.add(new HomeButton("Timed Quiz", R.drawable.time));
         homeButtonArrayList.add(new HomeButton("Family", R.drawable.familyimage));
        // homeButtonArrayList.add(new HomeButton("Proverbs", R.drawable.proverbsimage));
         //homeButtonArrayList.add(new HomeButton("Children", R.drawable.childrenimage));
@@ -737,6 +756,7 @@ public class QuizHome extends AppCompatActivity {
         homeButtonArrayList.add(new HomeButton("Months", R.drawable.calendar));
         homeButtonArrayList.add(new HomeButton("Expressions", R.drawable.expressionsimage));
         homeButtonArrayList.add(new HomeButton("Colours", R.drawable.colourimage));
+        homeButtonArrayList.add(new HomeButton("Children Animals", R.drawable.childrenanimalsimage));
         homeButtonArrayList.add(new HomeButton("Animals", R.drawable.animalsimage));
         homeButtonArrayList.add(new HomeButton("Business", R.drawable.businessimage));
 
@@ -758,6 +778,9 @@ public class QuizHome extends AppCompatActivity {
 
 
                 switch (me1){
+                    case "Timed Quiz":
+                        goToTimedQuiz();
+                        return;
                     case "Conversations":
                         goToConversation();
                         return;
@@ -772,6 +795,9 @@ public class QuizHome extends AppCompatActivity {
                         return;
                     case "Colours":
                         goToColours();
+                        return;
+                    case "Children Animals":
+                        goToChildrenAnimals();
                         return;
                     case "Days of Week":
                         goToDaysOfWk();

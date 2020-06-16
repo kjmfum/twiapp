@@ -22,6 +22,15 @@
     </com.google.android.gms.ads.AdView>
     -->
 
+   <!-- <AdapterViewFlipper
+        android:id="@+id/proverbsAdapterViewFlipper"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelinehor80"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />-->
+
     <AdapterViewFlipper
         android:id="@+id/proverbsAdapterViewFlipper"
         android:layout_width="match_parent"
@@ -29,14 +38,21 @@
         app:layout_constraintBottom_toTopOf="@+id/guidelinehor80"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/adView1" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelinehor80"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelinehor10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
 
     <Button
         android:id="@+id/previousButton"
@@ -47,12 +63,52 @@
         android:padding="10dp"
         android:text="PREVIOUS"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/adView1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline30"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guidelinehor80" />
 
     <Button
+        android:id="@+id/nextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:onClick="next"
+        android:padding="5dp"
+        android:text="NEXT"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline70"
+        app:layout_constraintTop_toTopOf="@id/guidelinehor80" />
+
+    <ImageButton
+        android:id="@+id/pauseButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:onClick="pauseSlideshow"
+        android:padding="10dp"
+        android:src="@drawable/ic_pause_circle_outline_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline50"
+        app:layout_constraintStart_toStartOf="@id/guideline33"
+        app:layout_constraintTop_toTopOf="@id/guidelinehor80" />
+
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:onClick="slideshow"
+        android:padding="10dp"
+        android:src="@drawable/ic_play_circle_outline_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline67"
+        app:layout_constraintStart_toStartOf="@id/guideline50"
+        app:layout_constraintTop_toTopOf="@id/guidelinehor80" />
+
+    <!--<Button
         android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -88,7 +144,7 @@
         app:layout_constraintBottom_toTopOf="@id/adView1"
         app:layout_constraintEnd_toEndOf="@id/guideline67"
         app:layout_constraintStart_toStartOf="@id/guideline50"
-        app:layout_constraintTop_toTopOf="@id/guidelinehor80" />
+        app:layout_constraintTop_toTopOf="@id/guidelinehor80" />-->
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -119,7 +175,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.7" />
 
-    <com.google.android.gms.ads.AdView
+<!--    <com.google.android.gms.ads.AdView
         android:id="@+id/adView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -130,7 +186,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nextButton" />
+        app:layout_constraintTop_toBottomOf="@id/nextButton" />-->
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="ca-app-pub-7384642419407303/7840050122"
+        app:layout_constraintBottom_toBottomOf="@id/guidelinehor10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline50"

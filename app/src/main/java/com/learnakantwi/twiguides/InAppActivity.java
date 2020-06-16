@@ -55,6 +55,9 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
     String premiumUpgradePrice;
     Button btBuyMonthly;
     Button btBuyHalfYear;
+    Button btLifeTimeAccess;
+
+    int Lifetime=0;
 
     Button btBuyAnnual;
     SkuDetails skuDetails;
@@ -121,8 +124,6 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
             return true;
         }
         else{
-
-
         switch (item.getItemId()){
             case R.id.main:
                 goToMain();
@@ -141,7 +142,6 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
                 return false;
         }
         }
-
     }*/
 
     @Override
@@ -181,6 +181,9 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
             Toast.makeText(this, "You cancelled the Purchase", Toast.LENGTH_SHORT).show();
             billingClient.endConnection();}
         else if(billingResult.getResponseCode()== BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED){
+            Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+            startActivity(homeIntent);
+            finish();
                 Toast.makeText(this, "Already Purchased", Toast.LENGTH_SHORT).show();
         } else {
             // Handle any other error codes.
@@ -204,7 +207,12 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
                     @Override
                     public void onAcknowledgePurchaseResponse(BillingResult billingResult) {
 
-                        toast.setText("Acknowleged");
+                        sharedPreferencesAds = getSharedPreferences("AdsDecision",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+                        editor.putInt("Ads",0);
+                        editor.putInt("Sub",1);
+
+                        toast.setText("Acknowledged");
                         toast.show();
 
                         /*Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
@@ -223,19 +231,26 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
     }
 
     public void setUpBillingClient(String subName) {
+        if (subName.contains("access1")){
+           // if (subName.contains("likoio")){
+            billingClient = BillingClient.newBuilder(this)
+                    .setListener(this)
+                    .enablePendingPurchases()
+                    .build();
+            setUpBillingLifetime(subName);
+        }else{
+            // Toast.makeText(this, "This " +subName, Toast.LENGTH_SHORT).show();
+            billingClient = BillingClient.newBuilder(this)
+                    .setListener(this)
+                    .enablePendingPurchases()
+                    .build();
+            setUpBilling(subName);
+        }
 
-       // Toast.makeText(this, "This " +subName, Toast.LENGTH_SHORT).show();
-        billingClient = BillingClient.newBuilder(this)
-                .setListener(this)
-                .enablePendingPurchases()
-                .build();
-        setUpBilling(subName);
+
     }
 
         public void setUpBilling(final String subName){
-
-
-
 
         billingClient.startConnection(new BillingClientStateListener() {
             @Override
@@ -246,6 +261,9 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
 
                     List<String> skuList = new ArrayList<>();
                      skuList.add("reading_club");
+                    skuList.add("monthly_subscription");
+                    skuList.add("year_subscription");
+                    skuList.add("6months_subscription");
                     skuList.add("premium_6months");
                     skuList.add("premium_annually");
                     // skuList.add("gas");
@@ -308,6 +326,88 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
         //billingClient.endConnection();
     }
 
+    public void setUpBillingLifetime(final String subName){
+
+        billingClient.startConnection(new BillingClientStateListener() {
+            @Override
+            public void onBillingSetupFinished(BillingResult billingResult) {
+                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                    // The BillingClient is ready. You can query purchases here.
+
+
+                    List<String> skuList = new ArrayList<>();
+                    skuList.add("lifetime_full_access1");
+                   // skuList.add("lifetime_full_access");
+                   //skuList.add("likoio");
+                    // skuList.add("gas");
+                    SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
+                    params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP);
+                    billingClient.querySkuDetailsAsync(params.build(),
+                            new SkuDetailsResponseListener() {
+                                @Override
+                                public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> skuDetailsList) {
+                                    // Process the result.
+
+                                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
+                                        toast.setText("Already Purchased 1");
+                                        toast.show();
+
+                                    }
+                                    else if (btLifeTimeAccess.getText().toString().toLowerCase().contains("restore")){
+                                        Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+                                        startActivity(homeIntent);
+                                    }
+                                    else{
+                                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
+                                            for (SkuDetails skuDetails : skuDetailsList) {
+                                                String sku = skuDetails.getSku();
+                                                String price = skuDetails.getPrice();
+                                               // Toast.makeText(InAppActivity.this, "Price: "+ price+" " + sku, Toast.LENGTH_SHORT).show();
+                                                // if ("reading_club".equals(sku))
+                                                // if ("premium_annually".equals(sku))
+                                               if (subName.equals(sku))
+
+                                                //if ("likoio".equals(sku))
+                                                {
+                                                    premiumUpgradePrice = price;
+
+                                                    BillingFlowParams flowParams = BillingFlowParams.newBuilder()
+                                                            .setSkuDetails(skuDetails)
+                                                            .build();
+                                                    billingClient.launchBillingFlow(InAppActivity.this, flowParams);
+                                                    // BillingResult responseCode = billingClient.launchBillingFlow(InAppActivity.this,flowParams);
+                                                    // Toast.makeText(InAppActivity.this, "I got it done "+ subName , Toast.LENGTH_SHORT).show();
+                                                } /*else if ("premium_annually".equals(sku)) {
+                                                premiumUpgradePrice = price;
+                                            }*/
+                                            }
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                    }
+
+
+
+                                }
+                            });
+                }
+            }
+            @Override
+            public void onBillingServiceDisconnected() {
+                Toast.makeText(InAppActivity.this, "I got disconnected", Toast.LENGTH_SHORT).show();
+                // Try to restart the connection on the next request to
+                // Google Play by calling the startConnection() method.
+
+                //setUpBillingClient(subName);
+            }
+
+
+        });
+        //billingClient.endConnection();
+    }
+
 
     public void getPricesOnButton(){
 
@@ -322,11 +422,24 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
             public void onBillingSetupFinished(BillingResult billingResult) {
                 if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                     List<String> skuList = new ArrayList<>();
+                    List<String> skuList1 = new ArrayList<>();
+                    skuList1.add("lifetime_full_access");
+                    skuList1.add("lifetime_full_access1");
+                   skuList1.add("likoio");
+
+
+                    skuList.add("monthly_subscription");
+                    skuList.add("year_subscription");
+                    skuList.add("6months_subscription");
+
+/*
                     skuList.add("reading_club");
                     skuList.add("premium_6months");
-                    skuList.add("premium_annually");
+                    skuList.add("premium_annually");*/
                     // skuList.add("gas");
                     SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
+
+
                     params.setSkusList(skuList).setType(BillingClient.SkuType.SUBS);
                     billingClient.querySkuDetailsAsync(params.build(),
                             new SkuDetailsResponseListener() {
@@ -341,18 +454,108 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
                                                 // if ("reading_club".equals(sku))
                                                 // if ("premium_annually".equals(sku))
 
-                                                    if (sku.contains("reading")){
-                                                        btBuyMonthly.setText(premiumUpgradePrice+ "\nMonthly " );
+                                                    if (sku.contains("monthly_subscription")){
+                                                        btBuyMonthly.setText(premiumUpgradePrice+ "\nBilled Monthly " );
                                                     }
-                                                    else if (sku.contains("6")){
-                                                        btBuyHalfYear.setText(premiumUpgradePrice+"\n 6 Months");
+                                                    else if (sku.contains("6months_subscription")){
+                                                        btBuyHalfYear.setText(premiumUpgradePrice+"\nBilled every 6 Months");
                                                 }
-                                                    else if (sku.contains("annually")){
-                                                        btBuyAnnual.setText(premiumUpgradePrice+ "\n Annual");
+
+                                                    else if (sku.contains("year_subscription")){
+                                                        btBuyAnnual.setText(premiumUpgradePrice+ "\nBilled Annually");
                                                     }
                                                 }
                                             }
                                         }
+                            });
+
+                    params.setSkusList(skuList1).setType(BillingClient.SkuType.INAPP);
+                    billingClient.querySkuDetailsAsync(params.build(),
+                            new SkuDetailsResponseListener() {
+                                @Override
+                                public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> skuDetailsList) {
+                                    // Process the result.
+
+                                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
+                                        for (SkuDetails skuDetails : skuDetailsList) {
+                                            String sku = skuDetails.getSku();
+                                            //Toast.makeText(InAppActivity.this, "Hi "+ sku, Toast.LENGTH_SHORT).show();
+                                            String premiumUpgradePrice = skuDetails.getPrice();
+                                          /*  if (sku.contains("access")){
+                                                btLifeTimeAccess.setText("Restore Lifetime \nAccess Content");
+                                            }*/
+                                          if (sku.contains("access1") && Lifetime ==1){
+                                                btLifeTimeAccess.setText("Restore Lifetime \nAccess Content");
+                                            }
+                                            else if (sku.contains("access1")){
+                                                    btLifeTimeAccess.setText(premiumUpgradePrice+"\n Lifetime - One Time Purchase");
+                                                }
+                                            /*else if (sku.contains("liko")){
+                                                btBuyAnnual.setText(premiumUpgradePrice+"\n Try - One Time Purchase");
+                                            }*/
+                                            /*if (sku.contains("likoio")){
+                                                btLifeTimeAccess.setText(premiumUpgradePrice+"\n Lifetime - Two Time Purchase");
+                                            }*/
+                                        }
+                                    }
+                                }
+                            });
+                }
+            }
+            @Override
+            public void onBillingServiceDisconnected() {
+                Toast.makeText(InAppActivity.this, "Internet disconnected", Toast.LENGTH_SHORT).show();
+                // Try to restart the connection on the next request to
+                // Google Play by calling the startConnection() method.
+            }
+
+
+        });
+        //billingClient.endConnection();
+    }
+
+    public void getPricesOnButtonLifetime(){
+
+
+        billingClient = BillingClient.newBuilder(this)
+                .setListener(this)
+                .enablePendingPurchases()
+                .build();
+
+        billingClient.startConnection(new BillingClientStateListener() {
+            @Override
+            public void onBillingSetupFinished(BillingResult billingResult) {
+                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                    List<String> skuList = new ArrayList<>();
+                    skuList.add("lifetime_full_access");
+                    // skuList.add("gas");
+                    SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
+                    params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP);
+                    billingClient.querySkuDetailsAsync(params.build(),
+                            new SkuDetailsResponseListener() {
+                                @Override
+                                public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> skuDetailsList) {
+                                    // Process the result.
+
+                                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
+                                        for (SkuDetails skuDetails : skuDetailsList) {
+                                            String sku = skuDetails.getSku();
+                                            String premiumUpgradePrice = skuDetails.getPrice();
+                                            // if ("reading_club".equals(sku))
+                                            // if ("premium_annually".equals(sku))
+
+                                            if (sku.contains("lifetime_full_access")){
+                                                btLifeTimeAccess.setText(premiumUpgradePrice+ "\nLifetime " );
+                                            }
+                                            else if (sku.contains("6")){
+                                                btBuyHalfYear.setText(premiumUpgradePrice+"\n 6 Months");
+                                            }
+                                            else if (sku.contains("annually")){
+                                                btBuyAnnual.setText(premiumUpgradePrice+ "\n Annual");
+                                            }
+                                        }
+                                    }
+                                }
                             });
                 }
             }
@@ -380,16 +583,26 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
        // Toast.makeText(InAppActivity.this, "Ready "+ ButtonText, Toast.LENGTH_SHORT).show();
 
         if (ButtonText.contains("monthly")){
-            setUpBillingClient("reading_club");
+           // setUpBillingClient("reading_club");
+            setUpBillingClient("monthly_subscription");
+
            // buyMeMonthly();
         }
         else if (ButtonText.contains("6")){
-            setUpBillingClient("premium_6months");
+            //setUpBillingClient("premium_6months");
+            setUpBillingClient("6months_subscription");
         }
         else if (ButtonText.contains("annual")){
-            setUpBillingClient("premium_annually");
+            //setUpBillingClient("premium_annually");
+            setUpBillingClient("year_subscription");
             //buyMeAnnually();
         }
+        else if (ButtonText.contains("lifetime")){
+            setUpBillingClient("lifetime_full_access1");
+            //setUpBillingClient("likoio");
+            //buyMeAnnually();
+        }
+
         else{
             if (isNetworkAvailable()){
                 setUpBillingClientCheck();
@@ -422,13 +635,23 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
                 if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                     // The BillingClient is ready. You can query purchases here.
                     //
+                    SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
+
+                    //In App
 
 
                     List<String> skuList = new ArrayList<>();
                     skuList.add("reading_club");
-                    skuList.add("premium_annually");
+                    skuList.add("monthly_subscription");
+                    skuList.add("year_subscription");
+                    skuList.add("6months_subscription");
                     skuList.add("premium_6months");
-                    SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
+                    skuList.add("premium_annually");
+
+                    /*skuList.add("reading_club");
+                    skuList.add("premium_annually");
+                    skuList.add("premium_6months");*/
+                    //SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
                     params.setSkusList(skuList).setType(BillingClient.SkuType.SUBS);
 
 
@@ -448,40 +671,59 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
                                             for (SkuDetails skuDetails : skuDetailsList) {
                                                 String sku = skuDetails.getSku();
                                                 String price = skuDetails.getPrice();
-                                                if ("reading_club".equals(sku) || "premium_annually".equals(sku) || "premium_6months".equals(sku)) {
+                                                if ("year_subscription".equals(sku) ||"6months_subscription".equals(sku) ||"monthly_subscription".equals(sku) || "reading_club".equals(sku) || "premium_annually".equals(sku) || "premium_6months".equals(sku)) {
                                                     premiumUpgradePrice = price;
 
 
                                                     Purchase.PurchasesResult purchasesResult = billingClient.queryPurchases(BillingClient.SkuType.SUBS);
                                                     List<Purchase> purchasesList = purchasesResult.getPurchasesList();
-                                                    //
-
 
                                                     if (purchasesList !=null && !purchasesList.isEmpty()){
                                                         String me1;
                                                         //String me1 = purchasesList.get(0).getOrderId();
                                                         for (Purchase purchase : purchasesList) {
                                                             String skuName = purchase.getSku();
-                                                            if (skuName.equals("reading_club") || skuName.equals("premium_6months") || skuName.equals("premium_annually")){
+                                                            if ("year_subscription".equals(sku) ||"6months_subscription".equals(sku) ||"monthly_subscription".equals(sku) ||skuName.equals("reading_club") || skuName.equals("premium_6months") || skuName.equals("premium_annually")){
 
                                                                 switch(skuName){
                                                                     case "reading_club":
                                                                         me1 = "\n\t AN ACTIVE MONTHLY SUBSCRIPTION";
                                                                         Toast.makeText(InAppActivity.this, "\t\t\t\t YOU ALREADY HAVE "+ me1 , Toast.LENGTH_SHORT).show();
-                                                                       // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-                                                                        //startActivity(homeIntent);
+                                                                        Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+                                                                        startActivity(homeIntent);
                                                                         return;
+
+                                                                    case "monthly_subscription":
+                                                                        me1 = "\n\t AN ACTIVE MONTHLY SUBSCRIPTION";
+                                                                        Toast.makeText(InAppActivity.this, "\t\t\t\t YOU ALREADY HAVE "+ me1 , Toast.LENGTH_SHORT).show();
+                                                                         homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+                                                                        startActivity(homeIntent);
+                                                                        return;
+
                                                                     case "premium_6months":
                                                                         me1 = "\n\t AN ACTIVE 6 MONTHS SUBSCRIPTION";
                                                                         Toast.makeText(InAppActivity.this, "\t\t\t\t YOU ALREADY HAVE "+ me1 , Toast.LENGTH_SHORT).show();
-                                                                        //homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-                                                                        //startActivity(homeIntent);
+                                                                        homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+                                                                        startActivity(homeIntent);
+                                                                        return;
+                                                                    case "6months_subscription":
+                                                                        me1 = "\n\t AN ACTIVE 6 MONTHS SUBSCRIPTION";
+                                                                        Toast.makeText(InAppActivity.this, "\t\t\t\t YOU ALREADY HAVE "+ me1 , Toast.LENGTH_SHORT).show();
+                                                                        homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+                                                                        startActivity(homeIntent);
                                                                         return;
                                                                     case "premium_annually":
                                                                         me1 = "\n\t AN ACTIVE ANNUAL SUBSCRIPTION";
                                                                         Toast.makeText(InAppActivity.this, "\t\t\t\t YOU ALREADY HAVE "+ me1 , Toast.LENGTH_SHORT).show();
-                                                                        //homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-                                                                        //startActivity(homeIntent);
+                                                                        homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+                                                                        startActivity(homeIntent);
+                                                                        return;
+
+                                                                    case "year_subscription":
+                                                                        me1 = "\n\t AN ACTIVE ANNUAL SUBSCRIPTION";
+                                                                        Toast.makeText(InAppActivity.this, "\t\t\t\t YOU ALREADY HAVE "+ me1 , Toast.LENGTH_SHORT).show();
+                                                                        homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+                                                                        startActivity(homeIntent);
                                                                         return;
                                                                 }
 
@@ -495,11 +737,6 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
                                                                 startActivity(homeIntent);*/
 
                                                             }
-
-                                                       /*     if (skuName.equals("premium_annually" )){
-                                                                Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-                                                                startActivity(homeIntent);
-                                                            }*/
                                                         }
                                                         //toast.setText(Integer.toString(me3));
                                                     }
@@ -533,15 +770,10 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
                                         }
 
                                     }
-
-
-                                }
-
-
-
-                                // }
+                              }
                             });
-                }
+
+            }
             }
             @Override
             public void onBillingServiceDisconnected() {
@@ -568,15 +800,19 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
         editor.putInt("Ads",1);
         editor.apply();
 
+        Lifetime = sharedPreferencesAds.getInt("Lifetime",5);
+
         btBuyMonthly =findViewById(R.id.buyMonthly);
         btBuyHalfYear =findViewById(R.id.buyHalfYear);
         btBuyAnnual =findViewById(R.id.buyAnnual);
+        btLifeTimeAccess = findViewById(R.id.btLifetimeAccess);
 
 
 
         toast = Toast.makeText(this, "", Toast.LENGTH_LONG);
 
         getPricesOnButton();
+        //getPricesOnButtonLifetime();
 
 
         setUpBillingClientCheck();

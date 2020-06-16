@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="animalImages">
+        <item>@drawable/wowa</item>
+        <item>@drawable/xkra</item>
+        <item>@drawable/nantwie</item>
+        <item>@drawable/tqfrq</item>
+        <item>@drawable/kxtx</item>
+        <item>@drawable/xdqnkyqm</item>
+        <item>@drawable/kraman</item>
+        <item>@drawable/afurum</item>
+        <item>@drawable/dabodabo</item>
+        <item>@drawable/xsono</item>
+        <item>@drawable/akokx</item>
+        <item>@drawable/apxnkye</item>
+        <item>@drawable/pxnkx</item>
+        <item>@drawable/prako</item>
+        <item>@drawable/gyata</item>
+        <item>@drawable/afofantx</item>
+
+        <item>@drawable/abosomakoterq</item>
+        <item>@drawable/akura</item>
+        <item>@drawable/akyekyedeq</item>
+        <item>@drawable/anomaa</item>
+        <item>@drawable/apataa</item>
+        <item>@drawable/ananse</item>
+        <item>@drawable/kxtxkx</item>
+        <item>@drawable/sisire</item>
+        <item>@drawable/xwx</item>
+        <item>@drawable/yoma</item>
+
+
+
+    </array>
+
+
+</resources>

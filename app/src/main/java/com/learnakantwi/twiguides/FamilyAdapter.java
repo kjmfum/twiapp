@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -51,11 +52,19 @@ public class FamilyAdapter extends BaseAdapter implements Filterable {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView= inflater.inflate(R.layout.custom_time, null);
 
-        TextView textView = (TextView) convertView.findViewById(R.id.speakEnglishTime);
+        TextView textView = convertView.findViewById(R.id.speakEnglishTime);
         TextView textView1 = convertView.findViewById(R.id.speakTwiTime);
 
         textView.setText(originalArray.get(position).getEnglishFamily());
         textView1.setText(originalArray.get(position).getTwiFamily());
+
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, originalArray.get(position).getEnglishFamily()+ ": "+ originalArray.get(position).getTwiFamily(), Toast.LENGTH_SHORT).show();
+            }
+        });
         //if image would have been --- setImageResource.
 
         return convertView;

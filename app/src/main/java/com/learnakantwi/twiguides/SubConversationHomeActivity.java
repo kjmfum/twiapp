@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SubConversationHomeActivity extends AppCompatActivity {
 
@@ -28,102 +27,55 @@ public class SubConversationHomeActivity extends AppCompatActivity {
     String currentUser;
     TextView tvAkwaaba;
     ListView lvsubconversation;
-    ArrayList <HomeButton> subConversationHomeArrayList;
+   // ArrayList <HomeButton> subConversationHomeArrayList;
+
+    ArrayList <String> subConversationHomeArrayList;
 
     @Override
-   /* public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         //MenuInflater menuInflater = getMenuInflater();
-        getMenuInflater().inflate(R.menu.vocabulary_menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu_simple, menu);
 
         final MenuItem item = menu.findItem(R.id.menusearch);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getApplicationContext(), query, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SubConversationHomeActivity.this, query, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                final ArrayList<HomeButton> results = new ArrayList<>();
-                for (HomeButton x: homeButtonArrayList ){
+                final ArrayList<String> results = new ArrayList<>();
+                for (String x: subConversationHomeArrayList ){
 
-                    if(x.getNameofActivity().toLowerCase().contains(newText.toLowerCase())
-
-                    ){
+                    if(x.toLowerCase().contains(newText.toLowerCase()) ){
                         results.add(x);
                     }
 
-                    ((HomeAdapter)homeListView.getAdapter()).update(results);
-
-                    homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                            String me1 = results.get(position).getNameofActivity();
-
-
-                            switch (me1){
-                                case "Alphabets":
-                                    goToAlphabets();
-                                    return;
-                                case "Proverbs":
-                                    goToProverbs();
-                                    return;
-                                case "Children":
-                                    goToChildren();
-                                    return;
-                                case "Animals":
-                                    goToAnimals();
-                                    return;
-                                case "Body Parts":
-                                    goToBodyparts();
-                                    return;
-                                case "Colours":
-                                    goToColours();
-                                    return;
-                                case "Days of Week":
-                                    goToDaysOfWk();
-                                    return;
-                                case "Expressions":
-                                    goToCommonExpressionsa();
-                                    return;
-                                case "Family":
-                                    goToFamily();
-                                    return;
-                                case "Food":
-                                    goToFood();
-                                    return;
-                                case "Months":
-                                    goToMonths();
-                                    return;
-                                case "Numbers":
-                                    goToNumber();
-                                    return;
-                                case "Pronouns":
-                                    goToPronouns();
-                                    return;
-                                case "Time":
-                                    goToTime();
-                                    return;
-                                case "Weather":
-                                    goToWeather();
-                                    return;
-                                case "Business":
-                                    goToBusiness();
-                                    return;
-                                case "Search":
-                                    goToAll();
-                                    return;
-                                case "Download All Audio":
-                                    downloadAll();
-                                    return;
-                            }
-                        }
-                    });
+                    ((ReadingMainAdapter)lvsubconversation.getAdapter()).update(results);
                 }
 
+                lvsubconversation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        // vowel = readingAlphabetArray.get(position);
+
+                       String  me1 = results.get(position);
+
+                        switch (me1){
+                            case "Introducing yourself":
+                                goToConversationIntroduction();
+                                return;
+                            case "Welcoming others":
+                                goToQuiz();
+                                return;
+                        }
+                        //goToTwoLetters();
+
+                    }
+                });
 
                 return false;
             }
@@ -134,34 +86,24 @@ public class SubConversationHomeActivity extends AppCompatActivity {
 
     }
 
-    @Override*/
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
 
-        switch (item.getItemId()) {
-           /*case R.id.settings:
-                Log.i("Menu Item Selected", "Settings");
-                playAll();
-                return true;
-            case R.id.alphabets:
-                Log.i("Menu Item Selected", "Alphabets");
-                return  true;*/
-
+        switch (item.getItemId()){
             case R.id.main:
                 goToMain();
-                return true;
+                return  true;
+            /*case R.id.quiz1:
+                goToQuizFamily();
+                return  true;
+            case R.id.downloadAudio:
+                downloadClick();
+                return true;*/
             case R.id.videoCourse:
+                //Log.i("Menu Item Selected", "Alphabets");
                 goToWeb();
-                return true;
-            case R.id.rate:
-                rateMe();
-                return true;
-            case R.id.share:
-                shareApp();
-                return true;
-            case R.id.dailyTwiAlert:
-                tunOnDailyTwi();
-                return true;
+                return  true;
             default:
                 return false;
         }
@@ -210,8 +152,33 @@ public class SubConversationHomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    public void goToCategory(String category){
+        Intent intent;
+        switch (category){
+            case "directions":
+                intent = new Intent(getApplicationContext(), SubConversationDirections.class);
+                startActivity(intent);
+                return;
+            case "welcome":
+                intent = new Intent(getApplicationContext(), SubConversationWelcomingOthers.class);
+                startActivity(intent);
+                return;
+
+        }
+    }
     public void goToConversationIntroduction(){
         Intent intent = new Intent(getApplicationContext(), SubConversationIntroductionActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToConversationWelcome(){
+        Intent intent = new Intent(getApplicationContext(), SubConversationWelcomingOthers.class);
+        startActivity(intent);
+    }
+
+    public void goToConversationApologies(){
+        Intent intent = new Intent(getApplicationContext(), SubConversationApologiesAndResponses.class);
         startActivity(intent);
     }
 
@@ -232,26 +199,37 @@ public class SubConversationHomeActivity extends AppCompatActivity {
         subConversationHomeArrayList = new ArrayList<>();
         lvsubconversation = findViewById(R.id.lvsubconversation);
 
-        subConversationHomeArrayList.add(new HomeButton("Introducing yourself"));
-        subConversationHomeArrayList.add(new HomeButton("Welcoming others",R.drawable.businessimage));
+        subConversationHomeArrayList.add("Introducing yourself");
+        subConversationHomeArrayList.add("Welcoming others");
+        subConversationHomeArrayList.add("Apologies and Regret");
+        subConversationHomeArrayList.add("Asking and Giving Directions");
        // homeButtonArrayList.add(new HomeButton("Business", R.drawable.businessimage));
 
-        HomeAdapter homeAdapter = new HomeAdapter(this,subConversationHomeArrayList);
+        //HomeAdapter homeAdapter = new HomeAdapter(this,subConversationHomeArrayList);
+
+        ConversationMainAdapter homeAdapter = new ConversationMainAdapter(this,subConversationHomeArrayList);
+
         lvsubconversation.setAdapter(homeAdapter);
 
         lvsubconversation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String me1 = subConversationHomeArrayList.get(position).getNameofActivity();
+                String me1 = subConversationHomeArrayList.get(position);
 
 
                 switch (me1){
                     case "Introducing yourself":
                         goToConversationIntroduction();
                         return;
+                    case "Apologies and Regret":
+                        goToConversationApologies();
+                        return;
                     case "Welcoming others":
-                        goToQuiz();
+                        goToConversationWelcome();
+                        return;
+                    case "Asking and Giving Directions":
+                        goToCategory("directions");
                         return;
                 }
             }
