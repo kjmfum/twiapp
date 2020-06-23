@@ -2,11 +2,15 @@ package com.learnakantwi.twiguides;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,6 +18,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,11 +29,6 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -40,7 +41,12 @@ import java.util.ArrayList;
 
 import static com.learnakantwi.twiguides.DaysOfWeekActivity.daysOfWeeksArray;
 
-public class SubPDaysOfWeekActivity extends AppCompatActivity {
+public class SubPDaysOfWeekActivity extends AppCompatActivity implements  RVDayofWeekAdapter.onClickRecycle{
+
+    RecyclerView foodListView;
+    PlayFromFirebase convertAndPlay;
+    RVDayofWeekAdapter dayofWeekAdapter;
+    ArrayList<DaysOfWeek> recycleArrayList;
 
     ListView daysOfWeekListView;
     EditText daysOfWeekEditText;
@@ -347,6 +353,7 @@ public class SubPDaysOfWeekActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //MenuInflater menuInflater = getMenuInflater();
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
         final MenuItem item = menu.findItem(R.id.menusearch);
@@ -354,21 +361,22 @@ public class SubPDaysOfWeekActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //Toast.makeText(DaysOfWeekActivity.this, query, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(FoodActivity.this, query, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<DaysOfWeek> results = new ArrayList<>();
-                for (DaysOfWeek x: daysOfWeeksArray ){
+                dayofWeekAdapter.getFilter().filter(newText);
+              /*  ArrayList<Food> results = new ArrayList<>();
+                for (Food x: foodArrayList ){
 
-                    if(x.getNameEnglish().toLowerCase().contains(newText.toLowerCase()) || x.getNameTwi().toLowerCase().contains(newText.toLowerCase())){
+                    if(x.getEnglishFood().toLowerCase().contains(newText.toLowerCase()) || x.getTwiFood().toLowerCase().contains(newText.toLowerCase())){
                         results.add(x);
                     }
 
-                    ((DaysOfWeekAdapter)daysOfWeekListView.getAdapter()).update(results);
-                }
+                   // ((FoodAdapter)foodListView.getAdapter()).update(results);
+                }*/
 
 
                 return false;
@@ -421,7 +429,7 @@ public class SubPDaysOfWeekActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub_pdays_of_week);
+        setContentView(R.layout.activity_sub_pfamily_one);
 
         isNetworkAvailable();
 
@@ -429,25 +437,48 @@ public class SubPDaysOfWeekActivity extends AppCompatActivity {
         toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
         toast.show();
 
-        daysOfWeekListView = findViewById(R.id.lvdaysofweek);
-        storageReference= FirebaseStorage.getInstance().getReference();
+        convertAndPlay = new PlayFromFirebase();
 
+        foodListView = findViewById(R.id.familyRecyclerView);
+        storageReference = FirebaseStorage.getInstance().getReference();
 
+        recycleArrayList = new ArrayList<>();
+        recycleArrayList.addAll(daysOfWeeksArray);
 
-        /*daysOfWeeksArray = new ArrayList<>();
+        dayofWeekAdapter = new RVDayofWeekAdapter(this, recycleArrayList, this);
+        foodListView.setAdapter(dayofWeekAdapter);
 
-        daysOfWeeksArray.add(new DaysOfWeek("Monday", "Dwoada"));
-        daysOfWeeksArray.add(new DaysOfWeek("Tuesday", "Benada"));
-        daysOfWeeksArray.add(new DaysOfWeek("Wednesday", "Wukuada"));
-        daysOfWeeksArray.add(new DaysOfWeek("Thursday", "Yawada"));
-        daysOfWeeksArray.add(new DaysOfWeek("Friday", "Fiada"));
-        daysOfWeeksArray.add(new DaysOfWeek("Saturday", "Memeneda"));
-        daysOfWeeksArray.add(new DaysOfWeek("Sunday", "Kwasiada"));
-        // daysOfWeeksArray.add(new DaysOfWeek("Holiday", "Afofida"));*/
-
-
-        myAdapterDaysOfWk = new DaysOfWeekAdapter(this, daysOfWeeksArray);
-        daysOfWeekListView.setAdapter(myAdapterDaysOfWk);
+        foodListView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    @Override
+    public void onMyItemClick(int position, View view) {
+        String b = recycleArrayList.get(position).getNameTwi();
+
+        TextView tvEnglish = view.findViewById(R.id.textViewEnglish);
+        TextView tvTwi = view.findViewById(R.id.textViewTwi);
+
+        ColorStateList oldColor = tvEnglish.getTextColors();
+        // tvTwi.getTextColors();
+
+        tvEnglish.setTextColor(Color.BLACK);
+        tvTwi.setTextColor(Color.BLACK);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("Here1","I'm here");
+                tvEnglish.setTextColor(oldColor);
+                tvTwi.setTextColor(oldColor);
+            }
+        },1500);
+
+
+        b = PlayFromFirebase.viewTextConvert(b);
+
+        String a = recycleArrayList.get(position).getNameEnglish()+" is: "+ recycleArrayList.get(position).getNameTwi();
+
+        //Toast.makeText(this,recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood, Toast.LENGTH_SHORT).show();
+
+        playFromFileOrDownload(b, a);
+    }
 }

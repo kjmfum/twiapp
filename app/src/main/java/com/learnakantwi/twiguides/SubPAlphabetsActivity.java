@@ -2,12 +2,16 @@ package com.learnakantwi.twiguides;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -15,8 +19,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
@@ -24,11 +29,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -44,10 +45,15 @@ import java.util.ArrayList;
 
 import static com.learnakantwi.twiguides.AlphabetsActivity.alphabetArray;
 
-public class SubPAlphabetsActivity extends AppCompatActivity {
+public class SubPAlphabetsActivity extends AppCompatActivity implements RVAlphabetAdapter.onClickRecycle {
 
     AlphabetAdapter twiAlphapetAdapter;
     AdView mAdView;
+
+    RecyclerView foodListView;
+    PlayFromFirebase convertAndPlay;
+    RVAlphabetAdapter alphabetAdapter;
+    ArrayList<Alphabets> recycleArrayList;
 
     MediaPlayer mediaPlayer;
 
@@ -342,31 +348,21 @@ public class SubPAlphabetsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu, menu);
+        //MenuInflater menuInflater = getMenuInflater();
+        getMenuInflater().inflate(R.menu.main_menu, menu);
 
         final MenuItem item = menu.findItem(R.id.menusearch);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //Toast.makeText(AlphabetsActivity.this, query, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(FoodActivity.this, query, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<Alphabets> results = new ArrayList<>();
-                for (Alphabets x: alphabetArray){
-
-                    if(x.getBoth().contains(newText)){
-                        results.add(x);
-                    }
-
-                    ((AlphabetAdapter)myListView.getAdapter()).update(results);
-                }
-
-
+                alphabetAdapter.getFilter().filter(newText);
                 return false;
             }
         });
@@ -489,44 +485,56 @@ public class SubPAlphabetsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub_palphabets);
+        setContentView(R.layout.activity_sub_pfamily_one);
 
         isNetworkAvailable();
 
         toast = Toast.makeText(getApplicationContext(), "" , Toast.LENGTH_SHORT);
 
-        myListView = findViewById(R.id.myList);
+       // myListView = findViewById(R.id.myList);
+        foodListView = findViewById(R.id.familyRecyclerView);
         storageReference = FirebaseStorage.getInstance().getReference();
-        tempArray = new ArrayList<>();
 
-      /*  alphabetArray = new ArrayList<>();
+        recycleArrayList = new ArrayList<>();
+        recycleArrayList.addAll(alphabetArray);
 
-        alphabetArray.add(new Alphabets("Aa" ,"A","a"));
-        alphabetArray.add(new Alphabets("Bb","B","b"));
-        alphabetArray.add(new Alphabets("Dd","D","d"));
-        alphabetArray.add(new Alphabets("Ee","E","e"));
-        alphabetArray.add(new Alphabets("Ɛɛ","Ɛ","ɛ"));
-        alphabetArray.add(new Alphabets("Ff","F","f"));
-        alphabetArray.add(new Alphabets("Gg","G","g"));
-        alphabetArray.add(new Alphabets("Hh","H","h"));
-        alphabetArray.add(new Alphabets("Ii","I","i"));
-        alphabetArray.add(new Alphabets("Kk","K","k"));
-        alphabetArray.add(new Alphabets("Ll","L","l"));
-        alphabetArray.add(new Alphabets("Mm","M","m"));
-        alphabetArray.add(new Alphabets("Nn","N","n"));
-        alphabetArray.add(new Alphabets("Oo","O","o"));
-        alphabetArray.add(new Alphabets("Ɔɔ","Ɔ","ɔ"));
-        alphabetArray.add(new Alphabets("Pp","P","p"));
-        alphabetArray.add(new Alphabets("Rr","R","r"));
-        alphabetArray.add(new Alphabets("Ss","S","s"));
-        alphabetArray.add(new Alphabets("Tt","T","t"));
-        alphabetArray.add(new Alphabets("Uu","U","u"));
-        alphabetArray.add(new Alphabets("Ww","W","w"));
-        alphabetArray.add(new Alphabets("Yy","Y","y"));
-*/
+        alphabetAdapter = new RVAlphabetAdapter(this, recycleArrayList, this);
+        foodListView.setAdapter(alphabetAdapter);
 
-        twiAlphapetAdapter = new AlphabetAdapter(this, alphabetArray);
-        myListView.setAdapter(twiAlphapetAdapter);
+        foodListView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    @Override
+    public void onMyItemClick(int position, View view) {
+        String b = recycleArrayList.get(position).getLower();
+
+        TextView tvUpper = view.findViewById(R.id.tvUpper);
+        TextView tvLower = view.findViewById(R.id.tvLower);
+        TextView tvBoth = view.findViewById(R.id.tvBoth);
+
+        ColorStateList oldColor = tvBoth.getTextColors();
+        // tvTwi.getTextColors();
+
+        tvBoth.setTextColor(Color.BLACK);
+        tvUpper.setTextColor(Color.BLACK);
+        tvLower.setTextColor(Color.BLACK);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("Here1","I'm here");
+                tvLower.setTextColor(oldColor);
+                tvUpper.setTextColor(oldColor);
+                tvBoth.setTextColor(oldColor);
+            }
+        },1500);
+
+
+        b = PlayFromFirebase.viewTextConvert(b);
+
+        String a = recycleArrayList.get(position).getBoth();
+
+        //Toast.makeText(this,recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood, Toast.LENGTH_SHORT).show();
+
+        playFromFileOrDownload(b, a);
+    }
 }

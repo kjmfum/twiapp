@@ -2,11 +2,15 @@ package com.learnakantwi.twiguides;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,6 +18,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,10 +47,16 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 import static com.learnakantwi.twiguides.CommonExpressionsaActivity.commonExpressionsAArrayList;
+import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
 
-public class SubPCommonExpressionsaActivity extends AppCompatActivity {
+public class SubPCommonExpressionsaActivity extends AppCompatActivity implements RVCommonExpressionsAdapter.onClickRecycle{
 
-    ListView commonExpressionaListView;
+    RecyclerView foodListView;
+    PlayFromFirebase convertAndPlay;
+    RVCommonExpressionsAdapter foodAdapter;
+    ArrayList<CommonExpressionsA> recycleArrayList;
+
+
     AdView mAdView;
 
     StorageReference storageReference;
@@ -344,21 +356,22 @@ public class SubPCommonExpressionsaActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getApplicationContext(), query, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(FoodActivity.this, query, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<CommonExpressionsA> results = new ArrayList<>();
-                for (CommonExpressionsA x: commonExpressionsAArrayList ){
+                foodAdapter.getFilter().filter(newText);
+              /*  ArrayList<Food> results = new ArrayList<>();
+                for (Food x: foodArrayList ){
 
-                    if(x.getEnglishCommonExpressionsA().toLowerCase().contains(newText.toLowerCase()) || x.getTwiCommonExpressionsA().toLowerCase().contains(newText.toLowerCase())){
+                    if(x.getEnglishFood().toLowerCase().contains(newText.toLowerCase()) || x.getTwiFood().toLowerCase().contains(newText.toLowerCase())){
                         results.add(x);
                     }
 
-                    ((CommonExpressionsAdapterA)commonExpressionaListView.getAdapter()).update(results);
-                }
+                   // ((FoodAdapter)foodListView.getAdapter()).update(results);
+                }*/
 
 
                 return false;
@@ -454,7 +467,7 @@ public class SubPCommonExpressionsaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub_pcommon_expressionsa);
+        setContentView(R.layout.activity_sub_pfamily_one);
 
 
         isNetworkAvailable();
@@ -462,14 +475,49 @@ public class SubPCommonExpressionsaActivity extends AppCompatActivity {
         toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
         toast.show();
 
-        commonExpressionaListView = findViewById(R.id.commonExpressionsaListView);
-        storageReference= FirebaseStorage.getInstance().getReference();
+        foodListView = findViewById(R.id.familyRecyclerView);
+        storageReference = FirebaseStorage.getInstance().getReference();
 
-        CommonExpressionsAdapterA commonExpressionsAdapterA = new CommonExpressionsAdapterA(this,commonExpressionsAArrayList);
-        commonExpressionaListView.setAdapter(commonExpressionsAdapterA);
+        recycleArrayList = new ArrayList<>();
+        recycleArrayList.addAll(commonExpressionsAArrayList);
+
+        foodAdapter = new RVCommonExpressionsAdapter(this, recycleArrayList, this);
+        foodListView.setAdapter(foodAdapter);
+
+        foodListView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
 
+    @Override
+    public void onMyItemClick(int position, View view) {
+        String b = recycleArrayList.get(position).getTwiCommonExpressionsA();
 
+        TextView tvEnglish = view.findViewById(R.id.textViewEnglish);
+        TextView tvTwi = view.findViewById(R.id.textViewTwi);
+
+        ColorStateList oldColor = tvEnglish.getTextColors();
+        // tvTwi.getTextColors();
+
+        tvEnglish.setTextColor(Color.BLACK);
+        tvTwi.setTextColor(Color.BLACK);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("Here1","I'm here");
+                tvEnglish.setTextColor(oldColor);
+                tvTwi.setTextColor(oldColor);
+            }
+        },1500);
+
+
+        b = PlayFromFirebase.viewTextConvert(b);
+
+        String a = recycleArrayList.get(position).getEnglishCommonExpressionsA()+" is: "+ recycleArrayList.get(position).getTwiCommonExpressionsA();
+
+        //Toast.makeText(this,recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood, Toast.LENGTH_SHORT).show();
+
+        playFromFileOrDownload(b, a);
+
+    }
 }

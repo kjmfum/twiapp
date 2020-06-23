@@ -573,7 +573,7 @@ public class FamilyActivity extends AppCompatActivity {
 
 
 
-        listView = findViewById(R.id.familyListView);
+        listView = findViewById(R.id.familyRecycleView);
         storageReference = FirebaseStorage.getInstance().getReference();
 
 

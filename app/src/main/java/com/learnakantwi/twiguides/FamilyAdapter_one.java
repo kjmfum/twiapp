@@ -1,15 +1,11 @@
 package com.learnakantwi.twiguides;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,13 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RVFamilyAdapter extends RecyclerView.Adapter<RVFamilyAdapter.MyViewHolder> implements Filterable {
+public class FamilyAdapter_one extends RecyclerView.Adapter<FamilyAdapter_one.MyViewHolder> implements Filterable{
+
 
 
     Context context;
+    ArrayList<Family> originalArray , tempArray;
     LayoutInflater inflater;
     onClickRecycle onClickRecycle;
-    private ArrayList<Family> originalArray, tempArray;
     private Filter RecycleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -38,7 +35,7 @@ public class RVFamilyAdapter extends RecyclerView.Adapter<RVFamilyAdapter.MyView
                 //ArrayList<Animals> results = new ArrayList<>();
                 for (Family x : tempArray) {
 
-                    if (x.getTwiFamily().toLowerCase().contains(filterPattern) || x.englishFamily.toLowerCase().contains(filterPattern)) {
+                    if (x.getEnglishFamily().toLowerCase().contains(filterPattern) || x.getEnglishFamily().toLowerCase().contains(filterPattern)) {
                         filteredList.add(x);
                     }
                 }
@@ -60,35 +57,29 @@ public class RVFamilyAdapter extends RecyclerView.Adapter<RVFamilyAdapter.MyView
             notifyDataSetChanged();
         }
     };
+    //TimeAdapter.CustomFilter cf;
 
-
-     RVFamilyAdapter(Context context, ArrayList<Family> originalArray, onClickRecycle onClickRecycle) {
+    public FamilyAdapter_one(Context context, ArrayList<Family> originalArray , onClickRecycle onClickRecycle) {
         this.context = context;
-        this.inflater = LayoutInflater.from(context);
         this.originalArray = originalArray;
-        tempArray = new ArrayList<>(originalArray);
-        //tempArray = new ArrayList<>(originalArray);
+        this.tempArray = new ArrayList<>(originalArray);
+        this.inflater = LayoutInflater.from(context);
         this.onClickRecycle = onClickRecycle;
     }
+    
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       // View view = inflater.inflate(R.layout.rvlayout_home, parent, false);
-        View view = inflater.inflate(R.layout.custom_time, parent, false);
+
+        View view = inflater.inflate(R.layout.custom_time_recycler , parent, false);
         return new MyViewHolder(view, onClickRecycle);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-      /*  holder.textView1.setText(childrenAnimalsArrayList.get(position).englishAnimals);
-        holder.textView2.setText(childrenAnimalsArrayList.get(position).twiAnimals);
-        holder.imageView.setImageResource(childrenAnimalsArrayList.get(position).drawableID);*/
-
-        holder.textView1.setText(originalArray.get(position).getEnglishFamily());
-        holder.textView2.setText(originalArray.get(position).getTwiFamily());
-        //holder.imageView.setImageResource(originalArray.get(position).getImageOfActivity());
-
+            holder.tvEnglish.setText(originalArray.get(position).getEnglishFamily());
+        holder.tvTwi.setText(originalArray.get(position).getTwiFamily());
     }
 
     @Override
@@ -105,37 +96,26 @@ public class RVFamilyAdapter extends RecyclerView.Adapter<RVFamilyAdapter.MyView
         void onMyItemClick(int position, View view);
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView textView2;
-        TextView textView1;
-       // ImageView imageView;
+        TextView tvEnglish;
+        TextView tvTwi;
         onClickRecycle onClickRecycle;
 
-        public MyViewHolder(@NonNull View itemView, onClickRecycle onClickRecycle) {
+        public MyViewHolder(@NonNull View itemView , onClickRecycle onClickRecycle) {
             super(itemView);
 
-            textView1 = itemView.findViewById(R.id.speakEnglishTime);
-           textView2 = itemView.findViewById(R.id.speakTwiTime);
-            //imageView = itemView.findViewById(R.id.imageViewRecycle1);
+            tvEnglish = itemView.findViewById(R.id.textViewEnglish);
+            tvTwi = itemView.findViewById(R.id.textViewTwi);
             this.onClickRecycle = onClickRecycle;
 
-
             itemView.setOnClickListener(this);
-
-           // itemView.setOnLongClickListener();
-
         }
 
         @Override
-        public void onClick(View v) {
-            Animation shake = AnimationUtils.loadAnimation(context, R.anim.children_animation);
-            textView1.setTextColor(Color.GREEN);
-           // textView2.setTextColor(Color.RED);
-           // imageView.startAnimation(shake);
-           onClickRecycle.onMyItemClick(getAdapterPosition(), v);
-
-
+        public void onClick(View view) {
+            onClickRecycle.onMyItemClick(getAdapterPosition(), view);
         }
     }
+
 }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                >
+
+                <TextView
+                    android:id="@+id/subObject"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="6"
+                    android:gravity="center"
+                    android:text="Subject"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/singPlural"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="3rd Person Singular"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/englishPronoun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:paddingLeft="4dp"
+                android:paddingRight="5dp"
+                android:text="Pronoun"
+                android:textSize="25sp"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/twiPronoun"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="5"
+            android:gravity="bottom"
+            android:paddingTop="30dp"
+
+            android:text="Me"
+            android:textSize="25sp"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

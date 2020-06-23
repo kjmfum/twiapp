@@ -259,7 +259,7 @@ public class PlayFromFirebase {
         }
 
 
-        if (b.contains(" ") || b.contains(";") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") || b.contains("?")|| b.contains("...") || b.contains("’") || b.contains("\"") || b.contains("twi:")) {
+        if (b.contains(" ") || b.contains(";") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") || b.contains("?")|| b.contains("...") || b.contains("'") || b.contains("’") || b.contains("\"") || b.contains("twi:")) {
             b = b.replace(" ", "");
             b = b.replace("/", "");
             b= b.replace(",","");
@@ -269,9 +269,12 @@ public class PlayFromFirebase {
             b= b.replace("?","");
             b= b.replace("...","");
             b= b.replace("'","");
+            b= b.replace("’","");
             b= b.replace("\"","");
             b= b.replace("twi:","");
             b= b.replace(";","");
+
+
 
         }
 

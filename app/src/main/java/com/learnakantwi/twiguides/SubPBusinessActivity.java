@@ -2,11 +2,15 @@ package com.learnakantwi.twiguides;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,19 +18,16 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -42,9 +43,14 @@ import java.util.ArrayList;
 
 import static com.learnakantwi.twiguides.BusinessActivity.businessArrayList;
 
-public class SubPBusinessActivity extends AppCompatActivity {
+public class SubPBusinessActivity extends AppCompatActivity  implements  RVBusinessAdapter.onClickRecycle{
 
-    ListView businessListView;
+    RecyclerView foodListView;
+    PlayFromFirebase convertAndPlay;
+    RVBusinessAdapter businessAdapter;
+    ArrayList<Business> recycleArrayList;
+
+
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
@@ -339,6 +345,7 @@ public class SubPBusinessActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //MenuInflater menuInflater = getMenuInflater();
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
         final MenuItem item = menu.findItem(R.id.menusearch);
@@ -346,21 +353,22 @@ public class SubPBusinessActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(SubPBusinessActivity.this, query, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(FoodActivity.this, query, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<Business> results = new ArrayList<>();
-                for (Business x: businessArrayList){
+                businessAdapter.getFilter().filter(newText);
+              /*  ArrayList<Food> results = new ArrayList<>();
+                for (Food x: foodArrayList ){
 
-                    if(x.getEnglishBusiness().toLowerCase().contains(newText.toLowerCase()) || x.getTwiBusiness().toLowerCase().contains(newText.toLowerCase())){
+                    if(x.getEnglishFood().toLowerCase().contains(newText.toLowerCase()) || x.getTwiFood().toLowerCase().contains(newText.toLowerCase())){
                         results.add(x);
                     }
 
-                    ((BusinessAdapter)businessListView.getAdapter()).update(results);
-                }
+                   // ((FoodAdapter)foodListView.getAdapter()).update(results);
+                }*/
 
 
                 return false;
@@ -451,7 +459,7 @@ public class SubPBusinessActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub_pbusiness);
+        setContentView(R.layout.activity_sub_pfamily_one);
 
 
         isNetworkAvailable();
@@ -460,14 +468,48 @@ public class SubPBusinessActivity extends AppCompatActivity {
         toast.show();
 
 
-        businessListView = findViewById(R.id.animalsListView);
-
+        foodListView = findViewById(R.id.familyRecyclerView);
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        BusinessAdapter businessAdapter = new BusinessAdapter (this, businessArrayList);
-        businessListView.setAdapter(businessAdapter);
+        recycleArrayList = new ArrayList<>();
+        recycleArrayList.addAll(businessArrayList);
+
+        businessAdapter = new RVBusinessAdapter(this, recycleArrayList, this);
+        foodListView.setAdapter(businessAdapter);
+
+        foodListView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
 
+    @Override
+    public void onMyItemClick(int position, View view) {
+        String b = recycleArrayList.get(position).getTwiBusiness();
+
+        TextView tvEnglish = view.findViewById(R.id.textViewEnglish);
+        TextView tvTwi = view.findViewById(R.id.textViewTwi);
+
+        ColorStateList oldColor = tvEnglish.getTextColors();
+        // tvTwi.getTextColors();
+
+        tvEnglish.setTextColor(Color.BLACK);
+        tvTwi.setTextColor(Color.BLACK);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("Here1","I'm here");
+                tvEnglish.setTextColor(oldColor);
+                tvTwi.setTextColor(oldColor);
+            }
+        },1500);
+
+
+        b = PlayFromFirebase.viewTextConvert(b);
+
+        String a = recycleArrayList.get(position).getEnglishBusiness()+" is: "+ recycleArrayList.get(position).getTwiBusiness();
+
+        //Toast.makeText(this,recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood, Toast.LENGTH_SHORT).show();
+
+        playFromFileOrDownload(b, a);
+    }
 }

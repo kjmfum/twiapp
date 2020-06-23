@@ -26,7 +26,7 @@ public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.MyViewHo
     LayoutInflater inflater;
     onClickRecycle onClickRecycle;
     private ArrayList<Lessons> originalArray, tempArray;
-    private Filter RecycleFilter = new Filter() {
+    public Filter RecycleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             ArrayList<Lessons> filteredList = new ArrayList<>();
@@ -132,11 +132,6 @@ public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.MyViewHo
            /* textView1.setTextColor(Color.GREEN);
             textView2.setTextColor(Color.RED);*/
           //  imageView.startAnimation(shake);
-
-
-
-
-
             textView1.setTextColor(Color.BLUE);
             textView2.setTextColor(Color.RED);
            // toast.setText(tvTwi.getText().toString());

@@ -43,16 +43,21 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 import static com.learnakantwi.twiguides.FamilyActivity.familyArrayList;
+import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
 
 
-public class SubPFamilyActivity extends AppCompatActivity {
+public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapter_one.onClickRecycle {
 
-    ListView listView;
+    RecyclerView foodListView;
 
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
     AdView mAdView;
+
+    PlayFromFirebase convertAndPlay;
+    FamilyAdapter_one foodAdapter;
+    ArrayList<Family> recycleArrayList;
 
 
     Toast toast;
@@ -344,21 +349,22 @@ public class SubPFamilyActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(SubPFamilyActivity.this, query, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(FoodActivity.this, query, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<Family> results = new ArrayList<>();
-                for (Family x: familyArrayList ){
+                foodAdapter.getFilter().filter(newText);
+              /*  ArrayList<Food> results = new ArrayList<>();
+                for (Food x: foodArrayList ){
 
-                    if(x.getEnglishFamily().toLowerCase().contains(newText.toLowerCase()) || x.getTwiFamily().toLowerCase().contains(newText.toLowerCase())){
+                    if(x.getEnglishFood().toLowerCase().contains(newText.toLowerCase()) || x.getTwiFood().toLowerCase().contains(newText.toLowerCase())){
                         results.add(x);
                     }
 
-                    ((FamilyAdapter)listView.getAdapter()).update(results);
-                }
+                   // ((FoodAdapter)foodListView.getAdapter()).update(results);
+                }*/
 
 
                 return false;
@@ -467,25 +473,40 @@ public class SubPFamilyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub_pfamily);
+        setContentView(R.layout.activity_sub_pfamily_one);
 
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
         isNetworkAvailable();
+        convertAndPlay = new PlayFromFirebase();
 
 
-
-
-
-        listView = findViewById(R.id.subPFamilyListView);
+        foodListView = findViewById(R.id.familyRecyclerView);
         storageReference = FirebaseStorage.getInstance().getReference();
 
+        recycleArrayList = new ArrayList<>();
+        recycleArrayList.addAll(familyArrayList);
 
-        FamilyAdapter familyAdapter = new FamilyAdapter(this, familyArrayList);
-        listView.setAdapter(familyAdapter);
+        foodAdapter = new FamilyAdapter_one(this, recycleArrayList, this);
+        foodListView.setAdapter(foodAdapter);
+
+        foodListView.setLayoutManager(new LinearLayoutManager(this));
 
 
 
+    }
+
+    @Override
+    public void onMyItemClick(int position, View view) {
+        String b = recycleArrayList.get(position).twiFamily;
+
+        b = PlayFromFirebase.viewTextConvert(b);
+
+        String a = recycleArrayList.get(position).englishFamily+" is: "+ recycleArrayList.get(position).getTwiFamily();
+
+        //Toast.makeText(this,recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood, Toast.LENGTH_SHORT).show();
+
+        playFromFileOrDownload(b, a);
     }
 }

@@ -23,12 +23,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,24 +44,27 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
-public class FoodActivity extends AppCompatActivity {
+public class FoodActivity extends AppCompatActivity implements FoodAdapter.onClickRecycle{
 
-    ListView foodListView;
-    static  ArrayList<Food> foodArrayList;
+    public static  ArrayList<Food> foodArrayList;
+    RecyclerView foodListView;
+    ArrayList<Food> recycleArrayList;
 
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
     AdView mAdView;
+    FoodAdapter foodAdapter;
 
 
     int showAdProbability;
     InterstitialAd mInterstitialAd;
     Random random;
+
+    //PlayFromFirebase playFromFirebase;
+    PlayFromFirebase convertAndPlay;
 
 
     Toast toast;
@@ -71,13 +75,7 @@ public class FoodActivity extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null;
     }
-    //toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
-    //toast.setText(a);
-    //        toast.show();
-    //
-      //          case R.id.downloadAudio:
-        //            downloadClick();
-          //          return true;
+
     boolean isRunning =false;
 
     public Runnable runnable = new Runnable() {
@@ -370,15 +368,16 @@ public class FoodActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<Food> results = new ArrayList<>();
+                foodAdapter.getFilter().filter(newText);
+              /*  ArrayList<Food> results = new ArrayList<>();
                 for (Food x: foodArrayList ){
 
                     if(x.getEnglishFood().toLowerCase().contains(newText.toLowerCase()) || x.getTwiFood().toLowerCase().contains(newText.toLowerCase())){
                         results.add(x);
                     }
 
-                    ((FoodAdapter)foodListView.getAdapter()).update(results);
-                }
+                   // ((FoodAdapter)foodListView.getAdapter()).update(results);
+                }*/
 
 
                 return false;
@@ -416,8 +415,18 @@ public class FoodActivity extends AppCompatActivity {
     }
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
-        startActivity(intent);
+
+        if (MainActivity.Subscribed==1){
+            Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+            startActivity(intent);
+        }
+
+
+
     }
     public void goToQuizFood() {
         Intent intent = new Intent(getApplicationContext(), QuizFood.class);
@@ -484,7 +493,9 @@ public class FoodActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_family);
+        setContentView(R.layout.activity_food);
+
+        convertAndPlay = new PlayFromFirebase();
 
         mInterstitialAd = new InterstitialAd(this);
         //mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
@@ -510,11 +521,16 @@ public class FoodActivity extends AppCompatActivity {
         toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
         toast.show();
 
-        foodListView = findViewById(R.id.familyListView);
+        foodListView = findViewById(R.id.foodRecyclerView);
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        FoodAdapter foodAdapter = new FoodAdapter(this, foodArrayList);
+        recycleArrayList = new ArrayList<>();
+        recycleArrayList.addAll(foodArrayList);
+
+        foodAdapter = new FoodAdapter(this, recycleArrayList, this);
         foodListView.setAdapter(foodAdapter);
+
+        foodListView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
@@ -524,6 +540,19 @@ public class FoodActivity extends AppCompatActivity {
             advert1();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onMyItemClick(int position, View view) {
+        String b = recycleArrayList.get(position).twiFood;
+
+        b = PlayFromFirebase.viewTextConvert(b);
+
+        String a = recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood;
+
+        //Toast.makeText(this,recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood, Toast.LENGTH_SHORT).show();
+
+        playFromFileOrDownload(b, a);
     }
 }
 

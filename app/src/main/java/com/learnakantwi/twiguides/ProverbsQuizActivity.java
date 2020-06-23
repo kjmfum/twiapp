@@ -90,6 +90,9 @@ public class ProverbsQuizActivity extends AppCompatActivity {
     TextView counterText;
     Toast toast;
 
+    Handler handler1;
+    Runnable ranable;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //MenuInflater menuInflater = getMenuInflater();
@@ -552,7 +555,7 @@ public class ProverbsQuizActivity extends AppCompatActivity {
             scoreText.setTextColor(Color.WHITE);
 
             if(muteNumber==1){
-                new Handler().postDelayed(new Runnable() {
+               /* new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         if (!(freeze==1)){
@@ -562,20 +565,11 @@ public class ProverbsQuizActivity extends AppCompatActivity {
                         }
 
                     }
-                },6000);
+                },6000);*/
+               handler1.postDelayed(ranable,6000);
             }
             else{
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!(freeze==1)){
-                            generateQuestion();
-                            scoreText.setBackgroundColor(Color.WHITE );
-                            scoreText.setTextColor(Color.GRAY);
-                        }
-
-                    }
-                },700);
+                handler1.postDelayed(ranable,700);
             }
 
 
@@ -588,7 +582,7 @@ public class ProverbsQuizActivity extends AppCompatActivity {
             correctWrong.setTextColor(Color.WHITE);
             toast.setText("Dabi (Wrong)");
             toast.show();
-            new Handler().postDelayed(new Runnable() {
+          /*  new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if (!(freeze==1)){
@@ -600,7 +594,8 @@ public class ProverbsQuizActivity extends AppCompatActivity {
                         correctWrong.setTextColor(Color.GRAY);
                     }
                 }
-            }, 700);
+            }, 700);*/
+          handler1.postDelayed(ranable,700);
         }
 
        // correctWrong.setText(getString(R.string.correctanswers));
@@ -661,6 +656,22 @@ public class ProverbsQuizActivity extends AppCompatActivity {
 
         tvSubscribe = findViewById(R.id.tvSubscribe);
         tvSubscribe.setVisibility(View.INVISIBLE);
+
+        handler1 = new Handler();
+        ranable = new Runnable() {
+            @Override
+            public void run() {
+                if (!(freeze==1)){
+                    generateQuestion();
+                    scoreText.setBackgroundColor(Color.WHITE );
+                    scoreText.setTextColor(Color.GRAY);
+                }
+            }
+        };
+
+
+
+
 
         SharedPreferences subscribe = getSharedPreferences("AdsDecision",MODE_PRIVATE);
         Sub = subscribe.getInt("Sub",0);
@@ -852,9 +863,20 @@ public class ProverbsQuizActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+
+        Log.i("Hi1","Came");
+        if (handler1 !=null){
+            Log.i("Hi1","Came1");
+            handler1.removeCallbacks(ranable);
+        }
+        if (playFromDevice!=null){
+            playFromDevice.stop();
+        }
+
         if (Sub==0){
             advert1();
         }
+
         proverbsQuizQuestionArray.clear();
         super.onDestroy();
     }

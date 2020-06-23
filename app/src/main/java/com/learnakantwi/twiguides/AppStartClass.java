@@ -816,6 +816,8 @@ public class AppStartClass extends Application {
 //FOOD ARRAY LIST
 
         foodArrayList = new ArrayList<>();
+      //  foodArrayList.add(new Food("Rice is a very good meal for everyone to enjoy over and over again you hear me? YEs Rice is a very good meal for everyone to enjoy over and over again you hear me?", "Ɛmo very good meal for everyone to enjoy over and over again you hear me?"));
+
 
         foodArrayList.add(new Food("Rice", "Ɛmo"));
         foodArrayList.add(new Food("Yam", "Bayerɛ"));

@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,6 +52,10 @@ public class SubPProverbsActivity extends AppCompatActivity {
     Toast toast;
     ArrayList<Proverbs> results = new ArrayList<>();
     ArrayList<Proverbs> results1 = new ArrayList<>();
+
+    ProverbsAdapter proverbsAdapter;
+
+    int countProverb=0;
 
 
     private boolean isNetworkAvailable() {
@@ -502,8 +507,12 @@ public class SubPProverbsActivity extends AppCompatActivity {
 
     public void slideshow() {
         proverbsViewFlipper.showNext();
+
         proverbsViewFlipper.startFlipping();
         proverbsViewFlipper.setFlipInterval(5000);
+
+
+
 
         //proverbsViewFlipper.getChildCount();
     }
@@ -511,6 +520,7 @@ public class SubPProverbsActivity extends AppCompatActivity {
     public void slideshow(View view) {
         proverbsViewFlipper.showNext();
         proverbsViewFlipper.startFlipping();
+
         proverbsViewFlipper.setFlipInterval(6000);
         toast.setText("Proverbs change after 6 seconds");
         toast.show();
@@ -533,6 +543,7 @@ public class SubPProverbsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proverbs);
+
 
        // Toast.makeText(this, "Subscribed Customer", Toast.LENGTH_SHORT).show();
 
@@ -611,11 +622,17 @@ public class SubPProverbsActivity extends AppCompatActivity {
 
 
 
-        ProverbsAdapter proverbsAdapter = new ProverbsAdapter(this, proverbsArrayList);
+        proverbsAdapter = new ProverbsAdapter(this, proverbsArrayList);
 
         proverbsViewFlipper.setAdapter(proverbsAdapter);
 
 
+        PlayFromFirebase convertText = new PlayFromFirebase();
+
+        String b = PlayFromFirebase.viewTextConvert(proverbsAdapter.playSound(0));
+        Toast.makeText(this, "Hi "+ b, Toast.LENGTH_SHORT).show();
+
+        playFromFileOrDownload(b,"Hello");
 
 
 

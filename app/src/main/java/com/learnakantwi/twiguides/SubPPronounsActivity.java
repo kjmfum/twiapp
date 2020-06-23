@@ -2,11 +2,15 @@ package com.learnakantwi.twiguides;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,6 +18,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,11 +28,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -42,9 +44,14 @@ import java.util.ArrayList;
 
 import static com.learnakantwi.twiguides.PronounsActivity.pronounsArrayList;
 
-public class SubPPronounsActivity extends AppCompatActivity {
+public class SubPPronounsActivity extends AppCompatActivity implements RVPronounsAdapter.onClickRecycle{
 
     ListView pronounsListView;
+
+    RecyclerView foodListView;
+    PlayFromFirebase convertAndPlay;
+    RVPronounsAdapter pronounsAdapter;
+    ArrayList<Pronouns> recycleArrayList;
 
     String b;
 
@@ -344,28 +351,29 @@ public class SubPPronounsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //MenuInflater menuInflater = getMenuInflater();
-        getMenuInflater().inflate(R.menu.main_alphabet, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
 
         final MenuItem item = menu.findItem(R.id.menusearch);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(SubPPronounsActivity.this, query, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(FoodActivity.this, query, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<Pronouns> results = new ArrayList<>();
-                for (Pronouns x: pronounsArrayList ){
+                pronounsAdapter.getFilter().filter(newText);
+              /*  ArrayList<Food> results = new ArrayList<>();
+                for (Food x: foodArrayList ){
 
-                    if(x.getEnglishPronoun().toLowerCase().contains(newText.toLowerCase()) || x.getTwiPronoun().toLowerCase().contains(newText.toLowerCase())|| x.getSingPlural().toLowerCase().contains(newText.toLowerCase())|| x.getSubObject().toLowerCase().contains(newText.toLowerCase())){
+                    if(x.getEnglishFood().toLowerCase().contains(newText.toLowerCase()) || x.getTwiFood().toLowerCase().contains(newText.toLowerCase())){
                         results.add(x);
                     }
 
-                    ((PronounsAdapter)pronounsListView.getAdapter()).update(results);
-                }
+                   // ((FoodAdapter)foodListView.getAdapter()).update(results);
+                }*/
 
 
                 return false;
@@ -373,6 +381,8 @@ public class SubPPronounsActivity extends AppCompatActivity {
         });
 
         return super.onCreateOptionsMenu(menu);
+
+
     }
 
 
@@ -451,29 +461,63 @@ public class SubPPronounsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub_ppronouns);
+       // setContentView(R.layout.activity_sub_ppronouns);
+        setContentView(R.layout.activity_sub_pfamily_one);
 
 
         isNetworkAvailable();
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
-        pronounsListView = findViewById(R.id.pronounsListView);
+        /*pronounsListView = findViewById(R.id.pronounsListView);
         storageReference = FirebaseStorage.getInstance().getReference();
-       /* pronounsArrayList = new ArrayList<>();
-
-        //1st Person subject
-
-
-
-*/
-
-       // b= pronounsArrayList.get(0).toString();
 
         PronounsAdapter pronounsAdapter = new PronounsAdapter(this, pronounsArrayList);
         pronounsListView.setAdapter(pronounsAdapter);
+*/
+        convertAndPlay = new PlayFromFirebase();
+
+        foodListView = findViewById(R.id.familyRecyclerView);
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+        recycleArrayList = new ArrayList<>();
+        recycleArrayList.addAll(pronounsArrayList);
+
+        pronounsAdapter = new RVPronounsAdapter(this, recycleArrayList, this);
+        foodListView.setAdapter(pronounsAdapter);
+
+        foodListView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
 
+    @Override
+    public void onMyItemClick(int position, View view) {
+        String b = recycleArrayList.get(position).getTwiPronoun();
+
+        TextView tvEnglish = view.findViewById(R.id.englishPronoun);
+        TextView tvTwi = view.findViewById(R.id.twiPronoun);
+
+        ColorStateList oldColor = tvEnglish.getTextColors();
+        // tvTwi.getTextColors();
+
+        tvEnglish.setTextColor(Color.BLACK);
+        tvTwi.setTextColor(Color.BLACK);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("Here1","I'm here");
+                tvEnglish.setTextColor(oldColor);
+                tvTwi.setTextColor(oldColor);
+            }
+        },1500);
+
+        b = PlayFromFirebase.viewTextConvert(b);
+
+        String a = recycleArrayList.get(position).getEnglishPronoun()+" is: "+ recycleArrayList.get(position).getTwiPronoun();
+
+        //Toast.makeText(this,recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood, Toast.LENGTH_SHORT).show();
+
+        playFromFileOrDownload(b, a);
+    }
 }

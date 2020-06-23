@@ -70,6 +70,10 @@ public class ProverbsAdapter extends BaseAdapter implements Filterable {
         return convertView;
     }
 
+    public String playSound(int position){
+       return originalArray.get(position).getTwiProverb();
+    }
+
     @Override
     public Filter getFilter() {
         return null;

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
@@ -15,18 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> implements Filterable{
+public class RVPronounsAdapter extends RecyclerView.Adapter<RVPronounsAdapter.MyViewHolder> implements Filterable{
 
 
 
     Context context;
-    ArrayList<Food> originalArray , tempArray;
+    ArrayList<Pronouns> originalArray , tempArray;
     LayoutInflater inflater;
     onClickRecycle onClickRecycle;
     private Filter RecycleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<Food> filteredList = new ArrayList<>();
+            ArrayList<Pronouns> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
                 //filteredList = originalArray;
@@ -34,9 +33,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 //ArrayList<Animals> results = new ArrayList<>();
-                for (Food x : tempArray) {
+                for (Pronouns x : tempArray) {
 
-                    if (x.getTwiFood().toLowerCase().contains(filterPattern) || x.getEnglishFood().toLowerCase().contains(filterPattern)) {
+                    if (x.getEnglishPronoun().toLowerCase().contains(filterPattern) || x.getTwiPronoun().toLowerCase().contains(filterPattern) || x.getSingPlural().toLowerCase().contains(filterPattern) || x.getSubObject().toLowerCase().contains(filterPattern)) {
                         filteredList.add(x);
                     }
                 }
@@ -60,7 +59,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
     };
     //TimeAdapter.CustomFilter cf;
 
-    public FoodAdapter(Context context, ArrayList<Food> originalArray , onClickRecycle onClickRecycle) {
+    public RVPronounsAdapter(Context context, ArrayList<Pronouns> originalArray , onClickRecycle onClickRecycle) {
         this.context = context;
         this.originalArray = originalArray;
         this.tempArray = new ArrayList<>(originalArray);
@@ -73,14 +72,16 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = inflater.inflate(R.layout.custom_time_recycler , parent, false);
+        View view = inflater.inflate(R.layout.custom_pronouns_one, parent, false);
         return new MyViewHolder(view, onClickRecycle);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            holder.tvEnglish.setText(originalArray.get(position).englishFood);
-        holder.tvTwi.setText(originalArray.get(position).twiFood);
+            holder.tvEnglish.setText(originalArray.get(position).getEnglishPronoun());
+        holder.tvTwi.setText(originalArray.get(position).getTwiPronoun());
+        holder.subObject.setText(originalArray.get(position).getSubObject());
+        holder.singPlural.setText(originalArray.get(position).getSingPlural());
     }
 
     @Override
@@ -101,13 +102,19 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
 
         TextView tvEnglish;
         TextView tvTwi;
+        TextView subObject;
+        TextView singPlural;
+
         onClickRecycle onClickRecycle;
 
         public MyViewHolder(@NonNull View itemView , onClickRecycle onClickRecycle) {
             super(itemView);
 
-            tvEnglish = itemView.findViewById(R.id.textViewEnglish);
-            tvTwi = itemView.findViewById(R.id.textViewTwi);
+            tvEnglish = itemView.findViewById(R.id.englishPronoun);
+            tvTwi = itemView.findViewById(R.id.twiPronoun);
+            subObject = itemView.findViewById(R.id.subObject);
+            singPlural= itemView.findViewById(R.id.singPlural);
+
             this.onClickRecycle = onClickRecycle;
 
             itemView.setOnClickListener(this);

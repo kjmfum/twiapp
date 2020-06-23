@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -11,6 +13,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +25,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -40,16 +46,20 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
+import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
 import static com.learnakantwi.twiguides.TimeActivity.timeArrayList;
 
-public class SubPTimeActivity extends AppCompatActivity {
+public class SubPTimeActivity extends AppCompatActivity implements RVTimeAdapter.onClickRecycle  {
 
 
-
+    RecyclerView foodListView;
+    PlayFromFirebase convertAndPlay;
+    RVTimeAdapter timeAdapter;
+    ArrayList<Time> recycleArrayList;
 
     ListView timeListView;
     TextView textView;
-    TimeAdapter timeAdapter;
+   // TimeAdapter timeAdapter;
 
     StorageReference storageReference;
     MediaPlayer playFromDevice;
@@ -392,21 +402,22 @@ public class SubPTimeActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(SubPTimeActivity.this, query, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(FoodActivity.this, query, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<Time> results = new ArrayList<>();
-                for (Time x: timeArrayList ){
+                timeAdapter.getFilter().filter(newText);
+              /*  ArrayList<Food> results = new ArrayList<>();
+                for (Food x: foodArrayList ){
 
-                    if(x.getEnglishTime().toLowerCase().contains(newText.toLowerCase()) || x.getTwiTime().toLowerCase().contains(newText.toLowerCase())){
+                    if(x.getEnglishFood().toLowerCase().contains(newText.toLowerCase()) || x.getTwiFood().toLowerCase().contains(newText.toLowerCase())){
                         results.add(x);
                     }
 
-                    ((TimeAdapter)timeListView.getAdapter()).update(results);
-                }
+                   // ((FoodAdapter)foodListView.getAdapter()).update(results);
+                }*/
 
 
                 return false;
@@ -457,7 +468,7 @@ public class SubPTimeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub_pfamily);
+        setContentView(R.layout.activity_sub_pfamily_one);
 
         isNetworkAvailable();
 
@@ -470,145 +481,53 @@ public class SubPTimeActivity extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
+        convertAndPlay = new PlayFromFirebase();
 
+        foodListView = findViewById(R.id.familyRecyclerView);
+        storageReference = FirebaseStorage.getInstance().getReference();
 
-        /* timeArrayList.add(new Time(" One second","Anibu baako"));
-        timeArrayList.add(new Time(" Two seconds","Anibu mmienu"));
+        recycleArrayList = new ArrayList<>();
+        recycleArrayList.addAll(timeArrayList);
 
+        timeAdapter = new RVTimeAdapter(this, recycleArrayList, this);
+        foodListView.setAdapter(timeAdapter);
 
-        timeArrayList.add(new Time("Minute (1)","Simma"));
-        timeArrayList.add(new Time("Minute (2)","Miniti"));
-        timeArrayList.add(new Time("One minute","Simma baako"));
-        timeArrayList.add(new Time("Two minutes","Simma mmienu"));
-
-
-
-        timeArrayList.add(new Time("Hour","Dɔnhwere"));
-        timeArrayList.add(new Time("Hours","Nnɔnhwere"));
-        timeArrayList.add(new Time("1 hour","Dɔnhwere baako"));
-        timeArrayList.add(new Time("2 hours","Nnɔnhwere mmienu"));
-
-        timeArrayList.add(new Time("Day","Da"));
-        timeArrayList.add(new Time("Days","Nna"));
-        timeArrayList.add(new Time("One day","Da koro"));
-        timeArrayList.add(new Time("Two days","Nnanu"));
-        timeArrayList.add(new Time("Three days","Nnansa"));
-        timeArrayList.add(new Time("Four days","Nnanan"));
-        timeArrayList.add(new Time("Five days","Nnanum"));
-        timeArrayList.add(new Time("Six days","Nnansia"));
-        timeArrayList.add(new Time("Seven days","Nnanson"));
-
-        timeArrayList.add(new Time("First day","Da a edi kan"));
-        timeArrayList.add(new Time("Second day","Da a ɛtɔ so mmienu"));
-        timeArrayList.add(new Time("Third day","Da a ɛtɔ so mmiɛnsa"));
-
-        timeArrayList.add(new Time("Week (1)","Nnawɔtwe"));
-        timeArrayList.add(new Time("Week (2)","Dapɛn"));
-        timeArrayList.add(new Time("Weeks (1)","Nnawɔtwe"));
-        timeArrayList.add(new Time("Weeks (2)","Adapɛn"));
-        timeArrayList.add(new Time("First week","Nnawɔtwe a edi kan"));
-        timeArrayList.add(new Time("Second week","Nnawɔtwe a ɛtɔ so mmienu"));
-        timeArrayList.add(new Time("Third week","Nnawɔtwe a ɛtɔ so mmiɛnsa"));
-        timeArrayList.add(new Time("Fortnight","Nnawɔtwe mmienu"));
-        timeArrayList.add(new Time("Next week","Nnawɔtwe a edi hɔ"));
-        timeArrayList.add(new Time("Last week","Nnawɔtwe a etwaam"));
-        timeArrayList.add(new Time("Last two weeks","Nnawɔtwe mmienu a etwaam"));
-        timeArrayList.add(new Time("This week","Nnawɔtwe yi"));
-
-        timeArrayList.add(new Time("Month (1)","Ɔsram"));
-        timeArrayList.add(new Time("Month (2)","Bosome"));
-        timeArrayList.add(new Time("Months","Abosome"));
-        timeArrayList.add(new Time("This Month","Bosome yi"));
-        timeArrayList.add(new Time("Last Month","Bosome a etwaam"));
-        timeArrayList.add(new Time("First Month (2)","Bosome a edi kan"));
-        timeArrayList.add(new Time("Second Month (2)","Bosome a ɛtɔ so mmienu"));
-
-        timeArrayList.add(new Time("Year","Afe"));
-        timeArrayList.add(new Time("Years","Mfe"));
-        timeArrayList.add(new Time("This year","Afe yi"));
-        timeArrayList.add(new Time("Last year","Afe a etwaam"));
-        timeArrayList.add(new Time("A year by this time","Afe sesɛɛ"));
-        timeArrayList.add(new Time("Next year (1)","Afedan"));
-        timeArrayList.add(new Time("Next year (2)","Afe a yebesi mu"));
-
-
-        timeArrayList.add(new Time("Today","Nnɛ"));
-        timeArrayList.add(new Time("Yesterday","Ɛnnora"));
-        timeArrayList.add(new Time("Tomorrow","Ɔkyena"));
-
-        timeArrayList.add(new Time("When","Bere bɛn"));
-        timeArrayList.add(new Time("What is the time?","Abɔ sɛn?"));
-        timeArrayList.add(new Time("What time is it?","Abɔ sɛn?"));
+        foodListView.setLayoutManager(new LinearLayoutManager(this));
 
 
 
 
 
+    }
 
-        timeArrayList.add(new Time("Morning","Anɔpa"));
-        timeArrayList.add(new Time("This morning","Anɔpa yi"));
+    @Override
+    public void onMyItemClick(int position, View view) {
+        String b = recycleArrayList.get(position).getTwiTime();
 
-        timeArrayList.add(new Time("Afternoon","Awia"));
-        timeArrayList.add(new Time("This afternoon","Awia yi"));
+        TextView tvEnglish = view.findViewById(R.id.textViewEnglish);
+        TextView tvTwi = view.findViewById(R.id.textViewTwi);
 
-        timeArrayList.add(new Time("Evening","Anwummere"));
-        timeArrayList.add(new Time("This evening","Anwummere yi"));
+        ColorStateList oldColor = tvEnglish.getTextColors();
+        // tvTwi.getTextColors();
 
-        timeArrayList.add(new Time("Night","Anadwo"));
-        timeArrayList.add(new Time("This night","Anadwo yi"));
-
-        timeArrayList.add(new Time("Midnight","Dasuom"));
-
-        timeArrayList.add(new Time("Dawn","Anɔpatutu"));
-
-
-        timeArrayList.add(new Time("1 am","Anɔpa Dɔnkoro"));
-        timeArrayList.add(new Time("1:01","Dɔnkoro apa ho simma baako"));
-        timeArrayList.add(new Time("1:05","Dɔnkoro apa ho simma num"));
-        timeArrayList.add(new Time("1:15","Dɔnkoro apa ho simma dunum"));
-
-
-
-        timeArrayList.add(new Time("2 am","Anɔpa Nnɔnmmienu"));
-        timeArrayList.add(new Time("2:30 (1)","Nnɔnmmienu ne fa"));
-        timeArrayList.add(new Time("2:30 (2)","Nnɔnmmienu apa ho simma aduasa"));
+        tvEnglish.setTextColor(Color.BLACK);
+        tvTwi.setTextColor(Color.BLACK);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("Here1","I'm here");
+                tvEnglish.setTextColor(oldColor);
+                tvTwi.setTextColor(oldColor);
+            }
+        },1500);
 
 
-        timeArrayList.add(new Time("3 am","Anɔpa Nnɔnmmiɛnsa "));
+        b = PlayFromFirebase.viewTextConvert(b);
 
-        timeArrayList.add(new Time("4 am","Anɔpa Nnɔnnan"));
-        timeArrayList.add(new Time("5 am","Anɔpa Nnɔnnum"));
-        timeArrayList.add(new Time("6 am","Anɔpa Nnɔnsia"));
-        timeArrayList.add(new Time("7 am","Anɔpa Nnɔnson"));
-        timeArrayList.add(new Time("8 am","Anɔpa Nnɔnwɔtwe"));
-        timeArrayList.add(new Time("9 am","Anɔpa Nnɔnkron"));
-        timeArrayList.add(new Time("10 am","Anɔpa Nnɔndu"));
-        timeArrayList.add(new Time("11 am","Anɔpa Nnɔndubaako"));
-        timeArrayList.add(new Time("12 am","Nnɔndummienu"));
-        timeArrayList.add(new Time("Noon (1)","Nnɔndummienu"));
-        timeArrayList.add(new Time("Noon (2)","Owigyinae"));
-        timeArrayList.add(new Time("1 pm","Awia Dɔnkoro"));
-        timeArrayList.add(new Time("2 pm","Awia Nnɔnmmienu"));
-        timeArrayList.add(new Time("3 pm","Awia Nnɔnmmiɛnsa"));
-        timeArrayList.add(new Time("4 pm","Anwummere Nnɔnnan"));
-        timeArrayList.add(new Time("5 pm","Anwummere Nnɔnnum"));
-        timeArrayList.add(new Time("6 pm","Anwummere Nnɔnsia"));
-        timeArrayList.add(new Time("7 pm","Anwummere Nnɔnson"));
-        timeArrayList.add(new Time("8 pm","Anadwo Nnɔnwɔtwe"));
-        timeArrayList.add(new Time("9 pm","Anadwo Nnɔnkron"));
-        timeArrayList.add(new Time("10 pm","Anadwo Nnɔndu"));
-        timeArrayList.add(new Time("11 pm","Anadwo Nnɔndubaako"));
-        timeArrayList.add(new Time("12 pm (1)","Anadwo dummienu"));
-        timeArrayList.add(new Time("12 pm (2)","Dasuom"));*/
+        String a = recycleArrayList.get(position).getEnglishTime()+" is: "+ recycleArrayList.get(position).getTwiTime();
 
+        //Toast.makeText(this,recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood, Toast.LENGTH_SHORT).show();
 
-        timeAdapter = new TimeAdapter(this,timeArrayList);
-
-        timeListView.setAdapter(timeAdapter);
-
-
-
-
-
+        playFromFileOrDownload(b, a);
     }
 }

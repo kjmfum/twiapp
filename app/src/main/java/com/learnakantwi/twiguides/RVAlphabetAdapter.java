@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
@@ -15,18 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> implements Filterable{
+public class RVAlphabetAdapter extends RecyclerView.Adapter<RVAlphabetAdapter.MyViewHolder> implements Filterable{
 
 
 
     Context context;
-    ArrayList<Food> originalArray , tempArray;
+    ArrayList<Alphabets> originalArray , tempArray;
     LayoutInflater inflater;
     onClickRecycle onClickRecycle;
     private Filter RecycleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<Food> filteredList = new ArrayList<>();
+            ArrayList<Alphabets> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
                 //filteredList = originalArray;
@@ -34,9 +33,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 //ArrayList<Animals> results = new ArrayList<>();
-                for (Food x : tempArray) {
+                for (Alphabets x : tempArray) {
 
-                    if (x.getTwiFood().toLowerCase().contains(filterPattern) || x.getEnglishFood().toLowerCase().contains(filterPattern)) {
+                    if (x.getBoth().contains(filterPattern)) {
                         filteredList.add(x);
                     }
                 }
@@ -60,7 +59,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
     };
     //TimeAdapter.CustomFilter cf;
 
-    public FoodAdapter(Context context, ArrayList<Food> originalArray , onClickRecycle onClickRecycle) {
+    public RVAlphabetAdapter(Context context, ArrayList<Alphabets> originalArray , onClickRecycle onClickRecycle) {
         this.context = context;
         this.originalArray = originalArray;
         this.tempArray = new ArrayList<>(originalArray);
@@ -73,14 +72,15 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = inflater.inflate(R.layout.custom_time_recycler , parent, false);
+        View view = inflater.inflate(R.layout.custom_alphabet_one , parent, false);
         return new MyViewHolder(view, onClickRecycle);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            holder.tvEnglish.setText(originalArray.get(position).englishFood);
-        holder.tvTwi.setText(originalArray.get(position).twiFood);
+            holder.tvBoth.setText(originalArray.get(position).getBoth());
+        holder.tvUpper.setText(originalArray.get(position).getUpper());
+        holder.tvLower.setText(originalArray.get(position).getLower());
     }
 
     @Override
@@ -99,15 +99,17 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView tvEnglish;
-        TextView tvTwi;
+        TextView tvBoth;
+        TextView tvUpper;
+        TextView tvLower;
         onClickRecycle onClickRecycle;
 
         public MyViewHolder(@NonNull View itemView , onClickRecycle onClickRecycle) {
             super(itemView);
 
-            tvEnglish = itemView.findViewById(R.id.textViewEnglish);
-            tvTwi = itemView.findViewById(R.id.textViewTwi);
+            tvBoth = itemView.findViewById(R.id.tvBoth);
+            tvUpper = itemView.findViewById(R.id.tvUpper);
+            tvLower = itemView.findViewById(R.id.tvLower);
             this.onClickRecycle = onClickRecycle;
 
             itemView.setOnClickListener(this);

@@ -2,11 +2,15 @@ package com.learnakantwi.twiguides;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,20 +18,16 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -43,9 +43,12 @@ import java.util.ArrayList;
 
 import static com.learnakantwi.twiguides.MonthsActivity.monthsArrayList;
 
-public class SubPMonthsActivity extends AppCompatActivity {
+public class SubPMonthsActivity extends AppCompatActivity implements RVMonthsAdapter.onClickRecycle {
 
-    ListView monthsListView;
+    RecyclerView foodListView;
+    PlayFromFirebase convertAndPlay;
+    RVMonthsAdapter monthsAdapter;
+    ArrayList<Months> recycleArrayList;
 
     StorageReference storageReference;
     MediaPlayer playFromDevice;
@@ -339,33 +342,30 @@ public class SubPMonthsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu, menu);
-
-
+        //MenuInflater menuInflater = getMenuInflater();
+        getMenuInflater().inflate(R.menu.main_menu, menu);
 
         final MenuItem item = menu.findItem(R.id.menusearch);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getApplicationContext(), query, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(FoodActivity.this, query, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<Months> results = new ArrayList<>();
+                monthsAdapter.getFilter().filter(newText);
+              /*  ArrayList<Food> results = new ArrayList<>();
+                for (Food x: foodArrayList ){
 
-                for (Months x: monthsArrayList){
-
-
-                    if(x.getEnglishMonths().toLowerCase().contains(newText.toLowerCase()) || x.getTwiMonths().contains(newText)){
+                    if(x.getEnglishFood().toLowerCase().contains(newText.toLowerCase()) || x.getTwiFood().toLowerCase().contains(newText.toLowerCase())){
                         results.add(x);
                     }
 
-                    ((MonthsAdapter)monthsListView.getAdapter()).update(results);
-                }
+                   // ((FoodAdapter)foodListView.getAdapter()).update(results);
+                }*/
 
 
                 return false;
@@ -460,7 +460,7 @@ public class SubPMonthsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub_pmonths);
+        setContentView(R.layout.activity_sub_pfamily_one);
 
 
 
@@ -468,13 +468,52 @@ public class SubPMonthsActivity extends AppCompatActivity {
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
-        monthsListView = findViewById(R.id.monthsListView);
+
+        convertAndPlay = new PlayFromFirebase();
+
+        foodListView = findViewById(R.id.familyRecyclerView);
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        MonthsAdapter monthsAdapter = new MonthsAdapter(this, monthsArrayList);
-        monthsListView.setAdapter(monthsAdapter);
+        recycleArrayList = new ArrayList<>();
+        recycleArrayList.addAll(monthsArrayList);
+
+        monthsAdapter = new RVMonthsAdapter(this, recycleArrayList, this);
+        foodListView.setAdapter(monthsAdapter);
+
+        foodListView.setLayoutManager(new LinearLayoutManager(this));
 
 
+    }
+
+    @Override
+    public void onMyItemClick(int position, View view) {
+        String b = recycleArrayList.get(position).getTwiMonths();
+
+        TextView tvEnglish = view.findViewById(R.id.textViewEnglish);
+        TextView tvTwi = view.findViewById(R.id.textViewTwi);
+
+        ColorStateList oldColor = tvEnglish.getTextColors();
+        // tvTwi.getTextColors();
+
+        tvEnglish.setTextColor(Color.BLACK);
+        tvTwi.setTextColor(Color.BLACK);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("Here1","I'm here");
+                tvEnglish.setTextColor(oldColor);
+                tvTwi.setTextColor(oldColor);
+            }
+        },1500);
+
+
+        b = PlayFromFirebase.viewTextConvert(b);
+
+        String a = recycleArrayList.get(position).getEnglishMonths()+" is: "+ recycleArrayList.get(position).getTwiMonths();
+
+        //Toast.makeText(this,recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood, Toast.LENGTH_SHORT).show();
+
+        playFromFileOrDownload(b, a);
     }
 }
 

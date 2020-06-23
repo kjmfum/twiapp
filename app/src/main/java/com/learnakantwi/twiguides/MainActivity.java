@@ -392,28 +392,30 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         SharedPreferences.Editor editor = sharedPreferencesAds.edit();
         editor.putInt("Ads",1);
         editor.putInt("Sub",5);  // not subscribed
-       // editor.putInt("Sub",1);  //subscribed
-        editor.putInt("Lifetime",5); //not subscribed
+        //editor.putInt("Sub",1);  //subscribed
+        //editor.putInt("Lifetime",5); //not subscribed
        // editor.putInt("Lifetime",1); //subscribed
         editor.apply();
 
         Lifetime = sharedPreferencesAds.getInt("Lifetime",5); //runtime
         Subscribed = sharedPreferencesAds.getInt("Sub", 5);
        // Lifetime = 1;  //Subscribed
-        //Lifetime = 5;
+       // Lifetime = 5;
 
         //Toast.makeText(this, "My: "+ Lifetime, Toast.LENGTH_SHORT).show();
 
         toast = Toast.makeText(this, "", Toast.LENGTH_LONG);
 
        // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-        //Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
+       // Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
         //Intent homeIntent = new Intent(getApplicationContext(), QuizTimedAll.class);
         //Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
         //startActivity(homeIntent);
 
 
-    new Handler().postDelayed(new Runnable() {
+        ////////
+
+   new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (Lifetime==1){
@@ -455,11 +457,11 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
       // Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
        // Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
         //startActivity(homeIntent);
-        super.onResume();
+        //super.onResume();
 
         /////////////
 
-   new Handler().postDelayed(new Runnable() {
+  new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 

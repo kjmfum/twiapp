@@ -2,11 +2,15 @@ package com.learnakantwi.twiguides;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,6 +18,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,10 +47,14 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 import static com.learnakantwi.twiguides.ColoursActivity.coloursArrayList;
+import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
 
-public class SubPColoursActivity extends AppCompatActivity {
+public class SubPColoursActivity extends AppCompatActivity implements RVColoursAdapter.onClickRecycle {
 
-    ListView coloursListView;
+    RecyclerView foodListView;
+    PlayFromFirebase convertAndPlay;
+    RVColoursAdapter foodAdapter;
+    ArrayList<Colours> recycleArrayList;
 
     StorageReference storageReference;
     MediaPlayer playFromDevice;
@@ -352,21 +362,22 @@ public class SubPColoursActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getApplicationContext(), query, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(FoodActivity.this, query, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<Colours> results = new ArrayList<>();
-                for (Colours x: coloursArrayList ){
+                foodAdapter.getFilter().filter(newText);
+              /*  ArrayList<Food> results = new ArrayList<>();
+                for (Food x: foodArrayList ){
 
-                    if(x.getEnglishColours().toLowerCase().contains(newText.toLowerCase()) || x.getTwiColours().toLowerCase().contains(newText.toLowerCase())){
+                    if(x.getEnglishFood().toLowerCase().contains(newText.toLowerCase()) || x.getTwiFood().toLowerCase().contains(newText.toLowerCase())){
                         results.add(x);
                     }
 
-                    ((ColoursAdapter)coloursListView.getAdapter()).update(results);
-                }
+                   // ((FoodAdapter)foodListView.getAdapter()).update(results);
+                }*/
 
 
                 return false;
@@ -465,7 +476,7 @@ public class SubPColoursActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub_pcolours);
+        setContentView(R.layout.activity_sub_pfamily_one);
 
         isNetworkAvailable();
 
@@ -474,15 +485,51 @@ public class SubPColoursActivity extends AppCompatActivity {
         toast.show();
 
 
-        coloursListView = findViewById(R.id.coloursListView);
-        storageReference= FirebaseStorage.getInstance().getReference();
+        convertAndPlay = new PlayFromFirebase();
 
+        foodListView = findViewById(R.id.familyRecyclerView);
+        storageReference = FirebaseStorage.getInstance().getReference();
 
-        ColoursAdapter coloursAdapter = new ColoursAdapter(this,coloursArrayList);
-        coloursListView.setAdapter(coloursAdapter);
+        recycleArrayList = new ArrayList<>();
+        recycleArrayList.addAll(coloursArrayList);
+
+        foodAdapter = new RVColoursAdapter(this, recycleArrayList, this);
+        foodListView.setAdapter(foodAdapter);
+
+        foodListView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
 
+    @Override
+    public void onMyItemClick(int position, View view) {
 
+        String b = recycleArrayList.get(position).getTwiColours();
+
+        TextView tvEnglish = view.findViewById(R.id.textViewEnglish);
+        TextView tvTwi = view.findViewById(R.id.textViewTwi);
+
+        ColorStateList oldColor = tvEnglish.getTextColors();
+        // tvTwi.getTextColors();
+
+        tvEnglish.setTextColor(Color.BLACK);
+        tvTwi.setTextColor(Color.BLACK);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("Here1","I'm here");
+                tvEnglish.setTextColor(oldColor);
+                tvTwi.setTextColor(oldColor);
+            }
+        },1500);
+
+
+        b = PlayFromFirebase.viewTextConvert(b);
+
+        String a = recycleArrayList.get(position).getEnglishColours()+" is: "+ recycleArrayList.get(position).getTwiColours();
+
+        //Toast.makeText(this,recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood, Toast.LENGTH_SHORT).show();
+
+        playFromFileOrDownload(b, a);
+    }
 }

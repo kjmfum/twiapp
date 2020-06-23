@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:orientation="horizontal"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+    <TextView
+        android:id="@+id/tvBoth"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_weight="6"
+        android:gravity="center"
+        android:text="HELLO THERE"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        />
+
+    <LinearLayout
+
+        android:id="@+id/LinearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:orientation="vertical"
+        >
+
+
+        <TextView
+            android:id="@+id/tvUpper"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="TEXT2"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tvLower"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="TEXT3"
+            android:textSize="20sp"/>
+
+        />
+
+
+    </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
