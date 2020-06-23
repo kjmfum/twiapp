@@ -457,7 +457,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
       // Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
        // Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
         //startActivity(homeIntent);
-        //super.onResume();
+        super.onResume();
 
         /////////////
 
