@@ -484,7 +484,7 @@ public class SubPProverbsHome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quizhome);
+        setContentView(R.layout.activity_quizhome_sub);
 
         ImageView topImage = findViewById(R.id.homeAdvertButton);
         topImage.setImageResource(R.drawable.proverbsimage);

@@ -743,6 +743,12 @@ public class ChildrenHome extends AppCompatActivity {
         }
     }
 
+    public void goToSubscriptionPage (View v){
+        // Toast.makeText(this, String.valueOf(subscriptionState), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), InAppActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

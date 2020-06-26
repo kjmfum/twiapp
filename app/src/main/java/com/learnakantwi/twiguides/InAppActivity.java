@@ -211,7 +211,7 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
                         SharedPreferences.Editor editor = sharedPreferencesAds.edit();
                         editor.putInt("Ads",0);
                         editor.putInt("Sub",1);
-
+                        editor.apply();
                         toast.setText("Acknowledged");
                         toast.show();
 

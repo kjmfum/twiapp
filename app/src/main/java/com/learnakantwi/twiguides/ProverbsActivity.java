@@ -685,40 +685,17 @@ public class ProverbsActivity extends AppCompatActivity {
             System.out.println("Error Null");
         }
 
+        //ca-app-pub-7384642419407303/9880404420
+        //ca-app-pub-3940256099942544/1033173712 test
+
         random = new Random();
         showAdProbability = random.nextInt(10);
 
-       // advertDialog();
 
 
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-
-        //ca-app-pub-7384642419407303/9880404420
-        //ca-app-pub-3940256099942544/1033173712 test
-
-
-        storageReference = FirebaseStorage.getInstance().getReference();
-        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_LONG);
-
-
-        toast = Toast.makeText(getApplicationContext(), "Tap Twi to Listen", Toast.LENGTH_LONG);
-        toast.show();
-
-       // toast.setText(Integer.toString(showAdProbability));
-        //toast.show();
-
-      /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-*/
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -728,6 +705,16 @@ public class ProverbsActivity extends AppCompatActivity {
         mAdView1 = findViewById(R.id.adView1);
         AdRequest adRequest1 = new AdRequest.Builder().build();
         mAdView1.loadAd(adRequest1);
+
+
+
+        storageReference = FirebaseStorage.getInstance().getReference();
+        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_LONG);
+
+
+        toast = Toast.makeText(getApplicationContext(), "Tap Twi to Listen", Toast.LENGTH_LONG);
+        toast.show();
+
 
 
         proverbsViewFlipper = findViewById(R.id.proverbsAdapterViewFlipper);

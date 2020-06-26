@@ -6,6 +6,27 @@
     android:layout_height="match_parent">
 
 
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorGreen"
+        android:gravity="center"
+        android:onClick="goToSubscriptionPage"
+        android:text="@string/purchase_or_subscribe_banner"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@id/Horguideline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/Horguideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
     <ImageView
         android:id="@+id/homeAdvertButton"
         android:layout_width="0dp"
@@ -15,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="@+id/guideline21"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="@id/guideline20"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/Horguideline5"
         app:srcCompat="@drawable/quizimage" />
 
     <ListView
@@ -72,19 +93,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/homeListView" />
 
-   <!-- <com.google.android.gms.ads.AdView
-        android:id="@+id/adView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        app:adSize="SMART_BANNER"
-        test adunit=  ca-app-pub-3940256099942544/6300978111
-        app:adUnitId="ca-app-pub-7384642419407303/7840050122"
-        app:layout_constraintBottom_toBottomOf="@id/guidelinehor10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" /> -->
+    <!-- <com.google.android.gms.ads.AdView
+         android:id="@+id/adView1"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_centerHorizontal="true"
+         app:adSize="SMART_BANNER"
+         test adunit=  ca-app-pub-3940256099942544/6300978111
+         app:adUnitId="ca-app-pub-7384642419407303/7840050122"
+         app:layout_constraintBottom_toBottomOf="@id/guidelinehor10"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" /> -->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline20"
@@ -117,10 +138,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/homeListView">
-
     </com.google.android.gms.ads.AdView>
-
     -->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

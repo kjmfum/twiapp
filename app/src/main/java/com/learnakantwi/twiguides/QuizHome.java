@@ -659,6 +659,12 @@ public class QuizHome extends AppCompatActivity {
     }*/
 //In your case, you do not need the LinearLayout and ImageView at all. Just add android:drawableLeft="@drawable/up_count_big" to your TextView.
 
+    public void goToSubscriptionPage (View v){
+        // Toast.makeText(this, String.valueOf(subscriptionState), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), InAppActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

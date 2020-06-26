@@ -192,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                             editor.apply();
                                                             Lifetime = sharedPreferencesAds.getInt("Lifetime", 5);
                                                            Subscribed = sharedPreferencesAds.getInt("Sub", 5);
+                                                          // addProverbs();
                                                             Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
                                                            //Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                                                             //Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
@@ -291,6 +292,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                                             editor.putInt("Sub", 1);
                                                                             editor.apply();
                                                                             Subscribed = sharedPreferencesAds.getInt("Sub", 5);
+                                                                            //addProverbs();
 
                                                                             Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
                                                                             startActivity(homeIntent);
@@ -383,24 +385,27 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     }
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Toast.makeText(this, "Before add: "+ proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
 
         sharedPreferencesAds = getSharedPreferences("AdsDecision",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferencesAds.edit();
         editor.putInt("Ads",1);
         editor.putInt("Sub",5);  // not subscribed
         //editor.putInt("Sub",1);  //subscribed
-        //editor.putInt("Lifetime",5); //not subscribed
+       // editor.putInt("Lifetime",5); //not subscribed
        // editor.putInt("Lifetime",1); //subscribed
         editor.apply();
 
         Lifetime = sharedPreferencesAds.getInt("Lifetime",5); //runtime
         Subscribed = sharedPreferencesAds.getInt("Sub", 5);
-       // Lifetime = 1;  //Subscribed
-       // Lifetime = 5;
+      // Lifetime = 1;  //Subscribed
+      //  Lifetime = 5;
 
         //Toast.makeText(this, "My: "+ Lifetime, Toast.LENGTH_SHORT).show();
 
@@ -452,11 +457,11 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
    @Override
     protected void onResume() {
 
-    //Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+   // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
    // Intent homeIntent = new Intent(getApplicationContext(), QuizTimedAll.class);
       // Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
        // Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
-        //startActivity(homeIntent);
+      //  startActivity(homeIntent);
         super.onResume();
 
         /////////////
@@ -472,6 +477,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                     editor.putInt("Ads",0);
                     editor.apply();
                     Subscribed = sharedPreferencesAds.getInt("Sub", 5);
+                    //addProverbs();
                     //Toast.makeText(MainActivity.this, "Me1 Only ", Toast.LENGTH_SHORT).show();
                     Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
                    // Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
@@ -483,54 +489,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
             }
         }, SPLASH_TIME_OUT);
 
-       if(MainActivity.Lifetime ==1 || MainActivity.Subscribed == 1){
-           proverbsArrayList.add(new Proverbs("Subscribed Baabi a ɔsono bɛfa biara yɛ kwan","Where ever the elephant passes is a way","A powerful person can make a way where there seems to be no way"));
 
-
-           proverbsArrayList.add(new Proverbs("Ɛba a, ɛka oni", "If it comes it affects mother", "If trouble comes it affects your closest relatives"));
-           //  proverbsArrayList.add(new Proverbs("Ɛreba a, mɛbɔ ho ban, ne ɛtoto a, mɛsane, wɔn mu hena na wowɔ n'afa? Mewɔ ɛreba a, mɛbɔ ano ban afa.","hello","YEs"));
-           proverbsArrayList.add(new Proverbs("Yɛbaa mmebu a, anka yɛso nkuma", "If we had come to fell proverbs then we would be carrying axes", "We did not come to play. We mean business"));
-           proverbsArrayList.add(new Proverbs("Bra bɛhwɛ bi nkyerɛ sɛ behunu sen me","Come and see some does not mean that come and see more than me","If you are offered something, you shouldn't take more than your fair share or more than the one who offered it to you"));
-           proverbsArrayList.add(new Proverbs("Bra bɛhwɛ ne deɛ wahunu","Come and see is what you have seen","You can only talk about what you have seen or experienced"));
-           proverbsArrayList.add(new Proverbs("Aba a ɛtɔ nyinaa na efifi a, anka obi rennya dua ase kwan","If all seeds that fall grow, then there will be no way to pass under trees", "Not everyone or every endeavour will succeed. That will allow room for others to succeed"));
-           //proverbsArrayList.add(new Proverbs("Wo ba koro wu a, na wo kosua korɔ abɔ","a","b"));
-           proverbsArrayList.add(new Proverbs("Ɔba nsɛ oni a ɔsɛ ɔse","If a baby or child does not resemble its mother then it resembles its father","Traits that people exhibit are picked up from those closest to you especially your relatives"));
-           proverbsArrayList.add(new Proverbs("Ɔba nsu a, yɛma no nom","If a baby does not cry we let it drink","You don't have to wait for someone to cry or toil for something that you know he needs before giving it"));
-           proverbsArrayList.add(new Proverbs("Ɔbaakofoɔ nkyere bɔdamfo","One person does not arrest a mad person","We have to work together"));
-           // proverbsArrayList.add(new Proverbs("","",""));
-
-           proverbsArrayList.add(new Proverbs("Ɔbaa na ɔwo ɔbarima","It is a woman who gives birth to a man","A seemingly weak person can help a strong person to succeed"));
-           proverbsArrayList.add(new Proverbs("Ɔbaa ne ne kunu asɛm, obi nnim mu","No one knows the issues between a woman and her husband","Intimacy is required to know underlying issues. Marriage issues are best known to the couples only. Don't interfere in marital affairs of others"));
-           proverbsArrayList.add(new Proverbs("Ɔbaakofoɔ di awu a, ɔsoa ne funu","If one person kills, he carries the corpse","If you plot and commit a sin alone, you will suffer the consequence alone"));
-           proverbsArrayList.add(new Proverbs("Mmaapɛ mu wɔ ade a, anka ɔpapo da apakan mu","If there was something to be gained from being a womanizer the he-goat would ride in a palanquin","Look at womanizers and learn that their lifestyle do not make them chiefs. You will not gain profit by being a womanizer"));
-           proverbsArrayList.add(new Proverbs("Ɔbaatan na onim nea ne ba bedi","A mother knows what her child will eat","Someone who cares for your physical needs even before you ask can be considered your mother"));
-           proverbsArrayList.add(new Proverbs("Abaa a yɛde bɔ efie aboa no, yɛmfa mmɔ wuram aboa","The stick that is used to hit the domestic animal is not the same stick that is used to hit a wild animal","Friends should be treated differently from strangers (even if they all deserve to be punished)"));
-           proverbsArrayList.add(new Proverbs("Ɔbaa kɔ adware na ɔmma ntɛm a, na ɔresiesie ne ho","If a woman goes to the bathroom and she delays, she is tidying herself up","If someone or something is delaying maybe there is a good reason. Be patient when expecting good things. There is an underlying reason for each cause"));
-           proverbsArrayList.add(new Proverbs("Baabi dehyeɛ kɔsom a, wɔfrɛ no afenaa","When a royal goes to another place to serve others, she is called a slave","You can be regarded with great respect within your community or family but viewed as of little value by those of another community"));
-           proverbsArrayList.add(new Proverbs("Baabiara nni hɔ a wotena we atadwe a, ɛnyɛ dɛ","There is no place that if you sit and chew tiger nuts, the tiger nuts will become bitter","A good thing is good, no matter where it is located"));
-           proverbsArrayList.add(new Proverbs("Sɛ ababaa wu na yɛde aberewa di n'adeɛ a, na ayie no na yɛatu ahyɛ da","If a young lady dies and we make an old lady inherit her property then it is the funeral that we are postponing to another day","If you replace a good thing with a bad thing then you will have to replace it again very soon"));
-           proverbsArrayList.add(new Proverbs("Ɔbaa na onim ne kunu yam kɔm","A woman knows how hungry her husband is","Those closest to you are those who know what you are going through"));
-           proverbsArrayList.add(new Proverbs("Sɛ bafan nnim hwee mpo a, onim nsam bɔ","If a cripple knows nothing at all, he can clap his hands","Even if you are disabled or disadvantaged in a way, there is still something you can do"));
-           proverbsArrayList.add(new Proverbs("Ɔba kwasea rehonhono a, ɔse ɔreyɛ kɛse","If a stupid child (person) is developing a swollen body he says he is getting fat","A stupid person cannot see the truth in the reality of events"));
-           // proverbsArrayList.add(new Proverbs("Ɔbaa ","",""));
-
-           proverbsArrayList.add(new Proverbs("Ɔbaako yɛ ya","One is painful","To be a alone hurts"));
-           proverbsArrayList.add(new Proverbs("Ɔbaakofo di ɛwoɔ a enyane ne yam","If one person eats honey alone it awakens his stomach","A greedy person will suffer. If one enjoys good things alone he will suffer"));
-           proverbsArrayList.add(new Proverbs("Ɔbaakofo nkyekyere kurow","One person does not build a city","You cannot achieve great things by working alone"));
-           proverbsArrayList.add(new Proverbs("Ɔbaakofo na ɔto tuo na ɛdɔm guo","One person shoots a gun and an army falls","One person's decision determines the outcome.(Usually said when one makes a wise suggestion"));
-           proverbsArrayList.add(new Proverbs("Ɔbaako nnante anadwo","One person does not walk alone at night","In blurry situations seek the company of others. Be careful and take care"));
-           proverbsArrayList.add(new Proverbs("Ɔbaakofo nsa nso nyame ani kata","One person's hand cannot cover god's eyes","You need help to be able to do something that seems impossible"));
-           proverbsArrayList.add(new Proverbs("Ɔbaako tirim nni adwen","There are no thoughts in the head of a single person","It is difficult to come up with wise thought if you don't consult others"));
-           proverbsArrayList.add(new Proverbs("Ɔdaadaafo na ɔsɛe adamfo","A deceitful person spoils a friend","It is the dishonesty of people that corrupts a friend"));
-           proverbsArrayList.add(new Proverbs("Dadeɛ, yɛse no boɔ so, na yɛnse no nku so","Iron, we sharpen it on a stone but not on cream","Use the right tools for the job at hand"));
-           proverbsArrayList.add(new Proverbs("W'adaka si aburokyire mpo a, nea ɛwɔ mu nyinaa wo nim","If your box is overseas, you still know it's contents","You know what is yours and its details no matter where it may be"));
-           proverbsArrayList.add(new Proverbs("Adamfoɔ, adamfoɔ ɛne me nnɛ","Friends, friends and this is me today","Being over friendly has made me lose a lot"));
-           proverbsArrayList.add(new Proverbs("Dammirifua firi tete, ɛmfiri nnɛ","Condolences are from ancient times, they ar not from today","The causes of bad events are from the remote past not from present situations"));
-           proverbsArrayList.add(new Proverbs("Ɛdan wɔ aso","Houses have ears","Others can hear you even when you think you are alone. Be careful of what you say if you don't want it to spread"));
-           proverbsArrayList.add(new Proverbs("Wodan wo na ka a, wokɔto w'agya deɛ","If you request your mother to pay you what she owes you, you go and meet that of your father","The boss pays the debt in the long run"));
-           proverbsArrayList.add(new Proverbs("Wodan kusie amoakua a, ɔrennane da","If you change a rat into a squirrel it won't change","It is impossible to change the real nature of a person"));
-
-       }
 
         ///////////////
     }

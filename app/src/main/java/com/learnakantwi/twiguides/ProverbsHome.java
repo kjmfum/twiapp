@@ -432,7 +432,8 @@ public class ProverbsHome extends AppCompatActivity {
             startActivity(intent);
         }
     public void goToProverbs() {
-        Intent intent = new Intent(getApplicationContext(), ProverbsActivity.class);
+       // Intent intent = new Intent(getApplicationContext(), ProverbsActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPProverbsActivity.class);
         startActivity(intent);
     }
 
@@ -589,6 +590,12 @@ public class ProverbsHome extends AppCompatActivity {
             }
         }
 
+    }
+
+    public void goToSubscriptionPage (View v){
+        // Toast.makeText(this, String.valueOf(subscriptionState), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), InAppActivity.class);
+        startActivity(intent);
     }
 
     @Override

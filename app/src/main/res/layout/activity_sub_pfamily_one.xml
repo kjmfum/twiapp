@@ -7,17 +7,6 @@
     tools:context=".SubPFamilyActivity">
 
 
-   <!-- <ListView
-        android:id="@+id/subPFamilyListView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@android:color/background_light"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-    </ListView>-->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/familyRecyclerView"
         android:layout_width="match_parent"

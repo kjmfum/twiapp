@@ -502,7 +502,8 @@ public class Home extends AppCompatActivity {
     }
 
     public void goToNumber() {
-        Intent intent = new Intent(getApplicationContext(), NumbersActivity.class);
+       // Intent intent = new Intent(getApplicationContext(), NumbersActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPNumbersActivity.class);
         startActivity(intent);
     }
 
@@ -779,6 +780,12 @@ public class Home extends AppCompatActivity {
 
     }
 
+    public void goToSubscriptionPage (View v){
+        // Toast.makeText(this, String.valueOf(subscriptionState), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), InAppActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -914,14 +921,15 @@ public class Home extends AppCompatActivity {
         homeListView = findViewById(R.id.homeListView);
 
         homeButtonArrayList.add(new HomeButton("Download All Audio", R.drawable.ic_download_audio));
+        homeButtonArrayList.add(new HomeButton("Numbers", R.drawable.numbers));
         homeButtonArrayList.add(new HomeButton("Family", R.drawable.familyimage));
+
        // homeButtonArrayList.add(new HomeButton("Proverbs", R.drawable.proverbsimage));
         //homeButtonArrayList.add(new HomeButton("Children", R.drawable.childrenimage));
         homeButtonArrayList.add(new HomeButton("Food", R.drawable.foodimage));
         homeButtonArrayList.add(new HomeButton("Alphabets", R.drawable.alphabetsimage));
         homeButtonArrayList.add(new HomeButton("Time", R.drawable.time));
         homeButtonArrayList.add(new HomeButton("Days of Week", R.drawable.monday));
-        homeButtonArrayList.add(new HomeButton("Numbers", R.drawable.numbers));
         homeButtonArrayList.add(new HomeButton("Pronouns", R.drawable.pronounsimage));
         homeButtonArrayList.add(new HomeButton("Weather", R.drawable.weathersunimage));
         homeButtonArrayList.add(new HomeButton("Body Parts", R.drawable.lungsimage));
