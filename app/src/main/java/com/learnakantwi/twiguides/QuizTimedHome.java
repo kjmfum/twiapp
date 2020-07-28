@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -61,6 +62,8 @@ public class QuizTimedHome extends AppCompatActivity {
     String Ads = "";
     int Sub=0;
     int testShared;
+
+    TextView tvSubscribeBanner;
 
    // SharedPreferences subscribed = getSharedPreferences("AdsDecision", MODE_PRIVATE);
 
@@ -487,15 +490,14 @@ public class QuizTimedHome extends AppCompatActivity {
        // intent.putExtra("category","Animals");
 
        // coming = intent.getStringExtra("coming");
-        if (Sub==0){
-           // Intent intent = new Intent(getApplicationContext(), QuizTimedAll.class);
-            //intent.putExtra("category","Animals");
+        if (MainActivity.Subscribed !=1){
             Intent intent = new Intent(getApplicationContext(), PleaseSubscribePage.class);
            // intent.putExtra("coming","ads");
             startActivity(intent);
         }
 
         else {
+           // Toast.makeText(this, "Two", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), QuizTimedChildrenAnimals.class);
         startActivity(intent);
             /*Intent intent = new Intent(getApplicationContext(), QuizTimedAll.class);
@@ -621,11 +623,30 @@ public class QuizTimedHome extends AppCompatActivity {
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
+    public void goToSubscriptionPage (View v){
+        // Toast.makeText(this, String.valueOf(subscriptionState), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), InAppActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToPleaseSubPage(){
+        Intent intent = new Intent(getApplicationContext(), PleaseSubscribePage.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quizhome);
+
+
+        tvSubscribeBanner = findViewById(R.id.tvSubscribe);
+
+        if (MainActivity.Subscribed == 1){
+            tvSubscribeBanner.setVisibility(View.GONE);
+        }
+
+
 
         Intent intent = getIntent();
         Ads = intent.getStringExtra("Ads");
@@ -650,8 +671,7 @@ public class QuizTimedHome extends AppCompatActivity {
             }
         }
 
-
-if (!Ads.equals(null) && Ads.equals("Ads")){
+        if (MainActivity.Subscribed !=1){
     mInterstitialAd = new InterstitialAd(this);
     mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
     mInterstitialAd.loadAd(new AdRequest.Builder().build());
@@ -673,6 +693,7 @@ if (!Ads.equals(null) && Ads.equals("Ads")){
         public void onInitializationComplete(InitializationStatus initializationStatus) {
         }
     });
+
 
 }
 

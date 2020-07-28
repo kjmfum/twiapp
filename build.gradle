@@ -23,8 +23,10 @@ allprojects {
         jcenter()
 
         maven {
-            url "https://adcolony.bintray.com/AdColony"
+            url "https://artifactory.appodeal.com/appodeal"
+           // url "https://adcolony.bintray.com/AdColony"
         }
+
     }
 }
 

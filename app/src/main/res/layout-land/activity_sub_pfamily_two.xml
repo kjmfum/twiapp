@@ -128,6 +128,18 @@
         app:srcCompat="@drawable/ic_unmute" />
 
     <ImageButton
+        android:id="@+id/repeatButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/Horguideline20"
+        app:layout_constraintEnd_toEndOf="@+id/Verguideline85"
+        app:layout_constraintStart_toStartOf="@+id/Verguideline65"
+        app:layout_constraintTop_toBottomOf="@+id/Horguideline10"
+        app:srcCompat="@drawable/ic_repeatall" />
+
+    <ImageButton
         android:id="@+id/playButton"
         android:layout_width="0dp"
         android:layout_height="0dp"

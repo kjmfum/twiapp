@@ -518,7 +518,8 @@ public class Home extends AppCompatActivity {
     }
 
     public void goToFamily() {
-        Intent intent = new Intent(getApplicationContext(), FamilyActivity.class);
+       // Intent intent = new Intent(getApplicationContext(), FamilyActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPFamilyActivity.class);
         startActivity(intent);
     }
 

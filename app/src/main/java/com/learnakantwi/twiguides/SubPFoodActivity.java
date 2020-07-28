@@ -227,12 +227,13 @@ public class SubPFoodActivity extends AppCompatActivity implements FoodAdapter.o
                                     try {
                                         mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
                                         mp1.prepareAsync();
-                                        mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                        mp1.setOnPreparedListener(MediaPlayer::start);
+                                        /*mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                                             @Override
                                             public void onPrepared(MediaPlayer mp) {
                                                 mp.start();
                                             }
-                                        });
+                                        });*/
                                     } catch (IOException ex) {
                                         ex.printStackTrace();
                                     }
@@ -458,19 +459,6 @@ public class SubPFoodActivity extends AppCompatActivity implements FoodAdapter.o
         }
 
         playFromFileOrDownload(b,a);
-
-        /*int resourceId = getResources().getIdentifier(b, "raw", "com.learnakantwi.twiguides");
-
-
-        final MediaPlayer player = MediaPlayer.create(this, resourceId);
-        player.start();
-
-        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                player.release();
-            }
-        });*/
 
     }
 

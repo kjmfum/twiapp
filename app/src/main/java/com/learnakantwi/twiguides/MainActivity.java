@@ -28,6 +28,8 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
+import com.appodeal.ads.Appodeal;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     Toast toast;
     String premiumUpgradePrice;
     SharedPreferences sharedPreferencesAds;
+    static final String APPODEAL_KEY = "3c7b8896d969d0a930c2e04e7cecfd3d89f3926a83c51193";
+
+    //Appodeal mAdView;
 
     //String AdUnitInterstitialID = getString(R.string.AdUnitIDInterstitial);
 
@@ -390,6 +395,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Appodeal.initialize(this, APPODEAL_KEY, Appodeal.BANNER | Appodeal.INTERSTITIAL, true);
 
         //Toast.makeText(this, "Before add: "+ proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
 

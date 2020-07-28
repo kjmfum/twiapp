@@ -16,11 +16,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.util.Size;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,6 +61,9 @@ public class QuizSubConversation extends AppCompatActivity {
     String gradeText;
     int finalScore;
 
+    Handler handler1;
+    Runnable ranable;
+
 
     TextView correctAnswer;
     TextView correctWrong;
@@ -69,6 +74,8 @@ public class QuizSubConversation extends AppCompatActivity {
     int totalQuestions=50;
     int score;
     int counter;
+
+    long delaytime = 5000;
     double scorePercent= ((score/totalQuestions)*100);
 
     int chosenSize=(conversationArrayList.size()-1);
@@ -356,7 +363,8 @@ public class QuizSubConversation extends AppCompatActivity {
                             if (appearText.equals(twi1)) {
                                 toast.setText(appearText + " -" + " " + "CORRECT!!!!");
                                 toast.show();
-                                generateQuestion();
+                                handler1.postDelayed(ranable,delaytime);
+                                //generateQuestion();
                             } else {
                                 toast.setText(appearText + " -" + " " + "WRONG \n TRY AGAIN");
                                 toast.show();
@@ -377,7 +385,9 @@ public class QuizSubConversation extends AppCompatActivity {
                         if (appearText.equals(twi1)) {
                             toast.setText(appearText + " -" + " " + "CORRECT!!!!");
                             toast.show();
-                            generateQuestion();
+
+                            handler1.postDelayed(ranable,delaytime);
+                           // generateQuestion();
                         } else {
                                 toast.setText(appearText + " -" + " " + "WRONG \n   TRY AGAIN");
                                 toast.show();
@@ -403,7 +413,8 @@ public class QuizSubConversation extends AppCompatActivity {
                 if (appearText.equals(twi1)) {
                     toast.setText(appearText + " -" + " " + "CORRECT!!!!");
                     toast.show();
-                    generateQuestion();
+                   // generateQuestion();
+                    handler1.postDelayed(ranable,3000);
                 } else {
                     toast.setText(appearText + " -" + " " + "WRONG \n   \t\t\tTRY AGAIN");
                     toast.show();
@@ -562,6 +573,16 @@ public class QuizSubConversation extends AppCompatActivity {
 
         muteNumber=1;
 
+        handler1 = new Handler();
+
+        ranable = new Runnable() {
+            @Override
+            public void run() {
+                //Toast.makeText(QuizSubConversation.this, "Me", Toast.LENGTH_SHORT).show();
+                generateQuestion();
+            }
+        };
+
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
         btStartPlayAgain = findViewById(R.id.btPlayStartAgain);
 
@@ -615,6 +636,32 @@ public class QuizSubConversation extends AppCompatActivity {
         //generateQuestion();
         //questionText.set
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (handler1 !=null){
+            handler1.removeCallbacks(ranable);
+        }
+        if (playFromDevice!=null){
+            playFromDevice.stop();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (handler1 !=null){
+            handler1.removeCallbacks(ranable);
+        }
+        if (playFromDevice!=null){
+            playFromDevice.stop();
+        }
+
+        Random random = new Random();
+        int prob = random.nextInt(10);
     }
 
 }

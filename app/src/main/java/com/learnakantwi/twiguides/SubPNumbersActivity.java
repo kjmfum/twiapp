@@ -84,6 +84,7 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
     ImageButton previousButton;
     ImageButton muteButton;
     ImageButton unmuteButton;
+    ImageButton repeatButton;
 
     Boolean slideshowBool = false;
     Boolean unMuted = true;
@@ -467,8 +468,15 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
     }
 
     public void goToQuizNumbers() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubNumbers.class);
-        startActivity(intent);
+
+        if (MainActivity.Subscribed !=1){
+            Intent intent = new Intent(getApplicationContext(), QuizNumbers.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(), QuizSubNumbers.class);
+            startActivity(intent);
+        }
     }
 
     public void goToWeb() {
@@ -562,12 +570,7 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
 
         playButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.VISIBLE);
-        /*toast.setText("Proverbs change after 6 seconds");
-        toast.show();*/
 
-       /* if (count!=0){
-            count--;
-        }*/
         handler1.postDelayed(ranable, 2);
 
         slideshowBool = true;
@@ -730,6 +733,14 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_pfamily_two);
 
+        repeatButton = findViewById(R.id.repeatButton);
+        repeatButton.setVisibility(View.GONE);
+
+
+        isNetworkAvailable();
+        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
+
+
         mAdView1 = findViewById(R.id.adView1);
 
         if (MainActivity.Subscribed != 1){
@@ -830,8 +841,7 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
             }
         };
 
-        isNetworkAvailable();
-        toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
+
 
 
 
@@ -975,7 +985,6 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
         TextView tvTwi = view.findViewById(R.id.textViewTwi);
 
         ColorStateList oldColor = tvEnglish.getTextColors();
-        // tvTwi.getTextColors();
 
         tvEnglish.setTextColor(Color.BLACK);
         tvTwi.setTextColor(Color.BLACK);

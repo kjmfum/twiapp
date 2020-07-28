@@ -70,7 +70,6 @@ public class SubConversationHomeActivity extends AppCompatActivity {
                                 return;
                             case "Welcoming others":
                                 goToQuiz();
-                                return;
                         }
                         //goToTwoLetters();
 
@@ -163,8 +162,6 @@ public class SubConversationHomeActivity extends AppCompatActivity {
             case "welcome":
                 intent = new Intent(getApplicationContext(), SubConversationWelcomingOthers.class);
                 startActivity(intent);
-                return;
-
         }
     }
     public void goToConversationIntroduction(){
@@ -181,6 +178,12 @@ public class SubConversationHomeActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), SubConversationApologiesAndResponses.class);
         startActivity(intent);
     }
+
+    public void goToConversationHospital(){
+        Intent intent = new Intent(getApplicationContext(), SubConversationHospital.class);
+        startActivity(intent);
+    }
+
 
 
 
@@ -203,6 +206,8 @@ public class SubConversationHomeActivity extends AppCompatActivity {
         subConversationHomeArrayList.add("Welcoming others");
         subConversationHomeArrayList.add("Apologies and Regret");
         subConversationHomeArrayList.add("Asking and Giving Directions");
+
+        subConversationHomeArrayList.add("At the Hospital");
        // homeButtonArrayList.add(new HomeButton("Business", R.drawable.businessimage));
 
         //HomeAdapter homeAdapter = new HomeAdapter(this,subConversationHomeArrayList);
@@ -228,9 +233,11 @@ public class SubConversationHomeActivity extends AppCompatActivity {
                     case "Welcoming others":
                         goToConversationWelcome();
                         return;
+                    case "At the Hospital":
+                        goToConversationHospital();
+                        return;
                     case "Asking and Giving Directions":
                         goToCategory("directions");
-                        return;
                 }
             }
         });

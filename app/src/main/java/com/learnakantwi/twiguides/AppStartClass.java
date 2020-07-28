@@ -2711,7 +2711,7 @@ public class AppStartClass extends Application {
             proverbsArrayList.add(new Proverbs("Abaa nna hɔ mma kraman nnka nipa", "The stick should not lie idle while a dog bites a human", "Use your resources for your good. Don't keep money and end up dying from a minor ailment"));
 
 
-            proverbsArrayList.add(new Proverbs("Eti wɔ hɔ a yɛnhyɛ kotodwe kyɛ", "If the head is availble we do not put a hat on the knee", "Give honour to who is due. Give privileges to those who can handle it better"));
+            proverbsArrayList.add(new Proverbs("Eti wɔ hɔ a yɛnhyɛ kotodwe kyɛ", "If the head is available we do not put a hat on the knee", "Give honour to who is due. Give privileges to those who can handle it better"));
             proverbsArrayList.add(new Proverbs("Ɔhɔhoɔ behu mpoatwa a, na kuroman ni na akyerɛ no", "If a foreigner knows how to insult, it is a citizen who has taught him", "New comers learn bad traits from ones they came to meet."));
             proverbsArrayList.add(new Proverbs("Ɛnyɛ ɔdehye biara na ɔfata kyinneɛ ase", "It is not every royal who deserves an umbrella over him", "Having the birthright or legal right to receiving honor does not automatically mean you will be praised or pampered especially if your behaviour is not fitting"));
             proverbsArrayList.add(new Proverbs("Nkurow dɔɔso a yɛntena faako nnye animguase", "If there are many cities, we do not stay in one and be shamed", "If you fail in something you should try other avenues. Move from where you have been disgraced to where you will not be shamed or disgraced"));
@@ -2729,7 +2729,7 @@ public class AppStartClass extends Application {
             proverbsArrayList.add(new Proverbs("Nea odi akyiri sua nea odi kan nanteɛ", "He one behind learns the walking style of the one in front", "The young learns their traits and habits from the old who trained them"));
             proverbsArrayList.add(new Proverbs("Baabi a yedidi no yɛnsɛe hɔ", "We do not spoil where we eat", "Make sure that you are always at peace with the people who provide your needs for you"));
 
-            proverbsArrayList.add(new Proverbs("Aboa apɔnkyerɛni na ɛkaa sɛ wobaa me fie yɛkotow hɔ, wo nso rebisa me akonwa", "The frog says that when you came to my house you saw us squatting and you are asking me for a chair", "Do not from others things which are obvious that the don't have. A good guest does not ask more than the host himself uses"));
+            proverbsArrayList.add(new Proverbs("Aboa apɔnkyerɛni na ɛkaa sɛ wobaa me fie yɛkotow hɔ, wo nso rebisa me akonwa", "The frog says that when you came to my house you saw us squatting and you are asking me for a chair", "Do not require from others things which are obvious that they don't have. A good guest does not ask more than the host himself uses"));
             proverbsArrayList.add(new Proverbs("Etua wo yɔnko a etua dua mu", "If it is pierced into your friend then it is pierced into a tree", "You do not feel the pain if you are not the one suffering"));
 
             proverbsArrayList.add(new Proverbs("Sɛ ehia wo na ehia wo hia mu boafo a, ɛnna na awie wo hia", "It is when you are poor and the one who bails you is also poor then you have ended up poor", "If you are poor and you have someone to help you, then there is hope"));

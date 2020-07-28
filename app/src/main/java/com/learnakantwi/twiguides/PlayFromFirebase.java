@@ -273,9 +273,6 @@ public class PlayFromFirebase {
             b= b.replace("\"","");
             b= b.replace("twi:","");
             b= b.replace(";","");
-
-
-
         }
 
         return b;

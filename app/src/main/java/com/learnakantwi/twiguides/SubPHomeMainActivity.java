@@ -52,6 +52,7 @@ import static android.Manifest.permission.INTERNET;
 import static com.learnakantwi.twiguides.SubChildrenAnimals.childrenAnimalsArrayList;
 import static com.learnakantwi.twiguides.SubConversationApologiesAndResponses.conversationsApologiesArrayList;
 import static com.learnakantwi.twiguides.SubConversationDirections.conversationDirections;
+import static com.learnakantwi.twiguides.SubConversationHospital.conversationHospital;
 import static com.learnakantwi.twiguides.SubConversationIntroductionActivity.conversationArrayList;
 import static com.learnakantwi.twiguides.SubConversationWelcomingOthers.conversationWelcomingOthersArrayList;
 
@@ -553,7 +554,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         tvSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tvSignIn.getText().toString().toLowerCase().contains("sign")){
+                if (tvSignIn.getText().toString().toLowerCase().contains("sign")) {
                     SignIn();
                 }
 
@@ -561,12 +562,11 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         });
 
 
-
         deleteDuplicatelDownload();
 
 
         subscriptionStatePreference = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-        subscriptionState = subscriptionStatePreference.getBoolean("Paid",false);
+        subscriptionState = subscriptionStatePreference.getBoolean("Paid", false);
 
 
         if (Build.VERSION.SDK_INT > 22) {
@@ -595,7 +595,6 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
 //  correct      homeListView = findViewById(R.id.homeListView);
 
 
-
         homeMainButtonArrayList.add(new HomeMainButton("Conversation", R.drawable.conversationimage));
         homeMainButtonArrayList.add(new HomeMainButton("Vocabulary", R.drawable.vocabularyimage));
         homeMainButtonArrayList.add(new HomeMainButton("Quiz", R.drawable.quizimage));
@@ -610,7 +609,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
 
 
         rvHomeMainAdapter = new RVHomeMainAdapter(this, homeMainButtonArrayList, this);
-       // recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // recyclerView.setLayoutManager(new LinearLayoutManager(this));
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(rvHomeMainAdapter);
@@ -652,220 +651,260 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         });*/
 
         childrenAnimalsArrayList = new ArrayList<>();
-
-        childrenAnimalsArrayList.add(new Animals("Bee", "Wowa",1, R.drawable.wowa));
-        childrenAnimalsArrayList.add(new Animals("Cat", "Ɔkra",2,R.drawable.xkra));
-        childrenAnimalsArrayList.add(new Animals("Cattle", "Nantwie",3,R.drawable.nantwie));
-        childrenAnimalsArrayList.add(new Animals("Cockroach", "Tɛfrɛ",4,R.drawable.tqfrq));
-        childrenAnimalsArrayList.add(new Animals("Crab", "Kɔtɔ",5,R.drawable.kxtx));
-        childrenAnimalsArrayList.add(new Animals("Crocodile", "Ɔdɛnkyɛm",6,R.drawable.xdqnkyqm));
-        childrenAnimalsArrayList.add(new Animals("Dog", "Kraman",7,R.drawable.kraman));
-        childrenAnimalsArrayList.add(new Animals("Donkey", "Afurum",8,R.drawable.afurum));
-        childrenAnimalsArrayList.add(new Animals("Duck", "Dabodabo",9,R.drawable.dabodabo));
-        childrenAnimalsArrayList.add(new Animals("Elephant", "Ɔsono",10,R.drawable.xsono));
-        childrenAnimalsArrayList.add(new Animals("Fowl", "Akokɔ",11,R.drawable.akokx));
-        childrenAnimalsArrayList.add(new Animals("Goat", "Apɔnkye",12,R.drawable.apxnkye));
-        childrenAnimalsArrayList.add(new Animals("Horse", "Pɔnkɔ",13,R.drawable.pxnkx));
-        childrenAnimalsArrayList.add(new Animals("Pig", "Prako",14,R.drawable.prako));
-        childrenAnimalsArrayList.add(new Animals("Lion", "Gyata",15,R.drawable.gyata));
-        childrenAnimalsArrayList.add(new Animals("Butterfly", "Afofantɔ",16,R.drawable.afofantx));
-
-
-        childrenAnimalsArrayList.add(new Animals("Chameleon", "Abosomakoterɛ",17,R.drawable.abosomakoterq));
-        childrenAnimalsArrayList.add(new Animals("Mouse", "Akura",18,R.drawable.akura));
-        childrenAnimalsArrayList.add(new Animals("Tortoise", "Akyekyedeɛ",19,R.drawable.akyekyedeq));
-        childrenAnimalsArrayList.add(new Animals("Bird", "Anomaa",20,R.drawable.anomaa));
-        childrenAnimalsArrayList.add(new Animals("Fish", "Apataa",21,R.drawable.apataa));
-        childrenAnimalsArrayList.add(new Animals("Spider", "Ananse",22,R.drawable.ananse));
-        childrenAnimalsArrayList.add(new Animals("Porcupine", "Kɔtɔkɔ",23,R.drawable.kxtxkx));
-        childrenAnimalsArrayList.add(new Animals("Bear", "Sisire",24,R.drawable.sisire));
-        childrenAnimalsArrayList.add(new Animals("Snake", "Ɔwɔ",25,R.drawable.xwx));
-        childrenAnimalsArrayList.add(new Animals("Camel", "Yoma",26,R.drawable.yoma));
+        if(5>2) {
+        childrenAnimalsArrayList.add(new Animals("Bee", "Wowa", 1, R.drawable.wowa));
+        childrenAnimalsArrayList.add(new Animals("Cat", "Ɔkra", 2, R.drawable.xkra));
+        childrenAnimalsArrayList.add(new Animals("Cattle", "Nantwie", 3, R.drawable.nantwie));
+        childrenAnimalsArrayList.add(new Animals("Cockroach", "Tɛfrɛ", 4, R.drawable.tqfrq));
+        childrenAnimalsArrayList.add(new Animals("Crab", "Kɔtɔ", 5, R.drawable.kxtx));
+        childrenAnimalsArrayList.add(new Animals("Crocodile", "Ɔdɛnkyɛm", 6, R.drawable.xdqnkyqm));
+        childrenAnimalsArrayList.add(new Animals("Dog", "Kraman", 7, R.drawable.kraman));
+        childrenAnimalsArrayList.add(new Animals("Donkey", "Afurum", 8, R.drawable.afurum));
+        childrenAnimalsArrayList.add(new Animals("Duck", "Dabodabo", 9, R.drawable.dabodabo));
+        childrenAnimalsArrayList.add(new Animals("Elephant", "Ɔsono", 10, R.drawable.xsono));
+        childrenAnimalsArrayList.add(new Animals("Fowl", "Akokɔ", 11, R.drawable.akokx));
+        childrenAnimalsArrayList.add(new Animals("Goat", "Apɔnkye", 12, R.drawable.apxnkye));
+        childrenAnimalsArrayList.add(new Animals("Horse", "Pɔnkɔ", 13, R.drawable.pxnkx));
+        childrenAnimalsArrayList.add(new Animals("Pig", "Prako", 14, R.drawable.prako));
+        childrenAnimalsArrayList.add(new Animals("Lion", "Gyata", 15, R.drawable.gyata));
+        childrenAnimalsArrayList.add(new Animals("Butterfly", "Afofantɔ", 16, R.drawable.afofantx));
 
 
-
-
-
+        childrenAnimalsArrayList.add(new Animals("Chameleon", "Abosomakoterɛ", 17, R.drawable.abosomakoterq));
+        childrenAnimalsArrayList.add(new Animals("Mouse", "Akura", 18, R.drawable.akura));
+        childrenAnimalsArrayList.add(new Animals("Tortoise", "Akyekyedeɛ", 19, R.drawable.akyekyedeq));
+        childrenAnimalsArrayList.add(new Animals("Bird", "Anomaa", 20, R.drawable.anomaa));
+        childrenAnimalsArrayList.add(new Animals("Fish", "Apataa", 21, R.drawable.apataa));
+        childrenAnimalsArrayList.add(new Animals("Spider", "Ananse", 22, R.drawable.ananse));
+        childrenAnimalsArrayList.add(new Animals("Porcupine", "Kɔtɔkɔ", 23, R.drawable.kxtxkx));
+        childrenAnimalsArrayList.add(new Animals("Bear", "Sisire", 24, R.drawable.sisire));
+        childrenAnimalsArrayList.add(new Animals("Snake", "Ɔwɔ", 25, R.drawable.xwx));
+        childrenAnimalsArrayList.add(new Animals("Camel", "Yoma", 26, R.drawable.yoma));
+    }
 
         //myself
         //conversationArrayList.add(new subConversation("Wo din de sɛn?", "What is your name?") );
         //conversationArrayList.add(new subConversation("My name is Michael Kwaku Asante and all is care about is that I don't ever want to see you in my life. Take note it is not because I hate you but I love you and want us to be friends forever but I just cant stand what you are doing to me right now", "My name is Michael Kwaku Asante and all is care about is that I don't ever want to see you in my life. Take note it is not because I hate you but I love you and want us to be friends forever but I just cant stand what you are doing to me right now.") );
-        conversationArrayList.add(new subConversation("Me din de Michael Kwaku Asante", "My name is Michael Kwaku Asante") );
-        conversationArrayList.add(new subConversation("Wubetumi afrɛ me Kwaku", "You can call me Kwaku") );
-        conversationArrayList.add(new subConversation("Wo nso ɛ?", "What about you?") );
-        conversationArrayList.add(new subConversation("Wo din de sɛn?", "What is your name?") );
-        conversationArrayList.add(new subConversation("Yɛfrɛ wo sɛn?", "How are you called? (Lit.: How do they call you)") );
-        conversationArrayList.add(new subConversation("Me fi Abuakwa", "I come from Abuakwa. (\"Come from\" as used here means my hometown)") );
-        conversationArrayList.add(new subConversation("Wufi kurow bɛn so?", "What is your hometown? (Lit.: Which town do you come from)") );
-        conversationArrayList.add(new subConversation("Me te Achimota", "I live at Achimota") );
-        conversationArrayList.add(new subConversation("Wote he?", "Where do you live?") );
-        conversationArrayList.add(new subConversation("Me kɔɔ ntoaso sukuu wɔ Achimota", "I attended Secondary School at Achimota") );
-        conversationArrayList.add(new subConversation("Wokɔɔ ntoaso sukuu wɔ he?", "Where did you attend Secondary School?") );
+        if(5>2) {
+        conversationArrayList.add(new subConversation("Me din de Michael Kwaku Asante", "My name is Michael Kwaku Asante"));
+        conversationArrayList.add(new subConversation("Wubetumi afrɛ me Kwaku", "You can call me Kwaku"));
+        conversationArrayList.add(new subConversation("Wo nso ɛ?", "What about you?"));
+        conversationArrayList.add(new subConversation("Wo din de sɛn?", "What is your name?"));
+        conversationArrayList.add(new subConversation("Yɛfrɛ wo sɛn?", "How are you called? (Lit.: How do they call you)"));
+        conversationArrayList.add(new subConversation("Me fi Abuakwa", "I come from Abuakwa. (\"Come from\" as used here means my hometown)"));
+        conversationArrayList.add(new subConversation("Wufi kurow bɛn so?", "What is your hometown? (Lit.: Which town do you come from)"));
+        conversationArrayList.add(new subConversation("Me te Achimota", "I live at Achimota"));
+        conversationArrayList.add(new subConversation("Wote he?", "Where do you live?"));
+        conversationArrayList.add(new subConversation("Me kɔɔ ntoaso sukuu wɔ Achimota", "I attended Secondary School at Achimota"));
+        conversationArrayList.add(new subConversation("Wokɔɔ ntoaso sukuu wɔ he?", "Where did you attend Secondary School?"));
 
-        conversationArrayList.add(new subConversation("Me kɔ sukuu wɔ Legon Sukuupɔn mu", "I school at Legon University") );
-        conversationArrayList.add(new subConversation("Wo kɔ sukuu wɔ he?", "Where do you attend school?") );
-        conversationArrayList.add(new subConversation("Megyina gyinapɛn num", "I am in class five") );
+        conversationArrayList.add(new subConversation("Me kɔ sukuu wɔ Legon Sukuupɔn mu", "I school at Legon University"));
+        conversationArrayList.add(new subConversation("Wo kɔ sukuu wɔ he?", "Where do you attend school?"));
+        conversationArrayList.add(new subConversation("Megyina gyinapɛn num", "I am in class five"));
 
-        conversationArrayList.add(new subConversation("Madi mfe aduonu", "I am twenty years old") );
+        conversationArrayList.add(new subConversation("Madi mfe aduonu", "I am twenty years old"));
 
-        conversationArrayList.add(new subConversation("Meyɛ tikyani", "I am a teacher") );
-        conversationArrayList.add(new subConversation("Woyɛ adwuma bɛn?", "What's your occupation (Lit.: What work do you do?)") );
-        conversationArrayList.add(new subConversation("Meyɛ okuani", "I am a farmer") );
-        conversationArrayList.add(new subConversation("Meyɛ adwuma wɔ Ghana Education Service", "I work at Ghana Education Service") );
-
-
-        conversationArrayList.add(new subConversation("Agorɔ a mepɛ paa ne \"basketball\" ", "My favorite game is basketball") );
-        conversationArrayList.add(new subConversation("Agorɔ bɛn na w'ani gye ho pa ara?", "What game do you like most?") );
-        conversationArrayList.add(new subConversation("M'ani gye nnwom ho pa ara", "I like music very much") );
-        conversationArrayList.add(new subConversation("M'ani gye akenkan ho", "I like reading") );
-        conversationArrayList.add(new subConversation("W'ani gye akenkan ho?", "Do you like reading?") );
-        conversationArrayList.add(new subConversation("M'ani nnye akenkan ho", "I do not like reading") );
-        conversationArrayList.add(new subConversation("M'ani gye sini ho?", "I like movies") );
-        conversationArrayList.add(new subConversation("M'ani gye sinihwɛ ho pa ara", "I like watching movies very much") );
-        conversationArrayList.add(new subConversation("Mempɛ sinihwɛ", "I don't like watching movies") );
-        conversationArrayList.add(new subConversation("Ade a mempɛ koraa ne ntɔkwa", "What I don't like at all is fighting") );
+        conversationArrayList.add(new subConversation("Meyɛ tikyani", "I am a teacher"));
+        conversationArrayList.add(new subConversation("Woyɛ adwuma bɛn?", "What's your occupation (Lit.: What work do you do?)"));
+        conversationArrayList.add(new subConversation("Meyɛ okuani", "I am a farmer"));
+        conversationArrayList.add(new subConversation("Meyɛ adwuma wɔ Ghana Education Service", "I work at Ghana Education Service"));
 
 
+        conversationArrayList.add(new subConversation("Agorɔ a mepɛ paa ne \"basketball\" ", "My favorite game is basketball"));
+        conversationArrayList.add(new subConversation("Agorɔ bɛn na w'ani gye ho pa ara?", "What game do you like most?"));
+        conversationArrayList.add(new subConversation("M'ani gye nnwom ho pa ara", "I like music very much"));
+        conversationArrayList.add(new subConversation("M'ani gye akenkan ho", "I like reading"));
+        conversationArrayList.add(new subConversation("W'ani gye akenkan ho?", "Do you like reading?"));
+        conversationArrayList.add(new subConversation("M'ani nnye akenkan ho", "I do not like reading"));
+        conversationArrayList.add(new subConversation("M'ani gye sini ho?", "I like movies"));
+        conversationArrayList.add(new subConversation("M'ani gye sinihwɛ ho pa ara", "I like watching movies very much"));
+        conversationArrayList.add(new subConversation("Mempɛ sinihwɛ", "I don't like watching movies"));
+        conversationArrayList.add(new subConversation("Ade a mempɛ koraa ne ntɔkwa", "What I don't like at all is fighting"));
 
 
-
-        conversationArrayList.add(new subConversation("Aduane a m'ani gye ho pa ara ne fufuo ne nkate nkwan", "My favorite food is fufuo and groundnut soup") );
-        conversationArrayList.add(new subConversation("Aduane a mepɛ pa ara ne banku", "The food I like most is banku") );
-        conversationArrayList.add(new subConversation("Wopɛ fufuo?", "Do you like fufuo?") );
-        conversationArrayList.add(new subConversation("Fufuo nyɛ me dɛ", "Fufu does not taste sweet to me") );
-        conversationArrayList.add(new subConversation("Mempɛ fufuo", "I don't like fufuo") );
-        conversationArrayList.add(new subConversation("Mepɛ fufuo", "I like fufuo") );
-        conversationArrayList.add(new subConversation("Nkate nkwan yɛ dɛ", "Groundnut soup is sweet") );
+        conversationArrayList.add(new subConversation("Aduane a m'ani gye ho pa ara ne fufuo ne nkate nkwan", "My favorite food is fufuo and groundnut soup"));
+        conversationArrayList.add(new subConversation("Aduane a mepɛ pa ara ne banku", "The food I like most is banku"));
+        conversationArrayList.add(new subConversation("Wopɛ fufuo?", "Do you like fufuo?"));
+        conversationArrayList.add(new subConversation("Fufuo nyɛ me dɛ", "Fufu does not taste sweet to me"));
+        conversationArrayList.add(new subConversation("Mempɛ fufuo", "I don't like fufuo"));
+        conversationArrayList.add(new subConversation("Mepɛ fufuo", "I like fufuo"));
+        conversationArrayList.add(new subConversation("Nkate nkwan yɛ dɛ", "Groundnut soup is sweet"));
 
 
         //family
-        conversationArrayList.add(new subConversation("Wo aware anaa?", "Are you married?") );
-        conversationArrayList.add(new subConversation("Menwaree", "I am not married") );
-        conversationArrayList.add(new subConversation("Maware", "I am married") );
-        conversationArrayList.add(new subConversation("Me yɛ sigyani", "I am single") );
-        conversationArrayList.add(new subConversation("Meyɛ ɔbaa warefo", "I am a married woman") );
-        conversationArrayList.add(new subConversation("Me yɛ ɔbarima warefo", "I am a married man") );
-        conversationArrayList.add(new subConversation("Me kunu din de Kwame", "My husband's name is Kwame") );
-        conversationArrayList.add(new subConversation("Yɛfrɛ me kunu Kwame", "My husband is called Kwame") );
-        conversationArrayList.add(new subConversation("Me yere din de Abena", "My wife's name is Abena") );
-        conversationArrayList.add(new subConversation("Yɛfrɛ me yere Abena", "My wife is called Abena") );
-        conversationArrayList.add(new subConversation("Medɔ me yere ", "I love my wife") );
-        conversationArrayList.add(new subConversation("Me yere ho yɛ fɛ", "My wife is beautiful") );
-        conversationArrayList.add(new subConversation("Medɔ me kunu", "I love my husband") );
-
-
-
+        conversationArrayList.add(new subConversation("Wo aware anaa?", "Are you married?"));
+        conversationArrayList.add(new subConversation("Menwaree", "I am not married"));
+        conversationArrayList.add(new subConversation("Maware", "I am married"));
+        conversationArrayList.add(new subConversation("Me yɛ sigyani", "I am single"));
+        conversationArrayList.add(new subConversation("Meyɛ ɔbaa warefo", "I am a married woman"));
+        conversationArrayList.add(new subConversation("Me yɛ ɔbarima warefo", "I am a married man"));
+        conversationArrayList.add(new subConversation("Me kunu din de Kwame", "My husband's name is Kwame"));
+        conversationArrayList.add(new subConversation("Yɛfrɛ me kunu Kwame", "My husband is called Kwame"));
+        conversationArrayList.add(new subConversation("Me yere din de Abena", "My wife's name is Abena"));
+        conversationArrayList.add(new subConversation("Yɛfrɛ me yere Abena", "My wife is called Abena"));
+        conversationArrayList.add(new subConversation("Medɔ me yere ", "I love my wife"));
+        conversationArrayList.add(new subConversation("Me yere ho yɛ fɛ", "My wife is beautiful"));
+        conversationArrayList.add(new subConversation("Medɔ me kunu", "I love my husband"));
+    }
 
         //Welcoming Others
         conversationWelcomingOthersArrayList = new ArrayList<>();
-        conversationWelcomingOthersArrayList.add(new subConversation("Agoo", "Knock Knock") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Amee", "Response to Knock Knock") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Bra mu", "Come in") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Akwaaba", "Welcome") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Yɛma wo akwaaba", "We welcome you") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Me pa wo kyɛw, akonnwa wɔ hɔ", "Please, there is a chair (1)") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Me pa wo kyɛw, adwa wɔ hɔ", "Please, there is a chair (2)") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Memma wo nsuo?", "Should I give you water?") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Me nya nsuo a anka m'ani begye paa", "I would be very grateful if I get water") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Me nom bi nkyɛe medaase", "I drank some not long ago, thank you") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Ɛyɛ medaase", "It's alright, thank you") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Mesrɛ wo, dɛn na wobɛnom?", "Please what will you drink?") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Dɛn na wobɛnom?", "What will you drink?") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Ɛkwan so ɛ?", "How was your journey?") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Yoo, medaase menkura no bɔne", "Okay, thank you. I come in peace") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Akonnwa wɔ hɔ", "There is a chair") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Ɛha bɔkɔɔ", "There is peace here") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Ɛkwan so bɔkɔɔ", "My journey was smooth") );
-        conversationWelcomingOthersArrayList.add(new subConversation("Ɛha bɔkɔɔ, wo na wonam", "There is peace here, you are the traveller") );
+        if(5>2) {
+        conversationWelcomingOthersArrayList.add(new subConversation("Agoo", "Knock Knock"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Amee", "Response to Knock Knock"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Bra mu", "Come in"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Akwaaba", "Welcome"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Yɛma wo akwaaba", "We welcome you"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Me pa wo kyɛw, akonnwa wɔ hɔ", "Please, there is a chair (1)"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Me pa wo kyɛw, adwa wɔ hɔ", "Please, there is a chair (2)"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Memma wo nsuo?", "Should I give you water?"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Me nya nsuo a anka m'ani begye paa", "I would be very grateful if I get water"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Me nom bi nkyɛe medaase", "I drank some not long ago, thank you"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Ɛyɛ medaase", "It's alright, thank you"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Mesrɛ wo, dɛn na wobɛnom?", "Please what will you drink?"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Dɛn na wobɛnom?", "What will you drink?"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Ɛkwan so ɛ?", "How was your journey?"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Yoo, medaase menkura no bɔne", "Okay, thank you. I come in peace"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Akonnwa wɔ hɔ", "There is a chair"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Ɛha bɔkɔɔ", "There is peace here"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Ɛkwan so bɔkɔɔ", "My journey was smooth"));
+        conversationWelcomingOthersArrayList.add(new subConversation("Ɛha bɔkɔɔ, wo na wonam", "There is peace here, you are the traveller"));
 
         //conversationWelcomingOthersArrayList.add(new subConversation("Me", "There is a chair") );
-
+    }
         ///Apologies
-
         conversationsApologiesArrayList = new ArrayList<>();
-
-        conversationsApologiesArrayList.add(new subConversation("Mepa wo kyɛw","Please"));
-        conversationsApologiesArrayList.add(new subConversation("Mesrɛ wo","I beg you"));
-        conversationsApologiesArrayList.add(new subConversation("Manu me ho","I have regretted"));
-        conversationsApologiesArrayList.add(new subConversation("Fa kyɛ me","Forgive me"));
-        conversationsApologiesArrayList.add(new subConversation("Kosɛ","Sorry"));
-        conversationsApologiesArrayList.add(new subConversation("Kafra","Sorry"));
-        conversationsApologiesArrayList.add(new subConversation("Na ɛsɛ sɛ mefrɛ wo","I should have called you"));
-        conversationsApologiesArrayList.add(new subConversation("Mekoto srɛ wo","I kneel before you in apology"));
-        conversationsApologiesArrayList.add(new subConversation("Ɛyɛ me ara me mfomsoɔ","It is solely my fault"));
-        conversationsApologiesArrayList.add(new subConversation("Me mfomsoɔ","My mistake"));
-        conversationsApologiesArrayList.add(new subConversation("Mafom wo","I have wronged you"));
-        conversationsApologiesArrayList.add(new subConversation("Mayɛ wo bɔne","I have sinned against you"));
-        conversationsApologiesArrayList.add(new subConversation("Wodi bem","You are right"));
-        conversationsApologiesArrayList.add(new subConversation("Medi fɔ","I am wrong"));
-        conversationsApologiesArrayList.add(new subConversation("Manhyɛ da","It wasn't deliberate"));
-        conversationsApologiesArrayList.add(new subConversation("M'ani awu","I'm ashamed"));
-        conversationsApologiesArrayList.add(new subConversation("Ɛnsi bio","It won't happen again"));
-        conversationsApologiesArrayList.add(new subConversation("Menyɛ saa bio","I won't do that again"));
-        conversationsApologiesArrayList.add(new subConversation("Ɛyɛ","It's okay"));
-        conversationsApologiesArrayList.add(new subConversation("Ɛnyɛ hwee","It is nothing. It's alright"));
-       // conversationsApologiesArrayList.add(new subConversation("Ɛsi","It happens"));
-        conversationsApologiesArrayList.add(new subConversation("Esi daa","It happens all the time"));
-        conversationsApologiesArrayList.add(new subConversation("Ɛtaa si","It always happens"));
-        conversationsApologiesArrayList.add(new subConversation("Ɛnha wo ho","Don't worry yourself"));
-        conversationsApologiesArrayList.add(new subConversation("Ɛnnwene ho","Don't think about it. Don't worry"));
-        conversationsApologiesArrayList.add(new subConversation("Ɛnnwene ho koraa","Don't worry about it at all"));
-        conversationsApologiesArrayList.add(new subConversation("Mede akyɛ wo","I have forgiven you. I forgive you"));
-        conversationsApologiesArrayList.add(new subConversation("Me mfa nkyɛ wo","I won't forgive you"));
-        conversationsApologiesArrayList.add(new subConversation("Ɛnyɛ saa bio","Don't do that again"));
-        conversationsApologiesArrayList.add(new subConversation("Magyae ama aka","I've left it to rest. I won't pursue any further"));
-        conversationsApologiesArrayList.add(new subConversation("Ɛho nhia","It's not important"));
-        conversationsApologiesArrayList.add(new subConversation("Magye wo kyɛwpa no atom","I have accepted your apology"));
-        conversationsApologiesArrayList.add(new subConversation("Mennim nea ɛbaa me so","I don't know what came over me"));
-        conversationsApologiesArrayList.add(new subConversation("Menhu nea menka mpo","I don't even know what to say"));
-        conversationsApologiesArrayList.add(new subConversation("Masua me nyansa","I have learnt my lesson. I have learnt wisdom"));
-        conversationsApologiesArrayList.add(new subConversation("Ɛnyɛ saa na mete o","That's not how I am o"));
-        conversationsApologiesArrayList.add(new subConversation("Manka no yie, fa kyɛ me","I didn't say it well. Forgive me"));
-       // conversationsApologiesArrayList.add(new subConversation("",""));
-
+        if(5>2) {
+            conversationsApologiesArrayList.add(new subConversation("Mepa wo kyɛw", "Please"));
+            conversationsApologiesArrayList.add(new subConversation("Mesrɛ wo", "I beg you"));
+            conversationsApologiesArrayList.add(new subConversation("Manu me ho", "I have regretted"));
+            conversationsApologiesArrayList.add(new subConversation("Fa kyɛ me", "Forgive me"));
+            conversationsApologiesArrayList.add(new subConversation("Kosɛ", "Sorry"));
+            conversationsApologiesArrayList.add(new subConversation("Kafra", "Sorry"));
+            conversationsApologiesArrayList.add(new subConversation("Na ɛsɛ sɛ mefrɛ wo", "I should have called you"));
+            conversationsApologiesArrayList.add(new subConversation("Mekoto srɛ wo", "I kneel before you in apology"));
+            conversationsApologiesArrayList.add(new subConversation("Ɛyɛ me ara me mfomsoɔ", "It is solely my fault"));
+            conversationsApologiesArrayList.add(new subConversation("Me mfomsoɔ", "My mistake"));
+            conversationsApologiesArrayList.add(new subConversation("Mafom wo", "I have wronged you"));
+            conversationsApologiesArrayList.add(new subConversation("Mayɛ wo bɔne", "I have sinned against you"));
+            conversationsApologiesArrayList.add(new subConversation("Wodi bem", "You are right"));
+            conversationsApologiesArrayList.add(new subConversation("Medi fɔ", "I am wrong"));
+            conversationsApologiesArrayList.add(new subConversation("Manhyɛ da", "It wasn't deliberate"));
+            conversationsApologiesArrayList.add(new subConversation("M'ani awu", "I'm ashamed"));
+            conversationsApologiesArrayList.add(new subConversation("Ɛnsi bio", "It won't happen again"));
+            conversationsApologiesArrayList.add(new subConversation("Menyɛ saa bio", "I won't do that again"));
+            conversationsApologiesArrayList.add(new subConversation("Ɛyɛ", "It's okay"));
+            conversationsApologiesArrayList.add(new subConversation("Ɛnyɛ hwee", "It is nothing. It's alright"));
+            // conversationsApologiesArrayList.add(new subConversation("Ɛsi","It happens"));
+            conversationsApologiesArrayList.add(new subConversation("Esi daa", "It happens all the time"));
+            conversationsApologiesArrayList.add(new subConversation("Ɛtaa si", "It always happens"));
+            conversationsApologiesArrayList.add(new subConversation("Ɛnha wo ho", "Don't worry yourself"));
+            conversationsApologiesArrayList.add(new subConversation("Ɛnnwene ho", "Don't think about it. Don't worry"));
+            conversationsApologiesArrayList.add(new subConversation("Ɛnnwene ho koraa", "Don't worry about it at all"));
+            conversationsApologiesArrayList.add(new subConversation("Mede akyɛ wo", "I have forgiven you. I forgive you"));
+            conversationsApologiesArrayList.add(new subConversation("Me mfa nkyɛ wo", "I won't forgive you"));
+            conversationsApologiesArrayList.add(new subConversation("Ɛnyɛ saa bio", "Don't do that again"));
+            conversationsApologiesArrayList.add(new subConversation("Magyae ama aka", "I've left it to rest. I won't pursue any further"));
+            conversationsApologiesArrayList.add(new subConversation("Ɛho nhia", "It's not important"));
+            conversationsApologiesArrayList.add(new subConversation("Magye wo kyɛwpa no atom", "I have accepted your apology"));
+            conversationsApologiesArrayList.add(new subConversation("Mennim nea ɛbaa me so", "I don't know what came over me"));
+            conversationsApologiesArrayList.add(new subConversation("Menhu nea menka mpo", "I don't even know what to say"));
+            conversationsApologiesArrayList.add(new subConversation("Masua me nyansa", "I have learnt my lesson. I have learnt wisdom"));
+            conversationsApologiesArrayList.add(new subConversation("Ɛnyɛ saa na mete o", "That's not how I am o"));
+            conversationsApologiesArrayList.add(new subConversation("Manka no yie, fa kyɛ me", "I didn't say it well. Forgive me"));
+            // conversationsApologiesArrayList.add(new subConversation("",""));
+        }
 
         /// Asking and Giving Directions
         conversationDirections = new ArrayList<>();
-        conversationDirections.add(new subConversation("Meyɛ ɔhɔhoɔ","I'm a stranger (1)"));
-        conversationDirections.add(new subConversation("Meyɛ ɔhɔhoɔ","I'm a guest (2)"));
-        conversationDirections.add(new subConversation("Ɛhe na bɔs \"stop\" no wɔ?","Where is the bus stop"));
-        conversationDirections.add(new subConversation("Ɛhe na menya kar akɔ Kumasi","Where can I board a car to Kumasi"));
-        conversationDirections.add(new subConversation("Ɛhe na ayaresabea no wɔ?","Where is the hospital located?"));
-        conversationDirections.add(new subConversation("Merehwehwɛ ayaresabea","I'm looking for a hospital"));
-        conversationDirections.add(new subConversation("Merehwehwɛ...","I'm looking for..."));
-        conversationDirections.add(new subConversation("Merekɔ mpoano","I'm going to the beach"));
-        conversationDirections.add(new subConversation("Ɛkwan bɛn na ɛkɔ mpoano hɔ?","Which road(way) leads to the beach?"));
-        conversationDirections.add(new subConversation("Ɛhe na keteke gyinabea wɔ?","Where is the train station?"));
-        conversationDirections.add(new subConversation("Kyerɛ me kwan no","Show me the way"));
-        conversationDirections.add(new subConversation("Me mfa he?","Where should I pass?"));
-        conversationDirections.add(new subConversation("Fa Benkum","Take left"));
-        conversationDirections.add(new subConversation("Fa nifa","Take Right"));
-        conversationDirections.add(new subConversation("Dan wo ho na fa nifa","Turn and take Right"));
-        conversationDirections.add(new subConversation("Kɔ w'anim","Go straight"));
-        conversationDirections.add(new subConversation("Kɔ w'akyi","Go back"));
-        conversationDirections.add(new subConversation("Fa dua no nkyɛn","Pass by the tree"));
-        conversationDirections.add(new subConversation("Wadu Accra","You have arrived at Accra"));
-        conversationDirections.add(new subConversation("Aka kakra na wadu hɔ","You will get there in a short period of time"));
-        conversationDirections.add(new subConversation("Hwɛ w'akyi","Look back"));
-        conversationDirections.add(new subConversation("Ɛha yɛ he?","Which place is this?"));
-        conversationDirections.add(new subConversation("Kyerɛ me kwan kɔ Achimota","Show me the way(give me directions) to Achimota"));
-        conversationDirections.add(new subConversation("Ɛkwan no wa","It(the road) is far from here"));
-        conversationDirections.add(new subConversation("Ɛkwan no wa anaa?","Is it far from here?"));
-        conversationDirections.add(new subConversation("Wo ntumi nnante nkɔ","You cannot walk to the place"));
-        conversationDirections.add(new subConversation("Gye sɛ wofa kar","Unless you use a car"));
-        conversationDirections.add(new subConversation("Di m'akyi","Follow me"));
-        conversationDirections.add(new subConversation("Di ahyɛnsode no akyi","Follow the signs"));
-        conversationDirections.add(new subConversation("Bisa","Ask"));
-        conversationDirections.add(new subConversation("Wo duru hɔ a, bisa obiara","When you reach there ask anyone"));
-        conversationDirections.add(new subConversation("Me nnim hɔ","I don't know the place"));
-        conversationDirections.add(new subConversation("Me nim hɔ","I know the place"));
-        conversationDirections.add(new subConversation("Ɛhe na wopɛ sɛ wokɔ?","Where do you want to go?"));
-        conversationDirections.add(new subConversation("Fa me kɔ wimhyɛn gyinabea","Take me to the airport"));
-        conversationDirections.add(new subConversation("Mepɛ sɛ mekɔ fie","I want to go home"));
-        conversationDirections.add(new subConversation("Ɛhe na wote?","Where do you stay?"));
-        conversationDirections.add(new subConversation("Mete Dansoman","I stay at Dansoman"));
+        if(5>2) {
+            conversationDirections.add(new subConversation("Meyɛ ɔhɔhoɔ", "I'm a stranger (1)"));
+            conversationDirections.add(new subConversation("Meyɛ ɔhɔhoɔ", "I'm a guest (2)"));
+            conversationDirections.add(new subConversation("Ɛhe na bɔs \"stop\" no wɔ?", "Where is the bus stop"));
+            conversationDirections.add(new subConversation("Ɛhe na menya kar akɔ Kumasi", "Where can I board a car to Kumasi"));
+            conversationDirections.add(new subConversation("Ɛhe na ayaresabea no wɔ?", "Where is the hospital located?"));
+            conversationDirections.add(new subConversation("Merehwehwɛ ayaresabea", "I'm looking for a hospital"));
+            conversationDirections.add(new subConversation("Merehwehwɛ...", "I'm looking for..."));
+            conversationDirections.add(new subConversation("Merekɔ mpoano", "I'm going to the beach"));
+            conversationDirections.add(new subConversation("Ɛkwan bɛn na ɛkɔ mpoano hɔ?", "Which road(way) leads to the beach?"));
+            conversationDirections.add(new subConversation("Ɛhe na keteke gyinabea wɔ?", "Where is the train station?"));
+            conversationDirections.add(new subConversation("Kyerɛ me kwan no", "Show me the way"));
+            conversationDirections.add(new subConversation("Me mfa he?", "Where should I pass?"));
+            conversationDirections.add(new subConversation("Fa Benkum", "Take left"));
+            conversationDirections.add(new subConversation("Fa nifa", "Take Right"));
+            conversationDirections.add(new subConversation("Dan wo ho na fa nifa", "Turn and take Right"));
+            conversationDirections.add(new subConversation("Kɔ w'anim", "Go straight"));
+            conversationDirections.add(new subConversation("Kɔ w'akyi", "Go back"));
+            conversationDirections.add(new subConversation("Fa dua no nkyɛn", "Pass by the tree"));
+            conversationDirections.add(new subConversation("Wadu Accra", "You have arrived at Accra"));
+            conversationDirections.add(new subConversation("Aka kakra na wadu hɔ", "You will get there in a short period of time"));
+            conversationDirections.add(new subConversation("Hwɛ w'akyi", "Look back"));
+            conversationDirections.add(new subConversation("Ɛha yɛ he?", "Which place is this?"));
+            conversationDirections.add(new subConversation("Kyerɛ me kwan kɔ Achimota", "Show me the way(give me directions) to Achimota"));
+            conversationDirections.add(new subConversation("Ɛkwan no wa", "It(the road) is far from here"));
+            conversationDirections.add(new subConversation("Ɛkwan no wa anaa?", "Is it far from here?"));
+            conversationDirections.add(new subConversation("Wo ntumi nnante nkɔ", "You cannot walk to the place"));
+            conversationDirections.add(new subConversation("Gye sɛ wofa kar", "Unless you use a car"));
+            conversationDirections.add(new subConversation("Di m'akyi", "Follow me"));
+            conversationDirections.add(new subConversation("Di ahyɛnsode no akyi", "Follow the signs"));
+            conversationDirections.add(new subConversation("Bisa", "Ask"));
+            conversationDirections.add(new subConversation("Wo duru hɔ a, bisa obiara", "When you reach there ask anyone"));
+            conversationDirections.add(new subConversation("Me nnim hɔ", "I don't know the place"));
+            conversationDirections.add(new subConversation("Me nim hɔ", "I know the place"));
+            conversationDirections.add(new subConversation("Ɛhe na wopɛ sɛ wokɔ?", "Where do you want to go?"));
+            conversationDirections.add(new subConversation("Fa me kɔ wimhyɛn gyinabea", "Take me to the airport"));
+            conversationDirections.add(new subConversation("Mepɛ sɛ mekɔ fie", "I want to go home"));
+            conversationDirections.add(new subConversation("Ɛhe na wote?", "Where do you stay?"));
+            conversationDirections.add(new subConversation("Mete Dansoman", "I stay at Dansoman"));
+        }
 
+        conversationHospital = new ArrayList<>();
+        if (5>2){
+           // conversationHospital.add(new subConversation("", ""));
+            conversationHospital.add(new subConversation("Me pɛ sɛ mehu dɔkota", "I want to see the doctor"));
+            conversationHospital.add(new subConversation("Me ho ayɛ hye", "My temperature is high"));
+            conversationHospital.add(new subConversation("Me yam yɛ me ya", "My stomach pains me"));
+            conversationHospital.add(new subConversation("Awɔw de me", "I am feeling cold"));
+            conversationHospital.add(new subConversation("Wo he na ɛyɛ wo ya?", "Where do you feel pains?"));
+            conversationHospital.add(new subConversation("Meyare", "I am sick"));
+            conversationHospital.add(new subConversation("Wo nipadua he na ɛyɛ wo ya", "Which part of your body is paining you"));
+            conversationHospital.add(new subConversation("Me nan yɛ me ya", "My leg pains me"));
+            conversationHospital.add(new subConversation("Me ti yɛ me ya", "My head pains me"));
+            conversationHospital.add(new subConversation("Me nsa yɛ me ya", "My hand pains me"));
+            conversationHospital.add(new subConversation("Pɔmpɔ abɔ me mmɔtoam", "I have lumps in my armpit"));
+            conversationHospital.add(new subConversation("Me yam atim", "I am constipated"));
+            conversationHospital.add(new subConversation("Me nsa ahono", "My hand is swollen"));
+            conversationHospital.add(new subConversation("Me nan ahono", "My leg is swollen"));
+            conversationHospital.add(new subConversation("Me ho keka me", "My body itches"));
+            conversationHospital.add(new subConversation("M'afe saa", "I've been vomiting many times"));
+            conversationHospital.add(new subConversation("Me yam rehwie", "I have diarrhea"));
+            conversationHospital.add(new subConversation("Mogya retu me", "I'm bleeding"));
+            conversationHospital.add(new subConversation("M'anom ato", "I have lost appetite"));
+            conversationHospital.add(new subConversation("Me ntumi nnidi", "I'm unable to eat"));
+            conversationHospital.add(new subConversation("Me ntumi nna", "I am unable to sleep"));
+            conversationHospital.add(new subConversation("Kɔ wɔ paneɛ", "Go for an injection"));
+            conversationHospital.add(new subConversation("Kɔ gye aduro", "Go for medicine"));
+            conversationHospital.add(new subConversation("Me bɔ wa", "I cough"));
+            conversationHospital.add(new subConversation("Me bɔ wa saa", "I cough repeatedly"));
+            conversationHospital.add(new subConversation("Mentumi nhome yiye", "I can't breath well"));
+            conversationHospital.add(new subConversation("Mehome a ɛnsi so", "I have difficulty breathing"));
+            conversationHospital.add(new subConversation("Mepɛ sɛ moyɛ me lab test", "I want a lab test"));
+            conversationHospital.add(new subConversation("Yɛbɛtwe wo mogya kakra", "We will take your blood sample"));
+            conversationHospital.add(new subConversation("Yɛbɛyɛ wo mogya mu nhwehwɛmu", "We will test your blood"));
+            conversationHospital.add(new subConversation("Yɛbɛyɛ wo tiafi mu nhwehwɛmu", "We will examine your stool (toilet)"));
+            conversationHospital.add(new subConversation("Yɛbɛyɛ wo dwonsɔ mu nhwehwɛmu", "We will examine your urine"));
+            conversationHospital.add(new subConversation("Ɛyɛ atiridii", "It is malaria"));
+            conversationHospital.add(new subConversation("Wo nyem", "You are pregnant"));
+            conversationHospital.add(new subConversation("Yɛbɛgye wo ato ha kakra", "You will be admitted here for a while"));
+            conversationHospital.add(new subConversation("Yɛbɛyɛ wo oprehyɛn", "We will perform surgery"));
+            conversationHospital.add(new subConversation("Nom aduro no ansa na wada", "Take the medicine before you sleep"));
+            conversationHospital.add(new subConversation("Didi ansa na w'anom aduro no", "Eat before you take the medicine"));
+            conversationHospital.add(new subConversation("Fa no mprɛnsa da biara", "Take it three times each day"));
+            conversationHospital.add(new subConversation("Nɛɛse no bɛhwɛ wo", "The nurse will take care of you"));
+            //conversationHospital.add(new subConversation("Mentumi nhome yiye", "I can't breath well"));
+            conversationHospital.add(new subConversation("Wo ho bɛtɔ wo", "You will get well"));
 
+        }
 
 
     }

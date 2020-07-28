@@ -9,6 +9,7 @@ import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -16,9 +17,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -26,6 +31,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -41,9 +47,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static com.learnakantwi.twiguides.FamilyActivity.familyArrayList;
 import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
+import static com.learnakantwi.twiguides.NumbersActivity.numbersArrayList;
 
 
 public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapter_one.onClickRecycle {
@@ -58,6 +66,30 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
     PlayFromFirebase convertAndPlay;
     FamilyAdapter_one foodAdapter;
     ArrayList<Family> recycleArrayList;
+
+    public InterstitialAd mInterstitialAd;
+    ImageButton playButton;
+    ImageButton pauseButton;
+    ImageButton nextButton;
+    ImageButton previousButton;
+    ImageButton muteButton;
+    ImageButton unmuteButton;
+    ImageButton repeatButton;
+    Boolean slideshowBool = false;
+    Boolean unMuted = true;
+    Boolean repeat = false;
+    Button btSlideText;
+    TextView tvStartSlideShow;
+    TextView tvNumberWord;
+    Handler handler1;
+    Runnable ranable;
+    AdView mAdView1;
+    Random random;
+
+    int showAdProbability;
+
+    int count= 0;
+
 
 
     Toast toast;
@@ -134,23 +166,7 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
                 String c = familyArrayList.get(j).getTwiFamily().toLowerCase();
 
                 String bb= PlayFromFirebase.viewTextConvert(c);
-             /*   boolean dd = bb.contains("ɔ");
-                boolean ee = bb.contains("ɛ");
-                if (dd || ee) {
-                    bb = bb.replace("ɔ", "x");
-                    bb = bb.replace("ɛ", "q");
-                }
 
-                if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'")) {
-                    bb = bb.replace(" ", "");
-                    bb = bb.replace("/", "");
-                    bb = bb.replace(",", "");
-                    bb = bb.replace("(", "");
-                    bb = bb.replace(")", "");
-                    bb = bb.replace("-", "");
-                    bb = bb.replace("?", "");
-                    bb = bb.replace("'", "");
-                }*/
                 File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
                 if (myFiles.exists()) {
                     counter++;
@@ -308,6 +324,58 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
         }
     }
 
+    public void playFromFileOrDownload(final String filename){
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
+        if (myFile.exists()){
+
+            try {
+                if (playFromDevice != null){
+                    playFromDevice.stop();
+                    playFromDevice.reset();
+                    playFromDevice.release();
+                }
+                playFromDevice = new MediaPlayer();
+
+                playFromDevice.setDataSource(myFile.toString());
+                playFromDevice.prepareAsync();
+                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.start();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+
+            if (isNetworkAvailable()){
+                final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+                musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String url = uri.toString();
+                        playFromFirebase(musicRef);
+                        downloadFile(getApplicationContext(), filename, ".m4a", url);
+                        //Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else {
+                toast.setText("Please connect to Internet to download audio");
+                toast.show();
+            }
+
+
+        }
+    }
+
     public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
 
         if (Build.VERSION.SDK_INT > 22) {
@@ -336,6 +404,7 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
 
         }
     }
+
 
 
 
@@ -401,9 +470,17 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
 
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
-        startActivity(intent);
+        if (MainActivity.Subscribed !=1){
+            Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+            startActivity(intent);
+        }
+
     }
+
     public void goToWeb() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
         startActivity(intent);
@@ -411,8 +488,15 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
 
 
     public void goToQuizFamily() {
-        Intent intent = new Intent(getApplicationContext(), QuizFamily.class);
-        startActivity(intent);
+
+        if (MainActivity.Subscribed !=1){
+            Intent intent = new Intent(getApplicationContext(), QuizFamily.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(), QuizSubFamily.class);
+            startActivity(intent);
+        }
     }
 
     public void log2(View view) {
@@ -424,22 +508,7 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
         toast.setText(a);
         toast.show();
 
-       /* if (isNetworkAvailable()){
-            Toast.makeText(this, "There is Internet 1", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(this, "No Internet 1", Toast.LENGTH_SHORT).show();
-        }
 
-        if (isNetworkAvailable()){
-            toast.setText("There is Internet 2");
-            toast.show();
-        }
-        else{
-            toast.setText("No Internet 2");
-            toast.show();
-
-        }*/
     }
 
     public void timeClick(View view){
@@ -470,18 +539,460 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
 
     }
 
+    public void slideshow() {
+
+        /*toast.setText("Proverbs change after 6 seconds");
+        toast.show();*/
+        slideshowBool = true;
+
+        count = 0;
+        handler1.postDelayed(ranable, 2);
+
+        /*slideshowBool = true;
+
+        if (slideshowBool){
+            count = position;
+            handler1.postDelayed(ranable, 2);
+        }*/
+
+    }
+
+    public void slideshow(View v) {
+
+        playButton.setVisibility(View.INVISIBLE);
+        pauseButton.setVisibility(View.VISIBLE);
+
+        handler1.postDelayed(ranable, 2);
+
+        slideshowBool = true;
+            /*
+        if (slideshowBool){
+            count = position;
+            handler1.postDelayed(ranable, 2);
+        }*/
+
+    }
+
+
+    public void pauseSlideshow(View view) {
+
+        //Log.i("Mee1","Hi b4pause"+ count);
+        count--;
+        // Log.i("Mee1","Hi pause"+ count);
+
+        pauseButton.setVisibility(View.INVISIBLE);
+        pauseButton.setVisibility(View.INVISIBLE);
+        playButton.setVisibility(View.VISIBLE);
+
+        toast.setText("Paused");
+        toast.show();
+
+        //slideshowBool = false;
+
+        if (handler1 !=null){
+            handler1.removeCallbacks(ranable);
+        }
+        if (playFromDevice!=null){
+            playFromDevice.stop();
+        }
+
+
+
+        //proverbsViewFlipper.getChildCount();
+    }
+    public void pauseSlideshow() {
+
+        pauseButton.setVisibility(View.INVISIBLE);
+        pauseButton.setVisibility(View.INVISIBLE);
+        playButton.setVisibility(View.VISIBLE);
+
+
+        //slideshowBool = false;
+
+        if (handler1 !=null){
+            handler1.removeCallbacks(ranable);
+        }
+        if (playFromDevice!=null){
+            playFromDevice.stop();
+        }
+
+
+
+        //proverbsViewFlipper.getChildCount();
+    }
+
+    public void previous (View view){
+        pauseSlideshow();
+        //proverbsViewFlipper.showPrevious();
+
+        Log.i("Mee1","Hi b4"+ count);
+        // count = count-1;
+        if (!slideshowBool){
+            if (count!=0){
+                count--;
+            }
+        }
+        else{
+            if (count>=2){
+                count= count-2;
+            }
+            slideshowBool = false;
+        }
+
+        Log.i("Mee1","Hi after "+ count);
+        // int position = proverbsViewFlipper.getDisplayedChild();
+
+        String c = familyArrayList.get(count).getTwiFamily();
+        String a = familyArrayList.get(count).getEnglishFamily();
+
+        btSlideText.setText(c);
+        tvNumberWord.setText(a);
+
+        String b = PlayFromFirebase.viewTextConvert(c);
+
+        if (unMuted){
+            playFromFileOrDownload(b);
+        }
+        else{
+            toast.setText("Sound Muted");
+            toast.show();
+        }
+
+       /* if (unMuted){
+            playFromFileOrDownload(b, a);
+        }*/
+
+    }
+
+    public void next(View view){
+        pauseSlideshow();
+        //proverbsViewFlipper.stopFlipping();
+        Log.i("Mee1","Hi next b4 "+ count);
+        if (!slideshowBool){
+            count++;
+        }
+        else{
+            slideshowBool = false;
+        }
+
+
+        Log.i("Mee1","Hi next after"+ count);
+
+
+        if (count>=familyArrayList.size()-1){
+            count = familyArrayList.size()-1;
+            toast.setText("The End");
+            toast.show();
+
+        }
+
+        Log.i("Mee1","Hi next2 after"+ count);
+
+        String c = familyArrayList.get(count).getTwiFamily();
+        String a = familyArrayList.get(count).getEnglishFamily();
+
+
+        btSlideText.setText(c);
+        tvNumberWord.setText(a);
+
+        String b = PlayFromFirebase.viewTextConvert(c);
+        if (unMuted){
+            playFromFileOrDownload(b);
+        }
+        else{
+            toast.setText("Sound Muted");
+            toast.show();
+        }
+
+
+    }
+
+    public void advert1() {
+
+        /*final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
+        //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
+        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
+
+        assert advertPreference != null;
+        if (advertPreference.equals("Yes")) {*/
+
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        //ca-app-pub-7384642419407303/9880404420
+        //ca-app-pub-3940256099942544/1033173712 test
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub_pfamily_one);
+        setContentView(R.layout.activity_sub_pfamily_two);
 
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
         isNetworkAvailable();
+
+        mAdView1 = findViewById(R.id.adView1);
+
+        if (MainActivity.Subscribed != 1){
+
+            random = new Random();
+            showAdProbability = random.nextInt(10);
+
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+            //Toast.makeText(this, "Show Advert: " +  proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+
+            AdRequest adRequest1 = new AdRequest.Builder().build();
+            mAdView1.loadAd(adRequest1);
+
+
+            /*public InterstitialAd mInterstitialAd;
+            Random random;
+            int showAdProbability;
+            AdView mAdView1;*/
+        }
+        else{
+            mAdView1.setVisibility(View.GONE);
+            // Toast.makeText(this, "No Advert: " +  proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
+            //addProverbs();
+        }
+
+        btSlideText = findViewById(R.id.btSlideText);
+        tvStartSlideShow = findViewById(R.id.tvStartSlideshow);
+        tvNumberWord = findViewById(R.id.tvNumberWord);
+        pauseButton = findViewById(R.id.pauseButton);
+        playButton = findViewById(R.id.playButton);
+        nextButton = findViewById(R.id.nextButton);
+        previousButton = findViewById(R.id.previousButton);
+        muteButton = findViewById(R.id.ivMuteButton);
+        unmuteButton = findViewById(R.id.ivUnMuteButton);
+
+        repeatButton = findViewById(R.id.repeatButton);
+
+        repeatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (MainActivity.Subscribed != 1){
+                    Toast.makeText(SubPFamilyActivity.this, "Repeat All Feature \n Only For Premium Users", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    repeat = !repeat;
+                    if (repeat){
+                        repeatButton.setBackgroundColor(Color.GREEN);
+                        toast.setText("REPEAT ALL\n ACTIVATED");
+                        toast.show();
+                    }
+                    else {
+                        repeatButton.setBackgroundColor(Color.WHITE);
+                        toast.setText("REPEAT ALL\n DEACTIVATED");
+                        toast.show();
+                    }
+                }
+            }
+        });
+
+        muteButton.setVisibility(View.INVISIBLE);
+        unmuteButton.setVisibility(View.INVISIBLE);
+
+        playButton.setVisibility(View.INVISIBLE);
+        repeatButton.setVisibility(View.INVISIBLE);
+        pauseButton.setVisibility(View.INVISIBLE);
+        nextButton.setVisibility(View.INVISIBLE);
+        previousButton.setVisibility(View.INVISIBLE);
+
+        tvNumberWord.setVisibility(View.INVISIBLE);
+        btSlideText.setVisibility(View.INVISIBLE);
+
+
+        handler1 = new Handler();
+        Handler handler2 = new Handler();
+
+        ranable = new Runnable() {
+            @Override
+            public void run() {
+                // String a = recycleArrayList.get(count).getTwiProverb();
+                if (count<= familyArrayList.size()-1){
+                    String a = familyArrayList.get(count).getTwiFamily();
+                    String c = familyArrayList.get(count).getEnglishFamily();
+
+                    btSlideText.setText(a);
+                    tvNumberWord.setText(c);
+
+                    String b = PlayFromFirebase.viewTextConvert(a);
+
+                    if (unMuted){
+                        playFromFileOrDownload(b);
+                    }
+
+                    //  Log.i("Mee1","Hi1 "+ count);
+                    count++;
+
+
+                    handler1.postDelayed(ranable, 3000);
+                }
+                else if(repeat){
+                    count =0;
+                    //repeat=false;
+                    handler1.postDelayed(ranable, 1000);
+                }
+                else{
+                    tvStartSlideShow.setText("Start Family Slideshow");
+                    foodListView.setVisibility(View.VISIBLE);
+                    tvStartSlideShow.setVisibility(View.VISIBLE);
+                    btSlideText.setVisibility(View.INVISIBLE);
+                    tvNumberWord.setVisibility(View.INVISIBLE);
+                    playButton.setVisibility(View.INVISIBLE);
+                    pauseButton.setVisibility(View.INVISIBLE);
+                    nextButton.setVisibility(View.INVISIBLE);
+                    previousButton.setVisibility(View.INVISIBLE);
+                    muteButton.setVisibility(View.INVISIBLE);
+                    unmuteButton.setVisibility(View.INVISIBLE);
+                    repeatButton.setVisibility(View.INVISIBLE);
+
+                }
+
+            }
+        };
+
+
+
+
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                slideshow(v);
+            }
+        });
+
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pauseSlideshow(v);
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (count<= familyArrayList.size()){
+                    System.out.println("Mee "+ familyArrayList.size() + ": " + count);
+                    next(v);
+                }
+
+            }
+        });
+
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                previous(v);
+            }
+        });
+
+        unmuteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                unMuted = true;
+                Toast.makeText(SubPFamilyActivity.this, "Sound Unmuted", Toast.LENGTH_SHORT).show();
+                muteButton.setVisibility(View.VISIBLE);
+                unmuteButton.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        muteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                unMuted = false;
+                Toast.makeText(SubPFamilyActivity.this, "Sound Muted", Toast.LENGTH_SHORT).show();
+                unmuteButton.setVisibility(View.VISIBLE);
+                muteButton.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        btSlideText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // foodListView.setVisibility(View.INVISIBLE);
+                //slideshow();
+                String c = btSlideText.getText().toString();
+                Toast.makeText(SubPFamilyActivity.this, c, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        tvStartSlideShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (tvStartSlideShow.getText().toString().toLowerCase().contains("end")){
+
+                    if (handler1 !=null){
+                        handler1.removeCallbacks(ranable);
+                    }
+                    if (playFromDevice!=null){
+                        playFromDevice.stop();
+                    }
+
+                    tvStartSlideShow.setText("Start Family Slideshow");
+                    foodListView.setVisibility(View.VISIBLE);
+                    tvStartSlideShow.setVisibility(View.VISIBLE);
+                    btSlideText.setVisibility(View.INVISIBLE);
+                    tvNumberWord.setVisibility(View.INVISIBLE);
+                    playButton.setVisibility(View.INVISIBLE);
+                    pauseButton.setVisibility(View.INVISIBLE);
+                    nextButton.setVisibility(View.INVISIBLE);
+                    previousButton.setVisibility(View.INVISIBLE);
+                    muteButton.setVisibility(View.INVISIBLE);
+                    unmuteButton.setVisibility(View.INVISIBLE);
+                    repeatButton.setVisibility(View.INVISIBLE);
+
+
+                }
+                else{
+                    foodListView.setVisibility(View.INVISIBLE);
+                    //tvStartSlideShow.setVisibility(View.INVISIBLE);
+                    tvStartSlideShow.setText("End Slideshow");
+                    tvNumberWord.setVisibility(View.VISIBLE);
+                    btSlideText.setVisibility(View.VISIBLE);
+                    playButton.setVisibility(View.VISIBLE);
+                    repeatButton.setVisibility(View.VISIBLE);
+                    repeatButton.setBackgroundColor(Color.WHITE);
+                    pauseButton.setVisibility(View.VISIBLE);
+                    nextButton.setVisibility(View.VISIBLE);
+                    previousButton.setVisibility(View.VISIBLE);
+                    if (unMuted){
+                        muteButton.setVisibility(View.VISIBLE);
+                        unmuteButton.setVisibility(View.INVISIBLE);
+                    }else{
+                        muteButton.setVisibility(View.INVISIBLE);
+                        unmuteButton.setVisibility(View.VISIBLE);
+                        Toast.makeText(SubPFamilyActivity.this, "Sound Muted", Toast.LENGTH_SHORT).show();
+                    }
+
+                    slideshow();
+                }
+
+            }
+        });
+
         convertAndPlay = new PlayFromFirebase();
-
-
         foodListView = findViewById(R.id.familyRecyclerView);
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -508,5 +1019,40 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
         //Toast.makeText(this,recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood, Toast.LENGTH_SHORT).show();
 
         playFromFileOrDownload(b, a);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (handler1 !=null){
+            handler1.removeCallbacks(ranable);
+        }
+        if (playFromDevice!=null){
+            playFromDevice.stop();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (handler1 !=null){
+            handler1.removeCallbacks(ranable);
+        }
+        if (playFromDevice!=null){
+            playFromDevice.stop();
+        }
+
+        Random random = new Random();
+        int prob = random.nextInt(10);
+
+        if (MainActivity.Subscribed != 1) {
+
+            if (prob < 7) {
+                Log.i("advert", "came");
+                advert1();
+                // advert1();
+            }
+        }
     }
 }
