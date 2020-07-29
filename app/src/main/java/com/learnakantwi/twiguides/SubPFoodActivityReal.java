@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -11,6 +13,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,24 +41,25 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-import static com.learnakantwi.twiguides.FamilyActivity.familyArrayList;
+import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
 
-
-public class SubPFamilyActivityReal extends AppCompatActivity implements FamilyAdapter_one.onClickRecycle {
+public class SubPFoodActivityReal extends AppCompatActivity implements FoodAdapter.onClickRecycle {
 
     RecyclerView foodListView;
+    PlayFromFirebase convertAndPlay;
+    FoodAdapter foodAdapter;
+    ArrayList<Food> recycleArrayList;
 
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
     AdView mAdView;
 
-    PlayFromFirebase convertAndPlay;
-    FamilyAdapter_one foodAdapter;
-    ArrayList<Family> recycleArrayList;
+
 
 
     Toast toast;
+
     boolean isRunning =false;
     public Runnable runnable = new Runnable() {
 
@@ -108,27 +113,17 @@ public class SubPFamilyActivityReal extends AppCompatActivity implements FamilyA
         }
     }
 
-   /* public boolean hasInternetAccess() {
-
-        Thread myThread = new Thread(runnable);
-        myThread.start();
-        return isRunning;
-    }*/
 
     public void downloadClick () {
         int counter = 0;
         int counter1 =0;
 
         if (isNetworkAvailable()) {
-            for (int j = 0; j < familyArrayList.size(); j++) {
+            for (int j = 0; j < foodArrayList.size(); j++) {
 
-                /*String bb = familyArrayList.get(j).getTwiFamily();
-                bb= bb.toLowerCase();*/
-
-                String c = familyArrayList.get(j).getTwiFamily().toLowerCase();
-
-                String bb= PlayFromFirebase.viewTextConvert(c);
-             /*   boolean dd = bb.contains("ɔ");
+                String bb = foodArrayList.get(j).getTwiFood();
+                bb= bb.toLowerCase();
+                boolean dd = bb.contains("ɔ");
                 boolean ee = bb.contains("ɛ");
                 if (dd || ee) {
                     bb = bb.replace("ɔ", "x");
@@ -144,13 +139,13 @@ public class SubPFamilyActivityReal extends AppCompatActivity implements FamilyA
                     bb = bb.replace("-", "");
                     bb = bb.replace("?", "");
                     bb = bb.replace("'", "");
-                }*/
+                }
                 File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
                 if (myFiles.exists()) {
                     counter++;
                 }
             }
-            if (counter == familyArrayList.size()) {
+            if (counter == foodArrayList.size()) {
                 toast.setText("All downloaded");
                 toast.show();
 
@@ -158,10 +153,25 @@ public class SubPFamilyActivityReal extends AppCompatActivity implements FamilyA
                 toast.setText("Downloading...");
                 toast.show();
 
-                for (int i = 0; i < familyArrayList.size(); i++) {
-                    String c = familyArrayList.get(i).getTwiFamily().toLowerCase();
+                for (int i = 0; i < foodArrayList.size(); i++) {
+                    String b = foodArrayList.get(i).getTwiFood().toLowerCase();
+                    boolean d = b.contains("ɔ");
+                    boolean e = b.contains("ɛ");
+                    if (d || e) {
+                        b = b.replace("ɔ", "x");
+                        b = b.replace("ɛ", "q");
+                    }
 
-                    String b= PlayFromFirebase.viewTextConvert(c);
+                    if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") || b.contains("?") || b.contains("'")) {
+                        b = b.replace(" ", "");
+                        b = b.replace("/", "");
+                        b = b.replace(",", "");
+                        b = b.replace("(", "");
+                        b = b.replace(")", "");
+                        b = b.replace("-", "");
+                        b = b.replace("?", "");
+                        b = b.replace("'", "");
+                    }
 
                     File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + b + ".m4a");
                     if (!myFile.exists()) {
@@ -212,12 +222,13 @@ public class SubPFamilyActivityReal extends AppCompatActivity implements FamilyA
                                     try {
                                         mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
                                         mp1.prepareAsync();
-                                        mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                        mp1.setOnPreparedListener(MediaPlayer::start);
+                                        /*mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                                             @Override
                                             public void onPrepared(MediaPlayer mp) {
                                                 mp.start();
                                             }
-                                        });
+                                        });*/
                                     } catch (IOException ex) {
                                         ex.printStackTrace();
                                     }
@@ -378,34 +389,29 @@ public class SubPFamilyActivityReal extends AppCompatActivity implements FamilyA
             case R.id.main:
                 goToMain();
                 return  true;
-            case R.id.quiz1:
-                goToQuizFamily();
-                return  true;
+            case R.id.videoCourse:
+                goToWeb();
             case R.id.downloadAudio:
                 downloadClick();
                 return true;
-            case R.id.videoCourse:
-                //Log.i("Menu Item Selected", "Alphabets");
-                goToWeb();
-                return  true;
+            case R.id.quiz1:
+                goToQuizFood();
             default:
                 return false;
         }
     }
 
-
-    public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
-        startActivity(intent);
-    }
     public void goToWeb() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
         startActivity(intent);
     }
 
-
-    public void goToQuizFamily() {
-        Intent intent = new Intent(getApplicationContext(), QuizFamily.class);
+    public void goToMain(){
+        Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+        startActivity(intent);
+    }
+    public void goToQuizFood() {
+        Intent intent = new Intent(getApplicationContext(), QuizFood.class);
         startActivity(intent);
     }
 
@@ -417,27 +423,9 @@ public class SubPFamilyActivityReal extends AppCompatActivity implements FamilyA
 
         toast.setText(a);
         toast.show();
-
-       /* if (isNetworkAvailable()){
-            Toast.makeText(this, "There is Internet 1", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(this, "No Internet 1", Toast.LENGTH_SHORT).show();
-        }
-
-        if (isNetworkAvailable()){
-            toast.setText("There is Internet 2");
-            toast.show();
-        }
-        else{
-            toast.setText("No Internet 2");
-            toast.show();
-
-        }*/
     }
 
     public void timeClick(View view){
-
 
         int idview= view.getId();
 
@@ -454,12 +442,17 @@ public class SubPFamilyActivityReal extends AppCompatActivity implements FamilyA
             b= b.replace("ɛ","q");
         }
 
-        if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("'")) {
+
+        if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") | b.contains("?")) {
             b = b.replace(" ", "");
             b = b.replace("/", "");
             b= b.replace(",","");
-            b= b.replace("'","");
+            b= b.replace("(","");
+            b= b.replace(")","");
+            b= b.replace("-","");
+            b= b.replace("?","");
         }
+
         playFromFileOrDownload(b,a);
 
     }
@@ -469,23 +462,25 @@ public class SubPFamilyActivityReal extends AppCompatActivity implements FamilyA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_pfamily_one);
 
+        isNetworkAvailable();
+
+
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
-        isNetworkAvailable();
         convertAndPlay = new PlayFromFirebase();
-
 
         foodListView = findViewById(R.id.familyRecyclerView);
         storageReference = FirebaseStorage.getInstance().getReference();
 
         recycleArrayList = new ArrayList<>();
-        recycleArrayList.addAll(familyArrayList);
+        recycleArrayList.addAll(foodArrayList);
 
-        foodAdapter = new FamilyAdapter_one(this, recycleArrayList, this);
+        foodAdapter = new FoodAdapter(this, recycleArrayList, this);
         foodListView.setAdapter(foodAdapter);
 
         foodListView.setLayoutManager(new LinearLayoutManager(this));
+
 
 
 
@@ -493,11 +488,29 @@ public class SubPFamilyActivityReal extends AppCompatActivity implements FamilyA
 
     @Override
     public void onMyItemClick(int position, View view) {
-        String b = recycleArrayList.get(position).twiFamily;
+        String b = recycleArrayList.get(position).twiFood;
+
+        TextView tvEnglish = view.findViewById(R.id.textViewEnglish);
+        TextView tvTwi = view.findViewById(R.id.textViewTwi);
+
+        ColorStateList oldColor = tvEnglish.getTextColors();
+       // tvTwi.getTextColors();
+
+        tvEnglish.setTextColor(Color.BLACK);
+        tvTwi.setTextColor(Color.BLACK);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("Here1","I'm here");
+                tvEnglish.setTextColor(oldColor);
+                tvTwi.setTextColor(oldColor);
+            }
+        },1500);
+
 
         b = PlayFromFirebase.viewTextConvert(b);
 
-        String a = recycleArrayList.get(position).englishFamily+" is: "+ recycleArrayList.get(position).getTwiFamily();
+        String a = recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood;
 
         //Toast.makeText(this,recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood, Toast.LENGTH_SHORT).show();
 

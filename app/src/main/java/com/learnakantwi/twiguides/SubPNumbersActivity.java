@@ -47,6 +47,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.learnakantwi.twiguides.FamilyActivity.familyArrayList;
 import static com.learnakantwi.twiguides.NumbersActivity.numbersArrayList;
 import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
 
@@ -56,9 +57,6 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
     Numbers numbers;
 
     public InterstitialAd mInterstitialAd;
-    AdView mAdView1;
-    Random random;
-    int showAdProbability;
 
     RecyclerView foodListView;
     PlayFromFirebase convertAndPlay;
@@ -71,10 +69,6 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
 
     AdView mAdView;
 
-    Button btSlideText;
-    TextView tvStartSlideShow;
-    TextView tvNumberWord;
-
     Handler handler1;
     Runnable ranable;
 
@@ -85,12 +79,23 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
     ImageButton muteButton;
     ImageButton unmuteButton;
     ImageButton repeatButton;
-
+    ImageButton repeatOne;
     Boolean slideshowBool = false;
     Boolean unMuted = true;
+    Boolean repeat = false;
+    Boolean repeat1 = false;
+    Button btSlideText;
+    TextView tvStartSlideShow;
+    TextView tvNumberWord;
+
+    AdView mAdView1;
+    Random random;
+
+
+    long delayTime=3000;
+    int showAdProbability;
 
     int count= 0;
-
 
     Toast toast;
     private boolean isNetworkAvailable() {
@@ -733,8 +738,8 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_pfamily_two);
 
-        repeatButton = findViewById(R.id.repeatButton);
-        repeatButton.setVisibility(View.GONE);
+    /*    repeatButton = findViewById(R.id.repeatButton);
+        repeatButton.setVisibility(View.GONE);*/
 
 
         isNetworkAvailable();
@@ -783,12 +788,15 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
         previousButton = findViewById(R.id.previousButton);
         muteButton = findViewById(R.id.ivMuteButton);
         unmuteButton = findViewById(R.id.ivUnMuteButton);
-
+        repeatButton = findViewById(R.id.repeatButton);
+        repeatOne = findViewById(R.id.repeatOne);
 
         muteButton.setVisibility(View.INVISIBLE);
         unmuteButton.setVisibility(View.INVISIBLE);
 
         playButton.setVisibility(View.INVISIBLE);
+        repeatButton.setVisibility(View.INVISIBLE);
+        repeatOne.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
         nextButton.setVisibility(View.INVISIBLE);
         previousButton.setVisibility(View.INVISIBLE);
@@ -797,6 +805,55 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
         btSlideText.setVisibility(View.INVISIBLE);
 
 
+
+        repeatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (MainActivity.Subscribed != 1){
+                    Toast.makeText(SubPNumbersActivity.this, "Repeat All Feature \n Only For Premium Users", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    repeat = !repeat;
+                    if (repeat){
+                        repeatButton.setBackgroundColor(Color.GREEN);
+                        repeatOne.setBackgroundColor(Color.WHITE);
+                        repeat1=false;
+                        toast.setText("REPEAT ALL\n ACTIVATED");
+                        toast.show();
+                    }
+                    else {
+                        repeatButton.setBackgroundColor(Color.WHITE);
+                        toast.setText("REPEAT ALL\n DEACTIVATED");
+                        toast.show();
+                    }
+                }
+            }
+        });
+
+        repeatOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (MainActivity.Subscribed != 1){
+                    Toast.makeText(SubPNumbersActivity.this, "Repeat All Feature \n Only For Premium Users", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    repeat1 = !repeat1;
+                    if (repeat1){
+                        repeat=false;
+                        repeatOne.setBackgroundColor(Color.GREEN);
+                        repeatButton.setBackgroundColor(Color.WHITE);
+                        toast.setText("REPEAT SELECTED\n ACTIVATED");
+                        toast.show();
+                    }
+                    else {
+                        repeatOne.setBackgroundColor(Color.WHITE);
+                        toast.setText("REPEAT SELECTED\n DEACTIVATED");
+                        toast.show();
+                    }
+                }
+            }
+        });
+
         handler1 = new Handler();
         Handler handler2 = new Handler();
 
@@ -804,12 +861,12 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
             @Override
             public void run() {
                 // String a = recycleArrayList.get(count).getTwiProverb();
-                if (count<= 120){
-                    String a = numbersArrayList.get(count).getNumberWord();
-                    String c = numbersArrayList.get(count).getFigure();
+                if (repeat1){
+                    String a = numbersArrayList.get(count-1).getNumberWord();
+                    String c = numbersArrayList.get(count-1).getFigure();
 
-                    btSlideText.setText(c);
-                    tvNumberWord.setText(a);
+                    btSlideText.setText(a);
+                    tvNumberWord.setText(c);
 
                     String b = PlayFromFirebase.viewTextConvert(a);
 
@@ -817,26 +874,63 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
                         playFromFileOrDownload(b);
                     }
 
-                  //  Log.i("Mee1","Hi1 "+ count);
-                    count++;
+                    if(b.length()>15){
+                        delayTime=6000;
+                    }else{
+                        delayTime=3000;
+                    }
 
-
-                    handler1.postDelayed(ranable, 3000);
+                    handler1.postDelayed(ranable, delayTime);
                 }
                 else{
-                    tvStartSlideShow.setText("Start Number Slideshow");
-                    foodListView.setVisibility(View.VISIBLE);
-                    tvStartSlideShow.setVisibility(View.VISIBLE);
-                    btSlideText.setVisibility(View.INVISIBLE);
-                    tvNumberWord.setVisibility(View.INVISIBLE);
-                    playButton.setVisibility(View.INVISIBLE);
-                    pauseButton.setVisibility(View.INVISIBLE);
-                    nextButton.setVisibility(View.INVISIBLE);
-                    previousButton.setVisibility(View.INVISIBLE);
-                    muteButton.setVisibility(View.INVISIBLE);
-                    unmuteButton.setVisibility(View.INVISIBLE);
+                    if (count<= numbersArrayList.size()-1){
+                        String a = numbersArrayList.get(count).getNumberWord();
+                        String c = numbersArrayList.get(count).getFigure();
 
+                        btSlideText.setText(a);
+                        tvNumberWord.setText(c);
+
+                        String b = PlayFromFirebase.viewTextConvert(a);
+
+                        if (unMuted){
+                            playFromFileOrDownload(b);
+                        }
+
+                        if(b.length()>15){
+                            delayTime=6000;
+                        }else{
+                            delayTime=3000;
+                        }
+                        //  Log.i("Mee1","Hi1 "+ count);
+                        count++;
+
+
+                        handler1.postDelayed(ranable, delayTime);
+                    }
+                    else if(repeat){
+                        count =0;
+                        //repeat=false;
+
+                        handler1.postDelayed(ranable, 1000);
+                    }
+                    else{
+                        tvStartSlideShow.setText("Start Number Slideshow");
+                        foodListView.setVisibility(View.VISIBLE);
+                        tvStartSlideShow.setVisibility(View.VISIBLE);
+                        btSlideText.setVisibility(View.INVISIBLE);
+                        tvNumberWord.setVisibility(View.INVISIBLE);
+                        playButton.setVisibility(View.INVISIBLE);
+                        pauseButton.setVisibility(View.INVISIBLE);
+                        nextButton.setVisibility(View.INVISIBLE);
+                        previousButton.setVisibility(View.INVISIBLE);
+                        muteButton.setVisibility(View.INVISIBLE);
+                        unmuteButton.setVisibility(View.INVISIBLE);
+                        repeatButton.setVisibility(View.INVISIBLE);
+                        repeatOne.setVisibility(View.INVISIBLE);
+
+                    }
                 }
+
 
             }
         };
@@ -926,7 +1020,7 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
                         playFromDevice.stop();
                     }
 
-                    tvStartSlideShow.setText("Start Number Slideshow");
+                    tvStartSlideShow.setText("Start Family Slideshow");
                     foodListView.setVisibility(View.VISIBLE);
                     tvStartSlideShow.setVisibility(View.VISIBLE);
                     btSlideText.setVisibility(View.INVISIBLE);
@@ -937,6 +1031,8 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
                     previousButton.setVisibility(View.INVISIBLE);
                     muteButton.setVisibility(View.INVISIBLE);
                     unmuteButton.setVisibility(View.INVISIBLE);
+                    repeatButton.setVisibility(View.INVISIBLE);
+                    repeatOne.setVisibility(View.INVISIBLE);
 
 
                 }
@@ -947,6 +1043,10 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
                     tvNumberWord.setVisibility(View.VISIBLE);
                     btSlideText.setVisibility(View.VISIBLE);
                     playButton.setVisibility(View.VISIBLE);
+                    repeatButton.setVisibility(View.VISIBLE);
+                    repeatButton.setBackgroundColor(Color.WHITE);
+                    repeatOne.setVisibility(View.VISIBLE);
+                    repeatOne.setBackgroundColor(Color.WHITE);
                     pauseButton.setVisibility(View.VISIBLE);
                     nextButton.setVisibility(View.VISIBLE);
                     previousButton.setVisibility(View.VISIBLE);

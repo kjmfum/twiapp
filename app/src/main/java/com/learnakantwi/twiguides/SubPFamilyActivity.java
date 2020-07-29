@@ -75,9 +75,11 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
     ImageButton muteButton;
     ImageButton unmuteButton;
     ImageButton repeatButton;
+    ImageButton repeatOne;
     Boolean slideshowBool = false;
     Boolean unMuted = true;
     Boolean repeat = false;
+    Boolean repeat1 = false;
     Button btSlideText;
     TextView tvStartSlideShow;
     TextView tvNumberWord;
@@ -86,6 +88,8 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
     AdView mAdView1;
     Random random;
 
+
+    long delayTime=3000;
     int showAdProbability;
 
     int count= 0;
@@ -425,17 +429,6 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
             @Override
             public boolean onQueryTextChange(String newText) {
                 foodAdapter.getFilter().filter(newText);
-              /*  ArrayList<Food> results = new ArrayList<>();
-                for (Food x: foodArrayList ){
-
-                    if(x.getEnglishFood().toLowerCase().contains(newText.toLowerCase()) || x.getTwiFood().toLowerCase().contains(newText.toLowerCase())){
-                        results.add(x);
-                    }
-
-                   // ((FoodAdapter)foodListView.getAdapter()).update(results);
-                }*/
-
-
                 return false;
             }
         });
@@ -782,8 +775,23 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
         previousButton = findViewById(R.id.previousButton);
         muteButton = findViewById(R.id.ivMuteButton);
         unmuteButton = findViewById(R.id.ivUnMuteButton);
-
         repeatButton = findViewById(R.id.repeatButton);
+        repeatOne = findViewById(R.id.repeatOne);
+
+        muteButton.setVisibility(View.INVISIBLE);
+        unmuteButton.setVisibility(View.INVISIBLE);
+
+        playButton.setVisibility(View.INVISIBLE);
+        repeatButton.setVisibility(View.INVISIBLE);
+        repeatOne.setVisibility(View.INVISIBLE);
+        pauseButton.setVisibility(View.INVISIBLE);
+        nextButton.setVisibility(View.INVISIBLE);
+        previousButton.setVisibility(View.INVISIBLE);
+
+        tvNumberWord.setVisibility(View.INVISIBLE);
+        btSlideText.setVisibility(View.INVISIBLE);
+
+
 
         repeatButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -795,6 +803,8 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
                     repeat = !repeat;
                     if (repeat){
                         repeatButton.setBackgroundColor(Color.GREEN);
+                        repeatOne.setBackgroundColor(Color.WHITE);
+                        repeat1=false;
                         toast.setText("REPEAT ALL\n ACTIVATED");
                         toast.show();
                     }
@@ -807,17 +817,31 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
             }
         });
 
-        muteButton.setVisibility(View.INVISIBLE);
-        unmuteButton.setVisibility(View.INVISIBLE);
+        repeatOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (MainActivity.Subscribed != 1){
+                    Toast.makeText(SubPFamilyActivity.this, "Repeat All Feature \n Only For Premium Users", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    repeat1 = !repeat1;
+                    if (repeat1){
+                        repeat=false;
+                        repeatOne.setBackgroundColor(Color.GREEN);
+                        repeatButton.setBackgroundColor(Color.WHITE);
+                        toast.setText("REPEAT SELECTED\n ACTIVATED");
+                        toast.show();
+                    }
+                    else {
+                        repeatOne.setBackgroundColor(Color.WHITE);
+                        toast.setText("REPEAT SELECTED\n DEACTIVATED");
+                        toast.show();
+                    }
+                }
+            }
+        });
 
-        playButton.setVisibility(View.INVISIBLE);
-        repeatButton.setVisibility(View.INVISIBLE);
-        pauseButton.setVisibility(View.INVISIBLE);
-        nextButton.setVisibility(View.INVISIBLE);
-        previousButton.setVisibility(View.INVISIBLE);
 
-        tvNumberWord.setVisibility(View.INVISIBLE);
-        btSlideText.setVisibility(View.INVISIBLE);
 
 
         handler1 = new Handler();
@@ -827,9 +851,9 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
             @Override
             public void run() {
                 // String a = recycleArrayList.get(count).getTwiProverb();
-                if (count<= familyArrayList.size()-1){
-                    String a = familyArrayList.get(count).getTwiFamily();
-                    String c = familyArrayList.get(count).getEnglishFamily();
+                if (repeat1){
+                    String a = familyArrayList.get(count-1).getTwiFamily();
+                    String c = familyArrayList.get(count-1).getEnglishFamily();
 
                     btSlideText.setText(a);
                     tvNumberWord.setText(c);
@@ -840,32 +864,63 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
                         playFromFileOrDownload(b);
                     }
 
-                    //  Log.i("Mee1","Hi1 "+ count);
-                    count++;
+                    if(b.length()>15){
+                        delayTime=6000;
+                    }else{
+                        delayTime=3000;
+                    }
 
-
-                    handler1.postDelayed(ranable, 3000);
-                }
-                else if(repeat){
-                    count =0;
-                    //repeat=false;
-                    handler1.postDelayed(ranable, 1000);
+                    handler1.postDelayed(ranable, delayTime);
                 }
                 else{
-                    tvStartSlideShow.setText("Start Family Slideshow");
-                    foodListView.setVisibility(View.VISIBLE);
-                    tvStartSlideShow.setVisibility(View.VISIBLE);
-                    btSlideText.setVisibility(View.INVISIBLE);
-                    tvNumberWord.setVisibility(View.INVISIBLE);
-                    playButton.setVisibility(View.INVISIBLE);
-                    pauseButton.setVisibility(View.INVISIBLE);
-                    nextButton.setVisibility(View.INVISIBLE);
-                    previousButton.setVisibility(View.INVISIBLE);
-                    muteButton.setVisibility(View.INVISIBLE);
-                    unmuteButton.setVisibility(View.INVISIBLE);
-                    repeatButton.setVisibility(View.INVISIBLE);
+                    if (count<= familyArrayList.size()-1){
+                        String a = familyArrayList.get(count).getTwiFamily();
+                        String c = familyArrayList.get(count).getEnglishFamily();
 
+                        btSlideText.setText(a);
+                        tvNumberWord.setText(c);
+
+                        String b = PlayFromFirebase.viewTextConvert(a);
+
+                        if (unMuted){
+                            playFromFileOrDownload(b);
+                        }
+
+                        if(b.length()>15){
+                            delayTime=6000;
+                        }else{
+                            delayTime=3000;
+                        }
+                        //  Log.i("Mee1","Hi1 "+ count);
+                        count++;
+
+
+                        handler1.postDelayed(ranable, delayTime);
+                    }
+                    else if(repeat){
+                        count =0;
+                        //repeat=false;
+
+                        handler1.postDelayed(ranable, 1000);
+                    }
+                    else{
+                        tvStartSlideShow.setText("Start Family Slideshow");
+                        foodListView.setVisibility(View.VISIBLE);
+                        tvStartSlideShow.setVisibility(View.VISIBLE);
+                        btSlideText.setVisibility(View.INVISIBLE);
+                        tvNumberWord.setVisibility(View.INVISIBLE);
+                        playButton.setVisibility(View.INVISIBLE);
+                        pauseButton.setVisibility(View.INVISIBLE);
+                        nextButton.setVisibility(View.INVISIBLE);
+                        previousButton.setVisibility(View.INVISIBLE);
+                        muteButton.setVisibility(View.INVISIBLE);
+                        unmuteButton.setVisibility(View.INVISIBLE);
+                        repeatButton.setVisibility(View.INVISIBLE);
+                        repeatOne.setVisibility(View.INVISIBLE);
+
+                    }
                 }
+
 
             }
         };
@@ -962,6 +1017,7 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
                     muteButton.setVisibility(View.INVISIBLE);
                     unmuteButton.setVisibility(View.INVISIBLE);
                     repeatButton.setVisibility(View.INVISIBLE);
+                    repeatOne.setVisibility(View.INVISIBLE);
 
 
                 }
@@ -974,6 +1030,8 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
                     playButton.setVisibility(View.VISIBLE);
                     repeatButton.setVisibility(View.VISIBLE);
                     repeatButton.setBackgroundColor(Color.WHITE);
+                    repeatOne.setVisibility(View.VISIBLE);
+                    repeatOne.setBackgroundColor(Color.WHITE);
                     pauseButton.setVisibility(View.VISIBLE);
                     nextButton.setVisibility(View.VISIBLE);
                     previousButton.setVisibility(View.VISIBLE);
