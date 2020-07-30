@@ -48,6 +48,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static com.learnakantwi.twiguides.FamilyActivity.familyArrayList;
+import static com.learnakantwi.twiguides.MainActivity.largeFont;
+import static com.learnakantwi.twiguides.MainActivity.longDelay;
+import static com.learnakantwi.twiguides.MainActivity.shortDelay;
+import static com.learnakantwi.twiguides.MainActivity.smallFont;
+import static com.learnakantwi.twiguides.MainActivity.textLength;
 import static com.learnakantwi.twiguides.NumbersActivity.numbersArrayList;
 import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
 
@@ -71,6 +76,8 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
 
     Handler handler1;
     Runnable ranable;
+
+    String textSlideshow = "Start Numbers Slideshow";
 
     ImageButton playButton;
     ImageButton pauseButton;
@@ -663,6 +670,13 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
 
         String b = PlayFromFirebase.viewTextConvert(a);
 
+        if(b.length()>textLength){
+            btSlideText.setTextSize(smallFont);
+
+        }else{
+            btSlideText.setTextSize(largeFont);
+        }
+
         if (unMuted){
             playFromFileOrDownload(b);
         }
@@ -699,6 +713,13 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
         tvNumberWord.setText(a);
 
         String b = PlayFromFirebase.viewTextConvert(a);
+
+        if(b.length()>textLength){
+            btSlideText.setTextSize(smallFont);
+
+        }else{
+            btSlideText.setTextSize(largeFont);
+        }
         if (unMuted){
             playFromFileOrDownload(b);
         }
@@ -865,8 +886,9 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
                     String a = numbersArrayList.get(count-1).getNumberWord();
                     String c = numbersArrayList.get(count-1).getFigure();
 
-                    btSlideText.setText(a);
-                    tvNumberWord.setText(c);
+
+                    btSlideText.setText(c);
+                    tvNumberWord.setText(a);
 
                     String b = PlayFromFirebase.viewTextConvert(a);
 
@@ -874,10 +896,13 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
                         playFromFileOrDownload(b);
                     }
 
-                    if(b.length()>15){
-                        delayTime=6000;
+                    if(b.length()>textLength){
+                        btSlideText.setTextSize(smallFont);
+
+                        delayTime= longDelay;
                     }else{
-                        delayTime=3000;
+                        delayTime=shortDelay;
+                        btSlideText.setTextSize(largeFont);
                     }
 
                     handler1.postDelayed(ranable, delayTime);
@@ -887,8 +912,8 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
                         String a = numbersArrayList.get(count).getNumberWord();
                         String c = numbersArrayList.get(count).getFigure();
 
-                        btSlideText.setText(a);
-                        tvNumberWord.setText(c);
+                        btSlideText.setText(c);
+                        tvNumberWord.setText(a);
 
                         String b = PlayFromFirebase.viewTextConvert(a);
 
@@ -896,10 +921,13 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
                             playFromFileOrDownload(b);
                         }
 
-                        if(b.length()>15){
-                            delayTime=6000;
+                        if(b.length()>textLength){
+                            btSlideText.setTextSize(smallFont);
+
+                            delayTime= longDelay;
                         }else{
-                            delayTime=3000;
+                            delayTime=shortDelay;
+                            btSlideText.setTextSize(largeFont);
                         }
                         //  Log.i("Mee1","Hi1 "+ count);
                         count++;
@@ -914,7 +942,7 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
                         handler1.postDelayed(ranable, 1000);
                     }
                     else{
-                        tvStartSlideShow.setText("Start Number Slideshow");
+                        tvStartSlideShow.setText(textSlideshow);
                         foodListView.setVisibility(View.VISIBLE);
                         tvStartSlideShow.setVisibility(View.VISIBLE);
                         btSlideText.setVisibility(View.INVISIBLE);

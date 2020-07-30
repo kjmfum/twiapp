@@ -51,10 +51,17 @@ import java.util.Random;
 
 import static com.learnakantwi.twiguides.FamilyActivity.familyArrayList;
 import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
+import static com.learnakantwi.twiguides.MainActivity.largeFont;
+import static com.learnakantwi.twiguides.MainActivity.longDelay;
+import static com.learnakantwi.twiguides.MainActivity.shortDelay;
+import static com.learnakantwi.twiguides.MainActivity.smallFont;
+import static com.learnakantwi.twiguides.MainActivity.textLength;
 import static com.learnakantwi.twiguides.NumbersActivity.numbersArrayList;
 
 
 public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapter_one.onClickRecycle {
+
+
 
     RecyclerView foodListView;
 
@@ -91,6 +98,7 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
 
     long delayTime=3000;
     int showAdProbability;
+
 
     int count= 0;
 
@@ -328,58 +336,6 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
         }
     }
 
-    public void playFromFileOrDownload(final String filename){
-        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
-        if (myFile.exists()){
-
-            try {
-                if (playFromDevice != null){
-                    playFromDevice.stop();
-                    playFromDevice.reset();
-                    playFromDevice.release();
-                }
-                playFromDevice = new MediaPlayer();
-
-                playFromDevice.setDataSource(myFile.toString());
-                playFromDevice.prepareAsync();
-                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
-                        mp.start();
-                    }
-                });
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else {
-
-            if (isNetworkAvailable()){
-                final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
-                musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        String url = uri.toString();
-                        playFromFirebase(musicRef);
-                        downloadFile(getApplicationContext(), filename, ".m4a", url);
-                        //Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-            else {
-                toast.setText("Please connect to Internet to download audio");
-                toast.show();
-            }
-
-
-        }
-    }
-
     public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
 
         if (Build.VERSION.SDK_INT > 22) {
@@ -532,6 +488,58 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
 
     }
 
+    public void playFromFileOrDownload(final String filename){
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
+        if (myFile.exists()){
+
+            try {
+                if (playFromDevice != null){
+                    playFromDevice.stop();
+                    playFromDevice.reset();
+                    playFromDevice.release();
+                }
+                playFromDevice = new MediaPlayer();
+
+                playFromDevice.setDataSource(myFile.toString());
+                playFromDevice.prepareAsync();
+                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.start();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+
+            if (isNetworkAvailable()){
+                final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+                musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String url = uri.toString();
+                        playFromFirebase(musicRef);
+                        downloadFile(getApplicationContext(), filename, ".m4a", url);
+                        //Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else {
+                toast.setText("Please connect to Internet to download audio");
+                toast.show();
+            }
+
+
+        }
+    }
+
     public void slideshow() {
 
         /*toast.setText("Proverbs change after 6 seconds");
@@ -641,7 +649,15 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
         btSlideText.setText(c);
         tvNumberWord.setText(a);
 
+
         String b = PlayFromFirebase.viewTextConvert(c);
+
+        if(b.length()>textLength){
+            btSlideText.setTextSize(smallFont);
+
+        }else{
+            btSlideText.setTextSize(largeFont);
+        }
 
         if (unMuted){
             playFromFileOrDownload(b);
@@ -689,6 +705,13 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
         tvNumberWord.setText(a);
 
         String b = PlayFromFirebase.viewTextConvert(c);
+
+        if(b.length()>textLength){
+            btSlideText.setTextSize(smallFont);
+
+        }else{
+            btSlideText.setTextSize(largeFont);
+        }
         if (unMuted){
             playFromFileOrDownload(b);
         }
@@ -797,7 +820,9 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
             @Override
             public void onClick(View v) {
                 if (MainActivity.Subscribed != 1){
-                    Toast.makeText(SubPFamilyActivity.this, "Repeat All Feature \n Only For Premium Users", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SubPFamilyActivity.this, "Repeat All Feature \n Only For Premium Users", Toast.LENGTH_SHORT).show();
+                    toast.setText("Repeat All Feature \n Only For Premium Users");
+                    toast.show();
                 }
                 else{
                     repeat = !repeat;
@@ -821,7 +846,9 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
             @Override
             public void onClick(View view) {
                 if (MainActivity.Subscribed != 1){
-                    Toast.makeText(SubPFamilyActivity.this, "Repeat All Feature \n Only For Premium Users", Toast.LENGTH_SHORT).show();
+                    toast.setText("Repeat All Feature \n Only For Premium Users");
+                    toast.show();
+                    //Toast.makeText(SubPFamilyActivity.this, "Repeat All Feature \n Only For Premium Users", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     repeat1 = !repeat1;
@@ -840,8 +867,6 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
                 }
             }
         });
-
-
 
 
         handler1 = new Handler();
@@ -864,10 +889,13 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
                         playFromFileOrDownload(b);
                     }
 
-                    if(b.length()>15){
-                        delayTime=6000;
+                    if(b.length()>textLength){
+                        btSlideText.setTextSize(smallFont);
+
+                        delayTime= longDelay;
                     }else{
-                        delayTime=3000;
+                        delayTime=shortDelay;
+                        btSlideText.setTextSize(largeFont);
                     }
 
                     handler1.postDelayed(ranable, delayTime);
@@ -886,10 +914,12 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
                             playFromFileOrDownload(b);
                         }
 
-                        if(b.length()>15){
-                            delayTime=6000;
+                        if(b.length()> textLength){
+                            btSlideText.setTextSize(smallFont);
+                            delayTime= longDelay;
                         }else{
-                            delayTime=3000;
+                            delayTime=shortDelay;
+                            btSlideText.setTextSize(largeFont);
                         }
                         //  Log.i("Mee1","Hi1 "+ count);
                         count++;
@@ -924,10 +954,6 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
 
             }
         };
-
-
-
-
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -965,7 +991,8 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
             @Override
             public void onClick(View v) {
                 unMuted = true;
-                Toast.makeText(SubPFamilyActivity.this, "Sound Unmuted", Toast.LENGTH_SHORT).show();
+                toast.setText("Sound Unmuted");
+                toast.show();
                 muteButton.setVisibility(View.VISIBLE);
                 unmuteButton.setVisibility(View.INVISIBLE);
             }
@@ -976,7 +1003,9 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
             public void onClick(View v) {
 
                 unMuted = false;
-                Toast.makeText(SubPFamilyActivity.this, "Sound Muted", Toast.LENGTH_SHORT).show();
+                toast.setText("Sound Muted");
+                toast.show();
+                //Toast.makeText(SubPFamilyActivity.this, "Sound Muted", Toast.LENGTH_SHORT).show();
                 unmuteButton.setVisibility(View.VISIBLE);
                 muteButton.setVisibility(View.INVISIBLE);
             }
@@ -988,7 +1017,9 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
                 // foodListView.setVisibility(View.INVISIBLE);
                 //slideshow();
                 String c = btSlideText.getText().toString();
-                Toast.makeText(SubPFamilyActivity.this, c, Toast.LENGTH_SHORT).show();
+                toast.setText(c);
+                toast.show();
+
             }
         });
 

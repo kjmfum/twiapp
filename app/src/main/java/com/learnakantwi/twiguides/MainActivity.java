@@ -39,6 +39,13 @@ import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
 
 public class MainActivity extends AppCompatActivity implements PurchasesUpdatedListener, PurchaseHistoryResponseListener {
 
+    static float smallFont = 15;
+    static float largeFont = 40;
+    static int textLength = 15;
+    static long longDelay = 6000;
+    static long shortDelay = 3000;
+
+
     private NotificationManagerCompat notificationManager;
     private EditText editTextTitle;
     private EditText editTextMessage;
@@ -411,7 +418,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
         Lifetime = sharedPreferencesAds.getInt("Lifetime",5); //runtime
         Subscribed = sharedPreferencesAds.getInt("Sub", 5);
-       Lifetime = 1;  //Subscribed
+       //Lifetime = 1;  //Subscribed
       //  Lifetime = 5;
 
         //Toast.makeText(this, "My: "+ Lifetime, Toast.LENGTH_SHORT).show();

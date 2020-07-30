@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,26 +42,31 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
+import static com.learnakantwi.twiguides.TimeActivity.timeArrayList;
 
-public class SubPFoodActivityReal extends AppCompatActivity implements FoodAdapter.onClickRecycle {
+public class SubPTimeActivityReal extends AppCompatActivity implements RVTimeAdapter.onClickRecycle  {
+
 
     RecyclerView foodListView;
     PlayFromFirebase convertAndPlay;
-    FoodAdapter foodAdapter;
-    ArrayList<Food> recycleArrayList;
+    RVTimeAdapter timeAdapter;
+    ArrayList<Time> recycleArrayList;
+
+    ListView timeListView;
+    TextView textView;
+   // TimeAdapter timeAdapter;
 
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
+
     AdView mAdView;
-
-
-
 
     Toast toast;
 
+
     boolean isRunning =false;
+
     public Runnable runnable = new Runnable() {
 
         @Override
@@ -80,14 +86,6 @@ public class SubPFoodActivityReal extends AppCompatActivity implements FoodAdapt
             }
         }
     };
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null;
-    }
-
     public void downloadOnly(final String filename){
         if (isNetworkAvailable()){
 
@@ -119,9 +117,9 @@ public class SubPFoodActivityReal extends AppCompatActivity implements FoodAdapt
         int counter1 =0;
 
         if (isNetworkAvailable()) {
-            for (int j = 0; j < foodArrayList.size(); j++) {
+            for (int j = 0; j < timeArrayList.size(); j++) {
 
-                String bb = foodArrayList.get(j).getTwiFood();
+                String bb = timeArrayList.get(j).getTwiTime();
                 bb= bb.toLowerCase();
                 boolean dd = bb.contains("ɔ");
                 boolean ee = bb.contains("ɛ");
@@ -145,7 +143,7 @@ public class SubPFoodActivityReal extends AppCompatActivity implements FoodAdapt
                     counter++;
                 }
             }
-            if (counter == foodArrayList.size()) {
+            if (counter == timeArrayList.size()) {
                 toast.setText("All downloaded");
                 toast.show();
 
@@ -153,8 +151,8 @@ public class SubPFoodActivityReal extends AppCompatActivity implements FoodAdapt
                 toast.setText("Downloading...");
                 toast.show();
 
-                for (int i = 0; i < foodArrayList.size(); i++) {
-                    String b = foodArrayList.get(i).getTwiFood().toLowerCase();
+                for (int i = 0; i < timeArrayList.size(); i++) {
+                    String b = timeArrayList.get(i).getTwiTime().toLowerCase();
                     boolean d = b.contains("ɔ");
                     boolean e = b.contains("ɛ");
                     if (d || e) {
@@ -222,13 +220,12 @@ public class SubPFoodActivityReal extends AppCompatActivity implements FoodAdapt
                                     try {
                                         mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
                                         mp1.prepareAsync();
-                                        mp1.setOnPreparedListener(MediaPlayer::start);
-                                        /*mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                        mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                                             @Override
                                             public void onPrepared(MediaPlayer mp) {
                                                 mp.start();
                                             }
-                                        });*/
+                                        });
                                     } catch (IOException ex) {
                                         ex.printStackTrace();
                                     }
@@ -342,77 +339,11 @@ public class SubPFoodActivityReal extends AppCompatActivity implements FoodAdapt
         }
     }
 
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //MenuInflater menuInflater = getMenuInflater();
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-
-        final MenuItem item = menu.findItem(R.id.menusearch);
-        SearchView searchView = (SearchView) item.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                //Toast.makeText(FoodActivity.this, query, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                foodAdapter.getFilter().filter(newText);
-              /*  ArrayList<Food> results = new ArrayList<>();
-                for (Food x: foodArrayList ){
-
-                    if(x.getEnglishFood().toLowerCase().contains(newText.toLowerCase()) || x.getTwiFood().toLowerCase().contains(newText.toLowerCase())){
-                        results.add(x);
-                    }
-
-                   // ((FoodAdapter)foodListView.getAdapter()).update(results);
-                }*/
-
-
-                return false;
-            }
-        });
-
-        return super.onCreateOptionsMenu(menu);
-
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
-
-        switch (item.getItemId()){
-            case R.id.main:
-                goToMain();
-                return  true;
-            case R.id.videoCourse:
-                goToWeb();
-            case R.id.downloadAudio:
-                downloadClick();
-                return true;
-            case R.id.quiz1:
-                goToQuizFood();
-            default:
-                return false;
-        }
-    }
-
-    public void goToWeb() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
-        startActivity(intent);
-    }
-
-    public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-        startActivity(intent);
-    }
-    public void goToQuizFood() {
-        Intent intent = new Intent(getApplicationContext(), QuizFood.class);
-        startActivity(intent);
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
     }
 
     public void log2(View view) {
@@ -454,8 +385,80 @@ public class SubPFoodActivityReal extends AppCompatActivity implements FoodAdapt
         }
 
         playFromFileOrDownload(b,a);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //MenuInflater menuInflater = getMenuInflater();
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        final MenuItem item = menu.findItem(R.id.menusearch);
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //Toast.makeText(FoodActivity.this, query, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                timeAdapter.getFilter().filter(newText);
+              /*  ArrayList<Food> results = new ArrayList<>();
+                for (Food x: foodArrayList ){
+
+                    if(x.getEnglishFood().toLowerCase().contains(newText.toLowerCase()) || x.getTwiFood().toLowerCase().contains(newText.toLowerCase())){
+                        results.add(x);
+                    }
+
+                   // ((FoodAdapter)foodListView.getAdapter()).update(results);
+                }*/
+
+
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+
+        switch (item.getItemId()){
+            case R.id.main:
+                goToMain();
+                return  true;
+            case R.id.videoCourse:
+                goToWeb();
+            case R.id.downloadAudio:
+                downloadClick();
+                return true;
+            case R.id.quiz1:
+                goToQuizTime();
+            default:
+                return false;
+        }
+    }
+
+    public void goToQuizTime() {
+        Intent intent = new Intent(getApplicationContext(), QuizSubTime.class);
+        startActivity(intent);
+    }
+
+    public void goToWeb() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
+        startActivity(intent);
+    }
+
+    public void goToMain(){
+        Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+        startActivity(intent);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -464,9 +467,14 @@ public class SubPFoodActivityReal extends AppCompatActivity implements FoodAdapt
 
         isNetworkAvailable();
 
-
-
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
+
+
+
+        timeListView = findViewById(R.id.subPFamilyListView);
+        textView = findViewById(R.id.speakEnglishTime);
+
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         convertAndPlay = new PlayFromFirebase();
 
@@ -474,12 +482,13 @@ public class SubPFoodActivityReal extends AppCompatActivity implements FoodAdapt
         storageReference = FirebaseStorage.getInstance().getReference();
 
         recycleArrayList = new ArrayList<>();
-        recycleArrayList.addAll(foodArrayList);
+        recycleArrayList.addAll(timeArrayList);
 
-        foodAdapter = new FoodAdapter(this, recycleArrayList, this);
-        foodListView.setAdapter(foodAdapter);
+        timeAdapter = new RVTimeAdapter(this, recycleArrayList, this);
+        foodListView.setAdapter(timeAdapter);
 
         foodListView.setLayoutManager(new LinearLayoutManager(this));
+
 
 
 
@@ -488,13 +497,13 @@ public class SubPFoodActivityReal extends AppCompatActivity implements FoodAdapt
 
     @Override
     public void onMyItemClick(int position, View view) {
-        String b = recycleArrayList.get(position).twiFood;
+        String b = recycleArrayList.get(position).getTwiTime();
 
         TextView tvEnglish = view.findViewById(R.id.textViewEnglish);
         TextView tvTwi = view.findViewById(R.id.textViewTwi);
 
         ColorStateList oldColor = tvEnglish.getTextColors();
-       // tvTwi.getTextColors();
+        // tvTwi.getTextColors();
 
         tvEnglish.setTextColor(Color.BLACK);
         tvTwi.setTextColor(Color.BLACK);
@@ -510,7 +519,7 @@ public class SubPFoodActivityReal extends AppCompatActivity implements FoodAdapt
 
         b = PlayFromFirebase.viewTextConvert(b);
 
-        String a = recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood;
+        String a = recycleArrayList.get(position).getEnglishTime()+" is: "+ recycleArrayList.get(position).getTwiTime();
 
         //Toast.makeText(this,recycleArrayList.get(position).englishFood+" is: "+ recycleArrayList.get(position).twiFood, Toast.LENGTH_SHORT).show();
 
