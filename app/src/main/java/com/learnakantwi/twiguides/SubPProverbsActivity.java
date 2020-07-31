@@ -29,6 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -764,15 +765,18 @@ public class SubPProverbsActivity extends AppCompatActivity implements RVProverb
             mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
             mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
+
+            Appodeal.show(this, Appodeal.BANNER_TOP);
+
             //Toast.makeText(this, "Show Advert: " +  proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
-            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+           /* MobileAds.initialize(this, new OnInitializationCompleteListener() {
                 @Override
                 public void onInitializationComplete(InitializationStatus initializationStatus) {
                 }
             });
             mAdView1 = findViewById(R.id.adView1);
             AdRequest adRequest1 = new AdRequest.Builder().build();
-            mAdView1.loadAd(adRequest1);
+            mAdView1.loadAd(adRequest1);*/
         }
         else{
            // Toast.makeText(this, "No Advert: " +  proverbsArrayList.size(), Toast.LENGTH_SHORT).show();

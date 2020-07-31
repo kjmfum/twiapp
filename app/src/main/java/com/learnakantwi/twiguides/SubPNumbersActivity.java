@@ -30,6 +30,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -785,8 +786,9 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
                 }
             });
 
-            AdRequest adRequest1 = new AdRequest.Builder().build();
-            mAdView1.loadAd(adRequest1);
+            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+         /*   AdRequest adRequest1 = new AdRequest.Builder().build();
+            mAdView1.loadAd(adRequest1);*/
 
 
             /*public InterstitialAd mInterstitialAd;

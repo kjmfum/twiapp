@@ -32,6 +32,7 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -255,39 +256,10 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
     }
 
 
-   /* public void checkPermission(String permission, int requestCode)
-    {
-        // Checking if permission is not granted
-        if (ContextCompat.checkSelfPermission(
-                Home.this,
-                permission)
-                == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat
-                    .requestPermissions(
-                            Home.this,
-                            new String[] {permission },
-                            100);
-        }
-        else {
-            Toast
-                    .makeText(Home.this,
-                            "Permission already granted",
-                            Toast.LENGTH_SHORT)
-                    .show();
-        }
-    }*/
-//In your case, you do not need the LinearLayout and ImageView at all. Just add android:drawableLeft="@drawable/up_count_big" to your TextView.
-
     public void buyMe() {
         setUpBillingClient();
     }
 
-        /*BillingFlowParams flowParams = BillingFlowParams.newBuilder()
-                .setSkuDetails(skuDetails)
-                .build();
-        BillingResult responseCode = billingClient.launchBillingFlow(InAppActivity.this, flowParams);
-       // int responseCode = billingClient.launchBillingFlow(flowParams);
-    }*/
 
     public void setUpBillingClient() {
         billingClient = BillingClient.newBuilder(this)
@@ -550,14 +522,16 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
         //ca-app-pub-3940256099942544/1033173712 test
 
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+      /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);*/
+
+        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
 
         AppRate.with(this)

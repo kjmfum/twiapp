@@ -28,6 +28,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -646,36 +647,17 @@ public class ProverbsHome extends AppCompatActivity {
         //ca-app-pub-3940256099942544/1033173712 test
 
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+    /*    MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);*/
 
+        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
-      /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView1 = findViewById(R.id.adView1);
-        AdRequest adRequest1 = new AdRequest.Builder().build();
-        mAdView1.loadAd(adRequest1);*/
-
-
-/*
-        findViewById(R.id.homeAdvertButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                advert();
-            }
-        }); */
-
-
-        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
 
         homeButtonArrayList = new ArrayList<>();
         homeListView = findViewById(R.id.homeListView);

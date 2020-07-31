@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -683,7 +684,8 @@ public class ProverbsQuizActivity extends AppCompatActivity {
             //ca-app-pub-7384642419407303/9880404420
             //ca-app-pub-3940256099942544/1033173712 test
 
-            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+          /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
                 @Override
                 public void onInitializationComplete(InitializationStatus initializationStatus) {
                 }
@@ -697,7 +699,7 @@ public class ProverbsQuizActivity extends AppCompatActivity {
                 @Override
                 public void onInitializationComplete(InitializationStatus initializationStatus) {
                 }
-            });
+            });*/
         }
 
         if (Sub==0){

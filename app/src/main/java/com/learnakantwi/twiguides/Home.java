@@ -30,6 +30,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -651,7 +652,7 @@ public class Home extends AppCompatActivity {
                     .show();
         }
     }*/
-//In your case, you do not need the LinearLayout and ImageView at all. Just add android:drawableLeft="@drawable/up_count_big" to your TextView.
+
 
    /* public void deleteDuplicatelDownload(){
 
@@ -681,7 +682,7 @@ public class Home extends AppCompatActivity {
                 //toast.show();
 
             *//*String bb = allArrayList.get(j).getTwiMain();
-            bb= bb.toLowerCase();
+
             boolean dd = bb.contains("ɔ");
             boolean ee = bb.contains("ɛ");
             if (dd || ee) {
@@ -744,25 +745,6 @@ public class Home extends AppCompatActivity {
                     //toast.show();
                 }
 
-            /*String bb = allArrayList.get(j).getTwiMain();
-            bb= bb.toLowerCase();
-            boolean dd = bb.contains("ɔ");
-            boolean ee = bb.contains("ɛ");
-            if (dd || ee) {
-                bb = bb.replace("ɔ", "x");
-                bb = bb.replace("ɛ", "q");
-            }
-
-            if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'") | bb.contains("...")) {
-                bb = bb.replace(" ", "");
-                bb = bb.replace("/", "");
-                bb = bb.replace(",", "");
-                bb = bb.replace("(", "");
-                bb = bb.replace(")", "");
-                bb = bb.replace("-", "");
-                bb = bb.replace("?", "");
-                bb = bb.replace("'", "");
-                bb= bb.replace("...","");*/
             }
            /* File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
            * if (myFiles.exists()) {
@@ -877,14 +859,15 @@ public class Home extends AppCompatActivity {
 
 
         if( testShared != 0){
-            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+          /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
                 @Override
                 public void onInitializationComplete(InitializationStatus initializationStatus) {
                 }
             });
             mAdView = findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder().build();
-            mAdView.loadAd(adRequest);
+            mAdView.loadAd(adRequest);*/
         }
 
 

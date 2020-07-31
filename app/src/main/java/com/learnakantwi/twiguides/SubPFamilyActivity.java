@@ -29,6 +29,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -768,14 +769,7 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
             mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
             //Toast.makeText(this, "Show Advert: " +  proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
-            MobileAds.initialize(this, new OnInitializationCompleteListener() {
-                @Override
-                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                }
-            });
-
-            AdRequest adRequest1 = new AdRequest.Builder().build();
-            mAdView1.loadAd(adRequest1);
+            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
 
             /*public InterstitialAd mInterstitialAd;
