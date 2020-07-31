@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     Toast toast;
     String premiumUpgradePrice;
     SharedPreferences sharedPreferencesAds;
-    static final String APPODEAL_KEY = "3c7b8896d969d0a930c2e04e7cecfd3d89f3926a83c51193";
+    static final String APPODEAL_KEY = "f70e5b095b1ab8de93dd6851fa87fe8589490b16f10a92ea";
 
     //Appodeal mAdView;
 

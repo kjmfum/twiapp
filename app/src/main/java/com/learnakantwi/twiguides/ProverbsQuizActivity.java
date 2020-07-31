@@ -135,12 +135,14 @@ public class ProverbsQuizActivity extends AppCompatActivity {
     }
 
     public void goToMain(){
-        if (Sub==0){
-            Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+        if (MainActivity.Subscribed==1){
+            Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
             startActivity(intent);
+
+
         }
         else{
-            Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
             startActivity(intent);
         }
     }
@@ -677,7 +679,7 @@ public class ProverbsQuizActivity extends AppCompatActivity {
         SharedPreferences subscribe = getSharedPreferences("AdsDecision",MODE_PRIVATE);
         Sub = subscribe.getInt("Sub",0);
 
-        if (Sub==0){
+        if (MainActivity.Subscribed != 1){
             mInterstitialAd = new InterstitialAd(this);
             mInterstitialAd.setAdUnitId(getString(R.string.AdUnitIDInterstitial));
             mInterstitialAd.loadAd(new AdRequest.Builder().build());
