@@ -32,15 +32,18 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import hotchemi.android.rate.AppRate;
@@ -512,6 +515,8 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
         //firebaseAuth = FirebaseAuth.getInstance();
 
+      //Appodeal.show(this, Appodeal.BANNER_TOP);
+
        // Toast.makeText(this, "Testing1", Toast.LENGTH_SHORT).show();
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
@@ -549,6 +554,8 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
         //ca-app-pub-7384642419407303/9880404420
         //ca-app-pub-3940256099942544/1033173712 test
 
+
+        new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("56D0AC46FE1087020EFA54F98D8970D4"));
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override

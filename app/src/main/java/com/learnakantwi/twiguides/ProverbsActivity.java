@@ -27,10 +27,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -42,8 +44,10 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class ProverbsActivity extends AppCompatActivity {
@@ -63,6 +67,9 @@ public class ProverbsActivity extends AppCompatActivity {
     Random random;
 
     int showAdProbability;
+
+
+
 
 
     public void advert() {
@@ -658,20 +665,6 @@ public class ProverbsActivity extends AppCompatActivity {
     }
 
 
-    /*public void deleteProverbsSection() {
-      //  File myFileProverbs = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/");
-        File myFileProverbs = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/");
-        File[] files2 = myFileProverbs.listFiles();
-
-
-        for (int i = 0; i < files2.length; i++) {
-
-            File fileConversation = files2[i];
-                fileConversation.delete();
-        }
-
-    }*/
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -692,10 +685,15 @@ public class ProverbsActivity extends AppCompatActivity {
         showAdProbability = random.nextInt(10);
 
 
+        List<String> testDeviceIds = Arrays.asList("56D0AC46FE1087020EFA54F98D8970D4");
+        RequestConfiguration configuration =
+                new RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build();
+        MobileAds.setRequestConfiguration(configuration);
 
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -705,6 +703,8 @@ public class ProverbsActivity extends AppCompatActivity {
         mAdView1 = findViewById(R.id.adView1);
         AdRequest adRequest1 = new AdRequest.Builder().build();
         mAdView1.loadAd(adRequest1);
+
+
 
 
 
