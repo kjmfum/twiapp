@@ -409,28 +409,11 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
                 bb = bb.replace("'", "");
                 bb= bb.replace("...","");*/
             }
-           /* File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
-           * if (myFiles.exists()) {
-                myFiles.delete();
-            }*/
 
-
-
-            /*for (File f: myFiles.listFiles()){
-                long space= f.getTotalSpace();
-
-                //f.delete();
-            }
-*/
         }
 
     }
 
-   /* public void Transition(View v){
-        Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-        startActivity(intent);
-
-    }*/
 
    public void goToPleaseSubPage(){
        Intent intent = new Intent(getApplicationContext(), PleaseSubscribePage.class);

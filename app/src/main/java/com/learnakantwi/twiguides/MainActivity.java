@@ -29,6 +29,7 @@ import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.appodeal.ads.Appodeal;
+import com.appodeal.ads.utils.Log;
 import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
@@ -404,6 +405,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         setContentView(R.layout.activity_main);
 
         Appodeal.initialize(this, APPODEAL_KEY, Appodeal.BANNER | Appodeal.INTERSTITIAL, true);
+
+        Appodeal.setLogLevel(Log.LogLevel.verbose);
 
         //Toast.makeText(this, "Before add: "+ proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
 
