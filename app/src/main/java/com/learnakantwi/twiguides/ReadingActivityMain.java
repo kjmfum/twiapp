@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -29,7 +30,6 @@ public class ReadingActivityMain extends AppCompatActivity {
     TextView tvHeading;
    String me;
     ListView lvReadingAlphabets;
-    AdView mAdView1;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -152,14 +152,7 @@ public class ReadingActivityMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView1 = findViewById(R.id.adView1);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView1.loadAd(adRequest);
+        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
         tvHeading = findViewById(R.id.tvHeading);
 
@@ -202,16 +195,6 @@ public class ReadingActivityMain extends AppCompatActivity {
 
             }
         });
-
-
-
-        /*tvLetterA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                vowel = tvLetterA.getText().toString();
-                goToTwoLetters();
-            }
-        });*/
 
 
 

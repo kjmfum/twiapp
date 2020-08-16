@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -49,8 +50,7 @@ import java.util.Random;
 public class ProverbsActivity extends AppCompatActivity {
 
     static ArrayList<Proverbs> proverbsArrayList = new ArrayList<>();
-    // AdView mAdView;
-    AdView mAdView1;
+
     AdapterViewFlipper proverbsViewFlipper;
     StorageReference storageReference;
     MediaPlayer playFromDevice;
@@ -59,79 +59,20 @@ public class ProverbsActivity extends AppCompatActivity {
     ArrayList<Proverbs> results = new ArrayList<>();
     ArrayList<Proverbs> results1 = new ArrayList<>();
 
-    public InterstitialAd mInterstitialAd;
     Random random;
 
     int showAdProbability;
 
 
-    public void advert() {
 
-        final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-        //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
-
-        assert advertPreference != null;
-        if (!advertPreference.equals("Yes")) {
-            new AlertDialog.Builder(this)
-                    .setIcon(R.drawable.learnakantwiimage)
-                    .setTitle("Please support us")
-                    .setMessage("Would You Like To View An Advert To Support Us?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            sharedPreferences.edit().putString("AdvertPreference", "Yes").apply();
-                            if (mInterstitialAd.isLoaded()) {
-                                mInterstitialAd.show();
-                            } else {
-                                Log.d("TAG", "The interstitial wasn't loaded yet.");
-                            }
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-                                }
-                            }
-                    )
-                    .show();
-        } else {
-            if (mInterstitialAd.isLoaded()) {
-                mInterstitialAd.show();
-
-            } else {
-                Log.d("TAG", "The interstitial wasn't loaded yet.");
-
-            }
-        }
-
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-    }
 
     public void advert1() {
 
-        /*final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-        //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
-
-        assert advertPreference != null;
-        if (advertPreference.equals("Yes")) {*/
-
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
 
-            mInterstitialAd = new InterstitialAd(this);
-            mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-            mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-        //ca-app-pub-7384642419407303/9880404420
-        //ca-app-pub-3940256099942544/1033173712 test
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
 
@@ -693,18 +634,9 @@ public class ProverbsActivity extends AppCompatActivity {
 
 
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView1 = findViewById(R.id.adView1);
-        AdRequest adRequest1 = new AdRequest.Builder().build();
-        mAdView1.loadAd(adRequest1);
+        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
 
 

@@ -28,6 +28,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -48,7 +49,6 @@ import java.util.Random;
 public class ReadingActivityTwoLetters extends AppCompatActivity {
 
 
-    public InterstitialAd mInterstitialAd;
     ArrayList  <String> twoLettersArrayList = new ArrayList<>();
     String vowelLetter = "e";
     ListView lvTwoLetters;
@@ -59,7 +59,6 @@ public class ReadingActivityTwoLetters extends AppCompatActivity {
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
     Toast toast;
-    AdView mAdView1;
     int showAdProbability;
     Random random;
 
@@ -107,7 +106,7 @@ public class ReadingActivityTwoLetters extends AppCompatActivity {
                         // c= b.substring(0,1) + "  "+ Character.toString(b.charAt(1)) +"   :"+ b.substring(0,2);
 
                         b= "read"+b.toLowerCase();
-                        b=  playFromFirebase.viewTextConvert(b);
+                        b=  PlayFromFirebase.viewTextConvert(b);
 
                         // Toast.makeText(ReadingActivityTwoLetters.this, sb, Toast.LENGTH_SHORT).show();
 
@@ -325,16 +324,11 @@ public class ReadingActivityTwoLetters extends AppCompatActivity {
 
     public void advert1() {
 
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
     @Override
@@ -342,24 +336,14 @@ public class ReadingActivityTwoLetters extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_two_letters);
 
-        mInterstitialAd = new InterstitialAd(this);
-        // mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
 
         random = new Random();
         showAdProbability = random.nextInt(10);
 
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView1 = findViewById(R.id.adView1);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView1.loadAd(adRequest);
+        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
 
 
@@ -389,7 +373,7 @@ public class ReadingActivityTwoLetters extends AppCompatActivity {
 
 
                 b = tvHeader.getText().toString().toLowerCase();
-               b=  playFromFirebase.viewTextConvert(b);
+               b=  PlayFromFirebase.viewTextConvert(b);
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -449,7 +433,7 @@ public class ReadingActivityTwoLetters extends AppCompatActivity {
               // c= b.substring(0,1) + "  "+ Character.toString(b.charAt(1)) +"   :"+ b.substring(0,2);
 
                 b= "read"+b.toLowerCase();
-                b=  playFromFirebase.viewTextConvert(b);
+                b=  PlayFromFirebase.viewTextConvert(b);
 
                // Toast.makeText(ReadingActivityTwoLetters.this, sb, Toast.LENGTH_SHORT).show();
 

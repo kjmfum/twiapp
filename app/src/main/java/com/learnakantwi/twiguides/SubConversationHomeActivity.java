@@ -54,7 +54,7 @@ public class SubConversationHomeActivity extends AppCompatActivity {
                         results.add(x);
                     }
 
-                    ((ReadingMainAdapter)lvsubconversation.getAdapter()).update(results);
+                    ((ConversationMainAdapter)lvsubconversation.getAdapter()).update(results);
                 }
 
                 lvsubconversation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -68,8 +68,20 @@ public class SubConversationHomeActivity extends AppCompatActivity {
                             case "Introducing yourself":
                                 goToConversationIntroduction();
                                 return;
+                            case "Apologies and Regret":
+                                goToConversationApologies();
+                                return;
                             case "Welcoming others":
-                                goToQuiz();
+                                goToConversationWelcome();
+                                return;
+                            case "At the Hospital":
+                                goToConversationHospital();
+                                return;
+                            case "On The Phone":
+                                goToConversationPhone();
+                                return;
+                            case "Asking and Giving Directions":
+                                goToCategory("directions");
                         }
                         //goToTwoLetters();
 
@@ -184,6 +196,11 @@ public class SubConversationHomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToConversationPhone(){
+        Intent intent = new Intent(getApplicationContext(), SubConversationPhone.class);
+        startActivity(intent);
+    }
+
 
 
 
@@ -203,11 +220,14 @@ public class SubConversationHomeActivity extends AppCompatActivity {
         lvsubconversation = findViewById(R.id.lvsubconversation);
 
         subConversationHomeArrayList.add("Introducing yourself");
+
         subConversationHomeArrayList.add("Welcoming others");
+        subConversationHomeArrayList.add("On The Phone");
         subConversationHomeArrayList.add("Apologies and Regret");
         subConversationHomeArrayList.add("Asking and Giving Directions");
 
         subConversationHomeArrayList.add("At the Hospital");
+
        // homeButtonArrayList.add(new HomeButton("Business", R.drawable.businessimage));
 
         //HomeAdapter homeAdapter = new HomeAdapter(this,subConversationHomeArrayList);
@@ -236,8 +256,11 @@ public class SubConversationHomeActivity extends AppCompatActivity {
                     case "At the Hospital":
                         goToConversationHospital();
                         return;
+                    case "On The Phone":
+                        goToConversationPhone();
+                        return;
                     case "Asking and Giving Directions":
-                        goToCategory("directions");
+                           goToCategory("directions");
                 }
             }
         });

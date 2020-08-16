@@ -51,9 +51,6 @@ public class SubChildrenHome extends AppCompatActivity {
 
     static ArrayList<HomeButton> homeButtonArrayList;
     //static ArrayList<Children> childrenArray;
-    public InterstitialAd mInterstitialAd;
-    AdView mAdView;
-    AdView mAdView1;
     ListView homeListView;
     MediaPlayer mediaPlayer;
     StorageReference storageReference;

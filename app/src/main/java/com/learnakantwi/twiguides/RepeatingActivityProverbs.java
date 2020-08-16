@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -56,13 +57,9 @@ public class RepeatingActivityProverbs extends AppCompatActivity {
     StorageReference storageReference;
     MediaPlayer mp1;
     MediaPlayer playFromDevice;
-    AdView mAdView;
-    AdView mAdView1;
     Toast toast;
     int testShared;
 
-
-    private InterstitialAd mInterstitialAd;
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -336,23 +333,6 @@ public class RepeatingActivityProverbs extends AppCompatActivity {
 
         generateQuestion();
 
-        mInterstitialAd = new InterstitialAd(this);
-       // mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.setAdUnitId(getString(R.string.AdUnitTestIDInterstitial));
-
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                    Toast.makeText(RepeatingActivityProverbs.this, "Hi Ya", Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.d("TAG", "The interstitial wasn't loaded yet.");
-                }
-            }
-        });
 
         //ca-app-pub-7384642419407303/9880404420 correct
         //ca-app-pub-3940256099942544/1033173712 test
@@ -381,26 +361,8 @@ public class RepeatingActivityProverbs extends AppCompatActivity {
 
 
         if (sub == 0) {
-            MobileAds.initialize(this, new OnInitializationCompleteListener() {
-                @Override
-                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                }
-            });
-            mAdView = findViewById(R.id.adView);
-            AdRequest adRequest = new AdRequest.Builder().build();
-            mAdView.loadAd(adRequest);
-
-           // Toast.makeText(this, "Yeso", Toast.LENGTH_SHORT).show();
-
-            MobileAds.initialize(this, new OnInitializationCompleteListener() {
-                @Override
-                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                }
-            });
-
-            mAdView1 = findViewById(R.id.adView1);
-            AdRequest adRequest1 = new AdRequest.Builder().build();
-            mAdView1.loadAd(adRequest1);
+            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+            Appodeal.show(this, Appodeal.BANNER_TOP);
         }
     }
 }

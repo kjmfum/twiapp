@@ -52,8 +52,7 @@ import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
 
 public class SubPProverbsActivity extends AppCompatActivity implements RVProverbsAdapter.onClickRecycle {
 
-   // AdView mAdView;
-    AdView mAdView1;
+
     AdapterViewFlipper proverbsViewFlipper;
     StorageReference storageReference;
     MediaPlayer playFromDevice;
@@ -64,7 +63,6 @@ public class SubPProverbsActivity extends AppCompatActivity implements RVProverb
 
     ProverbsAdapter proverbsAdapter;
 
-    public InterstitialAd mInterstitialAd;
     ImageButton playButton;
     ImageButton pauseButton;
     ImageButton muteButton;
@@ -729,25 +727,11 @@ public class SubPProverbsActivity extends AppCompatActivity implements RVProverb
 
     public void advert1() {
 
-        /*final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-        //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
-
-        assert advertPreference != null;
-        if (advertPreference.equals("Yes")) {*/
-
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-        //ca-app-pub-7384642419407303/9880404420
-        //ca-app-pub-3940256099942544/1033173712 test
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
     @Override
@@ -761,26 +745,11 @@ public class SubPProverbsActivity extends AppCompatActivity implements RVProverb
             random = new Random();
             showAdProbability = random.nextInt(10);
 
-            mInterstitialAd = new InterstitialAd(this);
-            mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
 
             Appodeal.show(this, Appodeal.BANNER_TOP);
 
-            //Toast.makeText(this, "Show Advert: " +  proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
-           /* MobileAds.initialize(this, new OnInitializationCompleteListener() {
-                @Override
-                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                }
-            });
-            mAdView1 = findViewById(R.id.adView1);
-            AdRequest adRequest1 = new AdRequest.Builder().build();
-            mAdView1.loadAd(adRequest1);*/
-        }
-        else{
-           // Toast.makeText(this, "No Advert: " +  proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
-            //addProverbs();
         }
 
         playButton = findViewById(R.id.playButton);

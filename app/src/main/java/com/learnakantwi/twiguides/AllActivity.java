@@ -51,9 +51,7 @@ public class AllActivity extends AppCompatActivity {
 
     static ArrayList<All> allArrayList;
     ListView allListView;
-    AdView mAdView;
     int showAdProbability;
-    InterstitialAd mInterstitialAd;
     Random random;
 
 
@@ -699,16 +697,11 @@ public class AllActivity extends AppCompatActivity {
 
     public void advert1() {
 
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
 
@@ -721,10 +714,7 @@ public class AllActivity extends AppCompatActivity {
 
         isNetworkAvailable();
 
-        mInterstitialAd = new InterstitialAd(this);
-        // mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
         random = new Random();
         showAdProbability = random.nextInt(10);
@@ -732,7 +722,8 @@ public class AllActivity extends AppCompatActivity {
         toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
         toast.show();
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+         Appodeal.setBannerViewId(R.id.appodealBannerView);
+        Appodeal.show(this, Appodeal.BANNER_VIEW);
 
        // test unit id: ca-app-pub-3940256099942544/6300978111
 

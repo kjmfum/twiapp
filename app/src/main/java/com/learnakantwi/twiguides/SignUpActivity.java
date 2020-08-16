@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +27,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -43,33 +53,58 @@ public class SignUpActivity extends AppCompatActivity {
         String password = etPassword.getText().toString();
         final String username = etUsername.getText().toString().trim();
 
-        Toast.makeText(this, email + ": " + password, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, email + ": " + password, Toast.LENGTH_SHORT).show();
 
 
         if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password) && TextUtils.isEmpty(username)){
             etEmail.setError("No email entered");
             etPassword.setError("No password entered");
-            etPassword.setError("Please enter a username");
+            etUsername.setError("Please enter a username");
             progressBar.setVisibility(View.INVISIBLE);
         }
         else if (TextUtils.isEmpty(email)){
             etEmail.setError("No email entered");
+            progressBar.setVisibility(View.INVISIBLE);
         }
         else if (TextUtils.isEmpty(password)){
             etPassword.setError("No password entered");
+            progressBar.setVisibility(View.INVISIBLE);
         }
         else if (TextUtils.isEmpty(username)) {
-            etPassword.setError("Please enter a username");
+            etUsername.setError("Please enter a username");
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+        else if (etPassword.length()<6){
+            etPassword.setError("Password should be at least 6 characters");
+            progressBar.setVisibility(View.INVISIBLE);
         }
         else {
+
             mAuth.createUserWithEmailAndPassword(etEmail.getText().toString(), password)
+                    .addOnFailureListener(this, new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                          //  Toast.makeText(SignUpActivity.this, "I'm here", Toast.LENGTH_SHORT).show();
+                            Log.i("Yipee", e.toString());
+
+                            if (e.toString().contains("com.google.firebase.auth.FirebaseAuthUserCollisionException")){
+                                Toast.makeText(SignUpActivity.this, "This e-mail address is already in use by another account", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    })
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                Toast.makeText(SignUpActivity.this, "Success" + " " + user, Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.VISIBLE);
+                                currentUser = mAuth.getCurrentUser();
+                                //Toast.makeText(SignUpActivity.this, "Success" + " " + currentUser, Toast.LENGTH_SHORT).show();
                                 writeNewUser(currentUser.getUid(), username,currentUser.getEmail());
+
+                                writeNewFirestore(currentUser.getUid(), username, currentUser.getEmail());
+
+                                Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+                                startActivity(intent);
                                 progressBar.setVisibility(View.INVISIBLE);
 
                             } else {
@@ -77,6 +112,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 progressBar.setVisibility(View.INVISIBLE);
                             }
                         }
+
                     });
         }
     }
@@ -87,6 +123,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         RealTimeDatabaseUsers users = new RealTimeDatabaseUsers(userID, name, email);
         databaseReference.child("Users").setValue(users);
+      //  databaseReference.child("Users").a
         //databaseReference.updateChildren("Users")
 
 
@@ -107,6 +144,76 @@ public class SignUpActivity extends AppCompatActivity {
         mDatabase.addValueEventListener(listener);*/
     }
 
+    private void writeNewFirestore(String userID, String name, String email){
+
+
+        RealTimeDatabaseUsers users = new RealTimeDatabaseUsers(userID, name, email);
+        databaseReference.child("Users").setValue(users);
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.i("getInstanceId failed", task.getException().toString());
+                           // Toast.makeText(SubPHomeMainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        Log.i("getInstanceId Good", token);
+                       // Toast.makeText(SubPHomeMainActivity.this, token, Toast.LENGTH_SHORT).show();
+
+                        sendRegistrationToServer(userID, name, email, token);
+                    }
+                });
+
+    }
+
+    public void sendRegistrationToServer(String userID, String name, String email, String token){
+
+       /* Toast.makeText(this, "SentToken", Toast.LENGTH_SHORT).show();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        DatabaseReference reference = database.getReference("message");
+
+        // reference.setValue("Hello, World!");
+        reference.push().setValue(token);*/
+
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+       /* Map<String, String> user = new HashMap<>();
+
+        user.put("", token);*/
+
+        // Create a new user with a first and last name
+       Map<String, Object> user = new HashMap<>();
+        user.put("userID", userID);
+        user.put("name", name);
+        user.put("email", email);
+        user.put("token", token);
+
+
+
+// Add a new document with a generated ID
+        db.collection("users").document(email)
+                .set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.i("Debugged", "No Error adding document");
+            }
+        })
+
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Debugged", "Error adding document", e);
+                    }
+                });
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

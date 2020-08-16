@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -50,9 +51,7 @@ public class ChildrenNumbersActivityRV extends AppCompatActivity implements Chil
 
 
    public static  ArrayList<Children> lesson;
- /*   TextView tvTwi;
-    TextView tvEnglish;*/
-    public InterstitialAd mInterstitialAd;
+
 RecyclerView recyclerView;
 ChildrenAdapterRV myAdapter;
 AdapterViewFlipper lessonAdapterView;
@@ -66,7 +65,7 @@ AdapterViewFlipper lessonAdapterView;
     Toast toast;
     StorageReference storageReference;
     int Ads;
-    AdView mAdView;
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -344,16 +343,11 @@ AdapterViewFlipper lessonAdapterView;
 
     public void advert1() {
 
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
 
@@ -370,19 +364,11 @@ AdapterViewFlipper lessonAdapterView;
         Ads = sharedPreferencesAds.getInt("Ads", 5);
 
         if (Ads != 0) {
-            mInterstitialAd = new InterstitialAd(this);
-            mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
-           // Toast.makeText(this, "Hey", Toast.LENGTH_SHORT).show();
-            MobileAds.initialize(this, new OnInitializationCompleteListener() {
-                @Override
-                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                }
-            });
-            mAdView = findViewById(R.id.adView);
-            AdRequest adRequest = new AdRequest.Builder().build();
-            mAdView.loadAd(adRequest);
+
+            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+
         }
 
         toast= Toast.makeText(this, "", Toast.LENGTH_SHORT);

@@ -51,9 +51,7 @@ public class DaysOfWeekActivity extends AppCompatActivity {
     EditText daysOfWeekEditText;
     DaysOfWeekAdapter myAdapterDaysOfWk;
     static  ArrayList<DaysOfWeek> daysOfWeeksArray;
-    AdView mAdView;
     int showAdProbability;
-    InterstitialAd mInterstitialAd;
     Random random;
 
     StorageReference storageReference;
@@ -428,17 +426,11 @@ public class DaysOfWeekActivity extends AppCompatActivity {
 
     public void advert1() {
 
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
 
@@ -449,23 +441,12 @@ public class DaysOfWeekActivity extends AppCompatActivity {
 
         isNetworkAvailable();
 
-        mInterstitialAd = new InterstitialAd(this);
-        // mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
         random = new Random();
         showAdProbability = random.nextInt(10);
 
 
-      /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);*/
 
      // Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.verbose);
 

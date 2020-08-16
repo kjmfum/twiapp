@@ -56,7 +56,6 @@ import static com.learnakantwi.twiguides.AnimalsActivity.animalsArrayList;
 public class QuizTimedAll extends AppCompatActivity {
 
 
-    public InterstitialAd mInterstitialAd;
     //ArrayList<Integer> checkArrayList;
     ArrayList<Integer> answersList;
     TextView correctAnswer;
@@ -96,7 +95,6 @@ public class QuizTimedAll extends AppCompatActivity {
         int seconds;
 
         double scorePercent = ((score / totalQuestions) * 100);
-        AdView mAdView;
 
         StorageReference storageReference;
         MediaPlayer playFromDevice;
@@ -778,18 +776,12 @@ public class QuizTimedAll extends AppCompatActivity {
         }
 
     public void advert1() {
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
+
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-        //ca-app-pub-7384642419407303/9880404420
-        //ca-app-pub-3940256099942544/1033173712 test
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
         @Override
@@ -826,9 +818,7 @@ public class QuizTimedAll extends AppCompatActivity {
                 if (Sub==0){
                     Ads="Ads";
                // Toast.makeText(this, "Displayed!!", Toast.LENGTH_SHORT).show();
-                mInterstitialAd = new InterstitialAd(this);
-                mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                    Appodeal.cache(this, Appodeal.INTERSTITIAL);
                 //ca-app-pub-7384642419407303/9880404420
                 //ca-app-pub-3940256099942544/1033173712 test
 

@@ -12,6 +12,9 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +26,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -40,11 +44,26 @@ import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.rpc.context.AttributeContext;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import hotchemi.android.rate.AppRate;
 
@@ -55,26 +74,28 @@ import static com.learnakantwi.twiguides.SubConversationDirections.conversationD
 import static com.learnakantwi.twiguides.SubConversationHospital.conversationHospital;
 import static com.learnakantwi.twiguides.SubConversationIntroductionActivity.conversationArrayList;
 import static com.learnakantwi.twiguides.SubConversationWelcomingOthers.conversationWelcomingOthersArrayList;
+import static com.learnakantwi.twiguides.SubConversationPhone.conversationPhone;
 
 //import android.support.v7.app.AppCompatActivity;
 
 public class SubPHomeMainActivity extends AppCompatActivity implements PurchasesUpdatedListener, RVHomeMainAdapter.onClickRecycle {
     //  app:adUnitId="ca-app-pub-6999427576830667~6251296006"ˆ
 
+
    static ArrayList<HomeMainButton> homeMainButtonArrayList;
-    public InterstitialAd mInterstitialAd;
     BillingClient billingClient;
     String premiumUpgradePrice;
     Button buyButton;
     Toast toast;
     ListView homeListView;
-    AdView mAdView;
     MediaPlayer mediaPlayer;
     SharedPreferences subscriptionStatePreference;
     boolean subscriptionState;
 
     TextView tvSignIn;
     FirebaseAuth mAuth;
+    FirebaseUser User;
+
     String currentUser;
 
     RecyclerView recyclerView;
@@ -279,54 +300,6 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         startActivity(intent);
     }
 
-    public void advert() {
-
-
-        final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-      //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
-
-
-        assert advertPreference != null;
-        if (!advertPreference.equals("Yes")) {
-            new AlertDialog.Builder(this)
-                    .setIcon(R.drawable.learnakantwiimage)
-                    .setTitle("We need your support")
-                    .setMessage("Would You Like To View An Advert To Support Us?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            sharedPreferences.edit().putString("AdvertPreference", "Yes").apply();
-                            if (mInterstitialAd.isLoaded()) {
-                                mInterstitialAd.show();
-                            } else {
-                                Log.d("TAG", "The interstitial wasn't loaded yet.");
-                            }
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-                                }
-                            }
-                    )
-                    .show();
-        } else {
-            if (mInterstitialAd.isLoaded()) {
-                mInterstitialAd.show();
-
-            } else {
-                Log.d("TAG", "The interstitial wasn't loaded yet.");
-
-            }
-        }
-
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-    }
-
     public void buyMe() {
         setUpBillingClient();
     }
@@ -491,13 +464,99 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
     }
 
     public void SignIn(View view){
-        Intent homeIntent = new Intent(getApplicationContext(), SignInActivity.class);
-        startActivity(homeIntent);
+        //Intent homeIntent = new Intent(getApplicationContext(), SignInActivity.class);
+        //startActivity(homeIntent);
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.i("getInstanceId failed", task.getException().toString());
+                            Toast.makeText(SubPHomeMainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        // Log and toast
+                       // String msg = getString(R.string.msg_token_fmt, token);
+                        Log.i("getInstanceId Good", token);
+                       // Toast.makeText(SubPHomeMainActivity.this, token, Toast.LENGTH_SHORT).show();
+
+                        sendRegistrationToServer(token);
+                    }
+                });
+    }
+
+    public void sendRegistrationToServer(String token){
+
+        Toast.makeText(this, "SentToken", Toast.LENGTH_SHORT).show();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        DatabaseReference reference = database.getReference("message");
+
+        // reference.setValue("Hello, World!");
+        reference.push().setValue(token);
+
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, String> user = new HashMap<>();
+
+        user.put("Justice", token);
+
+        // Create a new user with a first and last name
+      /*  Map<String, Object> user = new HashMap<>();
+        user.put("first", "Ada");
+        user.put("last", "Lovelace");
+        user.put("born", 1815);*/
+
+
+
+// Add a new document with a generated ID
+        db.collection("users")
+                .add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("Debugged", "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Debugged", "Error adding document", e);
+                    }
+                });
+
     }
 
     public void SignIn(){
         Intent homeIntent = new Intent(getApplicationContext(), SignInActivity.class);
         startActivity(homeIntent);
+      /*  FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.i("getInstanceId failed", task.getException().toString());
+                            Toast.makeText(SubPHomeMainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        Log.i("getInstanceId Good", token);
+                        Toast.makeText(SubPHomeMainActivity.this, token, Toast.LENGTH_SHORT).show();
+
+                        sendRegistrationToServer(token);
+                    }
+                });*/
+
+
+
     }
 
    /* public void Transition(View v){
@@ -541,6 +600,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subpactivity_home1);
 
+
         recyclerView = findViewById(R.id.recyclerView);
 
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
@@ -550,12 +610,26 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
 
         mAuth = FirebaseAuth.getInstance();
 
+        User = mAuth.getCurrentUser();
+
         tvSignIn = findViewById(R.id.tvSignIn);
         tvSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tvSignIn.getText().toString().toLowerCase().contains("sign")) {
+             //   if (tvSignIn.getText().toString().toLowerCase().contains("sign")) {
+                if (mAuth.getCurrentUser() == null) {
+                   // tvSignIn.setText("SIGN IN");
                     SignIn();
+                }
+                else{
+                  //  if (User != null){
+                        FirebaseAuth.getInstance().signOut();
+                        tvSignIn.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                       Toast.makeText(SubPHomeMainActivity.this, "You have been signed out : \n"+ User.getEmail(), Toast.LENGTH_SHORT).show();
+                        tvSignIn.setText("SIGN IN");
+                  //  }
+
+
                 }
 
             }
@@ -906,6 +980,68 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
 
         }
 
+        conversationPhone = new ArrayList<>();
+        if (5>2){
+            // conversationPhone.add(new subConversation("", ""));
+
+            conversationPhone.add(new subConversation("Hɛloo", "Hello"));
+            conversationPhone.add(new subConversation("Wote me nka?", "Can you hear me"));
+            conversationPhone.add(new subConversation("Kwame nie", "This is Kwame"));
+            conversationPhone.add(new subConversation("Aane, Kwame nie", "Yes, this is Kwame"));
+            conversationPhone.add(new subConversation("Dabi, Kwadwo nie", "No, this is Kwadwo"));
+            conversationPhone.add(new subConversation("Kwame ba a, ka kyerɛ no sɛ mefrɛe", "If Kwame comes tell him that I called"));
+            conversationPhone.add(new subConversation("Kwame ba a, ma no mfrɛ me", "If Kwame comes let him call me"));
+            conversationPhone.add(new subConversation("Ka kyerɛ no sɛ mefrɛe", "Tell him/her that I called"));
+
+
+
+
+            conversationPhone.add(new subConversation("Mɛtumi ne Kwabena akasa?", "Can I speak with Kwabena?"));
+            conversationPhone.add(new subConversation("Merehwehwɛ Abena", "I'm looking for Abena"));
+            conversationPhone.add(new subConversation("Abena na ɛrekasa yi", "This is Abena speaking"));
+
+            conversationPhone.add(new subConversation("Abena wɔ hɔ?", "Is Abena there?"));
+            conversationPhone.add(new subConversation("Mesrɛ wo, wobetumi afrɛ Akua ama me?", "Please, can you call Akua for me?"));
+            conversationPhone.add(new subConversation("Mesrɛ wo, wofrɛɛ me?", "Please, did you call me?"));
+            conversationPhone.add(new subConversation("Wofrɛe", "You called"));
+            conversationPhone.add(new subConversation("Wofrɛe anaa?", "Did you call?"));
+            conversationPhone.add(new subConversation("Wofrɛɛ me ɛnnora anaa?", "Did you call me yesterday?"));
+            conversationPhone.add(new subConversation("Gyina so", "Hold on"));
+            conversationPhone.add(new subConversation("Gyina so kakra", "Hold on for a short while"));
+            conversationPhone.add(new subConversation("Gyina so simma", "Hang on a minute"));
+            conversationPhone.add(new subConversation("Magyina so akyɛ dodo", "I've held on for too long"));
+            conversationPhone.add(new subConversation("Frɛ me anwummere", "Call me in the evening"));
+            conversationPhone.add(new subConversation("Frɛ me anɔpa", "Call me in the morning"));
+            conversationPhone.add(new subConversation("Ɛmfrɛ me", "Don't call me"));
+            conversationPhone.add(new subConversation("Ɛmfrɛ me bio", "Don't call me again"));
+            conversationPhone.add(new subConversation("Ɛmfrɛ me anwummere bio", "Don't call me in the evening again"));
+            conversationPhone.add(new subConversation("Adeɛ asa", "It's late"));
+            conversationPhone.add(new subConversation("Mefrɛ wo a wo mfa", "You don't answer my calls"));
+            conversationPhone.add(new subConversation("Adɛn nti na mefrɛe woamfa?", "Why didn't you pick up when I called?"));
+            conversationPhone.add(new subConversation("Wofrɛe anaa?", "Did you call?"));
+
+            conversationPhone.add(new subConversation("Ahoma no retwita", "The line is breaking"));
+            conversationPhone.add(new subConversation("Gyina yie", "Position your self well"));
+            conversationPhone.add(new subConversation("Medaase sɛ wofrɛe", "Thanks for calling"));
+
+            conversationPhone.add(new subConversation("Yɛbɛkasa akyiri", "We will talk later"));
+
+            conversationPhone.add(new subConversation("Mɛfrɛ wo ɔkyena", "I will call you tomorrow"));
+
+
+            conversationPhone.add(new subConversation("M'ani agye sɛ wo afrɛ me", "I am happy that you have called"));
+            conversationPhone.add(new subConversation("Bye byee", "Bye bye"));
+           /* conversationPhone.add(new subConversation("", ""));
+            conversationPhone.add(new subConversation("", ""));
+            conversationPhone.add(new subConversation("", ""));
+            conversationPhone.add(new subConversation("", ""));*/
+
+
+
+
+        }
+        //conversationPhone = new ArrayList<>();
+
 
     }
 
@@ -913,10 +1049,31 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
     protected void onStart() {
         if (mAuth.getCurrentUser()!=null){
             currentUser = mAuth.getCurrentUser().getEmail();
+            //currentUser =  User.getUid();
+            //String token = mAuth.getAccessToken();
+            User = mAuth.getCurrentUser();
+            SpannableStringBuilder ssb = new SpannableStringBuilder("Akwaaba");
+            ForegroundColorSpan fcsGreen = new ForegroundColorSpan(Color.GREEN);
+            ssb.setSpan(fcsGreen, 0,ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ssb.append(": ").append(currentUser);
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("Akwaaba: ").append(currentUser);
-            tvSignIn.setText(stringBuilder);
+            stringBuilder.append(ssb).append(": ").append(currentUser);
+           // tvSignIn.setText(stringBuilder);
+            tvSignIn.setText(ssb);
             tvSignIn.setBackgroundColor(Color.WHITE);
+
+         /*   User.sendEmailVerification()
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(SubPHomeMainActivity.this, "Email sent.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });*/
+
+
+            //  mAuth.
         }
         super.onStart();
     }
@@ -939,7 +1096,19 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         }
     }
 
-
+   /* TextView textView = findViewById(R.id.text_view);
+    String text = "I want THIS and THIS to be colored";
+    SpannableString ss = new SpannableString(text);
+    SpannableStringBuilder ssb = new SpannableStringBuilder(text);
+    ForegroundColorSpan fcsRed = new ForegroundColorSpan(Color.RED);
+    ForegroundColorSpan fcsGreen = new ForegroundColorSpan(Color.GREEN);
+    BackgroundColorSpan bcsYellow = new BackgroundColorSpan(Color.YELLOW);
+        ssb.setSpan(fcsRed, 7, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ssb.setSpan(fcsGreen, 16, 20, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ssb.setSpan(bcsYellow, 27, 34, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ssb.append(" and this to be appended");
+        textView.setText(ssb);
+*/
 }
 
 

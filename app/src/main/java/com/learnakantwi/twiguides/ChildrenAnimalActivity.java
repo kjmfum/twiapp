@@ -31,6 +31,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -54,9 +55,8 @@ import static com.learnakantwi.twiguides.SubChildrenAnimals.childrenAnimalsArray
 public class ChildrenAnimalActivity extends AppCompatActivity {
 
     static ArrayList<Animals> childrenAnimalsArrayListFew;
-    public InterstitialAd mInterstitialAd;
+
     public ImageView imageView;
-    AdView mAdView1;
     FirebaseStorage firebaseStorage;
     StorageReference storageReference;
     StorageReference musicRef;
@@ -77,25 +77,11 @@ public class ChildrenAnimalActivity extends AppCompatActivity {
 
     public void advert1() {
 
-        /*final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-        //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
-
-        assert advertPreference != null;
-        if (advertPreference.equals("Yes")) {*/
-
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-        //ca-app-pub-7384642419407303/9880404420
-        //ca-app-pub-3940256099942544/1033173712 test
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -563,11 +549,7 @@ public class ChildrenAnimalActivity extends AppCompatActivity {
         playFromFirebaseChildren = new PlayFromFirebase();
 
 
-        mInterstitialAd = new InterstitialAd(this);
-       // mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
         random = new Random();
         showAdProbability = random.nextInt(10);
@@ -575,15 +557,7 @@ public class ChildrenAnimalActivity extends AppCompatActivity {
         //ca-app-pub-7384642419407303/9880404420
         //ca-app-pub-3940256099942544/1033173712 test
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-                //Toast.makeText(ChildrenAnimalActivity.this, "I'm here o", Toast.LENGTH_SHORT).show();
-            }
-        });
-        mAdView1 = findViewById(R.id.adView1);
-        AdRequest adRequest1 = new AdRequest.Builder().build();
-        mAdView1.loadAd(adRequest1);
+        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
 
 

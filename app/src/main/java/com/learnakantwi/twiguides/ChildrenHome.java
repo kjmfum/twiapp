@@ -28,6 +28,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -55,9 +56,6 @@ public class ChildrenHome extends AppCompatActivity {
 
     static ArrayList<HomeButton> homeButtonArrayList;
     static ArrayList<Children> childrenArray;
-    public InterstitialAd mInterstitialAd;
-    AdView mAdView;
-    AdView mAdView1;
     ListView homeListView;
     MediaPlayer mediaPlayer;
     StorageReference storageReference;
@@ -562,54 +560,6 @@ public class ChildrenHome extends AppCompatActivity {
     }
 
 
-    public void advert() {
-
-
-        final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-      //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
-
-
-        assert advertPreference != null;
-        if (!advertPreference.equals("Yes")) {
-            new AlertDialog.Builder(this)
-                    .setIcon(R.drawable.learnakantwiimage)
-                    .setTitle("We need your support")
-                    .setMessage("Would You Like To View An Advert To Support Us?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            sharedPreferences.edit().putString("AdvertPreference", "Yes").apply();
-                            if (mInterstitialAd.isLoaded()) {
-                                mInterstitialAd.show();
-                            } else {
-                                Log.d("TAG", "The interstitial wasn't loaded yet.");
-                            }
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-                                }
-                            }
-                    )
-                    .show();
-        } else {
-            if (mInterstitialAd.isLoaded()) {
-                mInterstitialAd.show();
-
-            } else {
-                Log.d("TAG", "The interstitial wasn't loaded yet.");
-
-            }
-        }
-
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-    }
-
    /* public void checkPermission(String permission, int requestCode)
     {
         // Checking if permission is not granted
@@ -795,26 +745,11 @@ public class ChildrenHome extends AppCompatActivity {
             }
         }
 
-
-
-
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-
         //ca-app-pub-7384642419407303/9880404420
         //ca-app-pub-3940256099942544/1033173712 test
 
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {

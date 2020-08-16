@@ -52,6 +52,7 @@ public class SignInActivity extends AppCompatActivity {
            }
 
            else{
+
            mAuth.signInWithEmailAndPassword(email, password)
                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                        @Override

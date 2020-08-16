@@ -63,6 +63,7 @@
         <activity android:name=".SubConversationWelcomingOthers" />
         <activity android:name=".SubConversationDirections" />
         <activity android:name=".SubConversationHospital" />
+        <activity android:name=".SubConversationPhone" />
         <activity android:name=".DownloadsActivity" />
         <activity android:name=".DeleteDownloadsActivity" />
         <activity android:name=".SettingsAndTips" />
@@ -195,6 +196,28 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-7384642419407303~6578212997" />
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+
+            <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more. -->
+            <meta-data
+                android:name="com.google.firebase.messaging.default_notification_icon"
+                android:resource="@drawable/learnakantwi" />
+            <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+                 notification message. See README(https://goo.gl/6BKBk7) for more. -->
+            <meta-data
+                android:name="com.google.firebase.messaging.default_notification_color"
+                android:resource="@color/colorAccent" />
+        </service>
+
     </application>
+
+
 
 </manifest>

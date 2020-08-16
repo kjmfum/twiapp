@@ -29,6 +29,7 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -50,13 +51,11 @@ public class HomeMainActivityRecycle extends AppCompatActivity implements Purcha
     //  app:adUnitId="ca-app-pub-6999427576830667~6251296006"ˆ
 
     static ArrayList<HomeMainButton> homeMainButtonArrayList;
-    public InterstitialAd mInterstitialAd;
     BillingClient billingClient;
     String premiumUpgradePrice;
     Button buyButton;
     Toast toast;
     ListView homeListView;
-    AdView mAdView;
     MediaPlayer mediaPlayer;
     SharedPreferences subscriptionStatePreference;
     boolean subscriptionState;
@@ -504,23 +503,14 @@ public class HomeMainActivityRecycle extends AppCompatActivity implements Purcha
             }
         }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
 
         //ca-app-pub-7384642419407303/9880404420
         //ca-app-pub-3940256099942544/1033173712 test
 
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
 
         AppRate.with(this)

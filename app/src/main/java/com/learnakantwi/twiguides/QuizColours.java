@@ -72,7 +72,7 @@ public class QuizColours extends AppCompatActivity {
     int score;
     int counter;
     double scorePercent= ((score/totalQuestions)*100);
-    AdView mAdView;
+
 
 
     StorageReference storageReference;

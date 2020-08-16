@@ -52,9 +52,7 @@ public class BusinessActivity extends AppCompatActivity {
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
-    AdView mAdView;
     int showAdProbability;
-    InterstitialAd mInterstitialAd;
     Random random;
 
 
@@ -458,15 +456,11 @@ public class BusinessActivity extends AppCompatActivity {
 
     public void advert1() {
 
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
     @Override
@@ -476,10 +470,7 @@ public class BusinessActivity extends AppCompatActivity {
 
         isNetworkAvailable();
 
-        mInterstitialAd = new InterstitialAd(this);
-        // mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
         random = new Random();
         showAdProbability = random.nextInt(10);

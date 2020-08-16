@@ -71,7 +71,6 @@ public class QuizSubAnimals extends AppCompatActivity {
     int score;
     int counter;
     double scorePercent= ((score/totalQuestions)*100);
-    AdView mAdView;
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;

@@ -54,9 +54,6 @@ public class Home extends AppCompatActivity {
 
     static ArrayList<HomeButton> homeButtonArrayList;
     ListView homeListView;
-    AdView mAdView;
-    AdView mAdView1;
-    public InterstitialAd mInterstitialAd;
     MediaPlayer mediaPlayer;
     StorageReference storageReference;
     Toast toast;
@@ -582,7 +579,7 @@ public class Home extends AppCompatActivity {
         Toast.makeText(this, "Daily Twi Alerts Turned On", Toast.LENGTH_SHORT).show();
     }
 
-    public void advert() {
+   /* public void advert() {
 
 
 
@@ -629,29 +626,9 @@ public class Home extends AppCompatActivity {
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
-    }
-
-   /* public void checkPermission(String permission, int requestCode)
-    {
-        // Checking if permission is not granted
-        if (ContextCompat.checkSelfPermission(
-                Home.this,
-                permission)
-                == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat
-                    .requestPermissions(
-                            Home.this,
-                            new String[] {permission },
-                            100);
-        }
-        else {
-            Toast
-                    .makeText(Home.this,
-                            "Permission already granted",
-                            Toast.LENGTH_SHORT)
-                    .show();
-        }
     }*/
+
+
 
 
    /* public void deleteDuplicatelDownload(){
@@ -846,9 +823,7 @@ public class Home extends AppCompatActivity {
 
 
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
 
         //ca-app-pub-7384642419407303/9880404420
@@ -860,14 +835,6 @@ public class Home extends AppCompatActivity {
 
         if( testShared != 0){
             Appodeal.show(this, Appodeal.BANNER_BOTTOM);
-          /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
-                @Override
-                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                }
-            });
-            mAdView = findViewById(R.id.adView);
-            AdRequest adRequest = new AdRequest.Builder().build();
-            mAdView.loadAd(adRequest);*/
         }
 
 

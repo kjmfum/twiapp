@@ -69,13 +69,11 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
-    AdView mAdView;
 
     PlayFromFirebase convertAndPlay;
     FamilyAdapter_one foodAdapter;
     ArrayList<Family> recycleArrayList;
 
-    public InterstitialAd mInterstitialAd;
     ImageButton playButton;
     ImageButton pauseButton;
     ImageButton nextButton;
@@ -93,7 +91,6 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
     TextView tvNumberWord;
     Handler handler1;
     Runnable ranable;
-    AdView mAdView1;
     Random random;
 
 
@@ -726,25 +723,11 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
 
     public void advert1() {
 
-        /*final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-        //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
-
-        assert advertPreference != null;
-        if (advertPreference.equals("Yes")) {*/
-
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-        //ca-app-pub-7384642419407303/9880404420
-        //ca-app-pub-3940256099942544/1033173712 test
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
     @Override
@@ -757,30 +740,15 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
 
         isNetworkAvailable();
 
-        mAdView1 = findViewById(R.id.adView1);
 
         if (MainActivity.Subscribed != 1){
 
             random = new Random();
             showAdProbability = random.nextInt(10);
 
-            mInterstitialAd = new InterstitialAd(this);
-            mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
-            //Toast.makeText(this, "Show Advert: " +  proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
             Appodeal.show(this, Appodeal.BANNER_BOTTOM);
-
-
-            /*public InterstitialAd mInterstitialAd;
-            Random random;
-            int showAdProbability;
-            AdView mAdView1;*/
-        }
-        else{
-            mAdView1.setVisibility(View.GONE);
-            // Toast.makeText(this, "No Advert: " +  proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
-            //addProverbs();
         }
 
         btSlideText = findViewById(R.id.btSlideText);

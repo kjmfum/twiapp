@@ -56,12 +56,10 @@ public class FoodActivity extends AppCompatActivity implements FoodAdapter.onCli
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
-    AdView mAdView;
     FoodAdapter foodAdapter;
 
 
     int showAdProbability;
-    InterstitialAd mInterstitialAd;
     Random random;
 
     //PlayFromFirebase playFromFirebase;
@@ -479,16 +477,11 @@ public class FoodActivity extends AppCompatActivity implements FoodAdapter.onCli
 
     public void advert1() {
 
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
     @Override
@@ -498,11 +491,7 @@ public class FoodActivity extends AppCompatActivity implements FoodAdapter.onCli
 
         convertAndPlay = new PlayFromFirebase();
 
-        mInterstitialAd = new InterstitialAd(this);
-        //mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder()
-                .build());
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
         random = new Random();
         showAdProbability = random.nextInt(10);

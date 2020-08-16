@@ -61,9 +61,7 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
     DrawerLayout drawerLayout;
 
     static ArrayList<HomeMainButton> homeMainButtonArrayList;
-    public InterstitialAd mInterstitialAd;
     ListView homeListView;
-    AdView mAdView;
     MediaPlayer mediaPlayer;
     SharedPreferences subscriptionStatePreference;
     boolean subscriptionState;
@@ -496,23 +494,13 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
             }
         }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
 
         //ca-app-pub-7384642419407303/9880404420
         //ca-app-pub-3940256099942544/1033173712 test
 
 
-      /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);*/
 
         Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 

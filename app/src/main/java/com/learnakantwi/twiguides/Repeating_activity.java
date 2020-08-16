@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -65,13 +66,9 @@ public class Repeating_activity extends AppCompatActivity {
     StorageReference storageReference;
     MediaPlayer mp1;
     MediaPlayer playFromDevice;
-    AdView mAdView;
-    AdView mAdView1;
     Toast toast;
     int testShared;
 
-
-    private InterstitialAd mInterstitialAd;
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -354,9 +351,6 @@ public class Repeating_activity extends AppCompatActivity {
                 //Log.i("Menu Item Selected", "Alphabets");
                 goToQuizAll();
                 return true;
-            case R.id.advert:
-                advert();
-                return true;
             case R.id.videoCourse:
                 //Log.i("Menu Item Selected", "Alphabets");
                 goToWeb();
@@ -373,57 +367,6 @@ public class Repeating_activity extends AppCompatActivity {
     public void goToWeb() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.udemy_course)));
         startActivity(intent);
-    }
-
-    public void advert() {
-
-
-        final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-       // sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
-
-
-        assert advertPreference != null;
-        if (!advertPreference.equals("Yes")) {
-            new AlertDialog.Builder(this)
-                    .setIcon(R.drawable.learnakantwiimage)
-                    .setTitle("We need your support")
-                    .setMessage("Would You Like To View An Advert To Support Us?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            sharedPreferences.edit().putString("AdvertPreference", "Yes").apply();
-                            toast.setText("THANK YOU");
-                            if (mInterstitialAd.isLoaded()) {
-                                mInterstitialAd.show();
-                            } else {
-                                Log.d("TAG", "The interstitial wasn't loaded yet.");
-                            }
-                            toast.setText("THANK YOU");
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-                                }
-                            }
-                    )
-                    .show();
-        } else {
-            if (mInterstitialAd.isLoaded()) {
-                mInterstitialAd.show();
-
-            } else {
-                toast.setText("Please connect to the Internet");
-                Log.d("TAG", "The interstitial wasn't loaded yet.");
-
-            }
-        }
-
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
 
@@ -548,9 +491,7 @@ public class Repeating_activity extends AppCompatActivity {
 
         generateQuestion();
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
         //ca-app-pub-7384642419407303/9880404420 correct
         //ca-app-pub-3940256099942544/1033173712 test
@@ -579,24 +520,8 @@ public class Repeating_activity extends AppCompatActivity {
 
 
         if (testShared != 0) {
-            MobileAds.initialize(this, new OnInitializationCompleteListener() {
-                @Override
-                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                }
-            });
-            mAdView = findViewById(R.id.adView);
-            AdRequest adRequest = new AdRequest.Builder().build();
-            mAdView.loadAd(adRequest);
-
-            MobileAds.initialize(this, new OnInitializationCompleteListener() {
-                @Override
-                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                }
-            });
-
-            mAdView1 = findViewById(R.id.adView1);
-            AdRequest adRequest1 = new AdRequest.Builder().build();
-            mAdView1.loadAd(adRequest1);
+            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+            Appodeal.show(this, Appodeal.BANNER_TOP);
 
         }
     }

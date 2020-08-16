@@ -171,5 +171,6 @@
     <string name="deleteActivityText">Free up space by deleting some audio files.\n When you delete audio for a particular category you will not be able play the sound while offline. \n You will need to be connected to the internet to download again</string>
     <string name="downloadActivityText">Select any category below to download the audio files for offline playback</string>
     <string name="title_activity_home_main">HomeMainActivity</string>
+    <string name="msg_token_fmt">token</string>
 
 </resources>

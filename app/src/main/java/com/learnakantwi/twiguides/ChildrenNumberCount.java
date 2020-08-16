@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -50,7 +51,6 @@ public class ChildrenNumberCount extends AppCompatActivity {
     MediaPlayer playFromDevice;
     MediaPlayer playFromDevice1;
     MediaPlayer mp1;
-    AdView mAdView;
     boolean musicPlaying =true;
     String b;
     int testShared;
@@ -439,14 +439,7 @@ public class ChildrenNumberCount extends AppCompatActivity {
         testShared = sharedPreferencesAds.getInt("Ads", 5);
 
         if (testShared != 0) {
-            MobileAds.initialize(this, new OnInitializationCompleteListener() {
-                @Override
-                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                }
-            });
-            mAdView = findViewById(R.id.adView);
-            AdRequest adRequest = new AdRequest.Builder().build();
-            mAdView.loadAd(adRequest);
+            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
         }
 
     }

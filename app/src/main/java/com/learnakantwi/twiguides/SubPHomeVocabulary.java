@@ -51,10 +51,7 @@ public class SubPHomeVocabulary extends AppCompatActivity {
     //  app:adUnitId="ca-app-pub-6999427576830667~6251296006"
 
     static ArrayList<HomeButton> homeButtonArrayList;
-    public InterstitialAd mInterstitialAd;
     ListView homeListView;
-    AdView mAdView;
-    AdView mAdView1;
     MediaPlayer mediaPlayer;
     StorageReference storageReference;
     Toast toast;

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -25,7 +26,6 @@ import java.util.Random;
 public class QuizTimedAllFinishPage extends AppCompatActivity {
 
 
-    public InterstitialAd mInterstitialAd;
         TextView tvLastScore;
         String playerName;
         String coming;
@@ -37,7 +37,6 @@ public class QuizTimedAllFinishPage extends AppCompatActivity {
         String category;
         String sharedPref;
         String Ads;
-    AdView mAdView;
     Random random;
 
     int showAdProbability;
@@ -376,19 +375,11 @@ public class QuizTimedAllFinishPage extends AppCompatActivity {
 
     public void advert1() {
 
-
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-        //ca-app-pub-7384642419407303/9880404420
-        //ca-app-pub-3940256099942544/1033173712 test
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
 
@@ -403,9 +394,7 @@ public class QuizTimedAllFinishPage extends AppCompatActivity {
 
         if (!Ads.equals(null) && Ads.equals("Ads")){
          //   Toast.makeText(this, "Displayed!!!", Toast.LENGTH_SHORT).show();
-            mInterstitialAd = new InterstitialAd(this);
-            mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            Appodeal.cache(this, Appodeal.INTERSTITIAL);
             //ca-app-pub-7384642419407303/9880404420
             //ca-app-pub-3940256099942544/1033173712 test
         }

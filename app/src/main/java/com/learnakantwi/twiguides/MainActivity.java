@@ -31,6 +31,7 @@ import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.appodeal.ads.Appodeal;
 import com.appodeal.ads.utils.Log;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,16 +57,13 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     SharedPreferences sharedPreferencesAds;
     static final String APPODEAL_KEY = "f70e5b095b1ab8de93dd6851fa87fe8589490b16f10a92ea";
 
-    //Appodeal mAdView;
-
-    //String AdUnitInterstitialID = getString(R.string.AdUnitIDInterstitial);
-
-
 
     int SPLASH_TIME_OUT = 3000;
     int times =0;
     static int Lifetime;
     static  int Subscribed;
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public void goToAll() {
         Intent intent = new Intent(getApplicationContext(), AllActivity.class);
@@ -205,6 +203,9 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                             editor.apply();
                                                             Lifetime = sharedPreferencesAds.getInt("Lifetime", 5);
                                                            Subscribed = sharedPreferencesAds.getInt("Sub", 5);
+
+                                                           mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Premium");
+                                                           mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Lifetime");
                                                           // addProverbs();
                                                             Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
                                                            //Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
@@ -212,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                             startActivity(homeIntent);
                                                         } else {
                                                            Lifetime=4;
+                                                           mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Regular");
                                                            //Toast.makeText(MainActivity.this, "I don't have access5: "+skuName, Toast.LENGTH_SHORT).show();
                                                         }
                                                    // }
@@ -307,27 +309,18 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                                             Subscribed = sharedPreferencesAds.getInt("Sub", 5);
                                                                             //addProverbs();
 
+                                                                            mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Premium");
+
                                                                             Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
                                                                             startActivity(homeIntent);
 
                                                                         }
-                                                       /*     if (skuName.equals("premium_annually" )){
-                                                                Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-                                                                startActivity(homeIntent);
-                                                            }*/
+
                                                                     }
                                                                     //toast.setText(Integer.toString(me3));
                                                                 } else {
-                                                                    // SharedPreferences.Editor editor = sharedPreferencesAds.edit();
-                                                                    // editor.putString("Ads","Yes");
-                                                                    //editor.putInt("Sub",0);
-                                                                    //editor.apply();
 
-
-                                                                    //toast.setText("nothing subscribed");
-                                                                    //toast.show();
-                                                                    // Intent homeIntent = new Intent(getApplicationContext(), SignInActivity.class);
-                                                                    //Intent homeIntent = new Intent(getApplicationContext(), SignUpActivity.class);
+                                                                    mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Regular");
                                                                     Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                                                                     // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
                                                                     // Intent homeIntent = new Intent(getApplicationContext(), RealTimeDatabase.class);
@@ -406,7 +399,9 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
         Appodeal.initialize(this, APPODEAL_KEY, Appodeal.BANNER | Appodeal.INTERSTITIAL, true);
 
-        Appodeal.setLogLevel(Log.LogLevel.verbose);
+       // Appodeal.setLogLevel(Log.LogLevel.verbose);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         //Toast.makeText(this, "Before add: "+ proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
 
@@ -421,7 +416,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
         Lifetime = sharedPreferencesAds.getInt("Lifetime",5); //runtime
         Subscribed = sharedPreferencesAds.getInt("Sub", 5);
-       //Lifetime = 1;  //Subscribed
+      // Lifetime = 1;  //Subscribed
       //  Lifetime = 5;
 
         //Toast.makeText(this, "My: "+ Lifetime, Toast.LENGTH_SHORT).show();
@@ -452,6 +447,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                     //Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
                    Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
                     startActivity(homeIntent);
+                    mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Premium");
+                    mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Lifetime");
                    // Toast.makeText(MainActivity.this, "You ", Toast.LENGTH_SHORT).show();
                 }else{
                    // Toast.makeText(MainActivity.this, "Hi "+Lifetime, Toast.LENGTH_SHORT).show();
@@ -493,7 +490,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                     editor.putInt("Sub",1);
                     editor.putInt("Ads",0);
                     editor.apply();
-                    Subscribed = sharedPreferencesAds.getInt("Sub", 5);
+                    Subscribed = 1;
+                    //Subscribed = sharedPreferencesAds.getInt("Sub", 5);
                     //addProverbs();
                     //Toast.makeText(MainActivity.this, "Me1 Only ", Toast.LENGTH_SHORT).show();
                     Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);

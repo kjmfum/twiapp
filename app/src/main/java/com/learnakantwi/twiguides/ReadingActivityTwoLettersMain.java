@@ -17,6 +17,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -32,8 +33,6 @@ public class ReadingActivityTwoLettersMain extends AppCompatActivity {
     CharSequence vowel;
     HorizontalScrollView horizontalScrollView;
     ListView lvReadingAlphabets;
-    AdView mAdView;
-    AdView mAdView1;
     Toast toast;
    // int testShared;
 
@@ -165,14 +164,7 @@ public class ReadingActivityTwoLettersMain extends AppCompatActivity {
         testShared = sharedPreferencesAds.getInt("Ads", 5);
 */
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView1 = findViewById(R.id.adView1);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView1.loadAd(adRequest);
+        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
 
 

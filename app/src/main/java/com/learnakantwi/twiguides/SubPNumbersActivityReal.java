@@ -30,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -54,8 +55,6 @@ public class SubPNumbersActivityReal extends AppCompatActivity implements RVNumb
     ListView numbersListView;
     Numbers numbers;
 
-    public InterstitialAd mInterstitialAd;
-    AdView mAdView1;
     Random random;
     int showAdProbability;
 
@@ -68,7 +67,6 @@ public class SubPNumbersActivityReal extends AppCompatActivity implements RVNumb
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
 
-    AdView mAdView;
 
     Button btSlideText;
     TextView tvStartSlideShow;
@@ -706,25 +704,11 @@ public class SubPNumbersActivityReal extends AppCompatActivity implements RVNumb
 
     public void advert1() {
 
-        /*final SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-        //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
-        String advertPreference = sharedPreferences.getString("AdvertPreference", "No");
-
-        assert advertPreference != null;
-        if (advertPreference.equals("Yes")) {*/
-
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-        //ca-app-pub-7384642419407303/9880404420
-        //ca-app-pub-3940256099942544/1033173712 test
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
     @Override
@@ -740,37 +724,14 @@ public class SubPNumbersActivityReal extends AppCompatActivity implements RVNumb
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
 
-        mAdView1 = findViewById(R.id.adView1);
 
         if (MainActivity.Subscribed != 1){
 
             random = new Random();
             showAdProbability = random.nextInt(10);
 
-            mInterstitialAd = new InterstitialAd(this);
-            mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-            mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-            //Toast.makeText(this, "Show Advert: " +  proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
-            MobileAds.initialize(this, new OnInitializationCompleteListener() {
-                @Override
-                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                }
-            });
-
-            AdRequest adRequest1 = new AdRequest.Builder().build();
-            mAdView1.loadAd(adRequest1);
-
-
-            /*public InterstitialAd mInterstitialAd;
-            Random random;
-            int showAdProbability;
-            AdView mAdView1;*/
-        }
-        else{
-            mAdView1.setVisibility(View.GONE);
-            // Toast.makeText(this, "No Advert: " +  proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
-            //addProverbs();
+            Appodeal.cache(this, Appodeal.INTERSTITIAL);
+            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
         }
 
         btSlideText = findViewById(R.id.btSlideText);

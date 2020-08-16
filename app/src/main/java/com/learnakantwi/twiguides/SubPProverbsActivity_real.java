@@ -38,8 +38,6 @@ import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
 
 public class SubPProverbsActivity_real extends AppCompatActivity {
 
-   // AdView mAdView;
-    AdView mAdView1;
     AdapterViewFlipper proverbsViewFlipper;
     StorageReference storageReference;
     MediaPlayer playFromDevice;

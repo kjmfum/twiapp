@@ -58,8 +58,6 @@ public class ProverbsQuizActivity extends AppCompatActivity {
 
     static  ArrayList<Proverbs> proverbsQuizQuestionArray = new ArrayList<>();
     Random random;
-    AdView mAdView;
-    InterstitialAd mInterstitialAd;
     ArrayList<Integer> answers;
     Button btStartPlayAgain;
     Button btReset;
@@ -632,18 +630,12 @@ public class ProverbsQuizActivity extends AppCompatActivity {
     }
 
     public void advert1() {
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
+
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7384642419407303/9880404420");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-        //ca-app-pub-7384642419407303/9880404420
-        //ca-app-pub-3940256099942544/1033173712 test
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
     public void goToSubscriptionPage (View v){
@@ -680,28 +672,12 @@ public class ProverbsQuizActivity extends AppCompatActivity {
         Sub = subscribe.getInt("Sub",0);
 
         if (MainActivity.Subscribed != 1){
-            mInterstitialAd = new InterstitialAd(this);
-            mInterstitialAd.setAdUnitId(getString(R.string.AdUnitIDInterstitial));
-            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            Appodeal.cache(this, Appodeal.INTERSTITIAL);
             //ca-app-pub-7384642419407303/9880404420
             //ca-app-pub-3940256099942544/1033173712 test
 
             Appodeal.show(this, Appodeal.BANNER_BOTTOM);
-          /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
-                @Override
-                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                }
-            });
-            mAdView = findViewById(R.id.adView);
-            AdRequest adRequest = new AdRequest.Builder().build();
-            mAdView.loadAd(adRequest);
 
-
-            MobileAds.initialize(this, new OnInitializationCompleteListener() {
-                @Override
-                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                }
-            });*/
         }
 
         if (Sub==0){

@@ -281,9 +281,6 @@ public class subConversationAdapter extends BaseAdapter implements Filterable {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-
-
-
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView= inflater.inflate(R.layout.activity_sub_conversation, null);
 
@@ -306,7 +303,7 @@ public class subConversationAdapter extends BaseAdapter implements Filterable {
 
                                                       PlayFromFirebase playFromFirebase1 = new PlayFromFirebase();
 
-                                                      String filename = playFromFirebase1.viewTextConvert(tvText);
+                                                      String filename = PlayFromFirebase.viewTextConvert(tvText);
 
                                                       downloadOnly(filename);
 
@@ -318,7 +315,7 @@ public class subConversationAdapter extends BaseAdapter implements Filterable {
             public boolean onLongClick(View v) {
                 String tvText = tvTwi.getText().toString();
                 PlayFromFirebase playFromFirebase1 = new PlayFromFirebase();
-                String filename = playFromFirebase1.viewTextConvert(tvText);
+                String filename = PlayFromFirebase.viewTextConvert(tvText);
                 downloadOnly(filename);
                 return false;
             }
@@ -329,7 +326,7 @@ public class subConversationAdapter extends BaseAdapter implements Filterable {
             public boolean onLongClick(View v) {
                 String tvText = tvTwi.getText().toString();
                 PlayFromFirebase playFromFirebase1 = new PlayFromFirebase();
-                String filename = playFromFirebase1.viewTextConvert(tvText);
+                String filename = PlayFromFirebase.viewTextConvert(tvText);
                 downloadOnly(filename);
                 return true;
             }
@@ -347,7 +344,7 @@ public class subConversationAdapter extends BaseAdapter implements Filterable {
 
                 PlayFromFirebase playFromFirebase1 = new PlayFromFirebase();
 
-                String filename = playFromFirebase1.viewTextConvert(tvText);
+                String filename = PlayFromFirebase.viewTextConvert(tvText);
 
                                                     //playFromFirebase1.allClick(filename);
 
@@ -404,7 +401,7 @@ public class subConversationAdapter extends BaseAdapter implements Filterable {
 
                                                  PlayFromFirebase playFromFirebase1 = new PlayFromFirebase();
 
-                                                 String filename = playFromFirebase1.viewTextConvert(tvText);
+                                                 String filename = PlayFromFirebase.viewTextConvert(tvText);
 
                                                  //playFromFirebase1.allClick(filename);
 

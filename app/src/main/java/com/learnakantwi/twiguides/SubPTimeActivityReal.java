@@ -60,7 +60,6 @@ public class SubPTimeActivityReal extends AppCompatActivity implements RVTimeAda
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
 
-    AdView mAdView;
 
     Toast toast;
 

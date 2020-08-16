@@ -72,7 +72,6 @@ public class QuizAll extends AppCompatActivity {
     int score;
     int counter;
     double scorePercent = ((score / totalQuestions) * 100);
-    AdView mAdView;
 
     StorageReference storageReference;
     MediaPlayer playFromDevice;
@@ -515,17 +514,6 @@ public class QuizAll extends AppCompatActivity {
 
         Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
-      /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);*/
-
-        //Test Banner= ca-app-pub-3940256099942544/6300978111;
-        //Correct One = ca-app-pub-7384642419407303/7840050122;
 
 
         storageReference = FirebaseStorage.getInstance().getReference();

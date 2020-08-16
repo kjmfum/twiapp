@@ -54,8 +54,6 @@ public class SubPWeatherActivityReal extends AppCompatActivity implements RVWeat
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
 
-    AdView mAdView;
-
     Toast toast;
     boolean isRunning =false;
     public Runnable runnable = new Runnable() {
