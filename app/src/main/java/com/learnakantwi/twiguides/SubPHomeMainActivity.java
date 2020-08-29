@@ -898,7 +898,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
             conversationDirections.add(new subConversation("Ɛhe na menya kar akɔ Kumasi", "Where can I board a car to Kumasi"));
             conversationDirections.add(new subConversation("Ɛhe na ayaresabea no wɔ?", "Where is the hospital located?"));
             conversationDirections.add(new subConversation("Merehwehwɛ ayaresabea", "I'm looking for a hospital"));
-            conversationDirections.add(new subConversation("Merehwehwɛ...", "I'm looking for..."));
+           /*conversationDirections.add(new subConversation("Merehwehwɛ...", "I'm looking for..."));
             conversationDirections.add(new subConversation("Merekɔ mpoano", "I'm going to the beach"));
             conversationDirections.add(new subConversation("Ɛkwan bɛn na ɛkɔ mpoano hɔ?", "Which road(way) leads to the beach?"));
             conversationDirections.add(new subConversation("Ɛhe na keteke gyinabea wɔ?", "Where is the train station?"));
@@ -929,7 +929,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
             conversationDirections.add(new subConversation("Fa me kɔ wimhyɛn gyinabea", "Take me to the airport"));
             conversationDirections.add(new subConversation("Mepɛ sɛ mekɔ fie", "I want to go home"));
             conversationDirections.add(new subConversation("Ɛhe na wote?", "Where do you stay?"));
-            conversationDirections.add(new subConversation("Mete Dansoman", "I stay at Dansoman"));
+            conversationDirections.add(new subConversation("Mete Dansoman", "I stay at Dansoman"));*/
         }
 
         conversationHospital = new ArrayList<>();

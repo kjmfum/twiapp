@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QuizSubConversation">
+    tools:context=".QuizSubConversationIntroducing">
 
 
     <!--
@@ -40,7 +40,7 @@
         android:id="@+id/tvCorrectWrongText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TRY"
+        android:text="0"
         app:layout_constraintBottom_toTopOf="@id/tvScore"
         app:layout_constraintEnd_toEndOf="@id/Verguideline30"
         app:layout_constraintStart_toStartOf="@id/Verguideline5"

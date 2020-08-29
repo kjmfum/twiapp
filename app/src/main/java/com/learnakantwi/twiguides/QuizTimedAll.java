@@ -815,9 +815,9 @@ public class QuizTimedAll extends AppCompatActivity {
 
 
             //if (!Ads.equals(null) && Ads.equals("Ads")){
-                if (Sub==0){
+                if (MainActivity.Subscribed!=1){
                     Ads="Ads";
-               // Toast.makeText(this, "Displayed!!", Toast.LENGTH_SHORT).show();
+               //Toast.makeText(this, "Displayed!!", Toast.LENGTH_SHORT).show();
                     Appodeal.cache(this, Appodeal.INTERSTITIAL);
                 //ca-app-pub-7384642419407303/9880404420
                 //ca-app-pub-3940256099942544/1033173712 test
@@ -908,8 +908,8 @@ public class QuizTimedAll extends AppCompatActivity {
     protected void onDestroy() {
         countDownTimer.cancel();
 
-        if (score <= best5 && Sub==0){
-           //Toast.makeText(this, "Display!!!", Toast.LENGTH_SHORT).show();
+        if (score <= best5 && MainActivity.Subscribed!=1){
+           //Toast.makeText(this, "Display Interstitial!!!", Toast.LENGTH_SHORT).show();
             advert1();
         }
 

@@ -108,8 +108,12 @@
         <activity android:name=".SubChildrenHome" />
         <activity android:name=".QuizSubHome" />
         <activity
-            android:name=".QuizSubConversation"
+            android:name=".QuizSubConversationIntroducing"
             android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".QuizSubConversationHome"
+            android:screenOrientation="fullSensor" />
+
         <activity android:name=".SubConversationIntroductionActivity" />
         <activity android:name=".SubConversationHomeActivity" />
         <activity android:name=".SubConversationApologiesAndResponses" />

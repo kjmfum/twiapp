@@ -17,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -132,7 +131,7 @@ public class SubConversationIntroductionActivity extends AppCompatActivity {
     }
 
     public void goToQuizAll() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubConversation.class);
+        Intent intent = new Intent(getApplicationContext(), QuizSubConversationIntroducing.class);
         startActivity(intent);
     }
 
@@ -143,7 +142,7 @@ public class SubConversationIntroductionActivity extends AppCompatActivity {
 
 
             bb = conversationArrayList.get(j).getTwiConversation();
-            bb = playFromFirebaseConversation.viewTextConvert(bb);
+            bb = PlayFromFirebase.viewTextConvert(bb);
 
             File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/SUBCONVERSATION/" + bb + ".m4a");
             if (myFiles.exists()) {
@@ -171,7 +170,7 @@ public class SubConversationIntroductionActivity extends AppCompatActivity {
                 for (int i = 0; i < conversationArrayList.size(); i++) {
 
                     bb = conversationArrayList.get(i).getTwiConversation();
-                    bb = playFromFirebaseConversation.viewTextConvert(bb);
+                    bb = PlayFromFirebase.viewTextConvert(bb);
 
                     File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/SUBCONVERSATION/" + bb + ".m4a");
                     if (!myFile.exists()) {

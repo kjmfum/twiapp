@@ -132,7 +132,7 @@ public class SubConversationPhone extends AppCompatActivity {
         }
 
         public void goToQuizAll() {
-            Intent intent = new Intent(getApplicationContext(), QuizSubConversation.class);
+            Intent intent = new Intent(getApplicationContext(), QuizSubConversationIntroducing.class);
             startActivity(intent);
         }
 

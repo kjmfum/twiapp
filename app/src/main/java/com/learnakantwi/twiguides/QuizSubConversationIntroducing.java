@@ -43,13 +43,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.learnakantwi.twiguides.AllActivity.allArrayList;
 import static com.learnakantwi.twiguides.NumbersActivity.numbersArrayList;
+import static com.learnakantwi.twiguides.SubConversationApologiesAndResponses.conversationsApologiesArrayList;
+import static com.learnakantwi.twiguides.SubConversationDirections.conversationDirections;
+import static com.learnakantwi.twiguides.SubConversationHospital.conversationHospital;
 import static com.learnakantwi.twiguides.SubConversationIntroductionActivity.conversationArrayList;
+import static com.learnakantwi.twiguides.SubConversationPhone.conversationPhone;
+import static com.learnakantwi.twiguides.SubConversationWelcomingOthers.conversationWelcomingOthersArrayList;
 
-public class QuizSubConversation extends AppCompatActivity {
+public class QuizSubConversationIntroducing extends AppCompatActivity {
 
     Random random;
     ArrayList<String> answers;
+    ArrayList<subConversation> arrayList;
+    ArrayList<Integer> answersList;
+    ArrayList<Integer> possibleAnswersList;
+
     int answerLocation;
     int randomChoiceQuestion;
     TextView questionText;
@@ -78,7 +88,7 @@ public class QuizSubConversation extends AppCompatActivity {
     long delaytime = 5000;
     double scorePercent= ((score/totalQuestions)*100);
 
-    int chosenSize=(conversationArrayList.size()-1);
+    int chosenSize=10;
     int chosenSizeRand;
     int muteNumber;
 
@@ -93,6 +103,8 @@ public class QuizSubConversation extends AppCompatActivity {
 
 
     Toast toast;
+
+
 
 
     @Override
@@ -157,7 +169,7 @@ public class QuizSubConversation extends AppCompatActivity {
         correctWrong.setText("");
         scoreText.setText("");
         counterText.setText("");
-        generateQuestion();
+        generateQuestion(arrayList);
         //tvGradeText.setText("");
     }
 
@@ -184,7 +196,7 @@ public class QuizSubConversation extends AppCompatActivity {
         scoreText.setText("");
         counterText.setText("");
         resetQuiz();
-        generateQuestion();
+        generateQuestion(arrayList);
 
     }
 
@@ -275,11 +287,35 @@ public class QuizSubConversation extends AppCompatActivity {
 
     public void playFromFileOrDownload(final String filename, final String appearText) {
 
+        if(appearText.equals(twi1)){
+            questionText.setBackgroundColor(Color.GREEN);
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    questionText.setBackgroundColor(Color.WHITE);
+                }
+            },600);
+
+        }
+        else{
+            questionText.setBackgroundColor(Color.RED);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    questionText.setBackgroundColor(Color.WHITE);
+                }
+            },4700);
+        }
+
         if (counter<totalQuestions && appearText.equals(twi1)) {
             toast.setText(appearText + " -" + " " + "CORRECT!!!!");
             toast.show();
             score++;
             scoreText.setText(String.valueOf(score));
+
         }
 
         if (counter == totalQuestions) {
@@ -400,7 +436,7 @@ public class QuizSubConversation extends AppCompatActivity {
                         if (appearText.equals(twi1)) {
                             toast.setText(appearText + " -" + " " + "CORRECT!!!!");
                             toast.show();
-                            generateQuestion();
+                            generateQuestion(arrayList);
                         } else {
                            // toast.setText(appearText);
                             toast.setText(appearText + " -" + " " + "WRONG \n   \t\t\tTRY AGAIN");
@@ -414,7 +450,7 @@ public class QuizSubConversation extends AppCompatActivity {
                     toast.setText(appearText + " -" + " " + "CORRECT!!!!");
                     toast.show();
                    // generateQuestion();
-                    handler1.postDelayed(ranable,3000);
+                    handler1.postDelayed(ranable,1000);
                 } else {
                     toast.setText(appearText + " -" + " " + "WRONG \n   \t\t\tTRY AGAIN");
                     toast.show();
@@ -566,20 +602,136 @@ public class QuizSubConversation extends AppCompatActivity {
 
     }
 
+    public void generateQuestion(ArrayList<subConversation> arrayList){
+
+
+        random = new Random();
+        answers = new ArrayList<>();
+        answerLocation = random.nextInt(3);
+
+        randomChoiceQuestion = random.nextInt(arrayList.size()-1);
+
+        if(answersList.size()< arrayList.size()-1) {
+            while (answersList.contains(randomChoiceQuestion)) {
+                // randomChoiceQuestion = random.nextInt(numbersArrayList.size()-1);
+                randomChoiceQuestion = random.nextInt(arrayList.size() - 1);
+                //Toast.makeText(this, Arrays.asList(answers).toString() + " Good", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else{
+            answersList.clear();
+        }
+        answersList.add(randomChoiceQuestion);
+
+
+        english1 = arrayList.get(randomChoiceQuestion).getEnglishConversation();
+        //english1 = conversationArrayList.get(0).getEnglishConversation();
+
+        StringBuilder sb = new StringBuilder();
+        sb = sb.append("\"").append(english1).append("\"");
+
+        SpannableStringBuilder builder =new SpannableStringBuilder();
+        SpannableString howWillYouSay = new SpannableString("How will you say:\n");
+        SpannableString inTwi = new SpannableString("\n In Twi?");
+        // howWillYouSay.setSpan(new ForegroundColorSpan(Color.GREEN), 0,howWillYouSay.length(),0);
+        howWillYouSay.setSpan(new StyleSpan(Typeface.ITALIC), 0,howWillYouSay.length(),0);
+        inTwi.setSpan(new StyleSpan(Typeface.NORMAL), 0, inTwi.length(),0);
+
+        SpannableString questionText1 = new SpannableString(sb);
+        questionText1.setSpan(new StyleSpan(Typeface.BOLD),0,questionText1.length(),0);
+        builder.append(howWillYouSay).append(questionText1).append(inTwi);
+
+
+        questionText.setText(builder, TextView.BufferType.SPANNABLE);
+
+
+
+        twi1 = arrayList.get(randomChoiceQuestion).getTwiConversation();
+        //twi1 = conversationArrayList.get(0).getTwiConversation();
+
+
+        for (int i = 0; i < 3;i++ ){
+
+            chosenSizeRand= random.nextInt(chosenSize);
+
+
+            if (i== answerLocation){
+                answers.add(twi1);
+               // possibleAnswersList.add(chosenSizeRand);
+            }
+            else {
+                while (arrayList.get(chosenSizeRand).getTwiConversation().equals(twi1) || arrayList.get(chosenSizeRand).getEnglishConversation().contains("(")){
+                        chosenSizeRand = random.nextInt(chosenSize);
+                    }
+
+                answers.add(arrayList.get(chosenSizeRand).getTwiConversation());
+                //possibleAnswersList.add(chosenSizeRand);
+            }
+            //Log.i("List", possibleAnswersList.toString());
+            //Toast.makeText(this, possibleAnswersList.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+       // possibleAnswersList.clear();
+
+
+        possibleA1.setText(answers.get(0));
+        possibleA2.setText(answers.get(1));
+        possibleA3.setText(answers.get(2));
+
+        /*possibleA1.setText(String.format("A.   %s", answers.get(0)));
+        possibleA2.setText(String.format("B.   %s", answers.get(1)));
+        possibleA3.setText(String.format("C.   %s", answers.get(2)));*/
+        //button4.setText(answers.get(3));
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_sub_conversation);
 
         muteNumber=1;
+        answersList = new ArrayList<>();
+        possibleAnswersList = new ArrayList<>();
+
+        Intent intent = getIntent();
+        String category = intent.getStringExtra("arrayName");
+        switch (category){
+            case "Welcoming others":
+                chosenSize = conversationWelcomingOthersArrayList.size()-1;
+                arrayList = conversationWelcomingOthersArrayList;
+                break;
+            case "On The Phone":
+                chosenSize = conversationPhone.size()-1;
+                arrayList = conversationPhone;
+                break;
+            case "Apologies and Regret":
+                chosenSize = conversationsApologiesArrayList.size()-1;
+                arrayList = conversationsApologiesArrayList;
+                break;
+            case "Asking and Giving Directions":
+                chosenSize = conversationDirections.size()-1;
+                arrayList = conversationDirections;
+                break;
+            case "At the Hospital":
+                chosenSize = conversationHospital.size()-1;
+                arrayList = conversationHospital;
+                break;
+            default: chosenSize = conversationArrayList.size()-1;
+                arrayList = conversationArrayList;
+        }
+
+
+
+
 
         handler1 = new Handler();
 
         ranable = new Runnable() {
             @Override
             public void run() {
-                //Toast.makeText(QuizSubConversation.this, "Me", Toast.LENGTH_SHORT).show();
-                generateQuestion();
+                //Toast.makeText(QuizSubConversationIntroducing.this, "Me", Toast.LENGTH_SHORT).show();
+                generateQuestion(arrayList);
             }
         };
 

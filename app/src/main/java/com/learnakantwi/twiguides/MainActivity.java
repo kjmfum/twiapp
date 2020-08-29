@@ -416,7 +416,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
         Lifetime = sharedPreferencesAds.getInt("Lifetime",5); //runtime
         Subscribed = sharedPreferencesAds.getInt("Sub", 5);
-      // Lifetime = 1;  //Subscribed
+       Lifetime = 1;  //Subscribed
       //  Lifetime = 5;
 
         //Toast.makeText(this, "My: "+ Lifetime, Toast.LENGTH_SHORT).show();
@@ -442,7 +442,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                     editor.putInt("Sub",1);
                     editor.putInt("Ads",0);
                     editor.apply();
-                    Subscribed = sharedPreferencesAds.getInt("Sub", 5);
+                    Subscribed =1;
+                   // Subscribed = sharedPreferencesAds.getInt("Sub", 5);
 
                     //Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
                    Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);

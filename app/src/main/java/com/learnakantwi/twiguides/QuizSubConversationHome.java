@@ -1,8 +1,5 @@
 package com.learnakantwi.twiguides;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
@@ -25,14 +22,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -44,9 +40,10 @@ import java.util.ArrayList;
 import static android.Manifest.permission.INTERNET;
 import static com.learnakantwi.twiguides.AllActivity.allArrayList;
 
-public class QuizSubHome extends AppCompatActivity {
+public class QuizSubConversationHome extends AppCompatActivity {
 
-    static ArrayList<HomeButton> homeButtonArrayList;
+    //ArrayList<HomeButton> homeButtonArrayList;
+    ArrayList<String> subQuizHomeConversationArrayList;
     ListView homeListView;
     MediaPlayer mediaPlayer;
 
@@ -54,6 +51,16 @@ public class QuizSubHome extends AppCompatActivity {
     Toast toast;
     int audioToDownload;
     int downloadAllClickCount;
+
+    String Ads = "";
+    int Sub=0;
+    int testShared;
+
+    TextView tvSubscribeBanner;
+
+   // SharedPreferences subscribed = getSharedPreferences("AdsDecision", MODE_PRIVATE);
+
+
 
     public void downloadCompleteToast(){
         toast.setText("Download Complete");
@@ -319,75 +326,39 @@ public class QuizSubHome extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                final ArrayList<HomeButton> results = new ArrayList<>();
-                for (HomeButton x: homeButtonArrayList ){
+                final ArrayList<String> results = new ArrayList<>();
+                for (String x: subQuizHomeConversationArrayList ){
 
-                    if(x.getNameofActivity().toLowerCase().contains(newText.toLowerCase())
+                    if(x.toLowerCase().contains(newText.toLowerCase())
 
                     ){
                         results.add(x);
                     }
 
-                    ((HomeAdapter)homeListView.getAdapter()).update(results);
+                    ((ConversationMainAdapter)homeListView.getAdapter()).update(results);
 
                     homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                            String me1 = results.get(position).getNameofActivity();
+                            String me1 = results.get(position);
 
 
                             switch (me1){
-                                case "Conversations":
-                                     goToConversation();
+                                case "All Vocabulary":
+                                    goToAllVocabularyTimedQuiz();
                                     return;
-                                case "Timed Quiz":
-                                    goToTimedQuiz();
+                                case "Numbers":
+                                    goToNumberTimedQuiz();
+                                    return;
+                                case "HALL OF FAME":
+                                    goToHallOfFameMain();
                                     return;
                                 case "Children Animals":
                                     goToChildrenAnimals();
                                     return;
-                                case "Alphabets":
-                                    goToAlphabets();
-                                    return;
                                 case "Animals":
                                     goToAnimals();
-                                    return;
-                                case "Body Parts":
-                                    goToBodyparts();
-                                    return;
-                                case "Colours":
-                                    goToColours();
-                                    return;
-                                case "Days of Week":
-                                    goToDaysOfWk();
-                                    return;
-                                case "Expressions":
-                                    goToCommonExpressionsa();
-                                    return;
-                                case "Family":
-                                    goToFamily();
-                                    return;
-                                case "Food":
-                                    goToFood();
-                                    return;
-                                case "Months":
-                                    goToMonths();
-                                    return;
-                                case "Numbers":
-                                    goToNumber();
-                                    return;
-                                case "Time":
-                                    goToTime();
-                                    return;
-                                case "Weather":
-                                    goToWeather();
-                                    return;
-                                case "Business":
-                                    goToBusiness();
-                                    return;
-                                case "Search":
-                                    goToAll();
                                     return;
                                 case "Download All Audio":
                                     downloadAll();
@@ -465,34 +436,24 @@ public class QuizSubHome extends AppCompatActivity {
 
 
     public void goToQuizAll() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubAll.class);
+        Intent intent = new Intent(getApplicationContext(), QuizAll.class);
         startActivity(intent);
     }
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-        startActivity(intent);
-    }
+        if (Ads.equals("Ads")){
+            Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+            startActivity(intent);
+        }
 
-    public void goToConversation(){
-        Intent intent = new Intent(getApplicationContext(), QuizSubConversationHome.class);
-        startActivity(intent);
     }
-    public void goToChildrenAnimals(){
-        Intent intent = new Intent(getApplicationContext(), SubChildrenAnimalQuiz.class);
-        startActivity(intent);
-    }
-
-    public void goToTimedQuiz(){
-        Intent intent = new Intent(getApplicationContext(), QuizTimedHome.class);
-        intent.putExtra("Ads","");
-        startActivity(intent);
-    }
-
-
 
     public void goToBusiness(){
-        Intent intent = new Intent(getApplicationContext(), QuizSubBusiness.class);
+        Intent intent = new Intent(getApplicationContext(), QuizBusiness.class);
         startActivity(intent);
 
     }
@@ -502,73 +463,81 @@ public class QuizSubHome extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToAlphabets() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubAlphabet.class);
+    public void goToAllVocabularyTimedQuiz(){
+        Intent intent = new Intent(getApplicationContext(), QuizTimedAll.class);
+        intent.putExtra("category","All Vocabulary");
+        intent.putExtra("Ads", Ads);
         startActivity(intent);
     }
 
-    public void goToNumber() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubNumbers.class);
+    public void goToHallOfFameMain(){
+        Intent intent = new Intent(getApplicationContext(), QuizHighScoresHome.class);
+        intent.putExtra("Ads", Ads);
+       // intent.putExtra("from","no");
         startActivity(intent);
     }
 
-    public void goToDaysOfWk() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubDaysOfWeek.class);
+    public void goToChildrenAnimals(){
+
+
+       // intent.putExtra("category","Animals");
+
+       // coming = intent.getStringExtra("coming");
+        if (MainActivity.Subscribed !=1){
+            Intent intent = new Intent(getApplicationContext(), PleaseSubscribePage.class);
+           // intent.putExtra("coming","ads");
+            startActivity(intent);
+        }
+
+        else {
+           // Toast.makeText(this, "Two", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), QuizTimedChildrenAnimals.class);
+        startActivity(intent);
+            /*Intent intent = new Intent(getApplicationContext(), QuizTimedAll.class);
+            intent.putExtra("category","Animals");
+            //intent.putExtra("coming","soon");
+            startActivity(intent);*/
+        }
+
+    }
+
+    public void goToAnimals(){
+
+        // coming = intent.getStringExtra("coming");
+        if (Sub==0){
+            Intent intent = new Intent(getApplicationContext(), QuizTimedAll.class);
+            intent.putExtra("category","Animals");
+            /*Intent intent = new Intent(getApplicationContext(), PleaseSubscribePage.class);
+            intent.putExtra("coming","ads");*/
+            startActivity(intent);
+        }
+
+        else {
+            Intent intent = new Intent(getApplicationContext(), QuizTimedAll.class);
+            intent.putExtra("category","Animals");
+            //intent.putExtra("coming","soon");
+            startActivity(intent);
+        }
+
+    }
+
+    public void goToNumberTimedQuiz() {
+        Intent intent = new Intent(getApplicationContext(), QuizTimedAll.class);
+        intent.putExtra("category","Numbers");
+        intent.putExtra("Ads", Ads);
         startActivity(intent);
     }
 
-    public void goToTime() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubTime.class);
-        startActivity(intent);
-    }
 
-    public void goToFamily() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubFamily.class);
-        startActivity(intent);
-    }
-
-    public void goToWeather() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubWeather.class);
-        startActivity(intent);
-    }
-
-    public void goToMonths() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubMonths.class);
-        startActivity(intent);
-    }
 
    /* public void goToPronouns() {
         Intent intent = new Intent(getApplicationContext(), PronounsActivity.class);
         startActivity(intent);
     }*/
 
-    public void goToColours() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubColours.class);
-        startActivity(intent);
-    }
-
-    public void goToAnimals() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubAnimals.class);
-        startActivity(intent);
-    }
-
-    public void goToBodyparts() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubBodyParts.class);
-        startActivity(intent);
-    }
-
-    public void goToFood() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubFood.class);
-        startActivity(intent);
-    }
-
-    public void goToCommonExpressionsa() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubCommonExpressionsa.class);
-        startActivity(intent);
-    }
 
     public void goToAll() {
-        Intent intent = new Intent(getApplicationContext(), QuizSubAll.class);
+        Intent intent = new Intent(getApplicationContext(), QuizAll.class);
         startActivity(intent);
     }
 
@@ -581,23 +550,46 @@ public class QuizSubHome extends AppCompatActivity {
     }
 
 
-//In your case, you do not need the LinearLayout and ImageView at all. Just add android:drawableLeft="@drawable/up_count_big" to your TextView.
+    public void goToSubscriptionPage (View v){
+        // Toast.makeText(this, String.valueOf(subscriptionState), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), InAppActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToPleaseSubPage(){
+        Intent intent = new Intent(getApplicationContext(), PleaseSubscribePage.class);
+        startActivity(intent);
+    }
+
+    public void goToCategory(String category){
+        Intent intent;
+        intent = new Intent(getApplicationContext(), QuizSubConversationIntroducing.class);
+        intent.putExtra("arrayName",category);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz_sub_home);
+        setContentView(R.layout.activity_quizhome);
 
-        downloadAllClickCount =0;
 
-        // Function to check and request permission
-        // checkPermission(INTERNET, 100);
+        tvSubscribeBanner = findViewById(R.id.tvSubscribe);
+
+        if (MainActivity.Subscribed == 1){
+            tvSubscribeBanner.setVisibility(View.GONE);
+        }
+
+
+
+        Intent intent = getIntent();
+        Ads = intent.getStringExtra("Ads");
+
+       // Toast.makeText(this, Ads, Toast.LENGTH_SHORT).show();
+
+
         storageReference = FirebaseStorage.getInstance().getReference();
-
         toast= Toast.makeText(this, "", Toast.LENGTH_SHORT);
-
-
-
 
 
         if (Build.VERSION.SDK_INT > 22) {
@@ -613,42 +605,53 @@ public class QuizSubHome extends AppCompatActivity {
             }
         }
 
+        if (MainActivity.Subscribed !=1){
+            Appodeal.cache(this, Appodeal.INTERSTITIAL);
+    //ca-app-pub-7384642419407303/9880404420
+    //ca-app-pub-3940256099942544/1033173712 test
+
+            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+
+   /* MobileAds.initialize(this, new OnInitializationCompleteListener() {
+        @Override
+        public void onInitializationComplete(InitializationStatus initializationStatus) {
+        }
+    });
+    mAdView = findViewById(R.id.adView);
+    AdRequest adRequest = new AdRequest.Builder().build();
+    mAdView.loadAd(adRequest);
 
 
-        homeButtonArrayList = new ArrayList<>();
+    MobileAds.initialize(this, new OnInitializationCompleteListener() {
+        @Override
+        public void onInitializationComplete(InitializationStatus initializationStatus) {
+        }
+    });*/
+
+
+}
+            subQuizHomeConversationArrayList =new ArrayList<>();
+        subQuizHomeConversationArrayList.add("Introducing yourself");
+        subQuizHomeConversationArrayList.add("Welcoming others");
+        subQuizHomeConversationArrayList.add("On The Phone");
+        subQuizHomeConversationArrayList.add("Apologies and Regret");
+        subQuizHomeConversationArrayList.add("Asking and Giving Directions");
+        subQuizHomeConversationArrayList.add("At the Hospital");
+
         homeListView = findViewById(R.id.homeListView);
 
+        /*ArrayList<homeButtonArrayList = new ArrayList<>();
+        homeListView = findViewById(R.id.homeListView);
 
-
-        homeButtonArrayList.add(new HomeButton("Download All Audio", R.drawable.ic_download_audio));
-
-        homeButtonArrayList.add(new HomeButton("Timed Quiz", R.drawable.time));
-
-        homeButtonArrayList.add(new HomeButton("Conversations", R.drawable.conversationimage));
-        homeButtonArrayList.add(new HomeButton("Children Animals", R.drawable.childrenanimalsimage));
-        homeButtonArrayList.add(new HomeButton("Family", R.drawable.familyimage));
-        // homeButtonArrayList.add(new HomeButton("Proverbs", R.drawable.proverbsimage));
-        //homeButtonArrayList.add(new HomeButton("Children", R.drawable.childrenimage));
-        homeButtonArrayList.add(new HomeButton("Food", R.drawable.foodimage));
-        homeButtonArrayList.add(new HomeButton("Alphabets", R.drawable.alphabetsimage));
-        homeButtonArrayList.add(new HomeButton("Time", R.drawable.time));
-
-        homeButtonArrayList.add(new HomeButton("Days of Week", R.drawable.monday));
+        homeButtonArrayList.add(new HomeButton("HALL OF FAME", R.drawable.trophy));
+        homeButtonArrayList.add(new HomeButton("All Vocabulary", R.drawable.vocabularyimage));
         homeButtonArrayList.add(new HomeButton("Numbers", R.drawable.numbers));
-        // homeButtonArrayList.add(new HomeButton("Pronouns", R.drawable.pronounsimage));
-        homeButtonArrayList.add(new HomeButton("Weather", R.drawable.weathersunimage));
-        homeButtonArrayList.add(new HomeButton("Body Parts", R.drawable.lungsimage));
-        homeButtonArrayList.add(new HomeButton("Months", R.drawable.calendar));
-        homeButtonArrayList.add(new HomeButton("Expressions", R.drawable.expressionsimage));
-        homeButtonArrayList.add(new HomeButton("Colours", R.drawable.colourimage));
         homeButtonArrayList.add(new HomeButton("Animals", R.drawable.animalsimage));
-        homeButtonArrayList.add(new HomeButton("Business", R.drawable.businessimage));
+        homeButtonArrayList.add(new HomeButton("Children Animals", R.drawable.childrenanimalsimage));*/
 
-        //Collections.sort(this.homeButtonArrayList);
 
-        homeButtonArrayList.add(new HomeButton("All", R.drawable.allimage));
 
-        HomeAdapter homeAdapter = new HomeAdapter(this, homeButtonArrayList);
+        ConversationMainAdapter homeAdapter = new ConversationMainAdapter(this, subQuizHomeConversationArrayList);
         homeListView.setAdapter(homeAdapter);
 
 
@@ -658,77 +661,21 @@ public class QuizSubHome extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String me1 = homeButtonArrayList.get(position).getNameofActivity();
+                String me1 = subQuizHomeConversationArrayList.get(position);
+                goToCategory(me1);
 
 
-                switch (me1){
-                    case "Conversations":
-                        goToConversation();
-                        return;
-                    case "Timed Quiz":
-                        goToTimedQuiz();
-                        return;
-                    case "Children Animals":
-                        goToChildrenAnimals();
-                        return;
-                    case "Alphabets":
-                        goToAlphabets();
-                        return;
-                    case "Animals":
-                        goToAnimals();
-                        return;
-                    case "Body Parts":
-                        goToBodyparts();
-                        return;
-                    case "Colours":
-                        goToColours();
-                        return;
-                    case "Days of Week":
-                        goToDaysOfWk();
-                        return;
-                    case "Expressions":
-                        goToCommonExpressionsa();
-                        return;
-                    case "Family":
-                        goToFamily();
-                        return;
-                    case "Food":
-                        goToFood();
-                        return;
-                    case "Months":
-                        goToMonths();
-                        return;
-                    case "Numbers":
-                        goToNumber();
-                        return;
-                    case "Time":
-                        goToTime();
-                        return;
-                    case "Weather":
-                        goToWeather();
-                        return;
-                    case "Business":
-                        goToBusiness();
-                        return;
-                    case "All":
-                        goToAll();
-                        return;
-                    case "Download All Audio":
-                        downloadAll();
-                        return;
-                }
             }
         });
-
-
-
-
-
         //MobileAds.initialize(this, "ca-app-pub-6999427576830667~6251296006");
+
+        SharedPreferences subscribed = getSharedPreferences("AdsDecision", MODE_PRIVATE);
+        Sub = subscribed.getInt("Sub",0);
+        //Toast.makeText(this, "Hello: "+ Sub, Toast.LENGTH_SHORT).show();
+
 
 
     }
 }
-
 
 
