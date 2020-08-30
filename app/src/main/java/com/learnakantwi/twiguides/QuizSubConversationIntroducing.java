@@ -7,6 +7,7 @@ import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
@@ -91,6 +92,8 @@ public class QuizSubConversationIntroducing extends AppCompatActivity {
     int chosenSize=10;
     int chosenSizeRand;
     int muteNumber;
+
+    boolean canPlay = true;
 
     StorageReference storageReference;
     MediaPlayer playFromDevice;
@@ -286,8 +289,9 @@ public class QuizSubConversationIntroducing extends AppCompatActivity {
     }
 
     public void playFromFileOrDownload(final String filename, final String appearText) {
-
+        canPlay = false;
         if(appearText.equals(twi1)){
+
             questionText.setBackgroundColor(Color.GREEN);
 
             Handler handler = new Handler();
@@ -295,19 +299,26 @@ public class QuizSubConversationIntroducing extends AppCompatActivity {
                 @Override
                 public void run() {
                     questionText.setBackgroundColor(Color.WHITE);
+                    canPlay = true;
+
                 }
-            },600);
+
+            },4700);
 
         }
         else{
+            ColorStateList colorStateList = questionText.getTextColors();
+            questionText.setTextColor(Color.WHITE);
             questionText.setBackgroundColor(Color.RED);
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     questionText.setBackgroundColor(Color.WHITE);
+                    questionText.setTextColor(colorStateList);
+                    canPlay = true;
                 }
-            },4700);
+            },600);
         }
 
         if (counter<totalQuestions && appearText.equals(twi1)) {
@@ -528,7 +539,11 @@ public class QuizSubConversationIntroducing extends AppCompatActivity {
             b= b.replace("?","");
         }
 
-        playFromFileOrDownload(b,a);
+
+        if (canPlay){
+            playFromFileOrDownload(b,a);
+        }
+
 
     }
 

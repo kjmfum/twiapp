@@ -4,10 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +28,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +41,7 @@ import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -47,11 +55,99 @@ public class SignUpActivity extends AppCompatActivity {
     FirebaseUser currentUser;
     private  FirebaseAuth mAuth;
 
+    private static final String TAG = "SignUpActivity";
+    private String username;
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //MenuInflater menuInflater = getMenuInflater();
+        getMenuInflater().inflate(R.menu.vocabulary_menu, menu);
+
+
+
+        final MenuItem item = menu.findItem(R.id.menusearch);
+
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+
+        switch (item.getItemId()) {
+            case R.id.searchAll:
+                goToAll();
+                return true;
+            case R.id.videoCourse:
+                goToWeb();
+                return true;
+            case R.id.main:
+                goToMain();
+                return true;
+            case R.id.rate:
+                rateMe();
+                return true;
+            case R.id.share:
+                shareApp();
+                return true;
+            case R.id.dailyTwiAlert:
+                tunOnDailyTwi();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+
+    public void tunOnDailyTwi() {
+        SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
+        String dailyTwiPreference = sharedPreferences.getString("DailyTwiPreference", "Yes");
+        sharedPreferences.edit().putString("DailyTwiPreference", "Yes").apply();
+        Toast.makeText(this, "Daily Twi Alerts Turned On", Toast.LENGTH_SHORT).show();
+    }
+    public void shareApp(){
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        //sharingIntent.setAction("http://play.google.com/store/apps/details?id=" + getPackageName());
+        sharingIntent.setType("text/plain");
+        String shareBody = "http://play.google.com/store/apps/details?id=" + getPackageName();
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Please install this Nice Android Twi App");
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
+    }
+
+    public void rateMe() {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("market://details?id=" + getPackageName())));
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
+        }
+    }
+
+    public void goToMain(){
+        Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToWeb() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
+        startActivity(intent);
+    }
+
+
+    public void goToAll() {
+        Intent intent = new Intent(getApplicationContext(), SubPAllActivity.class);
+        startActivity(intent);
+    }
+
     public void SignUp(){
         progressBar.setVisibility(View.VISIBLE);
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString();
-        final String username = etUsername.getText().toString().trim();
+        username = etUsername.getText().toString().trim();
 
        // Toast.makeText(this, email + ": " + password, Toast.LENGTH_SHORT).show();
 
@@ -96,6 +192,28 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(username)
+                                        .build();
+
+                                Objects.requireNonNull(mAuth.getCurrentUser()).updateProfile(userProfileChangeRequest).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(SignUpActivity.this, "Success: "+ username, Toast.LENGTH_SHORT).show();
+                                        currentUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(SignUpActivity.this, "An email has been sent to "+ currentUser.getEmail() +" \n Please click the link in the email to verify account", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d(TAG, "onFailure: "+ e);
+                                        Toast.makeText(SignUpActivity.this, "Failed "+ e.toString(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                                 progressBar.setVisibility(View.VISIBLE);
                                 currentUser = mAuth.getCurrentUser();
                                 //Toast.makeText(SignUpActivity.this, "Success" + " " + currentUser, Toast.LENGTH_SHORT).show();
@@ -103,7 +221,9 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 writeNewFirestore(currentUser.getUid(), username, currentUser.getEmail());
 
-                                Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+                               // Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                                intent.putExtra("registeredEmail", currentUser.getEmail());
                                 startActivity(intent);
                                 progressBar.setVisibility(View.INVISIBLE);
 

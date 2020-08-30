@@ -1,10 +1,8 @@
 package com.learnakantwi.twiguides;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -19,7 +17,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -30,7 +27,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.billingclient.api.BillingClient;
@@ -41,23 +37,21 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
-import com.google.rpc.context.AttributeContext;
+import com.inmobi.ads.i;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -85,6 +79,8 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
    static ArrayList<HomeMainButton> homeMainButtonArrayList;
     BillingClient billingClient;
     String premiumUpgradePrice;
+    String userEmail;
+
     Button buyButton;
     Toast toast;
     ListView homeListView;
@@ -95,11 +91,16 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
     TextView tvSignIn;
     FirebaseAuth mAuth;
     FirebaseUser User;
+    String displayName;
 
-    String currentUser;
+    String currentUserEmail;
 
     RecyclerView recyclerView;
     RVHomeMainAdapter rvHomeMainAdapter;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    CollectionReference usersReference = db.collection("users");
+
 
 
     @Override
@@ -180,13 +181,6 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         super.onOptionsItemSelected(item);
 
         switch (item.getItemId()) {
-           /*case R.id.settings:
-                Log.i("Menu Item Selected", "Settings");
-                playAll();
-                return true;
-            case R.id.alphabets:
-                Log.i("Menu Item Selected", "Alphabets");
-                return  true;*/
 
             case R.id.quiz1:
                 goToQuizHome();
@@ -269,6 +263,10 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         Intent intent = new Intent(getApplicationContext(), SubPProverbsHome.class);
         startActivity(intent);
     }
+   public void goToNoticeBoard(){
+        Intent intent = new Intent(getApplicationContext(), NoticeBoardActivity.class);
+        startActivity(intent);
+   }
 
     public void goToWeb() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
@@ -473,7 +471,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
                         if (!task.isSuccessful()) {
                             Log.i("getInstanceId failed", task.getException().toString());
-                            Toast.makeText(SubPHomeMainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(SubPHomeMainActivity.this, "Success", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
@@ -501,7 +499,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         reference.push().setValue(token);
 
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         Map<String, String> user = new HashMap<>();
 
         user.put("Justice", token);
@@ -588,6 +586,9 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
             case "Proverbs":
                 goToProverbs();
                 return;
+            case "Premium Users":
+                goToNoticeBoard();
+                return;
             case "Quiz":
                 goToQuizHome();
                 return;
@@ -616,22 +617,54 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         tvSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             //   if (tvSignIn.getText().toString().toLowerCase().contains("sign")) {
+                //   if (tvSignIn.getText().toString().toLowerCase().contains("sign")) {
                 if (mAuth.getCurrentUser() == null) {
-                   // tvSignIn.setText("SIGN IN");
+                    // tvSignIn.setText("SIGN IN");
                     SignIn();
+                } else {
+                    if (User != null) {
+                        if (!User.isEmailVerified()) {
+                            userEmail = User.getEmail();
+                            User.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    FirebaseAuth.getInstance().signOut();
+                                    tvSignIn.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                                    tvSignIn.setText("SIGN IN");
+                                    Toast.makeText(SubPHomeMainActivity.this, "Email sent to " + userEmail + "\n Click on link in Email to verify", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                                    intent.putExtra("registeredEmail", userEmail);
+                                    startActivity(intent);
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                    Toast.makeText(SubPHomeMainActivity.this, "Could not send verification email", Toast.LENGTH_SHORT).show();
+                                    if(e.toString().toLowerCase().contains("a network error")){
+                                        Toast.makeText(SubPHomeMainActivity.this, "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+                                    }else if(e.toString().toLowerCase().contains("try again later")){
+                                        Toast.makeText(SubPHomeMainActivity.this, "Please try again in 5 minutes time", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            });
+                            /*StringBuilder sb = new StringBuilder();
+                            sb.append("Click link sent to ").append(User.getEmail()).append(" to verify email");
+                            tvSignIn.setText(sb);*/
+                        } else {
+
+                            FirebaseAuth.getInstance().signOut();
+                            tvSignIn.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                            Toast.makeText(SubPHomeMainActivity.this, "You have been signed out : \n" + User.getEmail() + "\n", Toast.LENGTH_SHORT).show();
+                            tvSignIn.setText("SIGN IN");
+                        }
+
+
+                    }
+
                 }
-                else{
-                  //  if (User != null){
-                        FirebaseAuth.getInstance().signOut();
-                        tvSignIn.setBackgroundColor(getResources().getColor(R.color.colorGreen));
-                       Toast.makeText(SubPHomeMainActivity.this, "You have been signed out : \n"+ User.getEmail(), Toast.LENGTH_SHORT).show();
-                        tvSignIn.setText("SIGN IN");
-                  //  }
-
-
-                }
-
             }
         });
 
@@ -659,7 +692,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
 
         AppRate.with(this)
                 .setInstallDays(0)
-                .setLaunchTimes(3)
+                .setLaunchTimes(5)
                 .setRemindInterval(2)
                 .monitor();
 
@@ -676,6 +709,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         homeMainButtonArrayList.add(new HomeMainButton("Children", R.drawable.childrenimage));
         homeMainButtonArrayList.add(new HomeMainButton("Reading", R.drawable.readingimage));
         homeMainButtonArrayList.add(new HomeMainButton("Manage Storage", R.drawable.ic_download_audio));
+        homeMainButtonArrayList.add(new HomeMainButton("Premium Users", R.drawable.noticeimage));
 
 
         HomeMainAdapter homeMainAdapter = new HomeMainAdapter(this, homeMainButtonArrayList);
@@ -898,7 +932,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
             conversationDirections.add(new subConversation("Ɛhe na menya kar akɔ Kumasi", "Where can I board a car to Kumasi"));
             conversationDirections.add(new subConversation("Ɛhe na ayaresabea no wɔ?", "Where is the hospital located?"));
             conversationDirections.add(new subConversation("Merehwehwɛ ayaresabea", "I'm looking for a hospital"));
-           /*conversationDirections.add(new subConversation("Merehwehwɛ...", "I'm looking for..."));
+           conversationDirections.add(new subConversation("Merehwehwɛ...", "I'm looking for..."));
             conversationDirections.add(new subConversation("Merekɔ mpoano", "I'm going to the beach"));
             conversationDirections.add(new subConversation("Ɛkwan bɛn na ɛkɔ mpoano hɔ?", "Which road(way) leads to the beach?"));
             conversationDirections.add(new subConversation("Ɛhe na keteke gyinabea wɔ?", "Where is the train station?"));
@@ -929,7 +963,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
             conversationDirections.add(new subConversation("Fa me kɔ wimhyɛn gyinabea", "Take me to the airport"));
             conversationDirections.add(new subConversation("Mepɛ sɛ mekɔ fie", "I want to go home"));
             conversationDirections.add(new subConversation("Ɛhe na wote?", "Where do you stay?"));
-            conversationDirections.add(new subConversation("Mete Dansoman", "I stay at Dansoman"));*/
+            conversationDirections.add(new subConversation("Mete Dansoman", "I stay at Dansoman"));
         }
 
         conversationHospital = new ArrayList<>();
@@ -1048,16 +1082,39 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
     @Override
     protected void onStart() {
         if (mAuth.getCurrentUser()!=null){
-            currentUser = mAuth.getCurrentUser().getEmail();
+            currentUserEmail = mAuth.getCurrentUser().getEmail();
+            displayName = mAuth.getCurrentUser().getDisplayName();
+
+            DocumentReference usersDocReference =  db.document("users/"+User.getEmail()+ "/");
+           // Toast.makeText(this, User.isEmailVerified() +": okay", Toast.LENGTH_SHORT).show();
+            if (displayName == null){
+                displayName ="";
+            }
             //currentUser =  User.getUid();
             //String token = mAuth.getAccessToken();
             User = mAuth.getCurrentUser();
-            SpannableStringBuilder ssb = new SpannableStringBuilder("Akwaaba");
-            ForegroundColorSpan fcsGreen = new ForegroundColorSpan(Color.GREEN);
-            ssb.setSpan(fcsGreen, 0,ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            ssb.append(": ").append(currentUser);
+            SpannableStringBuilder ssb = new SpannableStringBuilder();
+            if (User.isEmailVerified()){
+                Map<String, Boolean> verified = new HashMap<>();
+                verified.put("Verified", true);
+                usersDocReference.set(verified, SetOptions.merge());
+                //db.document("Users/"+User.getEmail()+ "/");
+                ssb.append("Akwaaba: ");
+                ForegroundColorSpan fcsGreen = new ForegroundColorSpan(Color.GREEN);
+                ssb.setSpan(fcsGreen, 0,ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                ssb.append(displayName).append(" ");
+            }
+
+            if (!User.isEmailVerified()){
+                Map<String, Boolean> verified = new HashMap<>();
+                verified.put("Verified", false);
+                usersDocReference.set(verified, SetOptions.merge());
+                ssb.append("Click to verify your email ");
+            }
+            ssb.append(": ").append(currentUserEmail);
+
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(ssb).append(": ").append(currentUser);
+            stringBuilder.append(ssb).append(": ").append(currentUserEmail);
            // tvSignIn.setText(stringBuilder);
             tvSignIn.setText(ssb);
             tvSignIn.setBackgroundColor(Color.WHITE);
@@ -1077,6 +1134,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         }
         super.onStart();
     }
+
 
     @Override
     public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {

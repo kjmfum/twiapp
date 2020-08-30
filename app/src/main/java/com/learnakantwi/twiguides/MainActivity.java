@@ -32,6 +32,8 @@ import com.appodeal.ads.Appodeal;
 import com.appodeal.ads.utils.Log;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     static  int Subscribed;
 
     private FirebaseAnalytics mFirebaseAnalytics;
+
 
     public void goToAll() {
         Intent intent = new Intent(getApplicationContext(), AllActivity.class);
