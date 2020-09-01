@@ -945,7 +945,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
             conversationDirections.add(new subConversation("Kɔ w'akyi", "Go back"));
             conversationDirections.add(new subConversation("Fa dua no nkyɛn", "Pass by the tree"));
             conversationDirections.add(new subConversation("Wadu Accra", "You have arrived at Accra"));
-            conversationDirections.add(new subConversation("Aka kakra na wadu hɔ", "You will get there in a short period of time"));
+            conversationDirections.add(new subConversation("Aka kakra na woadu hɔ", "You will get there in a short period of time"));
             conversationDirections.add(new subConversation("Hwɛ w'akyi", "Look back"));
             conversationDirections.add(new subConversation("Ɛha yɛ he?", "Which place is this?"));
             conversationDirections.add(new subConversation("Kyerɛ me kwan kɔ Achimota", "Show me the way(give me directions) to Achimota"));

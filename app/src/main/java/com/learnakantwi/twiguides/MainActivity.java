@@ -32,11 +32,16 @@ import com.appodeal.ads.Appodeal;
 import com.appodeal.ads.utils.Log;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
 
@@ -67,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
+    FirebaseAuth mAuth;
+    FirebaseUser User;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    CollectionReference usersCollection = db.collection("users");
 
     public void goToAll() {
         Intent intent = new Intent(getApplicationContext(), AllActivity.class);
@@ -312,6 +321,12 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                                             Subscribed = sharedPreferencesAds.getInt("Sub", 5);
                                                                             //addProverbs();
 
+                                                                            if (User != null){
+                                                                                Map<String, Object> premium = new HashMap<>();
+                                                                                premium.put("premium", sku);
+                                                                                usersCollection.document(User.getEmail()).set(premium, SetOptions.merge());
+                                                                            }
+
                                                                             mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Premium");
 
                                                                             Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
@@ -406,6 +421,10 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
+        mAuth = FirebaseAuth.getInstance();
+        User = mAuth.getCurrentUser();
+
+
         //Toast.makeText(this, "Before add: "+ proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
 
         sharedPreferencesAds = getSharedPreferences("AdsDecision",MODE_PRIVATE);
@@ -419,7 +438,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
         Lifetime = sharedPreferencesAds.getInt("Lifetime",5); //runtime
         Subscribed = sharedPreferencesAds.getInt("Sub", 5);
-       Lifetime = 1;  //Subscribed
+      // Lifetime = 1;  //Subscribed
       //  Lifetime = 5;
 
         //Toast.makeText(this, "My: "+ Lifetime, Toast.LENGTH_SHORT).show();
@@ -453,6 +472,12 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                     startActivity(homeIntent);
                     mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Premium");
                     mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Lifetime");
+
+                    if (User != null){
+                        Map<String, Object> premium = new HashMap<>();
+                        premium.put("premium", "Lifetime");
+                        usersCollection.document(User.getEmail()).set(premium, SetOptions.merge());
+                    }
                    // Toast.makeText(MainActivity.this, "You ", Toast.LENGTH_SHORT).show();
                 }else{
                    // Toast.makeText(MainActivity.this, "Hi "+Lifetime, Toast.LENGTH_SHORT).show();

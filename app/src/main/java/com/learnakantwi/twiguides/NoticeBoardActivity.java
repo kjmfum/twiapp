@@ -38,17 +38,20 @@ public class NoticeBoardActivity extends AppCompatActivity implements RVNoticeAd
     RVNoticeAdapter rvNoticeAdapter;
     ArrayList<Notice> noticeList;
     TextView notice1;
+    TextView notice2;
     TextView tvAnswer;
     EditText etQuestion;
 
     Button btSendQuestion;
 
+    FirebaseAuth mAuth;
+    FirebaseUser User;
    FirebaseFirestore db = FirebaseFirestore.getInstance();
    CollectionReference usersCollection = db.collection("users");
     CollectionReference questionsCollection = db.collection("questions");
     DocumentReference Notice1ref = db.document("notice/notice1");
-   FirebaseAuth mAuth;
-   FirebaseUser User;
+    DocumentReference Notice2ref = db.document("notice/notice2");
+
    String currentUser;
    String userEmail;
    String userDisplayName;
@@ -98,6 +101,7 @@ public class NoticeBoardActivity extends AppCompatActivity implements RVNoticeAd
 
 
         notice1 = findViewById(R.id.tvNotice1);
+        notice2 = findViewById(R.id.tvNotice2);
         User = mAuth.getCurrentUser();
 
         if (User != null){
@@ -171,13 +175,23 @@ public class NoticeBoardActivity extends AppCompatActivity implements RVNoticeAd
                 @Override
                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException e) {
                     if (e != null){
+                        tvAnswer.setVisibility(View.GONE);
                         return;
                     }
                     if (value.exists()){
                         String question = value.getString("question");
                         String answer = value.getString("answer");
-                        tvAnswer.setVisibility(View.VISIBLE);
-                        tvAnswer.setText("My Question: "+ question + "\n \nAnswer: "+answer);
+
+
+                        if (question.length()>1){
+                            tvAnswer.setVisibility(View.VISIBLE);
+                            tvAnswer.setText("My Question: "+ question + "\n \nAnswer: "+answer);
+                            tvAnswer.setTextSize(30);
+                        }
+                        else{
+                            tvAnswer.setVisibility(View.GONE);
+                        }
+
                     }
 
                 }
@@ -192,10 +206,39 @@ public class NoticeBoardActivity extends AppCompatActivity implements RVNoticeAd
                     }
                     if (value.exists()){
                         String Notice1 = value.getString("note1");
+
                         notice1.setText(Notice1);
+
+
+                        String Notice2 = value.getString("note2");
+                        if (Notice2!=null && Notice2.length()>1){
+                            notice2.setVisibility(View.VISIBLE);
+                            notice2.setText(Notice2);
+                            notice2.setTextSize(20);
+                        }
+                        else {
+                            notice2.setVisibility(View.GONE);
+                        }
+
+
                     }
                 }
             });
+
+           /* Notice2ref.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException e) {
+                    if (e != null){
+                        notice2.setVisibility(View.GONE);
+                        return;
+                    }
+                    if (value.exists()){
+                        notice2.setVisibility(View.VISIBLE);
+                        String Notice2 = value.getString("note2");
+                        notice2.setText(Notice2);
+                    }
+                }
+            });*/
         }
     }
 

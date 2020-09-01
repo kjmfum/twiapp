@@ -104,7 +104,7 @@
                     android:id="@+id/etQuestion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Ask a question"
+                    android:hint="Ask a question (Bisa Asɛm)"
                     android:inputType="text"
                     android:textSize="30sp"/>
                 <Button

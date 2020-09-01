@@ -51,6 +51,7 @@ public class QuizTimedHome extends AppCompatActivity {
     static ArrayList<HomeButton> homeButtonArrayList;
     ListView homeListView;
     MediaPlayer mediaPlayer;
+    AdView mAdView;
 
     StorageReference storageReference;
     Toast toast;
@@ -629,7 +630,7 @@ public class QuizTimedHome extends AppCompatActivity {
 
             Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
-   /* MobileAds.initialize(this, new OnInitializationCompleteListener() {
+   MobileAds.initialize(this, new OnInitializationCompleteListener() {
         @Override
         public void onInitializationComplete(InitializationStatus initializationStatus) {
         }
@@ -637,13 +638,6 @@ public class QuizTimedHome extends AppCompatActivity {
     mAdView = findViewById(R.id.adView);
     AdRequest adRequest = new AdRequest.Builder().build();
     mAdView.loadAd(adRequest);
-
-
-    MobileAds.initialize(this, new OnInitializationCompleteListener() {
-        @Override
-        public void onInitializationComplete(InitializationStatus initializationStatus) {
-        }
-    });*/
 
 
 }

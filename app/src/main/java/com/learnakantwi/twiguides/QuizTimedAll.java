@@ -57,6 +57,8 @@ public class QuizTimedAll extends AppCompatActivity {
 
 
     //ArrayList<Integer> checkArrayList;
+    AdView mAdView;
+
     ArrayList<Integer> answersList;
     TextView correctAnswer;
         TextView correctWrong;
@@ -790,19 +792,7 @@ public class QuizTimedAll extends AppCompatActivity {
             setContentView(R.layout.activity_quiz_timed_all);
 
             answersList = new ArrayList<>();
-            /*checkArrayList = new ArrayList<>();
 
-
-            checkArrayList.add(1);
-            checkArrayList.add(2);
-            checkArrayList.add(3);
-            checkArrayList.add(4);
-            checkArrayList.add(5);
-            checkArrayList.add(6);
-            checkArrayList.add(7);
-            checkArrayList.add(8);
-            checkArrayList.add(9);
-            checkArrayList.add(10);*/
 
             SharedPreferences subscribe = getSharedPreferences("AdsDecision",MODE_PRIVATE);
             Sub = subscribe.getInt("Sub",0);
@@ -822,9 +812,9 @@ public class QuizTimedAll extends AppCompatActivity {
                 //ca-app-pub-7384642419407303/9880404420
                 //ca-app-pub-3940256099942544/1033173712 test
 
-                    Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+                   // Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
-              /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                MobileAds.initialize(this, new OnInitializationCompleteListener() {
                     @Override
                     public void onInitializationComplete(InitializationStatus initializationStatus) {
                     }
@@ -834,11 +824,6 @@ public class QuizTimedAll extends AppCompatActivity {
                 mAdView.loadAd(adRequest);
 
 
-                MobileAds.initialize(this, new OnInitializationCompleteListener() {
-                    @Override
-                    public void onInitializationComplete(InitializationStatus initializationStatus) {
-                    }
-                });*/
             }else {
                     Ads ="No Ads";
                 }
