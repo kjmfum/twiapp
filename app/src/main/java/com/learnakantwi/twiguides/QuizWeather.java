@@ -47,6 +47,11 @@ import static com.learnakantwi.twiguides.WeatherActivity.weatherArray;
 
 public class QuizWeather extends AppCompatActivity {
 
+    AdView mAdView;
+
+    int showAdProbability;
+    Random random1;
+
     TextView correctAnswer;
     TextView correctWrong;
     TextView scoreText;
@@ -208,8 +213,8 @@ public class QuizWeather extends AppCompatActivity {
             button5.setVisibility(View.VISIBLE);
             button5.setText(getString(R.string.playagain));
 
-            double d1 = (double) score;
-            double d2 = (double) totalQuestions;
+            double d1 = score;
+            double d2 = totalQuestions;
             double scorePercent = ((d1 / d2) * 100);
             scorePercent = Math.round(scorePercent * 10.0) / 10.0;
 
@@ -502,6 +507,14 @@ public class QuizWeather extends AppCompatActivity {
 
     }
 
+    public void advert1() {
+
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
+
+    }
+
 
 
     @Override
@@ -531,18 +544,30 @@ public class QuizWeather extends AppCompatActivity {
            resetQuiz();
            generateQuestion();
 
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
-       /* MobileAds.initialize(this, new OnInitializationCompleteListener() {
+       // Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);*/
+        mAdView.loadAd(adRequest);
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        random1 = new Random();
+        showAdProbability = random1.nextInt(10);
+
+        if (showAdProbability<=4){
+            advert1();
+        }
+        super.onDestroy();
     }
 
 }

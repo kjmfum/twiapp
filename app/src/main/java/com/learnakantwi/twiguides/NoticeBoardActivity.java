@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -134,6 +136,18 @@ public class NoticeBoardActivity extends AppCompatActivity implements RVNoticeAd
             notice1.setText("Please sign In to Access Content");
         }
 
+        etQuestion.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    //do here your stuff f
+                    Toast.makeText(NoticeBoardActivity.this, "Got it", Toast.LENGTH_SHORT).show();
+                    SendChat(textView);
+                    return true;
+                }
+                return false;
+            }
+        });
 /*        Notice1ref.get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override

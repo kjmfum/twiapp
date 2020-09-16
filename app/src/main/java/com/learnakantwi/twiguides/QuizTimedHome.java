@@ -623,24 +623,26 @@ public class QuizTimedHome extends AppCompatActivity {
             }
         }
 
-        if (MainActivity.Subscribed !=1){
+
+        mAdView = findViewById(R.id.adView);
+
+        if (MainActivity.Subscribed!=1){
+
+            //AdView mAdView;
             Appodeal.cache(this, Appodeal.INTERSTITIAL);
-    //ca-app-pub-7384642419407303/9880404420
-    //ca-app-pub-3940256099942544/1033173712 test
+            //ca-app-pub-7384642419407303/9880404420
+            //ca-app-pub-3940256099942544/1033173712 test
 
-            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
-
-   MobileAds.initialize(this, new OnInitializationCompleteListener() {
-        @Override
-        public void onInitializationComplete(InitializationStatus initializationStatus) {
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }else{
+            mAdView.setVisibility(View.GONE);
         }
-    });
-    mAdView = findViewById(R.id.adView);
-    AdRequest adRequest = new AdRequest.Builder().build();
-    mAdView.loadAd(adRequest);
-
-
-}
 
 
         homeButtonArrayList = new ArrayList<>();

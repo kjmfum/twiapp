@@ -48,6 +48,11 @@ import static com.learnakantwi.twiguides.AllActivity.allArrayList;
 
 public class QuizAll extends AppCompatActivity {
 
+    AdView mAdView;
+
+    int showAdProbability;
+    Random random1;
+
     TextView correctAnswer;
     TextView correctWrong;
     TextView scoreText;
@@ -503,6 +508,13 @@ public class QuizAll extends AppCompatActivity {
 
     }
 
+    public void advert1() {
+
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
+
+    }
 
 
     @Override
@@ -512,7 +524,18 @@ public class QuizAll extends AppCompatActivity {
 
         toast= Toast.makeText(getApplicationContext()," ",Toast.LENGTH_SHORT);
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+       // Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
 
@@ -547,6 +570,17 @@ public class QuizAll extends AppCompatActivity {
         if (mp1 != null) {
             mp1.release();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        random1 = new Random();
+        showAdProbability = random1.nextInt(10);
+
+        if (showAdProbability<=5){
+            advert1();
+        }
+        super.onDestroy();
     }
 
    /* @Override

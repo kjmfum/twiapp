@@ -49,6 +49,10 @@ import static com.learnakantwi.twiguides.AlphabetsActivity.alphabetArray;
 
 public class QuizAlphabet extends AppCompatActivity {
 
+    AdView mAdView;
+    int showAdProbability;
+    Random random1;
+
     TextView correctAnswer;
     TextView correctWrong;
     TextView scoreText;
@@ -595,6 +599,13 @@ public class QuizAlphabet extends AppCompatActivity {
     }
 
 
+    public void advert1() {
+
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -604,7 +615,18 @@ public class QuizAlphabet extends AppCompatActivity {
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+       // Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
+
+        mAdView = findViewById(R.id.adView);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -631,6 +653,17 @@ public class QuizAlphabet extends AppCompatActivity {
            //generateQuestion();
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        random1 = new Random();
+        showAdProbability = random1.nextInt(10);
+
+        if (showAdProbability<=4){
+            advert1();
+        }
+        super.onDestroy();
     }
 
     /*public void stopPlay (){

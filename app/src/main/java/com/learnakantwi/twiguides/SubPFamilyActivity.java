@@ -808,7 +808,7 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
             @Override
             public void onClick(View view) {
                 if (MainActivity.Subscribed != 1){
-                    toast.setText("Repeat All Feature \n Only For Premium Users");
+                    toast.setText("Repeat One Feature \n Only For Premium Users");
                     toast.show();
                     //Toast.makeText(SubPFamilyActivity.this, "Repeat All Feature \n Only For Premium Users", Toast.LENGTH_SHORT).show();
                 }

@@ -49,6 +49,11 @@ import static com.learnakantwi.twiguides.BusinessActivity.businessArrayList;
 
 public class QuizBusiness extends AppCompatActivity {
 
+    AdView mAdView;
+
+    int showAdProbability;
+    Random random1;
+
     TextView correctAnswer;
     TextView correctWrong;
     TextView scoreText;
@@ -496,6 +501,13 @@ public class QuizBusiness extends AppCompatActivity {
 
     }
 
+    public void advert1() {
+
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
+
+    }
 
 
     @Override
@@ -506,7 +518,18 @@ public class QuizBusiness extends AppCompatActivity {
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+        //Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -531,5 +554,15 @@ public class QuizBusiness extends AppCompatActivity {
         generateQuestion();
     }
 
+    @Override
+    protected void onDestroy() {
+        random1 = new Random();
+        showAdProbability = random1.nextInt(10);
+
+        if (showAdProbability<=4){
+            advert1();
+        }
+        super.onDestroy();
+    }
 
 }

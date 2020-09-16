@@ -52,6 +52,7 @@ import static com.learnakantwi.twiguides.AllActivity.allArrayList;
 public class QuizHome extends AppCompatActivity {
     //  app:adUnitId="ca-app-pub-6999427576830667~6251296006"
 
+    AdView mAdView;
     static ArrayList<HomeButton> homeButtonArrayList;
     ListView homeListView;
 
@@ -628,32 +629,24 @@ public class QuizHome extends AppCompatActivity {
         //ca-app-pub-3940256099942544/1033173712 test
 
 
+
+
+        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+        ////
+
+
+
+
+        mAdView = findViewById(R.id.adView);
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
-        ////
-
-        /*mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-
-
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });*/
-
-        ////
-      /*  mAdView1 = findViewById(R.id.adView1);
         AdRequest adRequest1 = new AdRequest.Builder().build();
-        mAdView1.loadAd(adRequest1);
+        mAdView.loadAd(adRequest1);
 
-
+/*
         AppRate.with(this)
                 .setInstallDays(0)
                 .setLaunchTimes(3)

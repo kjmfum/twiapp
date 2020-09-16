@@ -48,6 +48,11 @@ import static com.learnakantwi.twiguides.MonthsActivity.monthsArrayList;
 
 public class QuizMonths extends AppCompatActivity {
 
+    AdView mAdView;
+
+    int showAdProbability;
+    Random random1;
+
     TextView correctAnswer;
     TextView correctWrong;
     TextView scoreText;
@@ -535,6 +540,14 @@ public class QuizMonths extends AppCompatActivity {
 
     }
 
+    public void advert1() {
+
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -543,7 +556,18 @@ public class QuizMonths extends AppCompatActivity {
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+       // Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
 
@@ -586,6 +610,17 @@ public class QuizMonths extends AppCompatActivity {
 
         mAdView.loadAd(adRequest);*/
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        random1 = new Random();
+        showAdProbability = random1.nextInt(10);
+
+        if (showAdProbability<=4){
+            advert1();
+        }
+        super.onDestroy();
     }
 
 }

@@ -807,12 +807,7 @@ public class QuizTimedAll extends AppCompatActivity {
             //if (!Ads.equals(null) && Ads.equals("Ads")){
                 if (MainActivity.Subscribed!=1){
                     Ads="Ads";
-               //Toast.makeText(this, "Displayed!!", Toast.LENGTH_SHORT).show();
                     Appodeal.cache(this, Appodeal.INTERSTITIAL);
-                //ca-app-pub-7384642419407303/9880404420
-                //ca-app-pub-3940256099942544/1033173712 test
-
-                   // Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
                 MobileAds.initialize(this, new OnInitializationCompleteListener() {
                     @Override

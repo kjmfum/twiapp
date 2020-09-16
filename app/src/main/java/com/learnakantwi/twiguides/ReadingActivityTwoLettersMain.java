@@ -35,6 +35,7 @@ public class ReadingActivityTwoLettersMain extends AppCompatActivity {
     ListView lvReadingAlphabets;
     Toast toast;
    // int testShared;
+   AdView mAdView;
 
 
 
@@ -164,7 +165,15 @@ public class ReadingActivityTwoLettersMain extends AppCompatActivity {
         testShared = sharedPreferencesAds.getInt("Ads", 5);
 */
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+       // Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
 

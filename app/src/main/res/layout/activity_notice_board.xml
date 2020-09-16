@@ -100,21 +100,40 @@
                     android:src="@drawable/noticeimage"
                     />
 
-                <EditText
-                    android:id="@+id/etQuestion"
+                <com.google.android.material.textfield.TextInputLayout
+
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Ask a question (Bisa Asɛm)"
-                    android:inputType="text"
-                    android:textSize="30sp"/>
-                <Button
+                    android:layout_height="wrap_content">
+
+
+                    <EditText
+                        android:id="@+id/etQuestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Ask a question (Bisa Asɛm)"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:textSize="30sp"/>
+
+                    <Button
+                        android:id="@+id/btSendQuestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/blue"
+                        android:onClick="SendChat"
+                        android:text="SEND"
+                        android:textColor="@color/white"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            <!--    <Button
                     android:id="@+id/btSendQuestion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/blue"
                     android:onClick="SendChat"
                     android:text="SEND"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"/>-->
 
 
             </LinearLayout>

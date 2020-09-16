@@ -58,6 +58,7 @@ import static com.learnakantwi.twiguides.NumbersActivity.numbersArrayList;
 import static com.learnakantwi.twiguides.PronounsActivity.pronounsArrayList;
 import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
 import static com.learnakantwi.twiguides.SubConversationIntroductionActivity.conversationArrayList;
+import static com.learnakantwi.twiguides.SubPVerbActivity.verbArrayList;
 import static com.learnakantwi.twiguides.TimeActivity.timeArrayList;
 import static com.learnakantwi.twiguides.WeatherActivity.weatherArray;
 import static com.learnakantwi.twiguides.ChildrenHome.childrenArray;
@@ -2749,6 +2750,8 @@ public class AppStartClass extends Application {
 
             // if(MainActivity.Lifetime ==1 || MainActivity.Subscribed == 1){
             if (Subscribed == 1) {
+
+               // Toast.makeText(this, "Hi: "+ Subscribed, Toast.LENGTH_SHORT).show();
                 proverbsArrayList.add(new Proverbs("Baabi a ɔsono bɛfa biara yɛ kwan", "Where ever the elephant passes is a way", "A powerful person can make a way where there seems to be no way"));
                 proverbsArrayList.add(new Proverbs("Ɛba a, ɛka oni", "If it comes it affects mother", "If trouble comes it affects your closest relatives"));
                 //  proverbsArrayList.add(new Proverbs("Ɛreba a, mɛbɔ ho ban, ne ɛtoto a, mɛsane, wɔn mu hena na wowɔ n'afa? Mewɔ ɛreba a, mɛbɔ ano ban afa.","hello","YEs"));
@@ -2800,6 +2803,122 @@ public class AppStartClass extends Application {
 
 
         }
+
+
+        ///VerbsArrayList/////
+
+       //// verbArrayList.add(new Verb("","",""));
+//        verbArrayList.add(new Verb("",""));
+
+        verbArrayList = new ArrayList<>();
+
+        if (5 > 1){
+            verbArrayList.add( new Verb("Come", "Bra"));
+            verbArrayList.add( new Verb("Don't Come", "Mma"));
+            verbArrayList.add(new Verb("Converse (1)","Bɔ nkɔmmɔ"));
+            verbArrayList.add(new Verb("Don't Converse (1)","Mmɔ Nkɔmmɔ"));
+            verbArrayList.add(new Verb("Converse (2)","Di nkɔmmɔ"));
+            verbArrayList.add(new Verb("Don't Converse (2)","Nni Nkɔmmɔ"));
+            verbArrayList.add(new Verb("Help","Boa"));
+
+                verbArrayList.add(new Verb("Don't Help", "Mmoa"));
+                verbArrayList.add(new Verb("Try", "Bɔ Mmɔden"));
+                verbArrayList.add(new Verb("Don't Try", "Mmɔ mmɔden"));
+                verbArrayList.add(new Verb("Ask", "Bisa"));
+                verbArrayList.add(new Verb("Don't Ask", "Mmisa"));
+                verbArrayList.add(new Verb("Break", "Bu"));
+                verbArrayList.add(new Verb("Don't Break", "Mmu"));
+                verbArrayList.add(new Verb("Calculate (work sums)", "Bu akontaa"));
+                verbArrayList.add(new Verb("Don't Calculate (work sums)", "Mmu Akontaa"));
+                verbArrayList.add(new Verb("Eat", "Didi"));
+                verbArrayList.add(new Verb("Don't Eat", "Nnidi"));
+                verbArrayList.add(new Verb("Sleep", "Da"));
+                verbArrayList.add(new Verb("Don't Sleep", "Nna"));
+                verbArrayList.add(new Verb("Deceive", "Daadaa"));
+                verbArrayList.add(new Verb("Don't Deceive", "Nnaadaa"));
+                verbArrayList.add(new Verb("Take", "Fa"));
+                verbArrayList.add(new Verb("Don't Take", "Mfa"));
+                verbArrayList.add(new Verb("Bring it","Fa bra"));
+                verbArrayList.add(new Verb("Don't Bring it","Mfa mma"));
+                verbArrayList.add(new Verb("Take it away","Fa kɔ"));
+                verbArrayList.add(new Verb("Don't take it away","Mfa nkɔ"));
+                verbArrayList.add(new Verb("Take it to...","Fa kɔma ..."));
+                verbArrayList.add(new Verb("Don't take it to...","Mfa nkɔma ..."));
+                verbArrayList.add(new Verb("Come out","Fi bra"));
+                verbArrayList.add(new Verb("Don't come out","Mfi mma"));
+                verbArrayList.add(new Verb("Buy on credit","Firi"));
+                verbArrayList.add(new Verb("Don't buy on credit","Mfiri"));
+                verbArrayList.add(new Verb("Bath(e)","Dware"));
+                verbArrayList.add(new Verb("Don't Bath(e)","Nnware"));
+                verbArrayList.add(new Verb("See him off","Gya no kwan"));
+                verbArrayList.add(new Verb("Don't see him off","Nnya no kwan"));
+                verbArrayList.add(new Verb("Take it / Receive it / Have it","Gye"));
+                verbArrayList.add(new Verb("Don't (Take it/Receive it/Have it)","Nnye"));
+                verbArrayList.add(new Verb("Believe","Gye di"));
+                verbArrayList.add(new Verb("Don't believe","Nnye nni"));
+                verbArrayList.add(new Verb("Play","Di agorɔ"));
+                verbArrayList.add(new Verb("Don't play","Nni agorɔ"));
+                verbArrayList.add(new Verb("Stop","Gyina"));
+                verbArrayList.add(new Verb("Don't stop","Nnyina"));
+                 verbArrayList.add(new Verb("Continue","Kɔ so"));
+                 verbArrayList.add(new Verb("Don't continue","Gyae"));
+                verbArrayList.add(new Verb("Wear","Hyɛ"));
+                verbArrayList.add(new Verb("Don't wear","Nhyɛ"));
+                verbArrayList.add(new Verb("Put on shoes","Hyɛ mpaboa"));
+                verbArrayList.add(new Verb("Don't put on shoes","Nhyɛ mpaboa"));
+
+            if (Subscribed == 1) {
+
+                verbArrayList.add(new Verb("Dry","Hata"));
+                verbArrayList.add(new Verb("Don't dry","Nhata"));
+                verbArrayList.add(new Verb("Wash Clothes (1)","Horo ntade"));
+                verbArrayList.add(new Verb("Wash Clothes (1)","Si ntade"));
+                verbArrayList.add(new Verb("Wash","Hohoro"));
+                verbArrayList.add(new Verb("Don't wash","Nhohoro"));
+                verbArrayList.add(new Verb("Meet","Hyia"));
+                verbArrayList.add(new Verb("Don't meet","Nhyia"));
+                verbArrayList.add(new Verb("Rest","Home"));
+                verbArrayList.add(new Verb("Don't rest","Nhome"));
+                verbArrayList.add(new Verb("Quarrel","Ham"));
+                verbArrayList.add(new Verb("Don't quarrel","Nham"));
+                verbArrayList.add(new Verb("Speak","Kasa"));
+                verbArrayList.add(new Verb("Don't speak","Nkasa"));
+                verbArrayList.add(new Verb("Teach","Kyerɛ"));
+                verbArrayList.add(new Verb("Don't teach","Nkyerɛ"));
+                verbArrayList.add(new Verb("Greet","Kyea"));
+                verbArrayList.add(new Verb("Don't greet","Nkyea"));
+                verbArrayList.add(new Verb("Keep long","Kyɛ"));
+                verbArrayList.add(new Verb("Don't keep long","Nkyɛ"));
+                verbArrayList.add(new Verb("Divide (or share)","Kyɛ"));
+                verbArrayList.add(new Verb("Don't divide (or share)","Nkyɛ"));
+                verbArrayList.add(new Verb("Look for (or Search)","Hwehwɛ"));
+                verbArrayList.add(new Verb("Don't look for (or search)","Nhwehwɛ"));
+                verbArrayList.add(new Verb("Look at","Hwɛ"));
+                verbArrayList.add(new Verb("Don't look at","Nhwɛ"));
+                verbArrayList.add(new Verb("Give","Ma"));
+                verbArrayList.add(new Verb("Don't give","Mma"));
+                verbArrayList.add(new Verb("Read","Kan"));
+                verbArrayList.add(new Verb("Don't read","Nkan"));
+                verbArrayList.add(new Verb("Read (1)","Kenkan"));
+                verbArrayList.add(new Verb("Don't read(1)","Nkenkan"));
+                verbArrayList.add(new Verb("Praise","Kamfo"));
+                verbArrayList.add(new Verb("Don't praise","Nkamfo"));
+                verbArrayList.add(new Verb("Fight","Ko"));
+                verbArrayList.add(new Verb("Don't fight","Nko"));
+               // verbArrayList.add(new Verb("",""));
+
+
+
+
+            }else{
+                verbArrayList.add(new Verb("Subscribe or Purchase","for more verbs"));
+            }
+        }
+
     }
+
+
+
+
 }
 

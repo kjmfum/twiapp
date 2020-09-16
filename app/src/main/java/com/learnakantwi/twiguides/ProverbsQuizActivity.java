@@ -56,6 +56,8 @@ import static com.learnakantwi.twiguides.SubConversationIntroductionActivity.con
 
 public class ProverbsQuizActivity extends AppCompatActivity {
 
+    AdView mAdView;
+
     static  ArrayList<Proverbs> proverbsQuizQuestionArray = new ArrayList<>();
     Random random;
     ArrayList<Integer> answers;
@@ -671,13 +673,24 @@ public class ProverbsQuizActivity extends AppCompatActivity {
         SharedPreferences subscribe = getSharedPreferences("AdsDecision",MODE_PRIVATE);
         Sub = subscribe.getInt("Sub",0);
 
-        if (MainActivity.Subscribed != 1){
+
+
+        mAdView = findViewById(R.id.adView);
+
+        if (MainActivity.Subscribed!=1){
+
+            //AdView mAdView;
             Appodeal.cache(this, Appodeal.INTERSTITIAL);
-            //ca-app-pub-7384642419407303/9880404420
-            //ca-app-pub-3940256099942544/1033173712 test
 
-            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
-
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }else{
+            mAdView.setVisibility(View.GONE);
         }
 
         if (Sub==0){

@@ -31,7 +31,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NoticeBoardActivity"></activity>
+        <activity android:name=".SubPVerbActivity"></activity>
+        <activity android:name=".NoticeBoardActivity" />
         <activity
             android:name=".HomeMainActivity"
             android:label="@string/title_activity_home_main"

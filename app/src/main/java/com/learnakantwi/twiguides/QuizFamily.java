@@ -52,6 +52,8 @@ import static com.learnakantwi.twiguides.FamilyActivity.familyArrayList;
 
 public class QuizFamily extends AppCompatActivity {
 
+    AdView mAdView;
+
     TextView correctAnswer;
     TextView correctWrong;
     TextView scoreText;
@@ -583,6 +585,22 @@ public class QuizFamily extends AppCompatActivity {
         setContentView(R.layout.activity_quiz_animals);
 
         Appodeal.cache(this, Appodeal.INTERSTITIAL);
+        mAdView = findViewById(R.id.adView);
+
+        if (MainActivity.Subscribed!=1){
+
+            //AdView mAdView;
+
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }else{
+            mAdView.setVisibility(View.GONE);
+        }
 
         random1 = new Random();
         showAdProbability = random1.nextInt(10);

@@ -53,6 +53,7 @@ import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
 public class SubPProverbsActivity extends AppCompatActivity implements RVProverbsAdapter.onClickRecycle {
 
 
+    AdView mAdView;
     AdapterViewFlipper proverbsViewFlipper;
     StorageReference storageReference;
     MediaPlayer playFromDevice;
@@ -740,7 +741,7 @@ public class SubPProverbsActivity extends AppCompatActivity implements RVProverb
         setContentView(R.layout.activity_sub_proverbs_one);
         // setContentView(R.layout.activity_proverbs);
 
-        if (MainActivity.Subscribed != 1){
+      /*  if (MainActivity.Subscribed != 1){
 
             random = new Random();
             showAdProbability = random.nextInt(10);
@@ -750,6 +751,24 @@ public class SubPProverbsActivity extends AppCompatActivity implements RVProverb
 
             Appodeal.show(this, Appodeal.BANNER_TOP);
 
+        }*/
+
+        mAdView = findViewById(R.id.adView);
+        if (MainActivity.Subscribed!=1){
+
+            Appodeal.cache(this, Appodeal.INTERSTITIAL);
+
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }
+        else{
+            mAdView.setVisibility(View.GONE);
         }
 
         playButton = findViewById(R.id.playButton);

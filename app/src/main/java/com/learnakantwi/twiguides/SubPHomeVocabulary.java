@@ -350,6 +350,9 @@ public class SubPHomeVocabulary extends AppCompatActivity {
                                 case "Alphabets":
                                     goToAlphabets();
                                     return;
+                                case "Verbs":
+                                    goToVerbs();
+                                    return;
                                 case "Proverbs":
                                     goToProverbs();
                                     return;
@@ -499,6 +502,11 @@ public class SubPHomeVocabulary extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToVerbs() {
+        Intent intent = new Intent(getApplicationContext(), SubPVerbActivity.class);
+        startActivity(intent);
+    }
+
     public void goToNumber() {
         Intent intent = new Intent(getApplicationContext(), SubPNumbersActivity.class);
         startActivity(intent);
@@ -609,6 +617,37 @@ public class SubPHomeVocabulary extends AppCompatActivity {
         }
     }
 
+    public void deleteDuplicatelVerbs() {
+
+        File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/VERBS");
+
+        String[] files = myFiles.list();
+        String name1 = myFiles.getName();
+
+        File[] files1 = myFiles.listFiles();
+
+        //System.out.println(Arrays.toString(files));
+        System.out.println("Hey " + name1);
+
+        ArrayList<String[]> filesArray = new ArrayList<>();
+        filesArray.add(files);
+
+
+        for (int j = 0; j < files1.length; j++) {
+
+            //toast.setText(String.valueOf(files1.length));
+            //toast.show();
+
+            File file = files1[j];
+            if (file.getName().contains("-")) {
+                file.delete();
+                //toast.setText("Deleted");
+                //toast.show();
+            }
+
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -650,6 +689,7 @@ public class SubPHomeVocabulary extends AppCompatActivity {
         homeButtonArrayList.add(new HomeButton("Download All Audio", R.drawable.ic_download_audio));
         homeButtonArrayList.add(new HomeButton("Family", R.drawable.familyimage));
         homeButtonArrayList.add(new HomeButton("Numbers", R.drawable.numbers));
+        homeButtonArrayList.add(new HomeButton("Verbs", R.drawable.verbs));
        // homeButtonArrayList.add(new HomeButton("Proverbs", R.drawable.proverbsimage));
         //homeButtonArrayList.add(new HomeButton("Children", R.drawable.childrenimage));
         homeButtonArrayList.add(new HomeButton("Food", R.drawable.foodimage));
@@ -688,6 +728,9 @@ public class SubPHomeVocabulary extends AppCompatActivity {
                 switch (me1){
                     case "Alphabets":
                         goToAlphabets();
+                        return;
+                    case "Verbs":
+                        goToVerbs();
                         return;
                     case "Proverbs":
                         goToProverbs();
@@ -756,6 +799,11 @@ public class SubPHomeVocabulary extends AppCompatActivity {
     @Override
     protected void onResume() {
         deleteDuplicatelDownload();
+        try {
+            deleteDuplicatelVerbs();
+        }catch (Exception e){
+            Log.i("error", "onResume: "+e);
+        }
         super.onResume();
     }
 }

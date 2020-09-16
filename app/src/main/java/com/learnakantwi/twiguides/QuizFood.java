@@ -51,6 +51,11 @@ import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
 
 public class QuizFood extends AppCompatActivity {
 
+    AdView mAdView;
+
+    int showAdProbability;
+    Random random1;
+
     TextView correctAnswer;
     TextView correctWrong;
     TextView scoreText;
@@ -520,7 +525,13 @@ public class QuizFood extends AppCompatActivity {
 
     }
 
+    public void advert1() {
 
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -529,16 +540,20 @@ public class QuizFood extends AppCompatActivity {
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
-        /*MobileAds.initialize(this, new OnInitializationCompleteListener() {
+
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);*/
+        mAdView.loadAd(adRequest);
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+        //Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+
 
 
 
@@ -589,5 +604,15 @@ public class QuizFood extends AppCompatActivity {
         setContentView(R.layout.activity_quiz_animals);
     }*/
 
+    @Override
+    protected void onDestroy() {
+        random1 = new Random();
+        showAdProbability = random1.nextInt(10);
+
+        if (showAdProbability<=4){
+            advert1();
+        }
+        super.onDestroy();
+    }
 
 }

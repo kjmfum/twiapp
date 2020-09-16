@@ -61,6 +61,7 @@ public class ReadingActivityTwoLetters extends AppCompatActivity {
     Toast toast;
     int showAdProbability;
     Random random;
+    AdView mAdView;
 
 
     @Override
@@ -343,7 +344,16 @@ public class ReadingActivityTwoLetters extends AppCompatActivity {
         showAdProbability = random.nextInt(10);
 
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+       // Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
 

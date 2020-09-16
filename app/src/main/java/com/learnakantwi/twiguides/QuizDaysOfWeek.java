@@ -49,6 +49,11 @@ import static com.learnakantwi.twiguides.DaysOfWeekActivity.daysOfWeeksArray;
 
 public class QuizDaysOfWeek extends AppCompatActivity {
 
+    AdView mAdView;
+
+    int showAdProbability;
+    Random random1;
+
     TextView correctAnswer;
     TextView correctWrong;
     TextView scoreText;
@@ -487,7 +492,13 @@ public class QuizDaysOfWeek extends AppCompatActivity {
 
     }
 
+    public void advert1() {
 
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
+
+    }
 
     @SuppressLint("ShowToast")
     @Override
@@ -518,18 +529,29 @@ public class QuizDaysOfWeek extends AppCompatActivity {
            generateQuestion();
 
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+       // Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
-      /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);*/
+        mAdView.loadAd(adRequest);
 
 
+    }
+
+    protected void onDestroy() {
+        random1 = new Random();
+        showAdProbability = random1.nextInt(10);
+
+        if (showAdProbability<=4){
+            advert1();
+        }
+        super.onDestroy();
     }
 
     /*@Override

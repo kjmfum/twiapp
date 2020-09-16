@@ -30,6 +30,7 @@ public class ReadingActivityMain extends AppCompatActivity {
     TextView tvHeading;
    String me;
     ListView lvReadingAlphabets;
+    AdView mAdView;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -152,7 +153,17 @@ public class ReadingActivityMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading);
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+      //  Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+
+        mAdView = findViewById(R.id.adView);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         tvHeading = findViewById(R.id.tvHeading);
 

@@ -53,6 +53,8 @@ import static android.Manifest.permission.INTERNET;
 public class HomeMainActivity extends AppCompatActivity implements PurchasesUpdatedListener, RVHomeMainAdapter.onClickRecycle {
     //  app:adUnitId="ca-app-pub-6999427576830667~6251296006"ˆ
 
+    AdView mAdView;
+
     BillingClient billingClient;
     String premiumUpgradePrice;
     Button buyButton;
@@ -502,12 +504,29 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
 
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+       // Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+
+        mAdView = findViewById(R.id.adView);
+
+        if (MainActivity.Subscribed!=1){
+
+            //AdView mAdView;
+
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }else{
+            mAdView.setVisibility(View.GONE);
+        }
 
 
         AppRate.with(this)
                 .setInstallDays(0)
-                .setLaunchTimes(3)
+                .setLaunchTimes(5)
                 .setRemindInterval(2)
                 .monitor();
 
