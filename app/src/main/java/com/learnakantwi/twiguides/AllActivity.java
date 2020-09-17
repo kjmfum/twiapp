@@ -54,14 +54,17 @@ public class AllActivity extends AppCompatActivity {
     int showAdProbability;
     Random random;
 
+    AdView mAdView;
+
 
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
     String state;
     ArrayList<All> results;
-
     Context context;
+
+    private InterstitialAd mInterstitialAd;
 
 
     Toast toast;
@@ -697,8 +700,12 @@ public class AllActivity extends AppCompatActivity {
 
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
+
+
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }else{
+            Toast.makeText(context, "I'm here", Toast.LENGTH_SHORT).show();
         }
 
         //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
@@ -714,7 +721,7 @@ public class AllActivity extends AppCompatActivity {
 
         isNetworkAvailable();
 
-        Appodeal.cache(this, Appodeal.INTERSTITIAL);
+       // Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
         random = new Random();
         showAdProbability = random.nextInt(10);
@@ -722,12 +729,29 @@ public class AllActivity extends AppCompatActivity {
         toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
         toast.show();
 
-         Appodeal.setBannerViewId(R.id.appodealBannerView);
-        Appodeal.show(this, Appodeal.BANNER_VIEW);
+
+
 
        // test unit id: ca-app-pub-3940256099942544/6300978111
 
+        mAdView = findViewById(R.id.adView);
+        if (MainActivity.Subscribed!=1){
 
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+
+        }
 
         //allArrayList = new ArrayList<>();
         allListView = findViewById(R.id.allListView);
@@ -818,7 +842,7 @@ allListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 */
    @Override
    protected void onDestroy() {
-       if (showAdProbability<=5){
+       if (showAdProbability<=6){
            advert1();
        }
        super.onDestroy();

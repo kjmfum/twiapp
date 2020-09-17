@@ -32,7 +32,6 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
-import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -59,6 +58,7 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
     String premiumUpgradePrice;
     Button buyButton;
     Toast toast;
+    private InterstitialAd mInterstitialAd;
 
     DrawerLayout drawerLayout;
 
@@ -496,7 +496,10 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
             }
         }
 
-        Appodeal.cache(this, Appodeal.INTERSTITIAL);
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+
+        //Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
 
         //ca-app-pub-7384642419407303/9880404420
