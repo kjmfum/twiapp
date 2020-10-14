@@ -30,7 +30,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appodeal.ads.Appodeal;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -43,20 +43,15 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
-
-import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
-import static com.learnakantwi.twiguides.SubConversationIntroductionActivity.conversationArrayList;
 
 public class ProverbsQuizActivity extends AppCompatActivity {
 
     AdView mAdView;
+    public InterstitialAd mInterstitialAd;
 
     static  ArrayList<Proverbs> proverbsQuizQuestionArray = new ArrayList<>();
     Random random;
@@ -633,9 +628,13 @@ public class ProverbsQuizActivity extends AppCompatActivity {
 
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
+
+       /* if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }*/
 
         //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
@@ -680,7 +679,9 @@ public class ProverbsQuizActivity extends AppCompatActivity {
         if (MainActivity.Subscribed!=1){
 
             //AdView mAdView;
-            Appodeal.cache(this, Appodeal.INTERSTITIAL);
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
             MobileAds.initialize(this, new OnInitializationCompleteListener() {
                 @Override

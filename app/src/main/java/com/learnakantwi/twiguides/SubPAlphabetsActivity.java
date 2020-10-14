@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
@@ -26,12 +25,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -53,7 +50,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static com.learnakantwi.twiguides.AlphabetsActivity.alphabetArray;
-import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
 import static com.learnakantwi.twiguides.MainActivity.largeFont;
 import static com.learnakantwi.twiguides.MainActivity.longDelay;
 import static com.learnakantwi.twiguides.MainActivity.shortDelay;
@@ -63,6 +59,10 @@ import static com.learnakantwi.twiguides.MainActivity.textLength;
 public class SubPAlphabetsActivity extends AppCompatActivity implements RVAlphabetAdapter.onClickRecycle {
 
     AlphabetAdapter twiAlphapetAdapter;
+
+
+    public InterstitialAd mInterstitialAd;
+    AdView mAdView;
 
     RecyclerView foodListView;
     PlayFromFirebase convertAndPlay;
@@ -745,9 +745,13 @@ public class SubPAlphabetsActivity extends AppCompatActivity implements RVAlphab
 
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
+
+       /* if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }*/
 
         //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
@@ -767,9 +771,21 @@ public class SubPAlphabetsActivity extends AppCompatActivity implements RVAlphab
 
             random = new Random();
             showAdProbability = random.nextInt(10);
-            Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
-            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+
+
         }
 
         btSlideText = findViewById(R.id.btSlideText);

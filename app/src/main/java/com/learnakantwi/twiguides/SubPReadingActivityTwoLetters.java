@@ -95,7 +95,7 @@ public class SubPReadingActivityTwoLetters extends AppCompatActivity {
                         // c= b.substring(0,1) + "  "+ Character.toString(b.charAt(1)) +"   :"+ b.substring(0,2);
 
                         b= "read"+b.toLowerCase();
-                        b=  playFromFirebase.viewTextConvert(b);
+                        b=  PlayFromFirebase.viewTextConvert(b);
 
                         // Toast.makeText(ReadingActivityTwoLetters.this, sb, Toast.LENGTH_SHORT).show();
 
@@ -344,7 +344,7 @@ public class SubPReadingActivityTwoLetters extends AppCompatActivity {
 
 
                 b = tvHeader.getText().toString().toLowerCase();
-                b=  playFromFirebase.viewTextConvert(b);
+                b=  PlayFromFirebase.viewTextConvert(b);
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -404,7 +404,7 @@ public class SubPReadingActivityTwoLetters extends AppCompatActivity {
                 // c= b.substring(0,1) + "  "+ Character.toString(b.charAt(1)) +"   :"+ b.substring(0,2);
 
                 b= "read"+b.toLowerCase();
-                b=  playFromFirebase.viewTextConvert(b);
+                b=  PlayFromFirebase.viewTextConvert(b);
 
                 // Toast.makeText(ReadingActivityTwoLetters.this, sb, Toast.LENGTH_SHORT).show();
 

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.app.DownloadManager;
-import android.app.admin.FreezePeriod;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -28,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -40,11 +38,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static androidx.annotation.InspectableProperty.ValueType.COLOR;
 import static com.learnakantwi.twiguides.SubChildrenAnimals.childrenAnimalsArrayList;
 
 import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;

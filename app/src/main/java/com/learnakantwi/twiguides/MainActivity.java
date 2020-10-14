@@ -28,9 +28,7 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
-import com.appodeal.ads.Appodeal;
-import com.appodeal.ads.utils.Log;
-import com.google.android.gms.ads.AdView;
+
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,8 +41,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
-
 
 public class MainActivity extends AppCompatActivity implements PurchasesUpdatedListener, PurchaseHistoryResponseListener {
 
@@ -53,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     static int textLength = 15;
     static long longDelay = 6000;
     static long shortDelay = 3000;
+
+    static final String AdUnitInterstitial = "ca-app-pub-7384642419407303/9880404420";
 
 
     private NotificationManagerCompat notificationManager;
@@ -214,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                             editor.putInt("Sub", 1);
                                                             editor.apply();
                                                             Lifetime = sharedPreferencesAds.getInt("Lifetime", 5);
-                                                           Subscribed = sharedPreferencesAds.getInt("Sub", 5);
+                                                           Subscribed = sharedPreferencesAds.getInt("Sub", 0);
 
                                                            mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Premium");
                                                            mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Lifetime");
@@ -318,7 +316,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                                             editor.putInt("Ads", 0);
                                                                             editor.putInt("Sub", 1);
                                                                             editor.apply();
-                                                                            Subscribed = sharedPreferencesAds.getInt("Sub", 5);
+                                                                            Subscribed = 1;  //sharedPreferencesAds.getInt("Sub", 5);
                                                                             //addProverbs();
 
                                                                             if (User != null){
@@ -337,7 +335,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                                     }
                                                                     //toast.setText(Integer.toString(me3));
                                                                 } else {
-
+                                                                    SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+                                                                    editor.putInt("Sub",0);
                                                                     mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Regular");
                                                                     Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                                                                     // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
@@ -356,6 +355,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                             toast.setText("No Internet Connection");
                                                             toast.show();
                                                             if (!isNetworkAvailable()) {
+                                                                SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+                                                                editor.putInt("Sub",0);
                                                                 Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                                                                 startActivity(homeIntent);
                                                                 finish();
@@ -364,6 +365,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                             }
 
                                                         } else {
+                                                            SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+                                                            editor.putInt("Sub",0);
                                                             Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                                                             startActivity(homeIntent);
                                                             finish();
@@ -397,6 +400,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                     setUpBillingClient();
                 }
                 else {
+                    SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+                    editor.putInt("Sub",0);
                     Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                     //Toast.makeText(MainActivity.this, "Disconnected O", Toast.LENGTH_SHORT).show();
                     startActivity(homeIntent);
@@ -415,7 +420,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Appodeal.initialize(this, APPODEAL_KEY, Appodeal.BANNER | Appodeal.INTERSTITIAL, true);
+       // Appodeal.initialize(this, APPODEAL_KEY, Appodeal.BANNER | Appodeal.INTERSTITIAL, true);
 
        // Appodeal.setLogLevel(Log.LogLevel.verbose);
 
@@ -430,15 +435,16 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         sharedPreferencesAds = getSharedPreferences("AdsDecision",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferencesAds.edit();
         editor.putInt("Ads",1);
-        editor.putInt("Sub",5);  // not subscribed
-        //editor.putInt("Sub",1);  //subscribed
+        //editor.putInt("Sub",0);  // not subscribed
+       // editor.putInt("Sub",1);  //subscribed
        // editor.putInt("Lifetime",5); //not subscribed
        // editor.putInt("Lifetime",1); //subscribed
         editor.apply();
 
         Lifetime = sharedPreferencesAds.getInt("Lifetime",5); //runtime
-        Subscribed = sharedPreferencesAds.getInt("Sub", 5);
-      // Lifetime = 1;  //Subscribed
+        Subscribed = sharedPreferencesAds.getInt("Sub", 0);
+       // Subscribed = 0;
+       //Lifetime = 1;  //Subscribed
       //  Lifetime = 5;
 
         //Toast.makeText(this, "My: "+ Lifetime, Toast.LENGTH_SHORT).show();
@@ -450,7 +456,6 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         //Intent homeIntent = new Intent(getApplicationContext(), QuizTimedAll.class);
         //Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
         //startActivity(homeIntent);
-
 
         ////////
 

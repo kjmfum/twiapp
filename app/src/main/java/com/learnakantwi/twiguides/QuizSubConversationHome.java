@@ -28,7 +28,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.appodeal.ads.Appodeal;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,6 +42,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static android.Manifest.permission.INTERNET;
 import static com.learnakantwi.twiguides.AllActivity.allArrayList;
@@ -46,6 +53,9 @@ public class QuizSubConversationHome extends AppCompatActivity {
     ArrayList<String> subQuizHomeConversationArrayList;
     ListView homeListView;
     MediaPlayer mediaPlayer;
+
+    public InterstitialAd mInterstitialAd;
+    AdView mAdView;
 
     StorageReference storageReference;
     Toast toast;
@@ -605,31 +615,24 @@ public class QuizSubConversationHome extends AppCompatActivity {
             }
         }
 
-        if (MainActivity.Subscribed !=1){
-            Appodeal.cache(this, Appodeal.INTERSTITIAL);
-    //ca-app-pub-7384642419407303/9880404420
-    //ca-app-pub-3940256099942544/1033173712 test
+        if (MainActivity.Subscribed != 1){
 
-            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+           /* random = new Random();
+            showAdProbability = random.nextInt(10);*/
 
-   /* MobileAds.initialize(this, new OnInitializationCompleteListener() {
-        @Override
-        public void onInitializationComplete(InitializationStatus initializationStatus) {
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
         }
-    });
-    mAdView = findViewById(R.id.adView);
-    AdRequest adRequest = new AdRequest.Builder().build();
-    mAdView.loadAd(adRequest);
-
-
-    MobileAds.initialize(this, new OnInitializationCompleteListener() {
-        @Override
-        public void onInitializationComplete(InitializationStatus initializationStatus) {
-        }
-    });*/
-
-
-}
             subQuizHomeConversationArrayList =new ArrayList<>();
         subQuizHomeConversationArrayList.add("Introducing yourself");
         subQuizHomeConversationArrayList.add("Welcoming others");

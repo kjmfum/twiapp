@@ -14,7 +14,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -207,7 +206,7 @@ public class DownloadsActivity extends AppCompatActivity {
                         case "Proverbs":
                             // String bb = proverbsArrayList.get(j).getTwiProverb();
                             b = proverbsArrayList.get(j).getTwiProverb();
-                            b = playFromFirebase.viewTextConvert(b);
+                            b = PlayFromFirebase.viewTextConvert(b);
                             myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/"+b+ ".m4a");
                             if (myFiles.exists()) {
                                 counter++;
@@ -216,7 +215,7 @@ public class DownloadsActivity extends AppCompatActivity {
                         case "Food":
                             // String bb = proverbsArrayList.get(j).getTwiProverb();
                             b = foodArrayList.get(j).getTwiFood();
-                            b = playFromFirebase.viewTextConvert(b);
+                            b = PlayFromFirebase.viewTextConvert(b);
                             myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+b+ ".m4a");
                             if (myFiles.exists()) {
                                 counter++;
@@ -250,13 +249,13 @@ public class DownloadsActivity extends AppCompatActivity {
                             case "Proverbs":
                                 // String bb = proverbsArrayList.get(j).getTwiProverb();
                                 b = proverbsArrayList.get(i).getTwiProverb();
-                                b = playFromFirebase.viewTextConvert(b);
+                                b = PlayFromFirebase.viewTextConvert(b);
                                 myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/"+b+ ".m4a");
                                 break;
                             case "Food":
                                 // String bb = proverbsArrayList.get(j).getTwiProverb();
                                 b = foodArrayList.get(i).getTwiFood();
-                                b = playFromFirebase.viewTextConvert(b);
+                                b = PlayFromFirebase.viewTextConvert(b);
                                 myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+b+ ".m4a");
                                 break;
                             case "Conversation":
@@ -324,7 +323,7 @@ public class DownloadsActivity extends AppCompatActivity {
 
                 String bb = proverbsArrayList.get(j).getTwiProverb();
                 PlayFromFirebase playFromFirebase = new PlayFromFirebase();
-                bb=  playFromFirebase.viewTextConvert(bb);
+                bb=  PlayFromFirebase.viewTextConvert(bb);
 
                 File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/"+bb+ ".m4a");
                 if (myFiles.exists()) {
@@ -342,7 +341,7 @@ public class DownloadsActivity extends AppCompatActivity {
                 for (int i = 0; i < proverbsArrayList.size(); i++) {
                     b = proverbsArrayList.get(i).getTwiProverb();
                     PlayFromFirebase playFromFirebase = new PlayFromFirebase();
-                    b=  playFromFirebase.viewTextConvert(b);
+                    b=  PlayFromFirebase.viewTextConvert(b);
 
 
                     File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/" + b + ".m4a");
@@ -396,13 +395,13 @@ public class DownloadsActivity extends AppCompatActivity {
                         case "Proverbs":
                             // String bb = proverbsArrayList.get(j).getTwiProverb();
                             bb = ProverbsActivity.proverbsArrayList.get(j).getTwiProverb();
-                            bb = playFromFirebase.viewTextConvert(bb);
+                            bb = PlayFromFirebase.viewTextConvert(bb);
                             myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/"+bb+ ".m4a");
                             break;
                         case "Food":
                             // String bb = proverbsArrayList.get(j).getTwiProverb();
                             bb = foodArrayList.get(j).getTwiFood();
-                            bb = playFromFirebase.viewTextConvert(bb);
+                            bb = PlayFromFirebase.viewTextConvert(bb);
                             myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+bb+ ".m4a");
                             break;
                         case "Conversation":

@@ -25,12 +25,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -51,7 +49,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
 import static com.learnakantwi.twiguides.MainActivity.largeFont;
 import static com.learnakantwi.twiguides.MainActivity.longDelay;
 import static com.learnakantwi.twiguides.MainActivity.shortDelay;
@@ -65,6 +62,9 @@ public class SubPWeatherActivity extends AppCompatActivity implements RVWeatherA
     PlayFromFirebase convertAndPlay;
     RVWeatherAdapter foodAdapter;
     ArrayList<Weather> recycleArrayList;
+
+    public InterstitialAd mInterstitialAd;
+    AdView mAdView;
 
     StorageReference storageReference;
     MediaPlayer playFromDevice;
@@ -738,9 +738,13 @@ public class SubPWeatherActivity extends AppCompatActivity implements RVWeatherA
 
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
+
+       /* if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }*/
 
         //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
@@ -764,15 +768,20 @@ public class SubPWeatherActivity extends AppCompatActivity implements RVWeatherA
             random = new Random();
             showAdProbability = random.nextInt(10);
 
-            Appodeal.cache(this, Appodeal.INTERSTITIAL);
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
-            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
 
 
-            /*public InterstitialAd mInterstitialAd;
-            Random random;
-            int showAdProbability;
-            AdView mAdView1;*/
         }
 
 

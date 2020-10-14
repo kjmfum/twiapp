@@ -7,9 +7,7 @@ import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Color;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -23,13 +21,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appodeal.ads.Appodeal;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -47,14 +45,13 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.learnakantwi.twiguides.AllActivity.allArrayList;
 import static com.learnakantwi.twiguides.AnimalsActivity.animalsArrayList;
-import static com.learnakantwi.twiguides.Home.homeButtonArrayList;
 
 
 public class QuizAnimals extends AppCompatActivity {
 
     AdView mAdView;
+    public InterstitialAd mInterstitialAd;
 
     int showAdProbability;
     Random random1;
@@ -518,10 +515,15 @@ public class QuizAnimals extends AppCompatActivity {
 
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
 
+       /* if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }*/
+
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
 
@@ -535,7 +537,9 @@ public class QuizAnimals extends AppCompatActivity {
 
         //Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
-        Appodeal.cache(this, Appodeal.INTERSTITIAL);
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override

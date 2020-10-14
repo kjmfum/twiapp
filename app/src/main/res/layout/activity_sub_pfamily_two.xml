@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@android:color/background_light"
-        app:layout_constraintBottom_toTopOf="@id/adView1"
+        app:layout_constraintBottom_toTopOf="@id/adView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/Horguideline10">
@@ -225,7 +225,7 @@
         app:layout_constraintGuide_percent="0.9" />
 
     <com.google.android.gms.ads.AdView
-        android:id="@+id/adView1"
+        android:id="@+id/adView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_alignParentBottom="true"

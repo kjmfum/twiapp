@@ -24,7 +24,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.appodeal.ads.Appodeal;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -53,6 +53,7 @@ import static com.learnakantwi.twiguides.FamilyActivity.familyArrayList;
 public class QuizFamily extends AppCompatActivity {
 
     AdView mAdView;
+    public InterstitialAd mInterstitialAd;
 
     TextView correctAnswer;
     TextView correctWrong;
@@ -572,9 +573,13 @@ public class QuizFamily extends AppCompatActivity {
 
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
+
+       /* if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }*/
 
         //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
@@ -584,11 +589,14 @@ public class QuizFamily extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_animals);
 
-        Appodeal.cache(this, Appodeal.INTERSTITIAL);
+       // Appodeal.cache(this, Appodeal.INTERSTITIAL);
         mAdView = findViewById(R.id.adView);
 
         if (MainActivity.Subscribed!=1){
 
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
             //AdView mAdView;
 
             MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -625,17 +633,6 @@ public class QuizFamily extends AppCompatActivity {
 
            resetQuiz();
            generateQuestion();
-
-
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
-       /* MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);*/
 
 
     }

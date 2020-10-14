@@ -16,8 +16,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,14 +28,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.appodeal.ads.Appodeal;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -45,6 +42,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static android.Manifest.permission.INTERNET;
 import static com.learnakantwi.twiguides.AllActivity.allArrayList;
@@ -62,6 +60,10 @@ public class Home extends AppCompatActivity {
     String sharedDownloadingOrNot;
 
     int testShared;
+
+
+    public InterstitialAd mInterstitialAd;
+    AdView mAdView;
 
 
 
@@ -784,6 +786,7 @@ public class Home extends AppCompatActivity {
 
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -859,11 +862,6 @@ public class Home extends AppCompatActivity {
         }
 
 
-
-
-        Appodeal.cache(this, Appodeal.INTERSTITIAL);
-
-
         //ca-app-pub-7384642419407303/9880404420
         //ca-app-pub-3940256099942544/1033173712 test
 
@@ -871,21 +869,28 @@ public class Home extends AppCompatActivity {
         testShared = sharedPreferencesAds.getInt("Ads",5);
 
 
-        if( testShared != 0){
-            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+        if (MainActivity.Subscribed != 1){
+
+          /*  random = new Random();
+            showAdProbability = random.nextInt(10);*/
+
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
         }
 
 
 
-      /*  MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView1 = findViewById(R.id.adView1);
-        AdRequest adRequest1 = new AdRequest.Builder().build();
-        mAdView1.loadAd(adRequest1);
-*/
+
 
 
         /*AppRate.with(this)
@@ -911,8 +916,8 @@ public class Home extends AppCompatActivity {
 
         homeButtonArrayList.add(new HomeButton("Download All Audio", R.drawable.ic_download_audio));
         homeButtonArrayList.add(new HomeButton("Numbers", R.drawable.numbers));
-        homeButtonArrayList.add(new HomeButton("Family", R.drawable.familyimage));
         homeButtonArrayList.add(new HomeButton("Verbs", R.drawable.verbs));
+        homeButtonArrayList.add(new HomeButton("Family", R.drawable.familyimage));
 
        // homeButtonArrayList.add(new HomeButton("Proverbs", R.drawable.proverbsimage));
         //homeButtonArrayList.add(new HomeButton("Children", R.drawable.childrenimage));

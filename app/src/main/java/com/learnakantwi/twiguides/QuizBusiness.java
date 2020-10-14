@@ -24,9 +24,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.appodeal.ads.Appodeal;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -50,6 +51,7 @@ import static com.learnakantwi.twiguides.BusinessActivity.businessArrayList;
 public class QuizBusiness extends AppCompatActivity {
 
     AdView mAdView;
+    public InterstitialAd mInterstitialAd;
 
     int showAdProbability;
     Random random1;
@@ -503,10 +505,15 @@ public class QuizBusiness extends AppCompatActivity {
 
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
 
+       /* if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }*/
+
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
 
@@ -520,7 +527,9 @@ public class QuizBusiness extends AppCompatActivity {
 
         //Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
-        Appodeal.cache(this, Appodeal.INTERSTITIAL);
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override

@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +24,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.appodeal.ads.Appodeal;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -40,9 +39,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -58,6 +54,9 @@ public class NumbersActivity extends AppCompatActivity {
 
     int showAdProbability;
     Random random;
+
+    public InterstitialAd mInterstitialAd;
+    AdView mAdView;
 
 
     Toast toast;
@@ -446,11 +445,11 @@ public class NumbersActivity extends AppCompatActivity {
 
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
 
-        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
+
     }
 
     @Override
@@ -459,17 +458,33 @@ public class NumbersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_numbers);
 
         isNetworkAvailable();
-        Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
         random = new Random();
         showAdProbability = random.nextInt(10);
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+
 
         numbersListView = findViewById(R.id.myList1);
         storageReference = FirebaseStorage.getInstance().getReference();
 
+        if (MainActivity.Subscribed!=1){
+
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+
+
+        }
        /* numbersArrayList = new ArrayList<>();
 
 

@@ -68,6 +68,9 @@ public class SubConversationHomeActivity extends AppCompatActivity {
                             case "Introducing yourself":
                                 goToConversationIntroduction();
                                 return;
+                            case "Love and Relationship":
+                                goToConversationLove();
+                                return;
                             case "Apologies and Regret":
                                 goToConversationApologies();
                                 return;
@@ -181,6 +184,11 @@ public class SubConversationHomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToConversationLove(){
+        Intent intent = new Intent(getApplicationContext(), SubConversationLove.class);
+        startActivity(intent);
+    }
+
     public void goToConversationWelcome(){
         Intent intent = new Intent(getApplicationContext(), SubConversationWelcomingOthers.class);
         startActivity(intent);
@@ -223,6 +231,8 @@ public class SubConversationHomeActivity extends AppCompatActivity {
 
         subConversationHomeArrayList.add("Welcoming others");
         subConversationHomeArrayList.add("On The Phone");
+        subConversationHomeArrayList.add("Love and Relationship");
+
         subConversationHomeArrayList.add("Apologies and Regret");
         subConversationHomeArrayList.add("Asking and Giving Directions");
 
@@ -246,6 +256,9 @@ public class SubConversationHomeActivity extends AppCompatActivity {
                 switch (me1){
                     case "Introducing yourself":
                         goToConversationIntroduction();
+                        return;
+                    case "Love and Relationship":
+                        goToConversationLove();
                         return;
                     case "Apologies and Regret":
                         goToConversationApologies();

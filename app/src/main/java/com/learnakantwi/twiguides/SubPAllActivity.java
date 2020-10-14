@@ -25,11 +25,6 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -512,7 +507,7 @@ public class SubPAllActivity extends AppCompatActivity {
                         // sb= sb.append(b.substring(0,1)).append("   ").append(b.charAt(1)).append("\n\t").append(b);
                         // c= b.substring(0,1) + "  "+ Character.toString(b.charAt(1)) +"   :"+ b.substring(0,2);
 
-                        b=  playFromFirebase.viewTextConvert(a);
+                        b=  PlayFromFirebase.viewTextConvert(a);
 
                         // Toast.makeText(ReadingActivityTwoLetters.this, sb, Toast.LENGTH_SHORT).show();
 
@@ -623,7 +618,7 @@ public class SubPAllActivity extends AppCompatActivity {
                // sb= sb.append(b.substring(0,1)).append("   ").append(b.charAt(1)).append("\n\t").append(b);
                 // c= b.substring(0,1) + "  "+ Character.toString(b.charAt(1)) +"   :"+ b.substring(0,2);
 
-                b=  playFromFirebase.viewTextConvert(a);
+                b=  PlayFromFirebase.viewTextConvert(a);
 
                 // Toast.makeText(ReadingActivityTwoLetters.this, sb, Toast.LENGTH_SHORT).show();
 

@@ -9,8 +9,6 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
-
 import java.util.ArrayList;
 
 public class ReadingTwoLetterAdapter extends BaseAdapter implements Filterable {

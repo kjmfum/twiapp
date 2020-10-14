@@ -94,7 +94,7 @@ public class SubPReadingDigraphs extends AppCompatActivity {
                             // c= b.substring(0,1) + "  "+ Character.toString(b.charAt(1)) +"   :"+ b.substring(0,2);
 
                             b = "read" + b.toLowerCase();
-                            b = playFromFirebase.viewTextConvert(b);
+                            b = PlayFromFirebase.viewTextConvert(b);
 
                             // Toast.makeText(ReadingActivityTwoLetters.this, sb, Toast.LENGTH_SHORT).show();
 
@@ -349,7 +349,7 @@ public class SubPReadingDigraphs extends AppCompatActivity {
 
                     b = tvHeader.getText().toString().toLowerCase();
                     if (b.contains("as")){
-                        b = "read" + playFromFirebase.viewTextConvert(b);
+                        b = "read" + PlayFromFirebase.viewTextConvert(b);
                         playFromFileOrDownload(b);
                     }
 
@@ -448,7 +448,7 @@ public class SubPReadingDigraphs extends AppCompatActivity {
                     // c= b.substring(0,1) + "  "+ Character.toString(b.charAt(1)) +"   :"+ b.substring(0,2);
 
                     b = "read" + b.toLowerCase();
-                    b = playFromFirebase.viewTextConvert(b);
+                    b = PlayFromFirebase.viewTextConvert(b);
 
                     // Toast.makeText(ReadingActivityTwoLetters.this, sb, Toast.LENGTH_SHORT).show();
 

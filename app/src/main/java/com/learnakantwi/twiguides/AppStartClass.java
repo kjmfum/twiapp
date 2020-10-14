@@ -1,35 +1,22 @@
 package com.learnakantwi.twiguides;
 
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.Application;
 import android.app.DownloadManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.SystemClock;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.BillingClientStateListener;
-import com.android.billingclient.api.BillingResult;
-import com.android.billingclient.api.Purchase;
-import com.android.billingclient.api.SkuDetails;
-import com.android.billingclient.api.SkuDetailsParams;
-import com.android.billingclient.api.SkuDetailsResponseListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -39,7 +26,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.List;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.learnakantwi.twiguides.AllActivity.allArrayList;
@@ -2688,7 +2674,7 @@ public class AppStartClass extends Application {
             proverbsArrayList.add(new Proverbs("Obi fom kum a, yɛn mfom ndwa", "If one kills by mistake, we do not cut up by mistake", "We do not deliberately repay someone with a bad deed for their unintentional mistake "));
             proverbsArrayList.add(new Proverbs("Wuhu sɛ wo yɔnko abɔdwesɛ rehye a na wasa nsuo asi wo de ho", "If you see that the beard of a friend is on fire, fetch water and put by your beard", "If something bad happens to a neighbour, plan on how you will deal it with if it happens to you next"));
             proverbsArrayList.add(new Proverbs("Dua a enya wo a ɛbɛwɔ w'ani no, yetu ase; yɛnsensene ano", "A tree which is likely to pierce your eye must be uprooted, not merely pruned", "If a problem has the potential to harm you, we do not solve it partially but rather we solve it completely. Eliminate completely anything that can harm you"));
-            proverbsArrayList.add(new Proverbs("Nyansapɔ wɔsane no badwemma", "A discerning man loosens a hard tight know", "It takes a wise person to solve hard riddles. One who solves a complex problem is wise"));
+            proverbsArrayList.add(new Proverbs("Nyansapɔ wɔsane no badwemma", "A discerning man loosens a hard tight knot", "It takes a wise person to solve hard riddles. One who solves a complex problem is wise"));
             proverbsArrayList.add(new Proverbs("Ahunu bi pɛn nti na aserewa regyegye ne ba agorɔ a na wayi n'ani ato nkyɛn", "When playing with its child, the silverbird looks away because of what it has seen before", "The behaviour of some people are as a result of the bad experiences they have encountered in their lives"));
             proverbsArrayList.add(new Proverbs("Abaa a yɛde bɔ Takyi no yɛde bɛbɔ Baa", "The cane which is used on Takyi will also be used on Baa", "The punishment given to someone for a crime will be the same punishment for another who commits the same crime. What is done to someone will be the same that will happen to you if you act like him"));
             proverbsArrayList.add(new Proverbs("Abɛ bi rebewu a na ɛsɔ", "When some palm trees are about to die, its wine tastes good", "Some people get to their best when they are about to retire or in their old age. The aged are the most experienced"));
@@ -2815,6 +2801,8 @@ public class AppStartClass extends Application {
         if (5 > 1){
             verbArrayList.add( new Verb("Come", "Bra"));
             verbArrayList.add( new Verb("Don't Come", "Mma"));
+            verbArrayList.add( new Verb("Go", "Kɔ"));
+            verbArrayList.add( new Verb("Don't go", "Nkɔ"));
             verbArrayList.add(new Verb("Converse (1)","Bɔ nkɔmmɔ"));
             verbArrayList.add(new Verb("Don't Converse (1)","Mmɔ Nkɔmmɔ"));
             verbArrayList.add(new Verb("Converse (2)","Di nkɔmmɔ"));
@@ -2848,8 +2836,11 @@ public class AppStartClass extends Application {
                 verbArrayList.add(new Verb("Don't come out","Mfi mma"));
                 verbArrayList.add(new Verb("Buy on credit","Firi"));
                 verbArrayList.add(new Verb("Don't buy on credit","Mfiri"));
+            if (Subscribed == 1) {
+
                 verbArrayList.add(new Verb("Bath(e)","Dware"));
                 verbArrayList.add(new Verb("Don't Bath(e)","Nnware"));
+
                 verbArrayList.add(new Verb("See him off","Gya no kwan"));
                 verbArrayList.add(new Verb("Don't see him off","Nnya no kwan"));
                 verbArrayList.add(new Verb("Take it / Receive it / Have it","Gye"));
@@ -2866,8 +2857,6 @@ public class AppStartClass extends Application {
                 verbArrayList.add(new Verb("Don't wear","Nhyɛ"));
                 verbArrayList.add(new Verb("Put on shoes","Hyɛ mpaboa"));
                 verbArrayList.add(new Verb("Don't put on shoes","Nhyɛ mpaboa"));
-
-            if (Subscribed == 1) {
 
                 verbArrayList.add(new Verb("Dry","Hata"));
                 verbArrayList.add(new Verb("Don't dry","Nhata"));
@@ -2905,6 +2894,7 @@ public class AppStartClass extends Application {
                 verbArrayList.add(new Verb("Don't praise","Nkamfo"));
                 verbArrayList.add(new Verb("Fight","Ko"));
                 verbArrayList.add(new Verb("Don't fight","Nko"));
+                
                // verbArrayList.add(new Verb("",""));
 
 

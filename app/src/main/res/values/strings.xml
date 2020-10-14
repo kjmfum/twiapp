@@ -144,7 +144,7 @@
     <!-- Subscription -->
 
     <string name="MonthlySubBenefits"> Benefits: \n 1. Ad free \n 2. Regular Updates \n 3. More Vocabulary \n 4. More Features \n 5. Billed Monthly</string>
-    <string name="HalfYearSubBenefits"> Purchase and keep for a Lifetime or Subscribe: \n 1. Ad free \n 2. Regular Updates  \n 3. More Vocabulary and Proverbs \n 4. More Fun Features to let you enjoy learning Twi </string>
+    <string name="HalfYearSubBenefits"> Purchase and keep for a Lifetime or Subscribe: \n 1. Ad free \n 2. Regular Updates  \n 3. More Vocabulary and Proverbs \n 4. Audio Slideshow For All Vocabulary Categories \n 5. More Fun Features to let you enjoy learning Twi </string>
     <string name="AnnualSubBenefits" tools:ignore="DuplicateDefinition"> Benefits: \n 1. Ad free \n 2. Regular Updates \n 3. More Vocabulary \n 4. More Features \n 5. Billed Annually </string>
     <string name="title_activity_settings">LearnAkanTwi</string>
     <string name="purchase_or_subscribe_banner">PURCHASE OR SUBSCRIBE FOR MORE CONTENT</string>

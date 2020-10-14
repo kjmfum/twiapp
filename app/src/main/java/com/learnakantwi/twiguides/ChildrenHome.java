@@ -1,11 +1,9 @@
 package com.learnakantwi.twiguides;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -28,10 +26,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.appodeal.ads.Appodeal;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -53,6 +50,8 @@ import static com.learnakantwi.twiguides.ChildrenAnimalActivity.childrenAnimalsA
 
 public class ChildrenHome extends AppCompatActivity {
     //  app:adUnitId="ca-app-pub-6999427576830667~6251296006"
+
+    AdView mAdView;
 
     static ArrayList<HomeButton> homeButtonArrayList;
     static ArrayList<Children> childrenArray;
@@ -749,7 +748,7 @@ public class ChildrenHome extends AppCompatActivity {
         //ca-app-pub-3940256099942544/1033173712 test
 
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+      //  Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -757,9 +756,9 @@ public class ChildrenHome extends AppCompatActivity {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-     /*   mAdView1 = findViewById(R.id.adView1);
+        mAdView = findViewById(R.id.adView);
         AdRequest adRequest1 = new AdRequest.Builder().build();
-        mAdView1.loadAd(adRequest1);
+        mAdView.loadAd(adRequest1);
 
 
         AppRate.with(this)
@@ -768,7 +767,7 @@ public class ChildrenHome extends AppCompatActivity {
                 .setRemindInterval(2)
                 .monitor();
 
-        AppRate.showRateDialogIfMeetsConditions(this); */
+        AppRate.showRateDialogIfMeetsConditions(this);
 
       /*  findViewById(R.id.homeAdvertButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -850,11 +849,6 @@ public class ChildrenHome extends AppCompatActivity {
             }
         });
 
-
-
-
-
-        //MobileAds.initialize(this, "ca-app-pub-6999427576830667~6251296006");
 
 
     }

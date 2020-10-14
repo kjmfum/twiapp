@@ -119,6 +119,7 @@
         <activity android:name=".SubConversationIntroductionActivity" />
         <activity android:name=".SubConversationHomeActivity" />
         <activity android:name=".SubConversationApologiesAndResponses" />
+        <activity android:name=".SubConversationLove" />
         <activity android:name=".ForgotPassword" />
         <activity android:name=".RealTimeDatabase" />
         <activity android:name=".PlayFromFirebase" />

@@ -9,7 +9,6 @@ import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 
-import static com.learnakantwi.twiguides.AppStartClass.CHANNEL_1_ID;
 import static com.learnakantwi.twiguides.AppStartClass.CHANNEL_2_ID;
 
 public class Notification_receiver_Proverbs extends BroadcastReceiver {

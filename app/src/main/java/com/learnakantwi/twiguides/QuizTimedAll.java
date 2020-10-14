@@ -18,17 +18,14 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -58,6 +55,7 @@ public class QuizTimedAll extends AppCompatActivity {
 
     //ArrayList<Integer> checkArrayList;
     AdView mAdView;
+    public InterstitialAd mInterstitialAd;
 
     ArrayList<Integer> answersList;
     TextView correctAnswer;
@@ -105,6 +103,8 @@ public class QuizTimedAll extends AppCompatActivity {
         MediaPlayer playWrongSound;
 
         Toast toast;
+
+
 
 
         ImageView ivMute;
@@ -779,14 +779,18 @@ public class QuizTimedAll extends AppCompatActivity {
 
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
+
+       /* if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }*/
 
         //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
-        @Override
+    @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_quiz_timed_all);
@@ -807,7 +811,32 @@ public class QuizTimedAll extends AppCompatActivity {
             //if (!Ads.equals(null) && Ads.equals("Ads")){
                 if (MainActivity.Subscribed!=1){
                     Ads="Ads";
-                    Appodeal.cache(this, Appodeal.INTERSTITIAL);
+                mInterstitialAd = new InterstitialAd(this);
+                mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+                MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                    @Override
+                    public void onInitializationComplete(InitializationStatus initializationStatus) {
+                    }
+                });
+                mAdView = findViewById(R.id.adView);
+                AdRequest adRequest = new AdRequest.Builder().build();
+                mAdView.loadAd(adRequest);
+            } else {
+                    Ads ="No Ads";
+                }
+
+
+
+         /*   if (MainActivity.Subscribed != 1){
+
+                random = new Random();
+                showAdProbability = random.nextInt(10);
+
+                mInterstitialAd = new InterstitialAd(this);
+                mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
                 MobileAds.initialize(this, new OnInitializationCompleteListener() {
                     @Override
@@ -819,10 +848,28 @@ public class QuizTimedAll extends AppCompatActivity {
                 mAdView.loadAd(adRequest);
 
 
-            }else {
-                    Ads ="No Ads";
-                }
+            }
 
+            ///ramd in
+            if (MainActivity.Subscribed != 1){
+
+                random = new Random();
+                showAdProbability = random.nextInt(10);
+
+                mInterstitialAd = new InterstitialAd(this);
+                mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+                MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                    @Override
+                    public void onInitializationComplete(InitializationStatus initializationStatus) {
+                    }
+                });
+                mAdView = findViewById(R.id.adView);
+                AdRequest adRequest = new AdRequest.Builder().build();
+                mAdView.loadAd(adRequest);
+
+            }*/
 
 
             btHallOfFame = findViewById(R.id.btHallOfFame);

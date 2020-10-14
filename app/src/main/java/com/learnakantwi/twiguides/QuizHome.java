@@ -27,10 +27,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.appodeal.ads.Appodeal;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -41,8 +40,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import hotchemi.android.rate.AppRate;
 
 import static android.Manifest.permission.INTERNET;
 import static com.learnakantwi.twiguides.AllActivity.allArrayList;
@@ -627,12 +624,6 @@ public class QuizHome extends AppCompatActivity {
 
         //ca-app-pub-7384642419407303/9880404420
         //ca-app-pub-3940256099942544/1033173712 test
-
-
-
-
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
-        ////
 
 
 

@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.appodeal.ads.Appodeal;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -43,7 +42,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 public class BodypartsActivity extends AppCompatActivity {
@@ -57,6 +55,9 @@ public class BodypartsActivity extends AppCompatActivity {
 
     int showAdProbability;
     Random random;
+
+    public InterstitialAd mInterstitialAd;
+    AdView mAdView;
 
     Toast toast;
 
@@ -462,12 +463,15 @@ public class BodypartsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
+
+       /* if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }*/
 
         //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
@@ -478,12 +482,28 @@ public class BodypartsActivity extends AppCompatActivity {
 
         isNetworkAvailable();
 
-        Appodeal.cache(this, Appodeal.INTERSTITIAL);
+       // Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
         random = new Random();
         showAdProbability = random.nextInt(10);
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+        if (MainActivity.Subscribed!=1){
+
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+
+
+        }
 
         toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
         toast.show();

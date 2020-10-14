@@ -15,17 +15,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -40,7 +37,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.learnakantwi.twiguides.AllActivity.allArrayList;
 import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
 
 public class RepeatingActivityProverbs extends AppCompatActivity {
@@ -59,6 +55,9 @@ public class RepeatingActivityProverbs extends AppCompatActivity {
     MediaPlayer playFromDevice;
     Toast toast;
     int testShared;
+
+    AdView mAdView;
+    AdView mAdView1;
 
 
     private boolean isNetworkAvailable() {
@@ -130,11 +129,11 @@ public class RepeatingActivityProverbs extends AppCompatActivity {
         randomChoiceQuestion = random.nextInt(proverbsArrayList.size()-1);
 
        // english1 = allArrayList.get(randomChoiceQuestion).getEnglishmain();
-        english1 =  proverbsArrayList.get(0).getProverbMeaning();
+        english1 =  proverbsArrayList.get(randomChoiceQuestion).getProverbMeaning();
 
 
        // twi1 = allArrayList.get(randomChoiceQuestion).getTwiMain();
-        twi1= proverbsArrayList.get(0).getTwiProverb();
+        twi1= proverbsArrayList.get(randomChoiceQuestion).getTwiProverb();
 
 
         textView.setText(english1);
@@ -341,28 +340,32 @@ public class RepeatingActivityProverbs extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goToMain();
-
-                //notificationPreference();
-
-       /* if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
-        }*/
             }
-
-           /* public void onClick(View v) {
-                generateQuestion();
-            }*/
         });
 
-        SharedPreferences subscribe = getSharedPreferences("AdsDecision",MODE_PRIVATE);
-        int sub =  subscribe.getInt("Sub",0);
+        final SharedPreferences sharedPreferencesAds = this.getSharedPreferences("AdsDecision", MODE_PRIVATE);
+        testShared = sharedPreferencesAds.getInt("Ads", 5);
 
 
-        if (sub == 0) {
-            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
-            Appodeal.show(this, Appodeal.BANNER_TOP);
+        if (testShared != 0) {
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+
+
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView1 = findViewById(R.id.adView1);
+            AdRequest adRequest1 = new AdRequest.Builder().build();
+            mAdView1.loadAd(adRequest1);
         }
     }
 }

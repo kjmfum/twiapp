@@ -29,7 +29,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appodeal.ads.Appodeal;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -51,7 +51,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static com.learnakantwi.twiguides.BodypartsActivity.bodypartsArrayList;
-import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
 import static com.learnakantwi.twiguides.MainActivity.largeFont;
 import static com.learnakantwi.twiguides.MainActivity.longDelay;
 import static com.learnakantwi.twiguides.MainActivity.shortDelay;
@@ -68,6 +67,9 @@ public class SubPBodypartsActivity extends AppCompatActivity implements  RVBodyP
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
+
+    public InterstitialAd mInterstitialAd;
+    AdView mAdView;
 
     int count= 0;
     String textSlideshow = "Start Body Parts Slideshow";
@@ -724,9 +726,13 @@ public class SubPBodypartsActivity extends AppCompatActivity implements  RVBodyP
 
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
+
+       /* if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }*/
 
         //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
@@ -749,10 +755,19 @@ public class SubPBodypartsActivity extends AppCompatActivity implements  RVBodyP
             random = new Random();
             showAdProbability = random.nextInt(10);
 
-            Appodeal.cache(this, Appodeal.INTERSTITIAL);
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
-            //Toast.makeText(this, "Show Advert: " +  proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
-            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+
         }
 
         btSlideText = findViewById(R.id.btSlideText);

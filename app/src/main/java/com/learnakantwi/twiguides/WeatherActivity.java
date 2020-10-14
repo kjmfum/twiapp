@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.appodeal.ads.Appodeal;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -54,6 +53,10 @@ public class WeatherActivity extends AppCompatActivity {
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
+
+
+    public InterstitialAd mInterstitialAd;
+    AdView mAdView;
 
     int showAdProbability;
     Random random;
@@ -462,12 +465,15 @@ public class WeatherActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
+
+       /* if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }*/
 
         //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
@@ -480,12 +486,28 @@ public class WeatherActivity extends AppCompatActivity {
 
         isNetworkAvailable();
 
-        Appodeal.cache(this, Appodeal.INTERSTITIAL);
+
 
         random = new Random();
         showAdProbability = random.nextInt(10);
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+        if (MainActivity.Subscribed!=1){
+
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+
+
+        }
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 

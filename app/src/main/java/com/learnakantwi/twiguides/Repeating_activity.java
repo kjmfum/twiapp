@@ -14,13 +14,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,10 +24,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -43,11 +37,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Random;
 
 import static com.learnakantwi.twiguides.AllActivity.allArrayList;
@@ -68,6 +58,9 @@ public class Repeating_activity extends AppCompatActivity {
     MediaPlayer playFromDevice;
     Toast toast;
     int testShared;
+
+    AdView mAdView;
+    AdView mAdView1;
 
 
     private boolean isNetworkAvailable() {
@@ -491,7 +484,7 @@ public class Repeating_activity extends AppCompatActivity {
 
         generateQuestion();
 
-        Appodeal.cache(this, Appodeal.INTERSTITIAL);
+      //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
         //ca-app-pub-7384642419407303/9880404420 correct
         //ca-app-pub-3940256099942544/1033173712 test
@@ -520,24 +513,17 @@ public class Repeating_activity extends AppCompatActivity {
 
 
         if (testShared != 0) {
-            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
-            Appodeal.show(this, Appodeal.BANNER_TOP);
-
-        }
-    }
-
-
-       /* MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);*/
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
 
 
-        /*MobileAds.initialize(this, new OnInitializationCompleteListener() {
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
@@ -545,6 +531,8 @@ public class Repeating_activity extends AppCompatActivity {
         mAdView1 = findViewById(R.id.adView1);
         AdRequest adRequest1 = new AdRequest.Builder().build();
         mAdView1.loadAd(adRequest1);
-    }*/
+    }
 
-}
+        }
+    }
+

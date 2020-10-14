@@ -51,7 +51,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
-import com.inmobi.ads.i;
+
 
 import java.io.File;
 import java.util.ArrayList;
@@ -69,6 +69,7 @@ import static com.learnakantwi.twiguides.SubConversationHospital.conversationHos
 import static com.learnakantwi.twiguides.SubConversationIntroductionActivity.conversationArrayList;
 import static com.learnakantwi.twiguides.SubConversationWelcomingOthers.conversationWelcomingOthersArrayList;
 import static com.learnakantwi.twiguides.SubConversationPhone.conversationPhone;
+import static com.learnakantwi.twiguides.SubConversationLove.conversationLove;
 
 //import android.support.v7.app.AppCompatActivity;
 
@@ -601,6 +602,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subpactivity_home1);
 
+       // Toast.makeText(this, "This is: "+ MainActivity.Subscribed, Toast.LENGTH_SHORT).show();
 
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -964,6 +966,21 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
             conversationDirections.add(new subConversation("Mepɛ sɛ mekɔ fie", "I want to go home"));
             conversationDirections.add(new subConversation("Ɛhe na wote?", "Where do you stay?"));
             conversationDirections.add(new subConversation("Mete Dansoman", "I stay at Dansoman"));
+
+
+          //  conversationDirections.add(new subConversation("", ""));
+
+            //Not recorded
+
+            conversationDirections.add(new subConversation("Bra w'anim", "Come forward"));
+            conversationDirections.add(new subConversation("Hwɛ w'anim", "Look forward"));
+            conversationDirections.add(new subConversation("Hwɛ fam", "Look down"));
+            conversationDirections.add(new subConversation("Hwɛ soro", "Look up"));
+            conversationDirections.add(new subConversation("Pagya wo ti", "Raise your head"));
+            conversationDirections.add(new subConversation("Hwɛ wo nifa so", "Look to your right"));
+            conversationDirections.add(new subConversation("Hwɛ wo benkum so", "Look to your left"));
+
+
         }
 
         conversationHospital = new ArrayList<>();
@@ -1076,7 +1093,76 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         }
         //conversationPhone = new ArrayList<>();
 
+        conversationLove = new ArrayList<>();
+        if(5>2){
+           // conversationLove.add(new subConversation("",""));
+            conversationLove.add(new subConversation("Medɔ wo","I love you"));
+            conversationLove.add(new subConversation("Wodɔ me?","Do you love me?"));
+            conversationLove.add(new subConversation("Medɔ no","I love him/her"));
+            conversationLove.add(new subConversation("Medɔ wo nko ara","I love only you"));
+            conversationLove.add(new subConversation("Medɔ wo pa ara","I love you very much"));
+            conversationLove.add(new subConversation("Kyerɛ me sɛ wodɔ me","Show me that you love me"));
 
+            conversationLove.add(new subConversation("Ka sɛ wodɔ me","Say that you love me"));
+            conversationLove.add(new subConversation("Medɔ wo kosi owu mu","I love you till death"));
+            conversationLove.add(new subConversation("Mɛdɔ wo kosi me wuda","I will love you till the day I die"));
+            conversationLove.add(new subConversation("Wei yɛ ɔdɔ kann","This is true love"));
+            conversationLove.add(new subConversation("Gye me di","Believe me/Trust me"));
+            conversationLove.add(new subConversation("Woakyerɛ me ɔdɔ kann","You have shown me true love"));
+            conversationLove.add(new subConversation("Mepɛ wo","I want you"));
+            conversationLove.add(new subConversation("Wo nko ara na mepɛ","I want only you"));
+            conversationLove.add(new subConversation("Wo nko ara ne me dɔ","You are my only love"));
+            conversationLove.add(new subConversation("M'ani gye wo ho","I like you"));
+            conversationLove.add(new subConversation("Wone me koma","You are my heart"));
+            conversationLove.add(new subConversation("Me hia wo","I need you"));
+            conversationLove.add(new subConversation("M'akomam tɔfe","My sweetheart(Lit.: My heart candy)"));
+            conversationLove.add(new subConversation("Woyɛ m'akomam tɔfe","You are my sweetheart"));
+            conversationLove.add(new subConversation("M'akoma yɛ wo dea","My heart is yours"));
+            conversationLove.add(new subConversation("M'akoma yɛ obi dea","My heart belongs to someone"));
+            conversationLove.add(new subConversation("Mepɛ sɛ meware wo","I want to marry you"));
+            conversationLove.add(new subConversation("Wobɛware me anaa?","Will you marry me?"));
+            conversationLove.add(new subConversation("Mɛwu ama wo","I will die for you"));
+            conversationLove.add(new subConversation("Wobɛku me","You will kill me"));
+            conversationLove.add(new subConversation("Kohu m'awofo","Go and see my parents"));
+
+            conversationLove.add(new subConversation("Wo ne me wiase","You are my world"));
+            conversationLove.add(new subConversation("Wo ne m'anigye","You are my happiness"));
+            conversationLove.add(new subConversation("Daa me so wo ho dae","I dream about you always"));
+            conversationLove.add(new subConversation("Mɛma wo daeso abam","I will make your dreams come true"));
+            conversationLove.add(new subConversation("Woma m'ani gye","You make me happy"));
+            conversationLove.add(new subConversation("Wokita m'akoma mu safoa","You hold the key to my heart"));
+            conversationLove.add(new subConversation("M'akoma bɔ ma wo","My heart beats for you"));
+            conversationLove.add(new subConversation("Mɛdɔ wo me nkwa nna nyinaa","I will love you all my life"));
+            conversationLove.add(new subConversation("Wowɔ mpena?","Do you have a girlfriend/boyfriend?"));
+            conversationLove.add(new subConversation("Me nni mpena","I don't have a boyfriend/girlfriend"));
+            conversationLove.add(new subConversation("Woaware?","Are you married?"));
+            conversationLove.add(new subConversation("Magyae awareɛ","I'm divorced"));
+            conversationLove.add(new subConversation("Me hokafo awu","My spouse(Lit.: partner) is dead"));
+            conversationLove.add(new subConversation("Meyɛ okunafo","I'm a widow"));
+            conversationLove.add(new subConversation("Meyɛ barima kunafo","I'm a widower"));
+            conversationLove.add(new subConversation("Obi nsa da me so","Someone has promised to marry me"));
+            conversationLove.add(new subConversation("Yɛatu me ti so nsa","I'm engaged (Lit.: they have removed the cork from the drink/bottle of my head"));
+            conversationLove.add(new subConversation("Mempɛ sɛ mɛware bio","I don't want to marry again"));
+            conversationLove.add(new subConversation("Mɛware wo","I will marry you"));
+            conversationLove.add(new subConversation("Ware me","Marry me"));
+
+            conversationLove.add(new subConversation("Ɛnte m'akoma","Don't break my heart"));
+            conversationLove.add(new subConversation("Nnaadaa me","Don't deceive me"));
+            conversationLove.add(new subConversation("Ɛnyi me mma","Don't betray me"));
+            conversationLove.add(new subConversation("Nnyae me","Don't leave me"));
+            conversationLove.add(new subConversation("Mma me nkɔ","Don't let me go"));
+            conversationLove.add(new subConversation("Me werɛ mfii me mpena dadaa no","I haven't gotten over my ex(boyfriend/girlfriend)"));
+
+            conversationLove.add(new subConversation("Mepɛ adamfo kɛkɛ","I only need a friend"));
+
+
+            conversationLove.add(new subConversation("Sɔ me mu","Hold me"));
+            conversationLove.add(new subConversation("Wo ho yɛ me fɛ","You are beautiful to me"));
+            conversationLove.add(new subConversation("Me mfa wo akyi da","I will never cheat on you"));
+
+
+
+        }
     }
 
     @Override

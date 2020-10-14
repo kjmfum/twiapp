@@ -14,17 +14,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -43,7 +40,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class AllActivity extends AppCompatActivity {
@@ -64,7 +60,7 @@ public class AllActivity extends AppCompatActivity {
     ArrayList<All> results;
     Context context;
 
-    private InterstitialAd mInterstitialAd;
+    public InterstitialAd mInterstitialAd;
 
 
     Toast toast;
@@ -704,8 +700,6 @@ public class AllActivity extends AppCompatActivity {
 
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
-        }else{
-            Toast.makeText(context, "I'm here", Toast.LENGTH_SHORT).show();
         }
 
         //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
@@ -747,7 +741,7 @@ public class AllActivity extends AppCompatActivity {
             mAdView.loadAd(adRequest);
 
             mInterstitialAd = new InterstitialAd(this);
-            mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
             mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
 

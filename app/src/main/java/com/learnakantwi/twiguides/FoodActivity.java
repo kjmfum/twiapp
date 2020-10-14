@@ -12,11 +12,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -64,6 +61,9 @@ public class FoodActivity extends AppCompatActivity implements FoodAdapter.onCli
 
     //PlayFromFirebase playFromFirebase;
     PlayFromFirebase convertAndPlay;
+
+    public InterstitialAd mInterstitialAd;
+    AdView mAdView;
 
 
     Toast toast;
@@ -474,12 +474,15 @@ public class FoodActivity extends AppCompatActivity implements FoodAdapter.onCli
 
     }
 
-
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
+
+       /* if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }*/
 
         //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
@@ -491,7 +494,6 @@ public class FoodActivity extends AppCompatActivity implements FoodAdapter.onCli
 
         convertAndPlay = new PlayFromFirebase();
 
-        Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
         random = new Random();
         showAdProbability = random.nextInt(10);
@@ -499,7 +501,25 @@ public class FoodActivity extends AppCompatActivity implements FoodAdapter.onCli
 
         isNetworkAvailable();
 
-        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+//        Toast.makeText(this, "This is: "+ MainActivity.Subscribed, Toast.LENGTH_SHORT).show();
+
+        if (MainActivity.Subscribed!=1){
+
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+
+
+        }
 
         toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
         toast.show();

@@ -2,7 +2,6 @@ package com.learnakantwi.twiguides;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,7 +9,6 @@ import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -18,15 +16,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Adapter;
 import android.widget.AdapterViewFlipper;
-import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,9 +34,6 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import static com.learnakantwi.twiguides.ProverbsActivity.proverbsArrayList;
-import static com.learnakantwi.twiguides.SubChildrenAnimals.childrenAnimalsArrayList;
 
 public class ReadingLesson1 extends AppCompatActivity implements LessonsAdapter.onClickRecycle{
 

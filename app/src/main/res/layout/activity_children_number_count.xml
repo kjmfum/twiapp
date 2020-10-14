@@ -358,7 +358,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.99" />
 
-    <com.google.android.gms.ads.AdView
+    6tum[pok,m<com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

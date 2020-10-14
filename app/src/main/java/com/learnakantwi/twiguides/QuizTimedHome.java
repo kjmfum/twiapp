@@ -28,7 +28,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appodeal.ads.Appodeal;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -42,6 +42,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static android.Manifest.permission.INTERNET;
 import static com.learnakantwi.twiguides.AllActivity.allArrayList;
@@ -51,7 +52,9 @@ public class QuizTimedHome extends AppCompatActivity {
     static ArrayList<HomeButton> homeButtonArrayList;
     ListView homeListView;
     MediaPlayer mediaPlayer;
+
     AdView mAdView;
+    public InterstitialAd mInterstitialAd;
 
     StorageReference storageReference;
     Toast toast;
@@ -628,16 +631,19 @@ public class QuizTimedHome extends AppCompatActivity {
 
         if (MainActivity.Subscribed!=1){
 
-            //AdView mAdView;
-            Appodeal.cache(this, Appodeal.INTERSTITIAL);
-            //ca-app-pub-7384642419407303/9880404420
-            //ca-app-pub-3940256099942544/1033173712 test
+          /*  random = new Random();
+            showAdProbability = random.nextInt(10);
+
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());*/
 
             MobileAds.initialize(this, new OnInitializationCompleteListener() {
                 @Override
                 public void onInitializationComplete(InitializationStatus initializationStatus) {
                 }
             });
+            mAdView = findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
         }else{

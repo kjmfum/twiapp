@@ -2,7 +2,6 @@ package com.learnakantwi.twiguides;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import android.Manifest;
 import android.app.DownloadManager;
@@ -17,18 +16,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appodeal.ads.Appodeal;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -62,7 +59,7 @@ public class ReadingActivityTwoLetters extends AppCompatActivity {
     int showAdProbability;
     Random random;
     AdView mAdView;
-
+    public InterstitialAd mInterstitialAd;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -325,25 +322,31 @@ public class ReadingActivityTwoLetters extends AppCompatActivity {
 
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
+
+       /* if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }*/
 
         //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_two_letters);
 
-        Appodeal.cache(this, Appodeal.INTERSTITIAL);
+       // Appodeal.cache(this, Appodeal.INTERSTITIAL);
 
 
         random = new Random();
         showAdProbability = random.nextInt(10);
 
 
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
        // Appodeal.show(this, Appodeal.BANNER_BOTTOM);
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {

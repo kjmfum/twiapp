@@ -28,12 +28,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -688,8 +682,9 @@ public class SubPHomeVocabulary extends AppCompatActivity {
 
         homeButtonArrayList.add(new HomeButton("Download All Audio", R.drawable.ic_download_audio));
         homeButtonArrayList.add(new HomeButton("Family", R.drawable.familyimage));
-        homeButtonArrayList.add(new HomeButton("Numbers", R.drawable.numbers));
         homeButtonArrayList.add(new HomeButton("Verbs", R.drawable.verbs));
+        homeButtonArrayList.add(new HomeButton("Numbers", R.drawable.numbers));
+
        // homeButtonArrayList.add(new HomeButton("Proverbs", R.drawable.proverbsimage));
         //homeButtonArrayList.add(new HomeButton("Children", R.drawable.childrenimage));
         homeButtonArrayList.add(new HomeButton("Food", R.drawable.foodimage));

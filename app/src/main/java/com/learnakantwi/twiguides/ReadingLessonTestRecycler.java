@@ -35,7 +35,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.learnakantwi.twiguides.ChildrenAnimalActivity.childrenAnimalsArrayListFew;
 import static com.learnakantwi.twiguides.SubChildrenAnimals.childrenAnimalsArrayList;
 
 public class ReadingLessonTestRecycler extends AppCompatActivity implements RecyclerViewAdapter.onClickRecycle{

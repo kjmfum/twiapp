@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,9 +23,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.appodeal.ads.Appodeal;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -44,14 +44,13 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.learnakantwi.twiguides.AllActivity.allArrayList;
-import static com.learnakantwi.twiguides.AnimalsActivity.animalsArrayList;
 import static com.learnakantwi.twiguides.FoodActivity.foodArrayList;
 
 
 public class QuizFood extends AppCompatActivity {
 
     AdView mAdView;
+    public InterstitialAd mInterstitialAd;
 
     int showAdProbability;
     Random random1;
@@ -527,10 +526,15 @@ public class QuizFood extends AppCompatActivity {
 
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
 
+       /* if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }*/
+
+        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
     @Override
@@ -541,7 +545,9 @@ public class QuizFood extends AppCompatActivity {
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
 
-        Appodeal.cache(this, Appodeal.INTERSTITIAL);
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override

@@ -10,23 +10,23 @@
         android:id="@+id/pronounsListView"
         android:layout_height="0dp"
         android:background="@android:color/background_light"
-        app:layout_constraintBottom_toTopOf="@id/appodealBannerView"
+        app:layout_constraintBottom_toTopOf="@id/adView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
 
     </ListView>
 
-    <com.appodeal.ads.BannerView
+  <!--  <com.appodeal.ads.BannerView
         android:id="@+id/appodealBannerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"/>-->
 
- <!--   <com.google.android.gms.ads.AdView
+    <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,6 +37,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pronounsListView" />-->
+        app:layout_constraintTop_toBottomOf="@+id/pronounsListView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

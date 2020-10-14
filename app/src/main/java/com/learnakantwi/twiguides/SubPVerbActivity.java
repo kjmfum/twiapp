@@ -28,7 +28,13 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appodeal.ads.Appodeal;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -43,7 +49,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.learnakantwi.twiguides.FamilyActivity.familyArrayList;
 import static com.learnakantwi.twiguides.MainActivity.largeFont;
 import static com.learnakantwi.twiguides.MainActivity.longDelay;
 import static com.learnakantwi.twiguides.MainActivity.shortDelay;
@@ -59,6 +64,9 @@ public class SubPVerbActivity extends AppCompatActivity implements VerbAdapter_o
     StorageReference storageReference;
     MediaPlayer playFromDevice;
     MediaPlayer mp1;
+
+    public InterstitialAd mInterstitialAd;
+    AdView mAdView;
 
     PlayFromFirebase convertAndPlay;
    // FamilyAdapter_one foodAdapter;
@@ -126,7 +134,7 @@ public class SubPVerbActivity extends AppCompatActivity implements VerbAdapter_o
     public void downloadOnly(final String filename){
         if (isNetworkAvailable()){
 
-            final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+            final StorageReference musicRef = storageReference.child("/Verbs/" + filename + ".m4a");
             musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
@@ -168,7 +176,7 @@ public class SubPVerbActivity extends AppCompatActivity implements VerbAdapter_o
 
                 String bb= PlayFromFirebase.viewTextConvert(c);
 
-                File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
+                File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/VERBS/" + bb + ".m4a");
                 if (myFiles.exists()) {
                     counter++;
                 }
@@ -274,7 +282,7 @@ public class SubPVerbActivity extends AppCompatActivity implements VerbAdapter_o
             Toast.makeText(this, "PURCHASE OR SUBSCRIBE FOR MORE FEATURES", Toast.LENGTH_SHORT).show();
         }
         else {
-            File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/VERBS" + filename + ".m4a");
+            File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/VERBS/" + filename + ".m4a");
             if (myFile.exists()) {
 
                 try {
@@ -479,7 +487,7 @@ public class SubPVerbActivity extends AppCompatActivity implements VerbAdapter_o
     }
 
     public void playFromFileOrDownload(final String filename){
-        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/VERBS/" + filename + ".m4a");
         if (myFile.exists()){
 
             try {
@@ -505,7 +513,7 @@ public class SubPVerbActivity extends AppCompatActivity implements VerbAdapter_o
         else {
 
             if (isNetworkAvailable()){
-                final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+                final StorageReference musicRef = storageReference.child("/Verbs/" + filename + ".m4a");
                 musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
@@ -715,11 +723,10 @@ public class SubPVerbActivity extends AppCompatActivity implements VerbAdapter_o
 
     public void advert1() {
 
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
-        }
 
-        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
     }
 
     @Override
@@ -738,9 +745,21 @@ public class SubPVerbActivity extends AppCompatActivity implements VerbAdapter_o
             random = new Random();
             showAdProbability = random.nextInt(10);
 
-            Appodeal.cache(this, Appodeal.INTERSTITIAL);
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
-            Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+
+
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            mAdView.setVisibility(View.VISIBLE);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
         }
 
         btSlideText = findViewById(R.id.btSlideText);
