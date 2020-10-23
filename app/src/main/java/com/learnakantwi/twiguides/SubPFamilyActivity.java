@@ -539,20 +539,10 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
 
     public void slideshow() {
 
-        /*toast.setText("Proverbs change after 6 seconds");
-        toast.show();*/
         slideshowBool = true;
 
         count = 0;
         handler1.postDelayed(ranable, 2);
-
-        /*slideshowBool = true;
-
-        if (slideshowBool){
-            count = position;
-            handler1.postDelayed(ranable, 2);
-        }*/
-
     }
 
     public void slideshow(View v) {
@@ -563,20 +553,17 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
         handler1.postDelayed(ranable, 2);
 
         slideshowBool = true;
-            /*
-        if (slideshowBool){
-            count = position;
-            handler1.postDelayed(ranable, 2);
-        }*/
-
     }
 
 
     public void pauseSlideshow(View view) {
 
         //Log.i("Mee1","Hi b4pause"+ count);
-        count--;
-        // Log.i("Mee1","Hi pause"+ count);
+        if (!repeat1){
+            count--;
+        }
+
+
 
         pauseButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
@@ -725,12 +712,6 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
         }
-
-       /* if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
-        }*/
-
-        //  Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
     @Override
@@ -852,8 +833,10 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
             public void run() {
                 // String a = recycleArrayList.get(count).getTwiProverb();
                 if (repeat1){
-                    String a = familyArrayList.get(count-1).getTwiFamily();
-                    String c = familyArrayList.get(count-1).getEnglishFamily();
+
+                    String a = familyArrayList.get(count).getTwiFamily();
+                    String c = familyArrayList.get(count).getEnglishFamily();
+
 
                     btSlideText.setText(a);
                     tvNumberWord.setText(c);
@@ -918,6 +901,8 @@ public class SubPFamilyActivity extends AppCompatActivity implements FamilyAdapt
                         pauseButton.setVisibility(View.INVISIBLE);
                         nextButton.setVisibility(View.INVISIBLE);
                         previousButton.setVisibility(View.INVISIBLE);
+                        ////
+
                         muteButton.setVisibility(View.INVISIBLE);
                         unmuteButton.setVisibility(View.INVISIBLE);
                         repeatButton.setVisibility(View.INVISIBLE);

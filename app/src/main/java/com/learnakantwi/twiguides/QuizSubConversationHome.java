@@ -124,7 +124,7 @@ public class QuizSubConversationHome extends AppCompatActivity {
                         //toast.setText("Download Complete koraa");
                         //toast.show();
                         //Toast.makeText(context, "Download Complete", Toast.LENGTH_SHORT).show();
-                        Log.i("Test1","Download complete");
+                        //Log.i("Test1","Download complete");
                     }
                     else {
                        /* toast.setText("Downloading...");
@@ -539,13 +539,6 @@ public class QuizSubConversationHome extends AppCompatActivity {
     }
 
 
-
-   /* public void goToPronouns() {
-        Intent intent = new Intent(getApplicationContext(), PronounsActivity.class);
-        startActivity(intent);
-    }*/
-
-
     public void goToAll() {
         Intent intent = new Intent(getApplicationContext(), QuizAll.class);
         startActivity(intent);
@@ -566,10 +559,6 @@ public class QuizSubConversationHome extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToPleaseSubPage(){
-        Intent intent = new Intent(getApplicationContext(), PleaseSubscribePage.class);
-        startActivity(intent);
-    }
 
     public void goToCategory(String category){
         Intent intent;
@@ -640,6 +629,7 @@ public class QuizSubConversationHome extends AppCompatActivity {
         subQuizHomeConversationArrayList.add("Apologies and Regret");
         subQuizHomeConversationArrayList.add("Asking and Giving Directions");
         subQuizHomeConversationArrayList.add("At the Hospital");
+        subQuizHomeConversationArrayList.add("Love and Relationship");
 
         homeListView = findViewById(R.id.homeListView);
 
@@ -666,15 +656,8 @@ public class QuizSubConversationHome extends AppCompatActivity {
 
                 String me1 = subQuizHomeConversationArrayList.get(position);
                 goToCategory(me1);
-
-
             }
         });
-        //MobileAds.initialize(this, "ca-app-pub-6999427576830667~6251296006");
-
-        SharedPreferences subscribed = getSharedPreferences("AdsDecision", MODE_PRIVATE);
-        Sub = subscribed.getInt("Sub",0);
-        //Toast.makeText(this, "Hello: "+ Sub, Toast.LENGTH_SHORT).show();
 
 
 

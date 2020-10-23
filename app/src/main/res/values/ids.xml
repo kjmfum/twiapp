@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <resources>
+        <!--app_id-->
+        <string name="app_id" translatable="false">454021853526</string>
+        <!--package_name-->
+        <string name="package_name" translatable="false">com.learnakantwi.twiguides</string>
+        <!--leaderboard Vocabulary-->
+        <string name="leaderboard_vocabulary" translatable="false">CgkI1uK-rpsNEAIQAQ</string>
+    </resources>

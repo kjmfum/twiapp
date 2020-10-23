@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -38,6 +39,16 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.LeaderboardsClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -73,6 +84,11 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
     RecyclerView recyclerView;
     RVHomeMainAdapter rvHomeMainAdapter;
+
+    private static final int RC_UNUSED = 5001;
+    GoogleSignInOptions  signInOptions;
+    private LeaderboardsClient mLeaderboardsClient;
+    private GoogleSignInClient mGoogleSignInClient;
 
 
 
@@ -151,14 +167,6 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
         super.onOptionsItemSelected(item);
 
         switch (item.getItemId()) {
-           /*case R.id.settings:
-                Log.i("Menu Item Selected", "Settings");
-                playAll();
-                return true;
-            case R.id.alphabets:
-                Log.i("Menu Item Selected", "Alphabets");
-                return  true;*/
-
             case R.id.quiz1:
                 goToQuizAll();
                 return true;
@@ -249,11 +257,13 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
         Toast.makeText(this, "Daily Twi Alerts Turned On", Toast.LENGTH_SHORT).show();
     }
 
-    public void goToSubscriptionPage (View v){
+   /* public void goToSubscriptionPage (View v){
        // Toast.makeText(this, String.valueOf(subscriptionState), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), InAppActivity.class);
         startActivity(intent);
-    }
+    }*/
+
+
 
 
     public void buyMe() {
@@ -460,6 +470,30 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
                 return;
         }
     }
+
+     public void goToSubscriptionPage (View v){
+     // Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
+       Intent intent = new Intent(getApplicationContext(), InAppActivity.class);
+       startActivity(intent);
+    /*     mLeaderboardsClient.getAllLeaderboardsIntent()
+                 .addOnSuccessListener(new OnSuccessListener<Intent>() {
+                     @Override
+                     public void onSuccess(Intent intent) {
+                         startActivityForResult(intent, RC_UNUSED);
+                     }
+                 })
+                 .addOnFailureListener(new OnFailureListener() {
+                     @Override
+                     public void onFailure(@NonNull Exception e) {
+                         Toast.makeText(HomeMainActivity.this, "Failed with: \n"+ e, Toast.LENGTH_SHORT).show();;
+                     }
+                 });
+
+         //Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
+           //      .submitScore(getString(R.string.leaderboard_id), 1337);*/
+   }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -469,6 +503,31 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
        // Toast.makeText(this, "Testing1", Toast.LENGTH_SHORT).show();
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+
+        /////////Testing
+
+      //  Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
+        //        .submitScore(getString(R.string.leaderboard_id), 1337);
+
+        signInOptions =
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+                        .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this,
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build());
+
+
+       // signInSilently();
+      //  Games.getLeaderboardsClient(this, googleSignInAccount);
+
+       // mLeaderboardsClient = Games.getLeaderboardsClient(this, googleSignInAccount);
+       // mLeaderboardsClient = Games.getLeaderboardsClient(this, "kjmfum1@gmail.com");
+
+
+
+
+
+        /////////Testing
 
 
         try {

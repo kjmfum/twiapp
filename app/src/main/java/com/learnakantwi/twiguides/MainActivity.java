@@ -64,9 +64,9 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
 
     int SPLASH_TIME_OUT = 3000;
-    int times =0;
+    static int Subscribed;
     static int Lifetime;
-    static  int Subscribed;
+    int times = 0;
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     public void onPurchaseHistoryResponse(BillingResult billingResult, List<PurchaseHistoryRecord> list) {
 
     }
+
     void handlePurchase(Purchase purchase) {
         if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
             if (!purchase.isAcknowledged()) {
@@ -131,15 +132,15 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
             // Handle an error caused by a user cancelling the purchase flow.
             Toast.makeText(this, "You cancelled the Purchase", Toast.LENGTH_SHORT).show();
-            billingClient.endConnection();}
-        else if(billingResult.getResponseCode()== BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED){
+            billingClient.endConnection();
+        } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
             Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
             startActivity(homeIntent);
             finish();
             Toast.makeText(this, "Already Purchased", Toast.LENGTH_SHORT).show();
         } else {
             // Handle any other error codes.
-            Toast.makeText(this,"Could not complete purchase", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Could not complete purchase", Toast.LENGTH_LONG).show();
         }
 
 
@@ -155,96 +156,94 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         setUpBilling();
     }
 
-    public void setUpBilling(){
+    public void setUpBilling() {
 
         billingClient.startConnection(new BillingClientStateListener() {
             @Override
             public void onBillingSetupFinished(BillingResult billingResult) {
                 if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
 
-        List<String> skuList1 = new ArrayList<>();
+                    List<String> skuList1 = new ArrayList<>();
 
-        //skuList1.add("likoio");
-        //skuList1.add("lifetime_full_access");
-        skuList1.add("lifetime_full_access1");
-        SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
-        params.setSkusList(skuList1).setType(BillingClient.SkuType.INAPP);
-
+                    //skuList1.add("likoio");
+                    //skuList1.add("lifetime_full_access");
+                    skuList1.add("lifetime_full_access1");
+                    SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
+                    params.setSkusList(skuList1).setType(BillingClient.SkuType.INAPP);
 
 
 ////////OneTimeProducts
-            billingClient.querySkuDetailsAsync(params.build(),
-                    new SkuDetailsResponseListener() {
-                        @Override
-                        public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> skuDetailsList) {
-                            // Process the result.
-                            if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
-                                toast.setText("Already Purchased");
-                                toast.show();
+                    billingClient.querySkuDetailsAsync(params.build(),
+                            new SkuDetailsResponseListener() {
+                                @Override
+                                public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> skuDetailsList) {
+                                    // Process the result.
+                                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
+                                        toast.setText("Already Purchased");
+                                        toast.show();
 
-                            } else{
-                                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
-                                    for (SkuDetails skuDetails : skuDetailsList) {
-                                        String sku = skuDetails.getSku();
-                                        String price = skuDetails.getPrice();
-                                        //
-                                        if ("lifetime_full_access1".equals(sku)) {
-                                       //     if ("likoio".equals(sku)) {
-                                            premiumUpgradePrice = price;
-                                            Purchase.PurchasesResult purchasesResult = billingClient.queryPurchases(BillingClient.SkuType.INAPP);
-                                            List<Purchase> purchasesList = purchasesResult.getPurchasesList();
-                                            //
-                                           // Toast.makeText(MainActivity.this, "Hi2 "+ purchasesList.size(), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
+                                            for (SkuDetails skuDetails : skuDetailsList) {
+                                                String sku = skuDetails.getSku();
+                                                String price = skuDetails.getPrice();
+                                                //
+                                                if ("lifetime_full_access1".equals(sku)) {
+                                                    //     if ("likoio".equals(sku)) {
+                                                    premiumUpgradePrice = price;
+                                                    Purchase.PurchasesResult purchasesResult = billingClient.queryPurchases(BillingClient.SkuType.INAPP);
+                                                    List<Purchase> purchasesList = purchasesResult.getPurchasesList();
+                                                    //
+                                                    // Toast.makeText(MainActivity.this, "Hi2 "+ purchasesList.size(), Toast.LENGTH_SHORT).show();
 
-                                          if (purchasesList !=null && !purchasesList.isEmpty()){
-                                          // if (purchasesList !=null && purchasesList.size()>1){
-                                               //Toast.makeText(MainActivity.this, "Hi "+ sku +" "+ purchasesList.size(), Toast.LENGTH_SHORT).show();
-                                                for (Purchase purchase : purchasesList) {
-                                                    String skuName = purchase.getSku();
-                                                   // if (Lifetime == 6) {
+                                                    if (purchasesList != null && !purchasesList.isEmpty()) {
+                                                        // if (purchasesList !=null && purchasesList.size()>1){
+                                                        //Toast.makeText(MainActivity.this, "Hi "+ sku +" "+ purchasesList.size(), Toast.LENGTH_SHORT).show();
+                                                        for (Purchase purchase : purchasesList) {
+                                                            String skuName = purchase.getSku();
+                                                            // if (Lifetime == 6) {
 
-                                                       if (skuName.equals("lifetime_full_access1")) {
-                                                       //     if (skuName.equals("likoio")) {
+                                                            if (skuName.equals("lifetime_full_access1")) {
+                                                                //     if (skuName.equals("likoio")) {
 
-                                                            sharedPreferencesAds = getSharedPreferences("AdsDecision", MODE_PRIVATE);
-                                                            SharedPreferences.Editor editor = sharedPreferencesAds.edit();
-                                                            editor.putInt("Lifetime", 1);
-                                                            editor.putInt("Sub", 1);
-                                                            editor.apply();
-                                                            Lifetime = sharedPreferencesAds.getInt("Lifetime", 5);
-                                                           Subscribed = sharedPreferencesAds.getInt("Sub", 0);
+                                                                sharedPreferencesAds = getSharedPreferences("AdsDecision", MODE_PRIVATE);
+                                                                SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+                                                                editor.putInt("Lifetime", 1);
+                                                                editor.putInt("Sub", 1);
+                                                                editor.apply();
+                                                                Lifetime = sharedPreferencesAds.getInt("Lifetime", 5);
+                                                                Subscribed = sharedPreferencesAds.getInt("Sub", 0);
 
-                                                           mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Premium");
-                                                           mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Lifetime");
-                                                          // addProverbs();
-                                                            Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-                                                           //Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
-                                                            //Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
-                                                            startActivity(homeIntent);
-                                                        } else {
-                                                           Lifetime=4;
-                                                           mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Regular");
-                                                           //Toast.makeText(MainActivity.this, "I don't have access5: "+skuName, Toast.LENGTH_SHORT).show();
+                                                                mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Premium");
+                                                                mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Lifetime");
+                                                                // addProverbs();
+                                                                Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+                                                                //Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
+                                                                //Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
+                                                                startActivity(homeIntent);
+                                                            } else {
+                                                                Lifetime = 4;
+                                                                mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Regular");
+                                                                //Toast.makeText(MainActivity.this, "I don't have access5: "+skuName, Toast.LENGTH_SHORT).show();
+                                                            }
+                                                            // }
                                                         }
-                                                   // }
-                                                }
-                                                //toast.setText(Integer.toString(me3));
-                                            }/*else {
+                                                        //toast.setText(Integer.toString(me3));
+                                                    }/*else {
                                                 Toast.makeText(MainActivity.this, "Hi "+Lifetime, Toast.LENGTH_SHORT).show();
                                             }*/
 
+                                                }
+                                            }
                                         }
+
                                     }
+
                                 }
-
-                            }
-
-                        }
-                    });
+                            });
 
 
-
-        ///////
+                    ///////
 
 
    /*     billingClient.startConnection(new BillingClientStateListener() {
@@ -258,9 +257,9 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            if(!(Lifetime==1)) {
+                            if (!(Lifetime == 1)) {
 
-                               // Toast.makeText(MainActivity.this, "Inside Here 3: "+ Lifetime , Toast.LENGTH_SHORT).show();
+                                // Toast.makeText(MainActivity.this, "Inside Here 3: "+ Lifetime , Toast.LENGTH_SHORT).show();
                                 List<String> skuList = new ArrayList<>();
                                 skuList.add("reading_club");
                                 skuList.add("monthly_subscription");
@@ -291,7 +290,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                         for (SkuDetails skuDetails : skuDetailsList) {
                                                             String sku = skuDetails.getSku();
                                                             String price = skuDetails.getPrice();
-                                                            if ("year_subscription".equals(sku) ||"6months_subscription".equals(sku) ||"monthly_subscription".equals(sku) || "reading_club".equals(sku) || "premium_annually".equals(sku) || "premium_6months".equals(sku)) {
+                                                            if ("year_subscription".equals(sku) || "6months_subscription".equals(sku) || "monthly_subscription".equals(sku) || "reading_club".equals(sku) || "premium_annually".equals(sku) || "premium_6months".equals(sku)) {
                                                                 premiumUpgradePrice = price;
                                                                 Purchase.PurchasesResult purchasesResult = billingClient.queryPurchases(BillingClient.SkuType.SUBS);
                                                                 List<Purchase> purchasesList = purchasesResult.getPurchasesList();
@@ -307,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                             int me3 = purchasesList.size();*/
                                                             /*toast.setText(skuName);
                                                             toast.show();*/
-                                                                        if ("year_subscription".equals(sku) ||"6months_subscription".equals(sku) ||"monthly_subscription".equals(sku) || skuName.equals("reading_club") || skuName.equals("premium_6months") || skuName.equals("premium_annually")) {
+                                                                        if ("year_subscription".equals(sku) || "6months_subscription".equals(sku) || "monthly_subscription".equals(sku) || skuName.equals("reading_club") || skuName.equals("premium_6months") || skuName.equals("premium_annually")) {
                                                                             // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
                                                                             //Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
 
@@ -319,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                                             Subscribed = 1;  //sharedPreferencesAds.getInt("Sub", 5);
                                                                             //addProverbs();
 
-                                                                            if (User != null){
+                                                                            if (User != null) {
                                                                                 Map<String, Object> premium = new HashMap<>();
                                                                                 premium.put("premium", sku);
                                                                                 usersCollection.document(User.getEmail()).set(premium, SetOptions.merge());
@@ -336,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                                     //toast.setText(Integer.toString(me3));
                                                                 } else {
                                                                     SharedPreferences.Editor editor = sharedPreferencesAds.edit();
-                                                                    editor.putInt("Sub",0);
+                                                                    editor.putInt("Sub", 0);
                                                                     mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Regular");
                                                                     Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                                                                     // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
@@ -356,7 +355,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                             toast.show();
                                                             if (!isNetworkAvailable()) {
                                                                 SharedPreferences.Editor editor = sharedPreferencesAds.edit();
-                                                                editor.putInt("Sub",0);
+                                                                editor.putInt("Sub", 0);
                                                                 Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                                                                 startActivity(homeIntent);
                                                                 finish();
@@ -366,7 +365,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
                                                         } else {
                                                             SharedPreferences.Editor editor = sharedPreferencesAds.edit();
-                                                            editor.putInt("Sub",0);
+                                                            editor.putInt("Sub", 0);
                                                             Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                                                             startActivity(homeIntent);
                                                             finish();
@@ -384,24 +383,24 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                         });
                             }
                         }
-                    },1500);
+                    }, 1500);
                     ///In App Purchase
                 }
             }
+
             @Override
             public void onBillingServiceDisconnected() {
 
                 times++;
                 times++;
-                if (times < 2){
+                if (times < 2) {
                     toast.setText("Internet Disconnected");
                     toast.show();
 
                     setUpBillingClient();
-                }
-                else {
+                } else {
                     SharedPreferences.Editor editor = sharedPreferencesAds.edit();
-                    editor.putInt("Sub",0);
+                    editor.putInt("Sub", 0);
                     Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                     //Toast.makeText(MainActivity.this, "Disconnected O", Toast.LENGTH_SHORT).show();
                     startActivity(homeIntent);
@@ -414,15 +413,14 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // Appodeal.initialize(this, APPODEAL_KEY, Appodeal.BANNER | Appodeal.INTERSTITIAL, true);
+        // Appodeal.initialize(this, APPODEAL_KEY, Appodeal.BANNER | Appodeal.INTERSTITIAL, true);
 
-       // Appodeal.setLogLevel(Log.LogLevel.verbose);
+        // Appodeal.setLogLevel(Log.LogLevel.verbose);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
@@ -432,66 +430,66 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
         //Toast.makeText(this, "Before add: "+ proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
 
-        sharedPreferencesAds = getSharedPreferences("AdsDecision",MODE_PRIVATE);
+        sharedPreferencesAds = getSharedPreferences("AdsDecision", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferencesAds.edit();
-        editor.putInt("Ads",1);
+        editor.putInt("Ads", 1);
         //editor.putInt("Sub",0);  // not subscribed
-       // editor.putInt("Sub",1);  //subscribed
-       // editor.putInt("Lifetime",5); //not subscribed
-       // editor.putInt("Lifetime",1); //subscribed
+        // editor.putInt("Sub",1);  //subscribed
+        // editor.putInt("Lifetime",5); //not subscribed
+        // editor.putInt("Lifetime",1); //subscribed
         editor.apply();
 
-        Lifetime = sharedPreferencesAds.getInt("Lifetime",5); //runtime
+        Lifetime = sharedPreferencesAds.getInt("Lifetime", 5); //runtime
         Subscribed = sharedPreferencesAds.getInt("Sub", 0);
-       // Subscribed = 0;
-       //Lifetime = 1;  //Subscribed
-      //  Lifetime = 5;
+        // Subscribed = 0;
+        Lifetime = 1;  //Subscribed
+        //  Lifetime = 5;
 
         //Toast.makeText(this, "My: "+ Lifetime, Toast.LENGTH_SHORT).show();
 
         toast = Toast.makeText(this, "", Toast.LENGTH_LONG);
 
-       // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-       // Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
+        // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+        // Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
         //Intent homeIntent = new Intent(getApplicationContext(), QuizTimedAll.class);
         //Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
         //startActivity(homeIntent);
 
         ////////
 
-   new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (Lifetime==1){
+                if (Lifetime == 1) {
 
-                    sharedPreferencesAds = getSharedPreferences("AdsDecision",MODE_PRIVATE);
+                    sharedPreferencesAds = getSharedPreferences("AdsDecision", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferencesAds.edit();
-                    editor.putInt("Sub",1);
-                    editor.putInt("Ads",0);
+                    editor.putInt("Sub", 1);
+                    editor.putInt("Ads", 0);
                     editor.apply();
-                    Subscribed =1;
-                   // Subscribed = sharedPreferencesAds.getInt("Sub", 5);
+                    Subscribed = 1;
+                    // Subscribed = sharedPreferencesAds.getInt("Sub", 5);
 
                     //Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
-                   Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+                    Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
                     startActivity(homeIntent);
                     mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Premium");
                     mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Lifetime");
 
-                    if (User != null){
+                    if (User != null) {
                         Map<String, Object> premium = new HashMap<>();
                         premium.put("premium", "Lifetime");
                         usersCollection.document(User.getEmail()).set(premium, SetOptions.merge());
                     }
-                   // Toast.makeText(MainActivity.this, "You ", Toast.LENGTH_SHORT).show();
-                }else{
-                   // Toast.makeText(MainActivity.this, "Hi "+Lifetime, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(MainActivity.this, "You ", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Toast.makeText(MainActivity.this, "Hi "+Lifetime, Toast.LENGTH_SHORT).show();
                     setUpBillingClient();
                 }
             }
         }, SPLASH_TIME_OUT);
 
-       ///////////////////
+        ///////////////////
 
         //int sub = sharedPreferencesAds.getInt("Sub",10);
 /*if(sub!=0){
@@ -499,45 +497,43 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 }*/
 
 
-
     }
 
-   @Override
+    @Override
     protected void onResume() {
 
-   // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-   // Intent homeIntent = new Intent(getApplicationContext(), QuizTimedAll.class);
-      // Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
-       // Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
-      //  startActivity(homeIntent);
+        // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+        // Intent homeIntent = new Intent(getApplicationContext(), QuizTimedAll.class);
+        // Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
+        // Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
+        //  startActivity(homeIntent);
         super.onResume();
 
         /////////////
 
-  new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                if (Lifetime==1){
-                    sharedPreferencesAds = getSharedPreferences("AdsDecision",MODE_PRIVATE);
+                if (Lifetime == 1) {
+                    sharedPreferencesAds = getSharedPreferences("AdsDecision", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferencesAds.edit();
-                    editor.putInt("Sub",1);
-                    editor.putInt("Ads",0);
+                    editor.putInt("Sub", 1);
+                    editor.putInt("Ads", 0);
                     editor.apply();
                     Subscribed = 1;
                     //Subscribed = sharedPreferencesAds.getInt("Sub", 5);
                     //addProverbs();
                     //Toast.makeText(MainActivity.this, "Me1 Only ", Toast.LENGTH_SHORT).show();
                     Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-                   // Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
+                    // Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
                     startActivity(homeIntent);
-                }else{
-                  //  Toast.makeText(MainActivity.this, "Me1 "+Lifetime, Toast.LENGTH_SHORT).show();
+                } else {
+                    //  Toast.makeText(MainActivity.this, "Me1 "+Lifetime, Toast.LENGTH_SHORT).show();
                     setUpBillingClient();
                 }
             }
         }, SPLASH_TIME_OUT);
-
 
 
         ///////////////
@@ -546,48 +542,5 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     public void sendOnChannel1(View v) {
         String title = editTextTitle.getText().toString();
         String message = editTextMessage.getText().toString();
-
-       /* Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.ic_one)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .build();
-
-        notificationManager.notify(1, notification);
     }
-
-    public void sendOnChannel2(View v) {
-        String title = editTextTitle.getText().toString();
-        String message = editTextMessage.getText().toString();
-
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_2_ID)
-                .setSmallIcon(R.drawable.ic_two)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setPriority(NotificationCompat.PRIORITY_LOW)
-                .build();
-
-        notificationManager.notify(2, notification); */
-
-
-        /*Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, 10);
-        //calendar.set(Calendar.HOUR_OF_DAY, 9);
-        //calendar.set(Calendar.MINUTE, 45);
-
-        Intent intent = new Intent(getApplicationContext(), Notification_receiver.class);
-        //Intent intent = new Intent(getApplicationContext(), Home.class);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-
-        //PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        //alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
-
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);*/
-
-    }
-
 }

@@ -2,32 +2,49 @@ package com.learnakantwi.twiguides;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
+
+import static com.learnakantwi.twiguides.MainActivity.largeFont;
+import static com.learnakantwi.twiguides.MainActivity.longDelay;
+import static com.learnakantwi.twiguides.MainActivity.shortDelay;
+import static com.learnakantwi.twiguides.MainActivity.smallFont;
+import static com.learnakantwi.twiguides.MainActivity.textLength;
 
 public class SubConversationIntroductionActivity extends AppCompatActivity {
 
@@ -36,11 +53,41 @@ public class SubConversationIntroductionActivity extends AppCompatActivity {
     ArrayList <String> names;
 
     StorageReference storageReference;
-
     String bb;
 
     PlayFromFirebase playFromFirebaseConversation;
     Toast toast;
+
+
+    //////////
+
+    Handler handler1;
+    Runnable ranable;
+    int count= 0;
+    long delayTime=3000;
+    int showAdProbability;
+    MediaPlayer playFromDevice;
+    MediaPlayer mp1;
+    ImageButton playButton;
+    ImageButton pauseButton;
+    ImageButton nextButton;
+    ImageButton previousButton;
+    ImageButton muteButton;
+    ImageButton unmuteButton;
+    ImageButton repeatButton;
+    ImageButton repeatOne;
+    Boolean slideshowBool = false;
+    Boolean unMuted = true;
+    Boolean repeat = false;
+    Boolean repeat1 = false;
+    Button btSlideText;
+    TextView tvStartSlideShow;
+    TextView tvHeader;
+    Button btStartSlideShow;
+    TextView tvNumberWord;
+    RecyclerView familyRecyclerView;
+
+    ////
 
 
     private boolean isNetworkAvailable() {
@@ -244,6 +291,270 @@ public class SubConversationIntroductionActivity extends AppCompatActivity {
         }
     }
 
+    /////
+
+    public void playFromFirebase(StorageReference musicRef) {
+
+        if (Build.VERSION.SDK_INT > 22) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+        if (isNetworkAvailable()) {
+
+            try {
+                final File localFile = File.createTempFile("aduonu", "m4a");
+
+                if (localFile != null) {
+                    musicRef.getFile(localFile)
+                            .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                                    if (mp1 != null) {
+                                        mp1.stop();
+                                        mp1.reset();
+                                        mp1.release();
+                                    }
+                                    mp1 = new MediaPlayer();
+                                    try {
+                                        mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
+                                        mp1.prepareAsync();
+                                        mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                            @Override
+                                            public void onPrepared(MediaPlayer mp) {
+                                                mp.start();
+                                            }
+                                        });
+                                    } catch (IOException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle failed download
+                            // ...
+                        }
+                    });
+                } else {
+                    toast.setText("Unable to download now. Please try later");
+                    toast.show();
+                }
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        else {
+            toast.setText("Please Connect to the Internet");
+            toast.show();
+        }
+
+    }
+
+    public void playFromFileOrDownload(final String filename){
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/SUBCONVERSATION/"+filename+ ".m4a");
+        if (myFile.exists()){
+
+            try {
+                if (playFromDevice != null){
+                    playFromDevice.stop();
+                    playFromDevice.reset();
+                    playFromDevice.release();
+                }
+                playFromDevice = new MediaPlayer();
+
+                playFromDevice.setDataSource(myFile.toString());
+                playFromDevice.prepareAsync();
+                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.start();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+
+            if (isNetworkAvailable()){
+                final StorageReference musicRef = storageReference.child("/Conversations/" + filename + ".m4a");
+                musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String url = uri.toString();
+                        playFromFirebase(musicRef);
+                        downloadFile(getApplicationContext(), filename, ".m4a", url);
+                        //Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else {
+                toast.setText("Please connect to Internet to download audio");
+                toast.show();
+            }
+
+
+        }
+    }
+
+
+    public void slideshow() {
+
+        slideshowBool = true;
+
+        count = 0;
+        handler1.postDelayed(ranable, 2);
+    }
+
+    public void slideshow(View v) {
+
+        playButton.setVisibility(View.INVISIBLE);
+        pauseButton.setVisibility(View.VISIBLE);
+
+        handler1.postDelayed(ranable, 2);
+
+        slideshowBool = true;
+    }
+
+    public void pauseSlideshow(View view) {
+
+        if (!repeat1){
+            count--;
+        }
+
+        pauseButton.setVisibility(View.INVISIBLE);
+        pauseButton.setVisibility(View.INVISIBLE);
+        playButton.setVisibility(View.VISIBLE);
+
+        toast.setText("Paused");
+        toast.show();
+
+        //slideshowBool = false;
+
+        if (handler1 !=null){
+            handler1.removeCallbacks(ranable);
+        }
+        if (playFromDevice!=null){
+            playFromDevice.stop();
+        }
+    }
+    public void pauseSlideshow() {
+
+        pauseButton.setVisibility(View.INVISIBLE);
+        pauseButton.setVisibility(View.INVISIBLE);
+        playButton.setVisibility(View.VISIBLE);
+
+
+        //slideshowBool = false;
+
+        if (handler1 !=null){
+            handler1.removeCallbacks(ranable);
+        }
+        if (playFromDevice!=null){
+            playFromDevice.stop();
+        }
+
+
+
+        //proverbsViewFlipper.getChildCount();
+    }
+
+    public void previous (View view){
+        pauseSlideshow();
+
+        Log.i("Mee1","Hi b4"+ count);
+        // count = count-1;
+        if (!slideshowBool){
+            if (count!=0){
+                count--;
+            }
+        }
+        else{
+            if (count>=2){
+                count= count-2;
+            }
+            slideshowBool = false;
+        }
+
+        String c = conversationArrayList.get(count).getTwiConversation();
+        String a = conversationArrayList.get(count).getEnglishConversation();
+
+        btSlideText.setText(c);
+        tvNumberWord.setText(a);
+
+
+        String b = PlayFromFirebase.viewTextConvert(c);
+
+        if(b.length()>textLength){
+            btSlideText.setTextSize(smallFont);
+
+        }else{
+            btSlideText.setTextSize(largeFont);
+        }
+
+        if (unMuted){
+            playFromFileOrDownload(b);
+        }
+        else{
+            toast.setText("Sound Muted");
+            toast.show();
+        }
+
+       /* if (unMuted){
+            playFromFileOrDownload(b, a);
+        }*/
+
+    }
+
+    public void next(View view){
+        pauseSlideshow();
+        if (!slideshowBool){
+            count++;
+        }
+        else{
+            slideshowBool = false;
+        }
+        if (count>=conversationArrayList.size()-1){
+            count = conversationArrayList.size()-1;
+            toast.setText("The End");
+            toast.show();
+
+        }
+        String c = conversationArrayList.get(count).getTwiConversation();
+        String a = conversationArrayList.get(count).getEnglishConversation();
+
+        btSlideText.setText(c);
+        tvNumberWord.setText(a);
+
+        String b = PlayFromFirebase.viewTextConvert(c);
+
+        if(b.length()>textLength){
+            btSlideText.setTextSize(smallFont);
+
+        }else{
+            btSlideText.setTextSize(largeFont);
+        }
+        if (unMuted){
+            playFromFileOrDownload(b);
+        }
+        else{
+            toast.setText("Sound Muted");
+            toast.show();
+        }
+
+
+    }
+    /////
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -252,85 +563,339 @@ public class SubConversationIntroductionActivity extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
+        listView = findViewById(R.id.lvConversation);
+
         playFromFirebaseConversation = new PlayFromFirebase();
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
        // deleteDuplicatelDownload();
 
-       // conversationArrayList = new ArrayList<>();
 
-        //myself
-       /* conversationArrayList.add(new subConversation("Wo din de sɛn?", "What is your name?") );
-        conversationArrayList.add(new subConversation("My name is Michael Kwaku Asante and all is care about is that I don't ever want to see you in my life. Take note it is not because I hate you but I love you and want us to be friends forever but I just cant stand what you are doing to me right now", "My name is Michael Kwaku Asante and all is care about is that I don't ever want to see you in my life. Take note it is not because I hate you but I love you and want us to be friends forever but I just cant stand what you are doing to me right now.") );
-        conversationArrayList.add(new subConversation("Me din de Michael Kwaku Asante", "My name is Michael Kwaku Asante") );
-        conversationArrayList.add(new subConversation("Wubetumi afrɛ me Kwaku", "You can call me Kwaku") );
-        conversationArrayList.add(new subConversation("Wo nso ɛ?", "What about you?") );
-        conversationArrayList.add(new subConversation("Wo din de sɛn?", "What is your name?") );
-        conversationArrayList.add(new subConversation("Yɛfrɛ wo sɛn", "How are you called? (Lit.: How do they call you") );
-        conversationArrayList.add(new subConversation("Me fi Abuakwa", "I come from Abuakwa. (\"Come from\" as used here means my hometown)") );
-        conversationArrayList.add(new subConversation("Wufi kurow bɛn so?", "What is your hometown? (Lit.: Which town do you come from)") );
-        conversationArrayList.add(new subConversation("Me te Achimota", "I live at Achimota") );
-        conversationArrayList.add(new subConversation("Wote he?", "Where do you live?") );
-        conversationArrayList.add(new subConversation("Me kɔɔ ntoaso sukuu wɔ Achimota", "I attended Secondary School at Achimota") );
-        conversationArrayList.add(new subConversation("Wokɔɔ ntoaso sukuu wɔ he?", "Where did you attend Secondary School?") );
+        /////
 
-        conversationArrayList.add(new subConversation("Me kɔ sukuu wɔ Legon Sukuupɔn mu", "I school at Legon University") );
-        conversationArrayList.add(new subConversation("Wo kɔ sukuu wɔ he?", "Where do you attend school?") );
-        conversationArrayList.add(new subConversation("Megyina gyinapɛn num", "I am in class five") );
+        if(1<5) {
+            btSlideText = findViewById(R.id.btSlideText);
+            tvStartSlideShow = findViewById(R.id.tvStartSlideshow);
+            btStartSlideShow = findViewById(R.id.btStartSlideShow);
+            familyRecyclerView = findViewById(R.id.familyRecyclerView);
+            tvHeader = findViewById(R.id.tvHeader);
 
-        conversationArrayList.add(new subConversation("Madi mfe aduonu", "I am twenty years old") );
-
-        conversationArrayList.add(new subConversation("Meyɛ tikyani", "I am a teacher") );
-        conversationArrayList.add(new subConversation("Woyɛ adwuma bɛn?", "What's your occupation (Lit.: What work do you do?)") );
-        conversationArrayList.add(new subConversation("Meyɛ okuani", "I am a farmer") );
-        conversationArrayList.add(new subConversation("Meyɛ adwuma wɔ Ghana Education Service", "I work at Ghana Education Service") );
+            tvNumberWord = findViewById(R.id.tvNumberWord);
+            pauseButton = findViewById(R.id.pauseButton);
+            playButton = findViewById(R.id.playButton);
+            nextButton = findViewById(R.id.nextButton);
+            previousButton = findViewById(R.id.previousButton);
+            muteButton = findViewById(R.id.ivMuteButton);
+            unmuteButton = findViewById(R.id.ivUnMuteButton);
+            repeatButton = findViewById(R.id.repeatButton);
+            repeatOne = findViewById(R.id.repeatOne);
 
 
-        conversationArrayList.add(new subConversation("Agorɔ a mepɛ paa ne \"basketball\" ", "My favorite game is basketball") );
-        conversationArrayList.add(new subConversation("Agorɔ bɛn na w'ani gye ho pa ara?", "What game do you like most?") );
-        conversationArrayList.add(new subConversation("M'ani gye nnwom ho pa are", "I like music very much") );
-        conversationArrayList.add(new subConversation("M'ani gye akenkan ho", "I like reading") );
-        conversationArrayList.add(new subConversation("W'ani gye akenkan ho?", "Do you like reading?") );
-        conversationArrayList.add(new subConversation("M'ani nnye akenkan ho", "I do not like reading") );
-        conversationArrayList.add(new subConversation("M'ani gye sini ho?", "I like movies") );
-        conversationArrayList.add(new subConversation("M'ani gye sinihwɛ ho pa ara", "I like watching movies very much") );
-        conversationArrayList.add(new subConversation("Mempɛ sinihwɛ", "I don't like watching movies") );
-        conversationArrayList.add(new subConversation("Ade a mempɛ koraa ne ntɔkwa", "What I don't like at all is fighting") );
+            handler1 = new Handler();
+            Handler handler2 = new Handler();
+
+            ranable = new Runnable() {
+                @Override
+                public void run() {
+                    // String a = recycleArrayList.get(count).getTwiProverb();
+                    if (repeat1) {
+
+                            String a = conversationArrayList.get(count).getTwiConversation();
+                            String c = conversationArrayList.get(count).getEnglishConversation();
 
 
+                        btSlideText.setText(a);
+                        tvNumberWord.setText(c);
+
+                        String b = PlayFromFirebase.viewTextConvert(a);
+
+                        if (unMuted) {
+                            playFromFileOrDownload(b);
+                        }
+
+                        if (b.length() > textLength) {
+                            btSlideText.setTextSize(smallFont);
+
+                            delayTime = longDelay;
+                        } else {
+                            delayTime = shortDelay;
+                            btSlideText.setTextSize(largeFont);
+                        }
+
+                        handler1.postDelayed(ranable, delayTime);
+                    } else {
+                        if (count <= conversationArrayList.size() - 1) {
+                            String a = conversationArrayList.get(count).getTwiConversation();
+                            String c = conversationArrayList.get(count).getEnglishConversation();
+
+                            btSlideText.setText(a);
+                            tvNumberWord.setText(c);
+
+                            String b = PlayFromFirebase.viewTextConvert(a);
+
+                            if (unMuted) {
+                                playFromFileOrDownload(b);
+                            }
+
+                            if (b.length() > textLength) {
+                                btSlideText.setTextSize(smallFont);
+                                delayTime = longDelay;
+                            } else {
+                                delayTime = shortDelay;
+                                btSlideText.setTextSize(largeFont);
+                            }
+                            //  Log.i("Mee1","Hi1 "+ count);
+                            count++;
 
 
+                            handler1.postDelayed(ranable, delayTime);
+                        } else if (repeat) {
+                            count = 0;
+                            //repeat=false;
 
-        conversationArrayList.add(new subConversation("Aduane a m'ani gye ho pa ara ne fufuo ne nkate nkwan", "My favorite food is fufuo and groundnut soup") );
-        conversationArrayList.add(new subConversation("Aduane a mepɛ pa ara ne banku", "The food I like most is banku") );
-        conversationArrayList.add(new subConversation("Wopɛ fufuo?", "Do you like fufuo?") );
-        conversationArrayList.add(new subConversation("Fufuo nyɛ me dɛ", "Fufu does't taste sweet to me") );
-        conversationArrayList.add(new subConversation("Mempɛ fufuo", "I don't like fufuo") );
-        conversationArrayList.add(new subConversation("Mepɛ fufuo", "I like fufuo") );
-        conversationArrayList.add(new subConversation("Nkate nkwan yɛ dɛ", "Groundnut soup is sweet") );
-*/
+                            handler1.postDelayed(ranable, 1000);
+                        } else {
+                            listView.setVisibility(View.VISIBLE);
+                            tvStartSlideShow.setVisibility(View.INVISIBLE);
+                            btStartSlideShow.setVisibility(View.VISIBLE);
+                            tvHeader.setVisibility(View.VISIBLE);
 
-        //family
-       /* conversationArrayList.add(new subConversation("Wo aware anaa?", "Are you married?") );
-        conversationArrayList.add(new subConversation("Menwaree", "I am not married") );
-        conversationArrayList.add(new subConversation("Maware", "I am married") );
-        conversationArrayList.add(new subConversation("Me yɛ sigyani", "I am single") );
-        conversationArrayList.add(new subConversation("Meyɛ ɔbaa warefo", "I am a married woman") );
-        conversationArrayList.add(new subConversation("Me yɛ ɔbarima warefo", "I am a married man") );
-        conversationArrayList.add(new subConversation("Me kunu din de Kwame", "My husband's name is Kwame") );
-        conversationArrayList.add(new subConversation("Yɛfrɛ me kunu Kwame", "My husband is called Kwame") );
-        conversationArrayList.add(new subConversation("Me yere din de Abena", "My wife's name is Abena") );
-        conversationArrayList.add(new subConversation("Yɛfrɛ me yere Abena", "My wife is called Abena") );
-        conversationArrayList.add(new subConversation("Medɔ me yere ", "I love my wife") );
-        conversationArrayList.add(new subConversation("Me yere ho yɛ fɛ", "My wife is beautiful") );
-        conversationArrayList.add(new subConversation("Medɔ me kunu", "I love my husband") );*/
+                            tvStartSlideShow.setText("End Slideshow");
+                            tvNumberWord.setVisibility(View.INVISIBLE);
+                            btSlideText.setVisibility(View.INVISIBLE);
+                            playButton.setVisibility(View.INVISIBLE);
+                            repeatButton.setVisibility(View.INVISIBLE);
+                            repeatButton.setBackgroundColor(Color.WHITE);
+                            repeatOne.setVisibility(View.INVISIBLE);
+                            repeatOne.setBackgroundColor(Color.WHITE);
+                            pauseButton.setVisibility(View.INVISIBLE);
+                            nextButton.setVisibility(View.INVISIBLE);
+                            previousButton.setVisibility(View.INVISIBLE);
+
+                            muteButton.setVisibility(View.INVISIBLE);
+                            unmuteButton.setVisibility(View.INVISIBLE);
+                            repeatButton.setVisibility(View.INVISIBLE);
+                            repeatOne.setVisibility(View.INVISIBLE);
+
+                        }
+                    }
 
 
-      /*  names = new ArrayList<>();
-        names.add("Justice");
-        names.add("Abena");*/
+                }
+            };
 
-        listView = findViewById(R.id.lvConversation);
+            muteButton.setVisibility(View.INVISIBLE);
+            unmuteButton.setVisibility(View.INVISIBLE);
+
+            playButton.setVisibility(View.INVISIBLE);
+            tvStartSlideShow.setVisibility(View.INVISIBLE);
+            familyRecyclerView.setVisibility(View.INVISIBLE);
+
+
+            repeatButton.setVisibility(View.INVISIBLE);
+            repeatOne.setVisibility(View.INVISIBLE);
+            pauseButton.setVisibility(View.INVISIBLE);
+            nextButton.setVisibility(View.INVISIBLE);
+            previousButton.setVisibility(View.INVISIBLE);
+
+            tvNumberWord.setVisibility(View.INVISIBLE);
+            btSlideText.setVisibility(View.INVISIBLE);
+
+
+            repeatButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (MainActivity.Subscribed != 1) {
+                        //Toast.makeText(SubPFamilyActivity.this, "Repeat All Feature \n Only For Premium Users", Toast.LENGTH_SHORT).show();
+                        toast.setText("Repeat All Feature \n Only For Premium Users");
+                        toast.show();
+                    } else {
+                        repeat = !repeat;
+                        if (repeat) {
+                            repeatButton.setBackgroundColor(Color.GREEN);
+                            repeatOne.setBackgroundColor(Color.WHITE);
+                            repeat1 = false;
+                            toast.setText("REPEAT ALL\n ACTIVATED");
+                            toast.show();
+                        } else {
+                            repeatButton.setBackgroundColor(Color.WHITE);
+                            toast.setText("REPEAT ALL\n DEACTIVATED");
+                            toast.show();
+                        }
+                    }
+                }
+            });
+
+            repeatOne.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (MainActivity.Subscribed != 1) {
+                        toast.setText("Repeat One Feature \n Only For Premium Users");
+                        toast.show();
+                        //Toast.makeText(SubPFamilyActivity.this, "Repeat All Feature \n Only For Premium Users", Toast.LENGTH_SHORT).show();
+                    } else {
+                        repeat1 = !repeat1;
+                        if (repeat1) {
+                            repeat = false;
+                            repeatOne.setBackgroundColor(Color.GREEN);
+                            repeatButton.setBackgroundColor(Color.WHITE);
+                            toast.setText("REPEAT SELECTED\n ACTIVATED");
+                            toast.show();
+                        } else {
+                            repeatOne.setBackgroundColor(Color.WHITE);
+                            toast.setText("REPEAT SELECTED\n DEACTIVATED");
+                            toast.show();
+                        }
+                    }
+                }
+            });
+
+            playButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    slideshow(v);
+                }
+            });
+
+            pauseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pauseSlideshow(v);
+                }
+            });
+
+            nextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (count <= conversationArrayList.size()) {
+                        next(v);
+                    }
+
+                }
+            });
+
+            previousButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    previous(v);
+                }
+            });
+
+            unmuteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    unMuted = true;
+                    toast.setText("Sound Unmuted");
+                    toast.show();
+                    muteButton.setVisibility(View.VISIBLE);
+                    unmuteButton.setVisibility(View.INVISIBLE);
+                }
+            });
+
+            muteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    unMuted = false;
+                    toast.setText("Sound Muted");
+                    toast.show();
+                    //Toast.makeText(SubPFamilyActivity.this, "Sound Muted", Toast.LENGTH_SHORT).show();
+                    unmuteButton.setVisibility(View.VISIBLE);
+                    muteButton.setVisibility(View.INVISIBLE);
+                }
+            });
+
+            btSlideText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // foodListView.setVisibility(View.INVISIBLE);
+                    //slideshow();
+                    String c = btSlideText.getText().toString();
+                    toast.setText(c);
+                    toast.show();
+
+                }
+            });
+
+
+            tvStartSlideShow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (handler1 != null) {
+                        handler1.removeCallbacks(ranable);
+                    }
+                    if (playFromDevice != null) {
+                        playFromDevice.stop();
+                    }
+
+
+                    listView.setVisibility(View.VISIBLE);
+                    tvStartSlideShow.setVisibility(View.INVISIBLE);
+                    btStartSlideShow.setVisibility(View.VISIBLE);
+                    tvHeader.setVisibility(View.VISIBLE);
+
+                    tvStartSlideShow.setText("End Slideshow");
+                    tvNumberWord.setVisibility(View.INVISIBLE);
+                    btSlideText.setVisibility(View.INVISIBLE);
+                    playButton.setVisibility(View.INVISIBLE);
+                    repeatButton.setVisibility(View.INVISIBLE);
+                    repeatButton.setBackgroundColor(Color.WHITE);
+                    repeatOne.setVisibility(View.INVISIBLE);
+                    repeatOne.setBackgroundColor(Color.WHITE);
+                    pauseButton.setVisibility(View.INVISIBLE);
+                    nextButton.setVisibility(View.INVISIBLE);
+                    previousButton.setVisibility(View.INVISIBLE);
+
+                    muteButton.setVisibility(View.INVISIBLE);
+                    unmuteButton.setVisibility(View.INVISIBLE);
+                    repeatButton.setVisibility(View.INVISIBLE);
+                    repeatOne.setVisibility(View.INVISIBLE);
+                }
+            });
+
+            btStartSlideShow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listView.setVisibility(View.INVISIBLE);
+                    btStartSlideShow.setVisibility(View.INVISIBLE);
+                    tvStartSlideShow.setVisibility(View.VISIBLE);
+                    tvStartSlideShow.setText("End Slideshow");
+                    tvHeader.setVisibility(View.INVISIBLE);
+
+                    tvNumberWord.setVisibility(View.VISIBLE);
+                    btSlideText.setVisibility(View.VISIBLE);
+                    playButton.setVisibility(View.VISIBLE);
+                    repeatButton.setVisibility(View.VISIBLE);
+                    repeatButton.setBackgroundColor(Color.WHITE);
+                    repeatOne.setVisibility(View.VISIBLE);
+                    repeatOne.setBackgroundColor(Color.WHITE);
+                    pauseButton.setVisibility(View.VISIBLE);
+                    nextButton.setVisibility(View.VISIBLE);
+                    previousButton.setVisibility(View.VISIBLE);
+
+
+                    if (unMuted){
+                        muteButton.setVisibility(View.VISIBLE);
+                        unmuteButton.setVisibility(View.INVISIBLE);
+                    }else{
+                        muteButton.setVisibility(View.INVISIBLE);
+                        unmuteButton.setVisibility(View.VISIBLE);
+                        Toast.makeText(SubConversationIntroductionActivity.this, "Sound Muted", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                    slideshow();
+                }
+            });
+
+
+        }
+
+
+        /////
+
+
 
        // ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,names);
 
@@ -351,4 +916,39 @@ public class SubConversationIntroductionActivity extends AppCompatActivity {
         //listView.setAdapter(arrayAdapter);
 
     }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (handler1 !=null){
+            handler1.removeCallbacks(ranable);
+        }
+        if (playFromDevice!=null){
+            playFromDevice.stop();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (handler1 !=null){
+            handler1.removeCallbacks(ranable);
+        }
+        if (playFromDevice!=null){
+            playFromDevice.stop();
+        }
+
+        Random random = new Random();
+        int prob = random.nextInt(10);
+
+        if (MainActivity.Subscribed != 1) {
+
+            if (prob < 7) {
+                Log.i("advert", "came");
+                //advert1();
+                // advert1();
+            }
+        }
+    }
+
 }

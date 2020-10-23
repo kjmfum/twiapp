@@ -37,6 +37,10 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -596,6 +600,42 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         }
     }
 
+    private void signInSilently() {
+        GoogleSignInOptions signInOptions = GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN;
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if (GoogleSignIn.hasPermissions(account, signInOptions.getScopeArray())) {
+            // Already signed in.
+            // The signed in account is stored in the 'account' variable.
+            Toast.makeText(this, "Already signed in.", Toast.LENGTH_SHORT).show();
+            GoogleSignInAccount signedInAccount = account;
+        } else {
+            // Haven't been signed-in before. Try the silent sign-in first.
+            GoogleSignInClient signInClient = GoogleSignIn.getClient(this, signInOptions);
+            signInClient
+                    .silentSignIn()
+                    .addOnCompleteListener(
+                            this,
+                            new OnCompleteListener<GoogleSignInAccount>() {
+                                @Override
+                                public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
+                                    if (task.isSuccessful()) {
+                                        // The signed in account is stored in the task's result.
+                                        toast.setText("Already stored");
+                                        toast.show();
+                                        GoogleSignInAccount signedInAccount = task.getResult();
+                                    } else {
+                                        toast.setText("Sign in Again");
+                                        toast.show();
+                                        // Player will need to sign-in explicitly using via UI.
+                                        // See [sign-in best practices](http://developers.google.com/games/services/checklist) for guidance on how and when to implement Interactive Sign-in,
+                                        // and [Performing Interactive Sign-in](http://developers.google.com/games/services/android/signin#performing_interactive_sign-in) for details on how to implement
+                                        // Interactive Sign-in.
+                                    }
+                                }
+                            });
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -759,6 +799,9 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
                 }
             }
         });*/
+
+       signInSilently();
+
 
         childrenAnimalsArrayList = new ArrayList<>();
         if(5>2) {
@@ -983,6 +1026,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
 
         }
 
+        //Hospital
         conversationHospital = new ArrayList<>();
         if (5>2){
            // conversationHospital.add(new subConversation("", ""));
@@ -1031,6 +1075,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
 
         }
 
+        //Phone
         conversationPhone = new ArrayList<>();
         if (5>2){
             // conversationPhone.add(new subConversation("", ""));

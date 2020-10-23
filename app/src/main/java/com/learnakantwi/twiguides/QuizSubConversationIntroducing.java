@@ -45,6 +45,7 @@ import static com.learnakantwi.twiguides.SubConversationDirections.conversationD
 import static com.learnakantwi.twiguides.SubConversationHospital.conversationHospital;
 import static com.learnakantwi.twiguides.SubConversationIntroductionActivity.conversationArrayList;
 import static com.learnakantwi.twiguides.SubConversationPhone.conversationPhone;
+import static com.learnakantwi.twiguides.SubConversationLove.conversationLove;
 import static com.learnakantwi.twiguides.SubConversationWelcomingOthers.conversationWelcomingOthersArrayList;
 
 public class QuizSubConversationIntroducing extends AppCompatActivity {
@@ -101,6 +102,7 @@ public class QuizSubConversationIntroducing extends AppCompatActivity {
 
     Toast toast;
 
+    PlayFromFirebase convertAndPlay;
 
 
 
@@ -283,8 +285,22 @@ public class QuizSubConversationIntroducing extends AppCompatActivity {
     }
 
     public void playFromFileOrDownload(final String filename, final String appearText) {
-        canPlay = false;
+        //canPlay = false;
+        counter++;
+
+        String counterSet = counter +" / " + totalQuestions;
+        counterText.setText(counterSet );
+
+
         if(appearText.equals(twi1)){
+
+
+            if (muteNumber == 0){
+                delaytime = 1000;
+
+            }else {
+                delaytime = 5000;
+            }
 
             questionText.setBackgroundColor(Color.GREEN);
 
@@ -296,11 +312,13 @@ public class QuizSubConversationIntroducing extends AppCompatActivity {
                     canPlay = true;
 
                 }
-
-            },4700);
+//4700
+            },delaytime);
 
         }
         else{
+            delaytime = 600;
+
             ColorStateList colorStateList = questionText.getTextColors();
             questionText.setTextColor(Color.WHITE);
             questionText.setBackgroundColor(Color.RED);
@@ -312,23 +330,23 @@ public class QuizSubConversationIntroducing extends AppCompatActivity {
                     questionText.setTextColor(colorStateList);
                     canPlay = true;
                 }
-            },600);
+                //600
+            },delaytime);
         }
 
-        if (counter<totalQuestions && appearText.equals(twi1)) {
+        if (counter<=totalQuestions && appearText.equals(twi1)) {
             toast.setText(appearText + " -" + " " + "CORRECT!!!!");
             toast.show();
             score++;
             scoreText.setText(String.valueOf(score));
-
         }
 
         if (counter == totalQuestions) {
 
-            toast.setText(appearText + " -" + " " + "CORRECT!!!!");
+           /* toast.setText(appearText + " -" + " " + "CORRECT!!!!");
             toast.show();
             score++;
-            scoreText.setText(String.valueOf(score));
+            scoreText.setText(String.valueOf(score));*/
 
             btStartPlayAgain.setVisibility(View.VISIBLE);
             btStartPlayAgain.setText(getString(R.string.playagain));
@@ -412,6 +430,13 @@ public class QuizSubConversationIntroducing extends AppCompatActivity {
                             }
                         }
                     });
+              /*      playFromDevice.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mediaPlayer) {
+                            toast.setText("Completed Playing: " + "CORRECT!!!!");
+                            toast.show();
+                        }
+                    });*/
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -455,7 +480,10 @@ public class QuizSubConversationIntroducing extends AppCompatActivity {
                     toast.setText(appearText + " -" + " " + "CORRECT!!!!");
                     toast.show();
                    // generateQuestion();
-                    handler1.postDelayed(ranable,1000);
+                    if (muteNumber == 0){
+                        delaytime = 1000;
+                    }
+                    handler1.postDelayed(ranable,delaytime);
                 } else {
                     toast.setText(appearText + " -" + " " + "WRONG \n   \t\t\tTRY AGAIN");
                     toast.show();
@@ -503,52 +531,31 @@ public class QuizSubConversationIntroducing extends AppCompatActivity {
         TextView blabla = view.findViewById(idview);
         String a = (String) blabla.getText();
 
+//        Toast.makeText(this, "Yes o", Toast.LENGTH_SHORT).show();
+
 
         correctWrong.setText(getString(R.string.correctanswers));
-        counter++;
-        String counterSet = counter +" / " + totalQuestions;
-        counterText.setText(counterSet );
+
+
 
         // scoreText.setText(String.valueOf(score));
 
-
-        String b = a.toLowerCase();
-
-        boolean d = b.contains("ɔ");
-        boolean e = b.contains("ɛ");
-
-        if (d || e ){
-            b= b.replace("ɔ","x");
-            b= b.replace("ɛ","q");
-        }
-
-
-        if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") | b.contains("?")) {
-            b = b.replace(" ", "");
-            b = b.replace("/", "");
-            b= b.replace(",","");
-            b= b.replace("(","");
-            b= b.replace(")","");
-            b= b.replace("-","");
-            b= b.replace("?","");
-        }
+        String b = PlayFromFirebase.viewTextConvert(a);
 
 
         if (canPlay){
+            canPlay = false;
+          /*  if(!canPlay){
+
+                counter++;
+            }*/
             playFromFileOrDownload(b,a);
+
         }
 
 
     }
 
-   /* public void hideStartButton(View v){
-        button5.setVisibility(View.INVISIBLE);
-        scoreText.setText("");
-        counterText.setText("");
-        resetQuiz();
-        generateQuestion();
-
-    }*/
 
 
     public void generateQuestion(){
@@ -699,6 +706,9 @@ public class QuizSubConversationIntroducing extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_sub_conversation);
 
+
+        convertAndPlay = new PlayFromFirebase();
+
         muteNumber=1;
         answersList = new ArrayList<>();
         possibleAnswersList = new ArrayList<>();
@@ -726,13 +736,13 @@ public class QuizSubConversationIntroducing extends AppCompatActivity {
                 chosenSize = conversationHospital.size()-1;
                 arrayList = conversationHospital;
                 break;
+            case "Love and Relationship":
+                chosenSize = conversationLove.size()-1;
+                arrayList = conversationLove;
+                break;
             default: chosenSize = conversationArrayList.size()-1;
                 arrayList = conversationArrayList;
         }
-
-
-
-
 
         handler1 = new Handler();
 
@@ -752,11 +762,7 @@ public class QuizSubConversationIntroducing extends AppCompatActivity {
         possibleA2 = findViewById(R.id.tvPossibleA2);
         possibleA3 = findViewById(R.id.tvPossibleA3);
 
-
-
-
         storageReference = FirebaseStorage.getInstance().getReference();
-
 
        // button5 = findViewById(R.id.playAgain);
         correctWrong = findViewById(R.id.tvCorrectWrongText);

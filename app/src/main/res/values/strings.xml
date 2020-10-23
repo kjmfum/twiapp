@@ -1,5 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+
+    <string name="leaderboard_id">CgkI1uK-rpsNEAIQAQ</string>
+
     <string name="udemy_course">https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F</string>
     <string name="AdUnitIDInterstitial">ca-app-pub-7384642419407303/9880404420</string>
     <string name="AdUnitTestIDInterstitial">ca-app-pub-3940256099942544/1033173712</string>
