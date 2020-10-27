@@ -217,7 +217,7 @@ public class AppStartClass extends Application {
 
         ///ChildrenAnimalFew
         childrenAnimalsArrayListFew = new ArrayList<>();
-        if (5>2) {
+        if (5 > 2) {
             childrenAnimalsArrayListFew.add(new Animals("Bee", "Wowa"));
             childrenAnimalsArrayListFew.add(new Animals("Cat", "Ɔkra"));
             childrenAnimalsArrayListFew.add(new Animals("Cattle", "Nantwie"));
@@ -238,7 +238,7 @@ public class AppStartClass extends Application {
         //ChildrenArray
 
         childrenArray = new ArrayList<>();
-        if (5>2) {
+        if (5 > 2) {
             childrenArray.add(new Children("1"));
             childrenArray.add(new Children("0"));
             childrenArray.add(new Children("2"));
@@ -264,10 +264,10 @@ public class AppStartClass extends Application {
         }
 
 
-//BUSINESS ARRAY
+        //BUSINESS ARRAY
 
         businessArrayList = new ArrayList<>();
-        if (5>2) {
+        {
             businessArrayList.add(new Business("Money", "Sika"));
             businessArrayList.add(new Business("I don't have money", "Menni sika"));
             businessArrayList.add(new Business("I have money", "Mewɔ sika"));
@@ -338,11 +338,11 @@ public class AppStartClass extends Application {
             businessArrayList.add(new Business("I have made a loss", "Mabɔ ka"));
             businessArrayList.add(new Business("I will make a loss", "Mɛbɔ ka"));
         }
+
+
         // DAYS OF WEEK ARRAY
-
-
         daysOfWeeksArray = new ArrayList<>();
-        if (5>2) {
+        {
             daysOfWeeksArray.add(new DaysOfWeek("Monday", "Dwoada"));
             daysOfWeeksArray.add(new DaysOfWeek("Tuesday", "Benada"));
             daysOfWeeksArray.add(new DaysOfWeek("Wednesday", "Wukuada"));
@@ -357,9 +357,8 @@ public class AppStartClass extends Application {
         }
 
         // ANIMALS ARRAY
-
         animalsArrayList = new ArrayList<>();
-        if (5>2) {
+        {
             animalsArrayList.add(new Animals("Bull", "Nantwinini"));
             animalsArrayList.add(new Animals("Animal", "Aboa"));
             animalsArrayList.add(new Animals("Animals", "Mmoa"));
@@ -461,9 +460,9 @@ public class AppStartClass extends Application {
             animalsArrayList.add(new Animals("It is a lion", "Ɛyɛ gyata"));
         }
 
-// Alphabet Array
+        // Alphabet Array
         alphabetArray = new ArrayList<>();
-        if (5>2) {
+        {
             alphabetArray.add(new Alphabets("Aa", "A", "a"));
             alphabetArray.add(new Alphabets("Bb", "B", "b"));
             alphabetArray.add(new Alphabets("Dd", "D", "d"));
@@ -488,10 +487,9 @@ public class AppStartClass extends Application {
             alphabetArray.add(new Alphabets("Yy", "Y", "y"));
         }
 
-// Body Parts Array
-
+        // Body Parts Array
         bodypartsArrayList = new ArrayList<>();
-        if (5>2) {
+        {
 
             bodypartsArrayList.add(new Bodyparts("Hand", "Nsa"));
             bodypartsArrayList.add(new Bodyparts("Finger", "Nsateaa"));
@@ -580,9 +578,8 @@ public class AppStartClass extends Application {
         }
 
         //ColoursArray
-
         coloursArrayList = new ArrayList<>();
-        if (5>2) {
+        {
             coloursArrayList.add(new Colours("Colour (1)", "Ahosu"));
             coloursArrayList.add(new Colours("Colour (2)", "Kɔla"));
             coloursArrayList.add(new Colours("What colour is it?", "Ɛyɛ kɔla bɛn?"));
@@ -604,9 +601,8 @@ public class AppStartClass extends Application {
         }
 
         //CommonExpressionsAArrayList
-
         commonExpressionsAArrayList = new ArrayList<>();
-        if (5>2) {
+        {
             commonExpressionsAArrayList.add(new CommonExpressionsA("Good morning (1)", "Maakye"));
             commonExpressionsAArrayList.add(new CommonExpressionsA("Good morning (2)", "Mema wo akye"));
             commonExpressionsAArrayList.add(new CommonExpressionsA("Good afternoon (1)", "Maaha"));
@@ -684,11 +680,10 @@ public class AppStartClass extends Application {
             commonExpressionsAArrayList.add(new CommonExpressionsA("See you soon", "Ɛrenkyɛ mehu wo"));
             commonExpressionsAArrayList.add(new CommonExpressionsA("Give me a hug", "Yɛ me atuu"));
         }
+
         //FAMILY ARRAY LIST
-
-
         familyArrayList = new ArrayList<>();
-        if (5>2) {
+        {
             familyArrayList.add(new Family("Family", "Abusua"));
             familyArrayList.add(new Family("Families", "Mmusua"));
 
@@ -794,12 +789,10 @@ public class AppStartClass extends Application {
             familyArrayList.add(new Family("Quadruplets", "Ahenanan"));
 
         }
-//FOOD ARRAY LIST
 
+        //FOOD ARRAY LIST
         foodArrayList = new ArrayList<>();
-        //  foodArrayList.add(new Food("Rice is a very good meal for everyone to enjoy over and over again you hear me? YEs Rice is a very good meal for everyone to enjoy over and over again you hear me?", "Ɛmo very good meal for everyone to enjoy over and over again you hear me?"));
-
-        if (5>2) {
+        {
             foodArrayList.add(new Food("Rice", "Ɛmo"));
             foodArrayList.add(new Food("Yam", "Bayerɛ"));
             foodArrayList.add(new Food("Plantain", "Bɔɔdeɛ"));
@@ -879,9 +872,8 @@ public class AppStartClass extends Application {
         }
 
         //MONTHS ARRAY LIST
-
         monthsArrayList = new ArrayList<>();
-        if (5>2) {
+        {
             monthsArrayList.add(new Months("January", "Ɔpɛpɔn"));
             monthsArrayList.add(new Months("We are in the month of January", "Yɛwɔ Ɔpɛpɔn bosome mu"));
             monthsArrayList.add(new Months("February", "Ɔgyefoɔ"));
@@ -907,7 +899,7 @@ public class AppStartClass extends Application {
         //NUMBERS ARRAY LIST
 
         numbersArrayList = new ArrayList<>();
-        if (5>2) {
+        {
             numbersArrayList.add(new Numbers("0", "Hwee/Ohunu"));
             numbersArrayList.add(new Numbers("1", "Baako"));
             numbersArrayList.add(new Numbers("2", "Mmienu"));
@@ -1189,10 +1181,9 @@ public class AppStartClass extends Application {
 
         }
 
-//PRONOUNS ARRAY LIST
-
+        //PRONOUNS ARRAY LIST
         pronounsArrayList = new ArrayList<>();
-        if (5>2) {
+        {
             //1st Person subject
 
             pronounsArrayList.add(new Pronouns("I", "Me", "1st Person Singular", "Subject"));
@@ -1279,13 +1270,13 @@ public class AppStartClass extends Application {
             pronounsArrayList.add(new Pronouns("Theirs", "Wɔn dea", "3rd Person Plural", "Possessive"));
 
         }
-        //TIME ARRAY LIST
 
-        timeArrayList = new ArrayList<Time>();
-        if (5>2) {
+        //TIME ARRAY LIST
+        timeArrayList = new ArrayList<>();
+        {
             timeArrayList.add(new Time("Second", "Anibu"));
-            timeArrayList.add(new Time(" One second", "Anibu baako"));
-            timeArrayList.add(new Time(" Two seconds", "Anibu mmienu"));
+            timeArrayList.add(new Time("One second", "Anibu baako"));
+            timeArrayList.add(new Time("Two seconds", "Anibu mmienu"));
 
 
             timeArrayList.add(new Time("Minute (1)", "Simma"));
@@ -1415,9 +1406,8 @@ public class AppStartClass extends Application {
         }
 
         //WEATHER ARRAY LIST
-
         weatherArray = new ArrayList<>();
-        if (5>2) {
+        {
             weatherArray.add(new Weather("Rain", "Osu"));
             weatherArray.add(new Weather("It is raining", "Osu retɔ"));
             weatherArray.add(new Weather("Will it rain today?", "Osu bɛtɔ nnɛ anaa?"));
@@ -1480,1334 +1470,1455 @@ public class AppStartClass extends Application {
             weatherArray.add(new Weather("Moon", "Bosome"));
 
         }
+
+
         /////////////////////////////////ALL ARRAY LIST BEGIN///////////////////////////
-
-
-        if (5>1) {
+        if (5 > 1) {
             allArrayList = new ArrayList<>();
 
+           // allArrayList.add(new All("AaCome", "Bra", "verb", "", "", ""));
+
             //AllBusiness
-
-            allArrayList.add(new All("Money", "Sika", "", "", "", ""));
-            allArrayList.add(new All("I don't have money", "Menni sika", "", "", "", ""));
-            allArrayList.add(new All("I have money", "Mewɔ sika", "", "", "", ""));
-            allArrayList.add(new All("Bank", "Sikakorabea", "", "", "", ""));
-            allArrayList.add(new All("Buy", "Tɔ", "", "", "", ""));
-            allArrayList.add(new All("What are you buying?", "Woretɔ dɛn?", "", "", "", ""));
-            allArrayList.add(new All("What should I buy?", "Dɛn na mentɔ?", "", "", "", ""));
-            allArrayList.add(new All("What would you like to buy?", "Dɛn na wopɛ sɛ wotɔ?", "", "", "", ""));
-            allArrayList.add(new All("Buy for me", "Tɔ ma me", "", "", "", ""));
-            allArrayList.add(new All("I am buying...", "Meretɔ...", "", "", "", ""));
-            allArrayList.add(new All("I am buying food", "Meretɔ aduane", "", "", "", ""));
-            allArrayList.add(new All("I will buy", "Mɛtɔ", "", "", "", ""));
-            allArrayList.add(new All("I will buy food", "Mɛtɔ aduane", "", "", "", ""));
-            allArrayList.add(new All("I will not buy", "Me ntɔ", "", "", "", ""));
-            allArrayList.add(new All("I will not buy food", "Me ntɔ aduane", "", "", "", ""));
-            allArrayList.add(new All("How much will you buy?", "Wobɛtɔ sɛn?", "", "", "", ""));
-            allArrayList.add(new All("Where can I buy...?", "Ɛhe na menya...atɔ?", "", "", "", ""));
-            allArrayList.add(new All("Where can I buy water?", "Ɛhe na menya nsuo atɔ?", "", "", "", ""));
-            allArrayList.add(new All("I want to buy..", "Mepɛ sɛ metɔ...", "", "", "", ""));
-            allArrayList.add(new All("How many do you want to buy?", "Ahe na wopɛ sɛ wotɔ?", "", "", "", ""));
-            allArrayList.add(new All("I will buy two?", "Mɛtɔ mmienu", "", "", "", ""));
-
-
-            allArrayList.add(new All("It is expensive", "Ne bo yɛ den", "", "", "", ""));
-            allArrayList.add(new All("It is too expensive", "Ne bo yɛ den dodo", "", "", "", ""));
-            allArrayList.add(new All("I want discount", "Mepɛ ntesoɔ", "", "", "", ""));
-            allArrayList.add(new All("Give me discount", "Te me so", "", "", "", ""));
-
-            allArrayList.add(new All("Please reduce the price a little", "Mesrɛ wo te so kakra", "", "", "", ""));
-            allArrayList.add(new All("I want you to give to me on credit", "Mepɛ sɛ wode firi me", "", "", "", ""));
+            {
+                allArrayList.add(new All("Money", "Sika", "", "", "", ""));
+                allArrayList.add(new All("I don't have money", "Menni sika", "", "", "", ""));
+                allArrayList.add(new All("I have money", "Mewɔ sika", "", "", "", ""));
+                allArrayList.add(new All("Bank", "Sikakorabea", "", "", "", ""));
+                allArrayList.add(new All("Buy", "Tɔ", "", "", "", ""));
+                allArrayList.add(new All("What are you buying?", "Woretɔ dɛn?", "", "", "", ""));
+                allArrayList.add(new All("What should I buy?", "Dɛn na mentɔ?", "", "", "", ""));
+                allArrayList.add(new All("What would you like to buy?", "Dɛn na wopɛ sɛ wotɔ?", "", "", "", ""));
+                allArrayList.add(new All("Buy for me", "Tɔ ma me", "", "", "", ""));
+                allArrayList.add(new All("I am buying...", "Meretɔ...", "", "", "", ""));
+                allArrayList.add(new All("I am buying food", "Meretɔ aduane", "", "", "", ""));
+                allArrayList.add(new All("I will buy", "Mɛtɔ", "", "", "", ""));
+                allArrayList.add(new All("I will buy food", "Mɛtɔ aduane", "", "", "", ""));
+                allArrayList.add(new All("I will not buy", "Me ntɔ", "", "", "", ""));
+                allArrayList.add(new All("I will not buy food", "Me ntɔ aduane", "", "", "", ""));
+                allArrayList.add(new All("How much will you buy?", "Wobɛtɔ sɛn?", "", "", "", ""));
+                allArrayList.add(new All("Where can I buy...?", "Ɛhe na menya...atɔ?", "", "", "", ""));
+                allArrayList.add(new All("Where can I buy water?", "Ɛhe na menya nsuo atɔ?", "", "", "", ""));
+                allArrayList.add(new All("I want to buy..", "Mepɛ sɛ metɔ...", "", "", "", ""));
+                allArrayList.add(new All("How many do you want to buy?", "Ahe na wopɛ sɛ wotɔ?", "", "", "", ""));
+                allArrayList.add(new All("I will buy two?", "Mɛtɔ mmienu", "", "", "", ""));
 
 
-            allArrayList.add(new All("It is cheap", "Ɛyɛ fo", "", "", "", ""));
-            allArrayList.add(new All("It is too cheap", "Ɛyɛ fo dodo", "", "", "", ""));
-            allArrayList.add(new All("My change", "Me nsesa", "", "", "", ""));
+                allArrayList.add(new All("It is expensive", "Ne bo yɛ den", "", "", "", ""));
+                allArrayList.add(new All("It is too expensive", "Ne bo yɛ den dodo", "", "", "", ""));
+                allArrayList.add(new All("I want discount", "Mepɛ ntesoɔ", "", "", "", ""));
+                allArrayList.add(new All("Give me discount", "Te me so", "", "", "", ""));
+
+                allArrayList.add(new All("Please reduce the price a little", "Mesrɛ wo te so kakra", "", "", "", ""));
+                allArrayList.add(new All("I want you to give to me on credit", "Mepɛ sɛ wode firi me", "", "", "", ""));
 
 
-            allArrayList.add(new All("Sell", "Tɔn", "", "", "", ""));
-            allArrayList.add(new All("I want to sell..", "Mepɛ sɛ metɔn...", "", "", "", ""));
-            allArrayList.add(new All("I want to sell clothes", "Mepɛ sɛ metɔn ntade", "", "", "", ""));
-            allArrayList.add(new All("How much is it?", "Ɛyɛ sɛn", "", "", "", ""));
-            allArrayList.add(new All("It is fifty cedis?", "Ɛyɛ cedis aduonum", "", "", "", ""));
-            allArrayList.add(new All("How much is this?", "Wei yɛ sɛn?", "", "", "", ""));
-            allArrayList.add(new All("Do you sell...here?", "Wotɔn...wɔ ha?", "", "", "", ""));
-            allArrayList.add(new All("Do you sell food here?", "Wotɔn aduane wɔ ha?", "", "", "", ""));
-
-            allArrayList.add(new All("How much do you sell it?", "Wotɔn no sɛn?", "", "", "", ""));
-            allArrayList.add(new All("Market (1)", "Gua", "", "", "", ""));
-            allArrayList.add(new All("Market (2)", "Dwaso", "", "", "", ""));
-            allArrayList.add(new All("I am going to the market", "Merekɔ dwaso", "", "", "", ""));
+                allArrayList.add(new All("It is cheap", "Ɛyɛ fo", "", "", "", ""));
+                allArrayList.add(new All("It is too cheap", "Ɛyɛ fo dodo", "", "", "", ""));
+                allArrayList.add(new All("My change", "Me nsesa", "", "", "", ""));
 
 
-            allArrayList.add(new All("Give me money", "Ma me sika", "", "", "", ""));
-            allArrayList.add(new All("Pay me", "Tua me", "", "", "", ""));
-            allArrayList.add(new All("Pay", "Tua", "", "", "", ""));
-            allArrayList.add(new All("Pay for me", "Tua ma me", "", "", "", ""));
-            allArrayList.add(new All("Pay for it", "Tua ka", "", "", "", ""));
-            allArrayList.add(new All("Can I pay tomorrow?", "Metumi atua no ɔkyena?", "", "", "", ""));
-            allArrayList.add(new All("I can't pay", "Mentumi ntua", "", "", "", ""));
-            allArrayList.add(new All("Who is selling?", "Hena na ɔretɔn?", "", "", "", ""));
+                allArrayList.add(new All("Sell", "Tɔn", "", "", "", ""));
+                allArrayList.add(new All("I want to sell..", "Mepɛ sɛ metɔn...", "", "", "", ""));
+                allArrayList.add(new All("I want to sell clothes", "Mepɛ sɛ metɔn ntade", "", "", "", ""));
+                allArrayList.add(new All("How much is it?", "Ɛyɛ sɛn", "", "", "", ""));
+                allArrayList.add(new All("It is fifty cedis?", "Ɛyɛ cedis aduonum", "", "", "", ""));
+                allArrayList.add(new All("How much is this?", "Wei yɛ sɛn?", "", "", "", ""));
+                allArrayList.add(new All("Do you sell...here?", "Wotɔn...wɔ ha?", "", "", "", ""));
+                allArrayList.add(new All("Do you sell food here?", "Wotɔn aduane wɔ ha?", "", "", "", ""));
 
-            allArrayList.add(new All("Work", "Adwuma", "", "", "", ""));
-            allArrayList.add(new All("Shop", "Sotɔɔ", "", "", "", ""));
-            allArrayList.add(new All("Profit", "Mfasoɔ", "", "", "", ""));
-            allArrayList.add(new All("I have made profit", "Manya mfasoɔ", "", "", "", ""));
-            allArrayList.add(new All("I will make profit", "Mɛnya mfasoɔ", "", "", "", ""));
-            allArrayList.add(new All("Loss", "Ɛka", "", "", "", ""));
-            allArrayList.add(new All("I have made a loss", "Mabɔ ka", "", "", "", ""));
-            allArrayList.add(new All("I will make a loss", "Mɛbɔ ka", "", "", "", ""));
+                allArrayList.add(new All("How much do you sell it?", "Wotɔn no sɛn?", "", "", "", ""));
+                allArrayList.add(new All("Market (1)", "Gua", "", "", "", ""));
+                allArrayList.add(new All("Market (2)", "Dwaso", "", "", "", ""));
+                allArrayList.add(new All("I am going to the market", "Merekɔ dwaso", "", "", "", ""));
 
+
+                allArrayList.add(new All("Give me money", "Ma me sika", "", "", "", ""));
+                allArrayList.add(new All("Pay me", "Tua me", "", "", "", ""));
+                allArrayList.add(new All("Pay", "Tua", "", "", "", ""));
+                allArrayList.add(new All("Pay for me", "Tua ma me", "", "", "", ""));
+                allArrayList.add(new All("Pay for it", "Tua ka", "", "", "", ""));
+                allArrayList.add(new All("Can I pay tomorrow?", "Metumi atua no ɔkyena?", "", "", "", ""));
+                allArrayList.add(new All("I can't pay", "Mentumi ntua", "", "", "", ""));
+                allArrayList.add(new All("Who is selling?", "Hena na ɔretɔn?", "", "", "", ""));
+
+                allArrayList.add(new All("Work", "Adwuma", "", "", "", ""));
+                allArrayList.add(new All("Shop", "Sotɔɔ", "", "", "", ""));
+                allArrayList.add(new All("Profit", "Mfasoɔ", "", "", "", ""));
+                allArrayList.add(new All("I have made profit", "Manya mfasoɔ", "", "", "", ""));
+                allArrayList.add(new All("I will make profit", "Mɛnya mfasoɔ", "", "", "", ""));
+                allArrayList.add(new All("Loss", "Ɛka", "", "", "", ""));
+                allArrayList.add(new All("I have made a loss", "Mabɔ ka", "", "", "", ""));
+                allArrayList.add(new All("I will make a loss", "Mɛbɔ ka", "", "", "", ""));
+            }
 
             //AllAnimals
-
-            allArrayList.add(new All("Bull", "Nantwinini", "", "", "", ""));
-            allArrayList.add(new All("Animal", "Aboa", "", "", "", ""));
-            allArrayList.add(new All("Animals", "Mmoa", "", "", "", ""));
-            allArrayList.add(new All("Cow", "Nantwibere", "", "", "", ""));
-            allArrayList.add(new All("Dog", "Kraman", "", "", "", ""));
-            allArrayList.add(new All("Cat (1)", "Ɔkra", "", "", "", ""));
-            allArrayList.add(new All("Cat (2)", "Agyinamoa", "", "", "", ""));
-            allArrayList.add(new All("Donkey", "Afurum", "", "", "", ""));
-            allArrayList.add(new All("Horse", "Pɔnkɔ", "", "", "", ""));
-            allArrayList.add(new All("Lamb", "Oguammaa", "", "", "", ""));
-            allArrayList.add(new All("Pig", "Prako", "", "", "", ""));
-            allArrayList.add(new All("Rabbit", "Adanko", "", "", "", ""));
-            allArrayList.add(new All("Sheep", "Odwan", "", "", "", ""));
-            allArrayList.add(new All("Bat", "Ampan", "", "", "", ""));
-            allArrayList.add(new All("Crocodile", "Ɔdɛnkyɛm", "", "", "", ""));
-            allArrayList.add(new All("Deer", "Ɔforote", "", "", "", ""));
-            allArrayList.add(new All("Elephant", "Ɔsono", "", "", "", ""));
-            allArrayList.add(new All("Hippopotamus", "Susono", "", "", "", ""));
-            allArrayList.add(new All("Hyena", "Pataku", "", "", "", ""));
-            allArrayList.add(new All("Wolf (1)", "Pataku", "", "", "", ""));
-            allArrayList.add(new All("Wolf (2)", "Sakraman", "", "", "", ""));
-            allArrayList.add(new All("Leopard", "Ɔsebɔ", "", "", "", ""));
-            allArrayList.add(new All("Lion", "Gyata", "", "", "", ""));
-            allArrayList.add(new All("Rat", "Kusie", "", "", "", ""));
-            allArrayList.add(new All("Snake", "Ɔwɔ", "", "", "", ""));
-            allArrayList.add(new All("Duck", "Dabodabo", "", "", "", ""));
-
-
-            //,"", "", "","")
-
-            allArrayList.add(new All("Bear", "Sisire", "", "", "", ""));
-            allArrayList.add(new All("Chameleon", "Abosomakoterɛ", "", "", "", ""));
-            allArrayList.add(new All("Lizard", "Koterɛ", "", "", "", ""));
-            allArrayList.add(new All("Mouse", "Akura", "", "", "", ""));
-            allArrayList.add(new All("Tortoise", "Akyekyedeɛ", "", "", "", ""));
-            allArrayList.add(new All("Centipede", "Sakasaka", "", "", "", ""));
-            allArrayList.add(new All("Millipede", "Kankabi", "", "", "", ""));
-            allArrayList.add(new All("Crab", "Kɔtɔ", "", "", "", ""));
-            allArrayList.add(new All("Camel", "Yoma", "", "", "", ""));
-            allArrayList.add(new All("Fowl", "Akokɔ", "", "", "", ""));
-            allArrayList.add(new All("Bird", "Anomaa", "", "", "", ""));
-            allArrayList.add(new All("Scorpion", "Akekantwɛre", "", "", "", ""));
-            allArrayList.add(new All("Cockroach", "Tɛfrɛ", "", "", "", ""));
-            allArrayList.add(new All("Ants", "Tɛtea", "", "", "", ""));
-            allArrayList.add(new All("Locust (1)", "Ntutummɛ", "", "", "", ""));
-            allArrayList.add(new All("Locust (2)", "Mmoadabi", "", "", "", ""));
-            allArrayList.add(new All("Goat (1)", "Apɔnkye", "", "", "", ""));
-            allArrayList.add(new All("Goat (2)", "Abirekyie", "", "", "", ""));
-            allArrayList.add(new All("Tiger", "Ɔsebɔ", "", "", "", ""));
-            allArrayList.add(new All("Butterfly", "Afofantɔ", "", "", "", ""));
-            allArrayList.add(new All("Grasscutter", "Akranteɛ", "", "", "", ""));
-            allArrayList.add(new All("Lice", "Edwie", "", "", "", ""));
-            allArrayList.add(new All("Porcupine", "Kɔtɔkɔ", "", "", "", ""));
-            allArrayList.add(new All("Hedgehog (1)", "Apɛsɛ", "", "", "", ""));
-            allArrayList.add(new All("Hedgehog (2)", "Apɛsɛe", "", "", "", ""));
-            allArrayList.add(new All("Whale", "Bonsu", "", "", "", ""));
-            allArrayList.add(new All("Shark", "Oboodede", "", "", "", ""));
-            allArrayList.add(new All("Mosquito", "Ntontom", "", "", "", ""));
-            allArrayList.add(new All("Grasshopper", "Abɛbɛ", "", "", "", ""));
-            allArrayList.add(new All("Bedbug", "Nsonkuronsuo", "", "", "", ""));
-            allArrayList.add(new All("Squirrel", "Opuro", "", "", "", ""));
-            allArrayList.add(new All("Alligator", "Ɔmampam", "", "", "", ""));
-            allArrayList.add(new All("Buffalo", "Ɛkoɔ", "", "", "", ""));
-            allArrayList.add(new All("Worm", "Sonsono", "", "", "", ""));
-            allArrayList.add(new All("Cattle", "Nantwie", "", "", "", ""));
-
-            allArrayList.add(new All("Tsetsefly", "Ohurii", "", "", "", ""));
-            allArrayList.add(new All("Red Tree Ant", "Nhohoa", "", "", "", ""));
-            allArrayList.add(new All("Driver Ants", "Nkrane", "", "", "", ""));
-            allArrayList.add(new All("Praying Mantis", "Akokromfi", "", "", "", ""));
-            allArrayList.add(new All("House fly", "Nwansena", "", "", "", ""));
-            allArrayList.add(new All("Beetle", "Ɔbankuo", "", "", "", ""));
+            {
+                allArrayList.add(new All("Bull", "Nantwinini", "", "", "", ""));
+                allArrayList.add(new All("Animal", "Aboa", "", "", "", ""));
+                allArrayList.add(new All("Animals", "Mmoa", "", "", "", ""));
+                allArrayList.add(new All("Cow", "Nantwibere", "", "", "", ""));
+                allArrayList.add(new All("Dog", "Kraman", "", "", "", ""));
+                allArrayList.add(new All("Cat (1)", "Ɔkra", "", "", "", ""));
+                allArrayList.add(new All("Cat (2)", "Agyinamoa", "", "", "", ""));
+                allArrayList.add(new All("Donkey", "Afurum", "", "", "", ""));
+                allArrayList.add(new All("Horse", "Pɔnkɔ", "", "", "", ""));
+                allArrayList.add(new All("Lamb", "Oguammaa", "", "", "", ""));
+                allArrayList.add(new All("Pig", "Prako", "", "", "", ""));
+                allArrayList.add(new All("Rabbit", "Adanko", "", "", "", ""));
+                allArrayList.add(new All("Sheep", "Odwan", "", "", "", ""));
+                allArrayList.add(new All("Bat", "Ampan", "", "", "", ""));
+                allArrayList.add(new All("Crocodile", "Ɔdɛnkyɛm", "", "", "", ""));
+                allArrayList.add(new All("Deer", "Ɔforote", "", "", "", ""));
+                allArrayList.add(new All("Elephant", "Ɔsono", "", "", "", ""));
+                allArrayList.add(new All("Hippopotamus", "Susono", "", "", "", ""));
+                allArrayList.add(new All("Hyena", "Pataku", "", "", "", ""));
+                allArrayList.add(new All("Wolf (1)", "Pataku", "", "", "", ""));
+                allArrayList.add(new All("Wolf (2)", "Sakraman", "", "", "", ""));
+                allArrayList.add(new All("Leopard", "Ɔsebɔ", "", "", "", ""));
+                allArrayList.add(new All("Lion", "Gyata", "", "", "", ""));
+                allArrayList.add(new All("Rat", "Kusie", "", "", "", ""));
+                allArrayList.add(new All("Snake", "Ɔwɔ", "", "", "", ""));
+                allArrayList.add(new All("Duck", "Dabodabo", "", "", "", ""));
 
 
-            allArrayList.add(new All("Vulture (1)", "Pɛtɛ", "", "", "", ""));
-            allArrayList.add(new All("Vulture (2)", "Kɔkɔsakyi", "", "", "", ""));
-            allArrayList.add(new All("Hawk", "Akorɔma", "", "", "", ""));
-            allArrayList.add(new All("Guinea Fowl", "Akɔmfɛm", "", "", "", ""));
-            allArrayList.add(new All("Monkey", "Adoe", "", "", "", ""));
-            allArrayList.add(new All("Parrot", "Akoo", "", "", "", ""));
-            allArrayList.add(new All("Crow", "Kwaakwaadabi", "", "", "", ""));
-            allArrayList.add(new All("Owl", "Patuo", "", "", "", ""));
-            allArrayList.add(new All("Eagle", "Ɔkɔre", "", "", "", ""));
-            allArrayList.add(new All("Sparrow", "Akasanoma", "", "", "", ""));
-            allArrayList.add(new All("Swallow", "Asomfena", "", "", "", ""));
-            allArrayList.add(new All("Dove", "Aborɔnoma", "", "", "", ""));
+                //,"", "", "","")
+
+                allArrayList.add(new All("Bear", "Sisire", "", "", "", ""));
+                allArrayList.add(new All("Chameleon", "Abosomakoterɛ", "", "", "", ""));
+                allArrayList.add(new All("Lizard", "Koterɛ", "", "", "", ""));
+                allArrayList.add(new All("Mouse", "Akura", "", "", "", ""));
+                allArrayList.add(new All("Tortoise", "Akyekyedeɛ", "", "", "", ""));
+                allArrayList.add(new All("Centipede", "Sakasaka", "", "", "", ""));
+                allArrayList.add(new All("Millipede", "Kankabi", "", "", "", ""));
+                allArrayList.add(new All("Crab", "Kɔtɔ", "", "", "", ""));
+                allArrayList.add(new All("Camel", "Yoma", "", "", "", ""));
+                allArrayList.add(new All("Fowl", "Akokɔ", "", "", "", ""));
+                allArrayList.add(new All("Bird", "Anomaa", "", "", "", ""));
+                allArrayList.add(new All("Scorpion", "Akekantwɛre", "", "", "", ""));
+                allArrayList.add(new All("Cockroach", "Tɛfrɛ", "", "", "", ""));
+                allArrayList.add(new All("Ants", "Tɛtea", "", "", "", ""));
+                allArrayList.add(new All("Locust (1)", "Ntutummɛ", "", "", "", ""));
+                allArrayList.add(new All("Locust (2)", "Mmoadabi", "", "", "", ""));
+                allArrayList.add(new All("Goat (1)", "Apɔnkye", "", "", "", ""));
+                allArrayList.add(new All("Goat (2)", "Abirekyie", "", "", "", ""));
+                allArrayList.add(new All("Tiger", "Ɔsebɔ", "", "", "", ""));
+                allArrayList.add(new All("Butterfly", "Afofantɔ", "", "", "", ""));
+                allArrayList.add(new All("Grasscutter", "Akranteɛ", "", "", "", ""));
+                allArrayList.add(new All("Lice", "Edwie", "", "", "", ""));
+                allArrayList.add(new All("Porcupine", "Kɔtɔkɔ", "", "", "", ""));
+                allArrayList.add(new All("Hedgehog (1)", "Apɛsɛ", "", "", "", ""));
+                allArrayList.add(new All("Hedgehog (2)", "Apɛsɛe", "", "", "", ""));
+                allArrayList.add(new All("Whale", "Bonsu", "", "", "", ""));
+                allArrayList.add(new All("Shark", "Oboodede", "", "", "", ""));
+                allArrayList.add(new All("Mosquito", "Ntontom", "", "", "", ""));
+                allArrayList.add(new All("Grasshopper", "Abɛbɛ", "", "", "", ""));
+                allArrayList.add(new All("Bedbug", "Nsonkuronsuo", "", "", "", ""));
+                allArrayList.add(new All("Squirrel", "Opuro", "", "", "", ""));
+                allArrayList.add(new All("Alligator", "Ɔmampam", "", "", "", ""));
+                allArrayList.add(new All("Buffalo", "Ɛkoɔ", "", "", "", ""));
+                allArrayList.add(new All("Worm", "Sonsono", "", "", "", ""));
+                allArrayList.add(new All("Cattle", "Nantwie", "", "", "", ""));
+
+                allArrayList.add(new All("Tsetsefly", "Ohurii", "", "", "", ""));
+                allArrayList.add(new All("Red Tree Ant", "Nhohoa", "", "", "", ""));
+                allArrayList.add(new All("Driver Ants", "Nkrane", "", "", "", ""));
+                allArrayList.add(new All("Praying Mantis", "Akokromfi", "", "", "", ""));
+                allArrayList.add(new All("House fly", "Nwansena", "", "", "", ""));
+                allArrayList.add(new All("Beetle", "Ɔbankuo", "", "", "", ""));
 
 
-            allArrayList.add(new All("Bee", "Wowa", "", "", "", ""));
-            allArrayList.add(new All("Herring", "Ɛmane", "", "", "", ""));
-            allArrayList.add(new All("Lobster", "Ɔbɔnkɔ", "", "", "", ""));
-            allArrayList.add(new All("Lobsters", "Mmɔnkɔ", "", "", "", ""));
+                allArrayList.add(new All("Vulture (1)", "Pɛtɛ", "", "", "", ""));
+                allArrayList.add(new All("Vulture (2)", "Kɔkɔsakyi", "", "", "", ""));
+                allArrayList.add(new All("Hawk", "Akorɔma", "", "", "", ""));
+                allArrayList.add(new All("Guinea Fowl", "Akɔmfɛm", "", "", "", ""));
+                allArrayList.add(new All("Monkey", "Adoe", "", "", "", ""));
+                allArrayList.add(new All("Parrot", "Akoo", "", "", "", ""));
+                allArrayList.add(new All("Crow", "Kwaakwaadabi", "", "", "", ""));
+                allArrayList.add(new All("Owl", "Patuo", "", "", "", ""));
+                allArrayList.add(new All("Eagle", "Ɔkɔre", "", "", "", ""));
+                allArrayList.add(new All("Sparrow", "Akasanoma", "", "", "", ""));
+                allArrayList.add(new All("Swallow", "Asomfena", "", "", "", ""));
+                allArrayList.add(new All("Dove", "Aborɔnoma", "", "", "", ""));
 
-            Collections.sort(allArrayList);
 
-            allArrayList.add(new All("Which animal?", "Aboa bɛn?", "", "", "", ""));
-            allArrayList.add(new All("Which animal is this?", "Aboa bɛn ni?", "", "", "", ""));
-            allArrayList.add(new All("It is a lion", "Ɛyɛ gyata", "", "", "", ""));
+                allArrayList.add(new All("Bee", "Wowa", "", "", "", ""));
+                allArrayList.add(new All("Herring", "Ɛmane", "", "", "", ""));
+                allArrayList.add(new All("Lobster", "Ɔbɔnkɔ", "", "", "", ""));
+                allArrayList.add(new All("Lobsters", "Mmɔnkɔ", "", "", "", ""));
 
+               Collections.sort(allArrayList);
+
+                allArrayList.add(new All("Which animal?", "Aboa bɛn?", "", "", "", ""));
+                allArrayList.add(new All("Which animal is this?", "Aboa bɛn ni?", "", "", "", ""));
+                allArrayList.add(new All("It is a lion", "Ɛyɛ gyata", "", "", "", ""));
+            }
 
             //BodyParts
+            {
+                allArrayList.add(new All("Hand", "Nsa", "", "", "", ""));
+                allArrayList.add(new All("Finger", "Nsateaa", "", "", "", ""));
 
-            allArrayList.add(new All("Hand", "Nsa", "", "", "", ""));
-            allArrayList.add(new All("Finger", "Nsateaa", "", "", "", ""));
+                allArrayList.add(new All("Leg", "Nan", "", "", "", ""));
+                allArrayList.add(new All("Nose", "Hwene", "", "", "", ""));
+                allArrayList.add(new All("Head", "Eti", "", "", "", ""));
+                allArrayList.add(new All("Mouth", "Ano", "", "", "", ""));
+                allArrayList.add(new All("Gum", "Ɛse akyi nam", "", "", "", ""));
 
-            allArrayList.add(new All("Leg", "Nan", "", "", "", ""));
-            allArrayList.add(new All("Nose", "Hwene", "", "", "", ""));
-            allArrayList.add(new All("Head", "Eti", "", "", "", ""));
-            allArrayList.add(new All("Mouth", "Ano", "", "", "", ""));
-            allArrayList.add(new All("Gum", "Ɛse akyi nam", "", "", "", ""));
+                allArrayList.add(new All("Cheek", "Afono", "", "", "", ""));
+                allArrayList.add(new All("Teeth", "Ɛse", "", "", "", ""));
+                allArrayList.add(new All("Tongue", "Tɛkrɛma", "", "", "", ""));
+                allArrayList.add(new All("Eyebrow (1)", "Ani akyi nhwi", "", "", "", ""));
+                allArrayList.add(new All("Eyebrow (2)", "Ani ntɔn nhwi", "", "", "", ""));
+                allArrayList.add(new All("Eyelashes (1)", "Anisoatɛtɛ", "", "", "", ""));
+                allArrayList.add(new All("Eyelashes (2)", "Ani ntɔn", "", "", "", ""));
 
-            allArrayList.add(new All("Cheek", "Afono", "", "", "", ""));
-            allArrayList.add(new All("Teeth", "Ɛse", "", "", "", ""));
-            allArrayList.add(new All("Tongue", "Tɛkrɛma", "", "", "", ""));
-            allArrayList.add(new All("Eyebrow (1)", "Ani akyi nhwi", "", "", "", ""));
-            allArrayList.add(new All("Eyebrow (2)", "Ani ntɔn nhwi", "", "", "", ""));
-            allArrayList.add(new All("Eyelashes (1)", "Anisoatɛtɛ", "", "", "", ""));
-            allArrayList.add(new All("Eyelashes (2)", "Ani ntɔn", "", "", "", ""));
+                allArrayList.add(new All("Hair", "Nhwi", "", "", "", ""));
+                allArrayList.add(new All("Forehead", "Moma", "", "", "", ""));
+                allArrayList.add(new All("Eyeball", "Ani kosua", "", "", "", ""));
+                allArrayList.add(new All("Chin", "Abɔdwe", "", "", "", ""));
+                allArrayList.add(new All("Beard", "Abɔdwesɛ nhwi", "", "", "", ""));
+                allArrayList.add(new All("Moustache (1)", "Ano ho nhwi", "", "", "", ""));
+                allArrayList.add(new All("Moustache (1)", "Mfemfem", "", "", "", ""));
 
-            allArrayList.add(new All("Hair", "Nhwi", "", "", "", ""));
-            allArrayList.add(new All("Forehead", "Moma", "", "", "", ""));
-            allArrayList.add(new All("Eyeball", "Ani kosua", "", "", "", ""));
-            allArrayList.add(new All("Chin", "Abɔdwe", "", "", "", ""));
-            allArrayList.add(new All("Beard", "Abɔdwesɛ nhwi", "", "", "", ""));
-            allArrayList.add(new All("Moustache (1)", "Ano ho nhwi", "", "", "", ""));
-            allArrayList.add(new All("Moustache (1)", "Mfemfem", "", "", "", ""));
+                allArrayList.add(new All("Human", "Nipa", "", "", "", ""));
+                allArrayList.add(new All("Body", "Nipadua", "", "", "", ""));
+                allArrayList.add(new All("Neck", "Kɔn", "", "", "", ""));
+                allArrayList.add(new All("Chest (1)", "Koko", "", "", "", ""));
+                allArrayList.add(new All("Chest (2)", "Bo", "", "", "", ""));
 
-            allArrayList.add(new All("Human", "Nipa", "", "", "", ""));
-            allArrayList.add(new All("Body", "Nipadua", "", "", "", ""));
-            allArrayList.add(new All("Neck", "Kɔn", "", "", "", ""));
-            allArrayList.add(new All("Chest (1)", "Koko", "", "", "", ""));
-            allArrayList.add(new All("Chest (2)", "Bo", "", "", "", ""));
+                allArrayList.add(new All("Navel", "Afunuma", "", "", "", ""));
+                allArrayList.add(new All("Stomach (1)", "Yafunu", "", "", "", ""));
+                allArrayList.add(new All("Stomach (2)", "Yam", "", "", "", ""));
 
-            allArrayList.add(new All("Navel", "Afunuma", "", "", "", ""));
-            allArrayList.add(new All("Stomach (1)", "Yafunu", "", "", "", ""));
-            allArrayList.add(new All("Stomach (2)", "Yam", "", "", "", ""));
+                allArrayList.add(new All("Ribs (1)", "Mparow", "", "", "", ""));
+                allArrayList.add(new All("Ribs (2)", "Mfe mpade", "", "", "", ""));
+                allArrayList.add(new All("Shoulder", "Abati", "", "", "", ""));
+                allArrayList.add(new All("Palm", "Nsayam", "", "", "", ""));
+                allArrayList.add(new All("Knee", "Kotodwe", "", "", "", ""));
+                allArrayList.add(new All("Intestine", "Nsono", "", "", "", ""));
+                allArrayList.add(new All("Lung", "Ahrawa", "", "", "", ""));
 
-            allArrayList.add(new All("Ribs (1)", "Mparow", "", "", "", ""));
-            allArrayList.add(new All("Ribs (2)", "Mfe mpade", "", "", "", ""));
-            allArrayList.add(new All("Shoulder", "Abati", "", "", "", ""));
-            allArrayList.add(new All("Palm", "Nsayam", "", "", "", ""));
-            allArrayList.add(new All("Knee", "Kotodwe", "", "", "", ""));
-            allArrayList.add(new All("Intestine", "Nsono", "", "", "", ""));
-            allArrayList.add(new All("Lung", "Ahrawa", "", "", "", ""));
+                allArrayList.add(new All("Armpit", "Mmɔtoam", "", "", "", ""));
+                allArrayList.add(new All("Bone", "Dompe", "", "", "", ""));
+                allArrayList.add(new All("Breast", "Nufuo", "", "", "", ""));
+                allArrayList.add(new All("Heart", "Koma", "", "", "", ""));
 
-            allArrayList.add(new All("Armpit", "Mmɔtoam", "", "", "", ""));
-            allArrayList.add(new All("Bone", "Dompe", "", "", "", ""));
-            allArrayList.add(new All("Breast", "Nufuo", "", "", "", ""));
-            allArrayList.add(new All("Heart", "Koma", "", "", "", ""));
+                allArrayList.add(new All("Brain (1)", "Adwene", "", "", "", ""));
+                allArrayList.add(new All("Brain (2)", "Amemene", "", "", "", ""));
+                allArrayList.add(new All("Fingernail", "Mmɔwerɛ", "", "", "", ""));
+                allArrayList.add(new All("Thumb", "Kokuromoti", "", "", "", ""));
+                allArrayList.add(new All("Arm", "Abasa", "", "", "", ""));
+                allArrayList.add(new All("Elbow", "Abatwɛ", "", "", "", ""));
+                allArrayList.add(new All("Vein", "Ntini", "", "", "", ""));
 
-            allArrayList.add(new All("Brain (1)", "Adwene", "", "", "", ""));
-            allArrayList.add(new All("Brain (2)", "Amemene", "", "", "", ""));
-            allArrayList.add(new All("Fingernail", "Mmɔwerɛ", "", "", "", ""));
-            allArrayList.add(new All("Thumb", "Kokuromoti", "", "", "", ""));
-            allArrayList.add(new All("Arm", "Abasa", "", "", "", ""));
-            allArrayList.add(new All("Elbow", "Abatwɛ", "", "", "", ""));
-            allArrayList.add(new All("Vein", "Ntini", "", "", "", ""));
+                allArrayList.add(new All("Buttock", "Ɛto", "", "", "", ""));
+                allArrayList.add(new All("Bladder", "Dwonsɔtwaa", "", "", "", ""));
+                allArrayList.add(new All("Waist", "Sisi", "", "", "", ""));
+                allArrayList.add(new All("Womb (1)", "Awode", "", "", "", ""));
+                allArrayList.add(new All("Womb (2)", "Awotwaa", "", "", "", ""));
 
-            allArrayList.add(new All("Buttock", "Ɛto", "", "", "", ""));
-            allArrayList.add(new All("Bladder", "Dwonsɔtwaa", "", "", "", ""));
-            allArrayList.add(new All("Waist", "Sisi", "", "", "", ""));
-            allArrayList.add(new All("Womb (1)", "Awode", "", "", "", ""));
-            allArrayList.add(new All("Womb (2)", "Awotwaa", "", "", "", ""));
+                allArrayList.add(new All("Toe", "Nansoaa", "", "", "", ""));
+                allArrayList.add(new All("Wrist", "Abakɔn", "", "", "", ""));
+                allArrayList.add(new All("Heel", "Nantin", "", "", "", ""));
+                allArrayList.add(new All("Throat (1)", "Mene", "", "", "", ""));
+                allArrayList.add(new All("Throat (2)", "Menemu", "", "", "", ""));
+                allArrayList.add(new All("Thigh", "Srɛ", "", "", "", ""));
+                allArrayList.add(new All("Blood", "Mogya", "", "", "", ""));
+                allArrayList.add(new All("Calf", "Nantu", "", "", "", ""));
+                allArrayList.add(new All("Lips", "Anofafa", "", "", "", ""));
 
-            allArrayList.add(new All("Toe", "Nansoaa", "", "", "", ""));
-            allArrayList.add(new All("Wrist", "Abakɔn", "", "", "", ""));
-            allArrayList.add(new All("Heel", "Nantin", "", "", "", ""));
-            allArrayList.add(new All("Throat (1)", "Mene", "", "", "", ""));
-            allArrayList.add(new All("Throat (2)", "Menemu", "", "", "", ""));
-            allArrayList.add(new All("Thigh", "Srɛ", "", "", "", ""));
-            allArrayList.add(new All("Blood", "Mogya", "", "", "", ""));
-            allArrayList.add(new All("Calf", "Nantu", "", "", "", ""));
-            allArrayList.add(new All("Lips", "Anofafa", "", "", "", ""));
+                allArrayList.add(new All("Skull", "Tikwankora", "", "", "", ""));
+                allArrayList.add(new All("Skin", "Honam", "", "", "", ""));
 
-            allArrayList.add(new All("Skull", "Tikwankora", "", "", "", ""));
-            allArrayList.add(new All("Skin", "Honam", "", "", "", ""));
+                allArrayList.add(new All("Liver", "Berɛboɔ", "", "", "", ""));
+                allArrayList.add(new All("Occiput", "Atikɔ", "", "", "", ""));
+                allArrayList.add(new All("Hip (1)", "Dwonku", "", "", "", ""));
+                allArrayList.add(new All("Hip (2)", "Asen", "", "", "", ""));
+                allArrayList.add(new All("Spine", "Akyi berɛmo", "", "", "", ""));
+            }
 
-            allArrayList.add(new All("Liver", "Berɛboɔ", "", "", "", ""));
-            allArrayList.add(new All("Occiput", "Atikɔ", "", "", "", ""));
-            allArrayList.add(new All("Hip (1)", "Dwonku", "", "", "", ""));
-            allArrayList.add(new All("Hip (2)", "Asen", "", "", "", ""));
-            allArrayList.add(new All("Spine", "Akyi berɛmo", "", "", "", ""));
-
-
-//Pronouns
-
-
+            //Pronouns
+            {
 //1st Person subject
 
-            allArrayList.add(new All("I", "Me", "1st Person Singular", "Subject", "", ""));
-            allArrayList.add(new All("I am a boy", "Me yɛ ɔbarima", "", "", "", ""));
-            allArrayList.add(new All("I am a child", "Me yɛ abofra", "", "", "", ""));
+                allArrayList.add(new All("I", "Me", "1st Person Singular", "Subject", "", ""));
+                allArrayList.add(new All("I am a boy", "Me yɛ ɔbarima", "", "", "", ""));
+                allArrayList.add(new All("I am a child", "Me yɛ abofra", "", "", "", ""));
 
-            allArrayList.add(new All("We", "Yɛ(n)", "1st Person Plural", "Subject", "", ""));
-            allArrayList.add(new All("We are strong", "Yɛn ho yɛ den", "", "", "", ""));
-            allArrayList.add(new All("We will go there", "Yɛbɛkɔ hɔ", "", "", "", ""));
+                allArrayList.add(new All("We", "Yɛ(n)", "1st Person Plural", "Subject", "", ""));
+                allArrayList.add(new All("We are strong", "Yɛn ho yɛ den", "", "", "", ""));
+                allArrayList.add(new All("We will go there", "Yɛbɛkɔ hɔ", "", "", "", ""));
 
 //1st Person object
 
-            allArrayList.add(new All("Me", "Me", "1st Person Singular", "Object", "", ""));
-            allArrayList.add(new All("Give it to me", "Fa ma me", "", "", "", ""));
-            allArrayList.add(new All("You told me", "Wo ka kyerɛɛ me", "", "", "", ""));
+                allArrayList.add(new All("Me", "Me", "1st Person Singular", "Object", "", ""));
+                allArrayList.add(new All("Give it to me", "Fa ma me", "", "", "", ""));
+                allArrayList.add(new All("You told me", "Wo ka kyerɛɛ me", "", "", "", ""));
 
 
-            allArrayList.add(new All("Us", "Yɛn", "1st Person Plural", "Object", "", ""));
-            allArrayList.add(new All("You told us", "Woka kyerɛɛ yɛn", "", "", "", ""));
-            allArrayList.add(new All("They invited us", "Wɔtoo nsa frɛɛ yɛn", "", "", "", ""));
+                allArrayList.add(new All("Us", "Yɛn", "1st Person Plural", "Object", "", ""));
+                allArrayList.add(new All("You told us", "Woka kyerɛɛ yɛn", "", "", "", ""));
+                allArrayList.add(new All("They invited us", "Wɔtoo nsa frɛɛ yɛn", "", "", "", ""));
 
 
 //2nd Person subject
-            allArrayList.add(new All("You", "Wo", "2nd Person Singular", "Subject", "", ""));
-            allArrayList.add(new All("You are a boy", "Woyɛ ɔbarima", "", "", "", ""));
-            allArrayList.add(new All("You are beautiful", "Wo ho yɛ fɛ", "", "", "", ""));
+                allArrayList.add(new All("You", "Wo", "2nd Person Singular", "Subject", "", ""));
+                allArrayList.add(new All("You are a boy", "Woyɛ ɔbarima", "", "", "", ""));
+                allArrayList.add(new All("You are beautiful", "Wo ho yɛ fɛ", "", "", "", ""));
 
-            allArrayList.add(new All("You", "Mo", "2nd Person Plural", "Subject", "", ""));
-            allArrayList.add(new All("You are many", "Mo dɔɔso", "", "", "", ""));
-            allArrayList.add(new All("You are farmers", "Mo yɛ akuafo", "", "", "", ""));
+                allArrayList.add(new All("You", "Mo", "2nd Person Plural", "Subject", "", ""));
+                allArrayList.add(new All("You are many", "Mo dɔɔso", "", "", "", ""));
+                allArrayList.add(new All("You are farmers", "Mo yɛ akuafo", "", "", "", ""));
 
 
 //2nd Person object
 
-            allArrayList.add(new All("You", "Wo", "2nd Person Singular", "Object", "", ""));
-            allArrayList.add(new All("I gave you money", "Me de sika maa wo", "", "", "", ""));
-            allArrayList.add(new All("She told you", "Ɔka kyerɛɛ wo", "", "", "", ""));
+                allArrayList.add(new All("You", "Wo", "2nd Person Singular", "Object", "", ""));
+                allArrayList.add(new All("I gave you money", "Me de sika maa wo", "", "", "", ""));
+                allArrayList.add(new All("She told you", "Ɔka kyerɛɛ wo", "", "", "", ""));
 
-            allArrayList.add(new All("You", "Mo", "2nd Person Plural", "Object", "", ""));
-            allArrayList.add(new All("I saw all of you", "Me huu mo nyinaa", "", "", "", ""));
+                allArrayList.add(new All("You", "Mo", "2nd Person Plural", "Object", "", ""));
+                allArrayList.add(new All("I saw all of you", "Me huu mo nyinaa", "", "", "", ""));
 
 //3rd Person subject
 
-            allArrayList.add(new All("He", "Ɔ-(no)", "3rd Person Singular", "Subject", "", ""));
-            allArrayList.add(new All("He gave it to you", "Ɔde maa wo", "", "", "", ""));
-            allArrayList.add(new All("She", "Ɔ-(no)", "3rd Person Singular", "Subject", "", ""));
-            allArrayList.add(new All("She told you", "Ɔka kyerɛɛ wo", "", "", "", ""));
-            allArrayList.add(new All("It", "Ɛ-(no)", "3rd Person Singular", "Subject", "", ""));
-            allArrayList.add(new All("It is nice", "Ɛyɛ fɛ", "", "", "", ""));
+                allArrayList.add(new All("He", "Ɔ-(no)", "3rd Person Singular", "Subject", "", ""));
+                allArrayList.add(new All("He gave it to you", "Ɔde maa wo", "", "", "", ""));
+                allArrayList.add(new All("She", "Ɔ-(no)", "3rd Person Singular", "Subject", "", ""));
+                allArrayList.add(new All("She told you", "Ɔka kyerɛɛ wo", "", "", "", ""));
+                allArrayList.add(new All("It", "Ɛ-(no)", "3rd Person Singular", "Subject", "", ""));
+                allArrayList.add(new All("It is nice", "Ɛyɛ fɛ", "", "", "", ""));
 
-            allArrayList.add(new All("They", "Wɔ(n)", "3rd Person Plural", "Subject", "", ""));
-            allArrayList.add(new All("They gave it to you", "Wɔde maa wo", "", "", "", ""));
-            allArrayList.add(new All("They are strong", "Wɔn ho yɛ den", "", "", "", ""));
+                allArrayList.add(new All("They", "Wɔ(n)", "3rd Person Plural", "Subject", "", ""));
+                allArrayList.add(new All("They gave it to you", "Wɔde maa wo", "", "", "", ""));
+                allArrayList.add(new All("They are strong", "Wɔn ho yɛ den", "", "", "", ""));
 
 
 //3rd Person object
 
-            allArrayList.add(new All("Him", "Ɔ-(no)", "3rd Person Singular", "Object", "", ""));
-            allArrayList.add(new All("I gave it to him", "Me de maa no", "", "", "", ""));
-            allArrayList.add(new All("It is him", "Ɛyɛ ɔno", "", "", "", ""));
-            allArrayList.add(new All("Her", "Ɔ-(no)", "3rd Person Singular", "Object", "", ""));
-            allArrayList.add(new All("I gave it to her", "Me de maa no", "", "", "", ""));
-            allArrayList.add(new All("It is her", "Ɛyɛ ɔno", "", "", "", ""));
-            allArrayList.add(new All("It", "Ɛ-(no)", "3rd Person Singular", "Object", "", ""));
-            allArrayList.add(new All("We killed it", "Yekum no", "", "", "", ""));
+                allArrayList.add(new All("Him", "Ɔ-(no)", "3rd Person Singular", "Object", "", ""));
+                allArrayList.add(new All("I gave it to him", "Me de maa no", "", "", "", ""));
+                allArrayList.add(new All("It is him", "Ɛyɛ ɔno", "", "", "", ""));
+                allArrayList.add(new All("Her", "Ɔ-(no)", "3rd Person Singular", "Object", "", ""));
+                allArrayList.add(new All("I gave it to her", "Me de maa no", "", "", "", ""));
+                allArrayList.add(new All("It is her", "Ɛyɛ ɔno", "", "", "", ""));
+                allArrayList.add(new All("It", "Ɛ-(no)", "3rd Person Singular", "Object", "", ""));
+                allArrayList.add(new All("We killed it", "Yekum no", "", "", "", ""));
 
 
-            allArrayList.add(new All("Them", "Wɔn", "3rd Person Plural", "Object", "", ""));
-            allArrayList.add(new All("Give it to them", "Fa ma wɔn", "", "", "", ""));
-            allArrayList.add(new All("Help them", "Boa Wɔn", "", "", "", ""));
+                allArrayList.add(new All("Them", "Wɔn", "3rd Person Plural", "Object", "", ""));
+                allArrayList.add(new All("Give it to them", "Fa ma wɔn", "", "", "", ""));
+                allArrayList.add(new All("Help them", "Boa Wɔn", "", "", "", ""));
 
 
 //Possessive All
 
-            allArrayList.add(new All("Mine", "Me dea", "1st Person Singular", "Possessive", "", ""));
-            allArrayList.add(new All("Ours", "Yɛn dea", "1st Person Plural", "Possessive", "", ""));
+                allArrayList.add(new All("Mine", "Me dea", "1st Person Singular", "Possessive", "", ""));
+                allArrayList.add(new All("Ours", "Yɛn dea", "1st Person Plural", "Possessive", "", ""));
 
-            allArrayList.add(new All("Yours", "Wo dea", "2nd Person Singular", "Possessive", "", ""));
-            allArrayList.add(new All("Yours", "Mo dea", "2nd Person Plural", "Possessive", "", ""));
+                allArrayList.add(new All("Yours", "Wo dea", "2nd Person Singular", "Possessive", "", ""));
+                allArrayList.add(new All("Yours", "Mo dea", "2nd Person Plural", "Possessive", "", ""));
 
 
-            allArrayList.add(new All("His", "Ne dea", "3rd Person Singular", "Possessive", "", ""));
-            allArrayList.add(new All("Hers", "Ne dea", "3rd Person Singular", "Possessive", "", ""));
-            allArrayList.add(new All("Theirs", "Wɔn dea", "3rd Person Plural", "Possessive", "", ""));
+                allArrayList.add(new All("His", "Ne dea", "3rd Person Singular", "Possessive", "", ""));
+                allArrayList.add(new All("Hers", "Ne dea", "3rd Person Singular", "Possessive", "", ""));
+                allArrayList.add(new All("Theirs", "Wɔn dea", "3rd Person Plural", "Possessive", "", ""));
 
-            //
-
+            }
 
             //Months
-            allArrayList.add(new All("January", "Ɔpɛpɔn", "", "", "", ""));
-            allArrayList.add(new All("We are in the month of January", "Yɛwɔ Ɔpɛpɔn bosome mu", "", "", "", ""));
-            allArrayList.add(new All("February", "Ɔgyefoɔ", "", "", "", ""));
-            allArrayList.add(new All("We will go to Ghana in February", "Yɛbɛkɔ Ghana Ɔgyefoɔ bosome no mu", "", "", "", ""));
-            allArrayList.add(new All("March", "Ɔbɛnem", "", "", "", ""));
-            allArrayList.add(new All("I will see you in March", "Mehu wo wɔ Ɔbɛnem bosome no mu", "", "", "", ""));
-            allArrayList.add(new All("April", "Oforisuo", "", "", "", ""));
-            allArrayList.add(new All("It often rains in April", "Osu taa tɔ wɔ Oforisuo bosome no mu", "", "", "", ""));
-            allArrayList.add(new All("May", "Kotonimaa", "", "", "", ""));
-            allArrayList.add(new All("June", "Ayɛwohomumɔ", "", "", "", ""));
-            allArrayList.add(new All("July", "Kitawonsa", "", "", "", ""));
-            allArrayList.add(new All("August", "Ɔsanaa", "", "", "", ""));
-            allArrayList.add(new All("I was born in the month of August", "Wɔwoo me Ɔsanaa bosome no mu", "", "", "", ""));
-            allArrayList.add(new All("September", "Ɛbɔ", "", "", "", ""));
-            allArrayList.add(new All("October", "Ahinime", "", "", "", ""));
-            allArrayList.add(new All("November", "Obubuo", "", "", "", ""));
-            allArrayList.add(new All("December", "Ɔpɛnimma", "", "", "", ""));
-            allArrayList.add(new All("It is often cold in December", "Awɔw taa ba wɔ Ɔpɛnimma bosome no mu", "", "", "", ""));
+            {
+                allArrayList.add(new All("January", "Ɔpɛpɔn", "", "", "", ""));
+                allArrayList.add(new All("We are in the month of January", "Yɛwɔ Ɔpɛpɔn bosome mu", "", "", "", ""));
+                allArrayList.add(new All("February", "Ɔgyefoɔ", "", "", "", ""));
+                allArrayList.add(new All("We will go to Ghana in February", "Yɛbɛkɔ Ghana Ɔgyefoɔ bosome no mu", "", "", "", ""));
+                allArrayList.add(new All("March", "Ɔbɛnem", "", "", "", ""));
+                allArrayList.add(new All("I will see you in March", "Mehu wo wɔ Ɔbɛnem bosome no mu", "", "", "", ""));
+                allArrayList.add(new All("April", "Oforisuo", "", "", "", ""));
+                allArrayList.add(new All("It often rains in April", "Osu taa tɔ wɔ Oforisuo bosome no mu", "", "", "", ""));
+                allArrayList.add(new All("May", "Kotonimaa", "", "", "", ""));
+                allArrayList.add(new All("June", "Ayɛwohomumɔ", "", "", "", ""));
+                allArrayList.add(new All("July", "Kitawonsa", "", "", "", ""));
+                allArrayList.add(new All("August", "Ɔsanaa", "", "", "", ""));
+                allArrayList.add(new All("I was born in the month of August", "Wɔwoo me Ɔsanaa bosome no mu", "", "", "", ""));
+                allArrayList.add(new All("September", "Ɛbɔ", "", "", "", ""));
+                allArrayList.add(new All("October", "Ahinime", "", "", "", ""));
+                allArrayList.add(new All("November", "Obubuo", "", "", "", ""));
+                allArrayList.add(new All("December", "Ɔpɛnimma", "", "", "", ""));
+                allArrayList.add(new All("It is often cold in December", "Awɔw taa ba wɔ Ɔpɛnimma bosome no mu", "", "", "", ""));
 
-            allArrayList.add(new All("Which month?", "Bosome bɛn?", "", "", "", ""));
-
+                allArrayList.add(new All("Which month?", "Bosome bɛn?", "", "", "", ""));
+            }
 
             //Food
-
-            allArrayList.add(new All("Rice", "Ɛmo", "", "", "", ""));
-            allArrayList.add(new All("Yam", "Bayerɛ", "", "", "", ""));
-            allArrayList.add(new All("Plantain", "Bɔɔdeɛ", "", "", "", ""));
-            allArrayList.add(new All("Cassava", "Bankye", "", "", "", ""));
-            allArrayList.add(new All("Onion", "Gyeene", "", "", "", ""));
-            allArrayList.add(new All("Salt", "Nkyene", "", "", "", ""));
+            {
+                allArrayList.add(new All("Rice", "Ɛmo", "", "", "", ""));
+                allArrayList.add(new All("Yam", "Bayerɛ", "", "", "", ""));
+                allArrayList.add(new All("Plantain", "Bɔɔdeɛ", "", "", "", ""));
+                allArrayList.add(new All("Cassava", "Bankye", "", "", "", ""));
+                allArrayList.add(new All("Onion", "Gyeene", "", "", "", ""));
+                allArrayList.add(new All("Salt", "Nkyene", "", "", "", ""));
 
 //fruits
-            allArrayList.add(new All("Fruit", "Aduaba", "", "", "", ""));
-            allArrayList.add(new All("Apple", "Aprɛ", "", "", "", ""));
-            allArrayList.add(new All("Banana", "Kwadu", "", "", "", ""));
-            allArrayList.add(new All("Orange (1)", "Ankaa", "", "", "", ""));
-            allArrayList.add(new All("Orange (2)", "Akutu", "", "", "", ""));
-            allArrayList.add(new All("Pawpaw", "Borɔferɛ", "", "", "", ""));
-            allArrayList.add(new All("Coconut", "Kube", "", "", "", ""));
-            allArrayList.add(new All("Pear", "Paya", "", "", "", ""));
-            allArrayList.add(new All("Tigernut", "Atadwe", "", "", "", ""));
-            allArrayList.add(new All("Pineapple", "Aborɔbɛ", "", "", "", ""));
-            allArrayList.add(new All("Ginger", "Akekaduro", "", "", "", ""));
-            allArrayList.add(new All("Sugarcane", "Ahwedeɛ", "", "", "", ""));
-            allArrayList.add(new All("Corn", "Aburo", "", "", "", ""));
-            allArrayList.add(new All("Maize", "Aburo", "", "", "", ""));
-            allArrayList.add(new All("Groundnut", "Nkateɛ", "", "", "", ""));
-            allArrayList.add(new All("Peanut", "Nkateɛ", "", "", "", ""));
-            allArrayList.add(new All("Palm fruit", "Abɛ", "", "", "", ""));
+                allArrayList.add(new All("Fruit", "Aduaba", "", "", "", ""));
+                allArrayList.add(new All("Apple", "Aprɛ", "", "", "", ""));
+                allArrayList.add(new All("Banana", "Kwadu", "", "", "", ""));
+                allArrayList.add(new All("Orange (1)", "Ankaa", "", "", "", ""));
+                allArrayList.add(new All("Orange (2)", "Akutu", "", "", "", ""));
+                allArrayList.add(new All("Pawpaw", "Borɔferɛ", "", "", "", ""));
+                allArrayList.add(new All("Coconut", "Kube", "", "", "", ""));
+                allArrayList.add(new All("Pear", "Paya", "", "", "", ""));
+                allArrayList.add(new All("Tigernut", "Atadwe", "", "", "", ""));
+                allArrayList.add(new All("Pineapple", "Aborɔbɛ", "", "", "", ""));
+                allArrayList.add(new All("Ginger", "Akekaduro", "", "", "", ""));
+                allArrayList.add(new All("Sugarcane", "Ahwedeɛ", "", "", "", ""));
+                allArrayList.add(new All("Corn", "Aburo", "", "", "", ""));
+                allArrayList.add(new All("Maize", "Aburo", "", "", "", ""));
+                allArrayList.add(new All("Groundnut", "Nkateɛ", "", "", "", ""));
+                allArrayList.add(new All("Peanut", "Nkateɛ", "", "", "", ""));
+                allArrayList.add(new All("Palm fruit", "Abɛ", "", "", "", ""));
 
 
 //Vegetables
-            allArrayList.add(new All("Vegetable", "Atosodeɛ", "", "", "", ""));
-            allArrayList.add(new All("Pepper", "Mako", "", "", "", ""));
-            allArrayList.add(new All("Bean", "Adua", "", "", "", ""));
-            allArrayList.add(new All("Okro", "Nkuruma", "", "", "", ""));
-            allArrayList.add(new All("Garden eggs", "Nyaadewa", "", "", "", ""));
-            allArrayList.add(new All("Tomato", "Ntoosi", "", "", "", ""));
-            allArrayList.add(new All("Garlic", "Galik", "", "", "", ""));
-            allArrayList.add(new All("Cucumber", "Ɛferɛ", "", "", "", ""));
+                allArrayList.add(new All("Vegetable", "Atosodeɛ", "", "", "", ""));
+                allArrayList.add(new All("Pepper", "Mako", "", "", "", ""));
+                allArrayList.add(new All("Bean", "Adua", "", "", "", ""));
+                allArrayList.add(new All("Okro", "Nkuruma", "", "", "", ""));
+                allArrayList.add(new All("Garden eggs", "Nyaadewa", "", "", "", ""));
+                allArrayList.add(new All("Tomato", "Ntoosi", "", "", "", ""));
+                allArrayList.add(new All("Garlic", "Galik", "", "", "", ""));
+                allArrayList.add(new All("Cucumber", "Ɛferɛ", "", "", "", ""));
 
 
-            allArrayList.add(new All("Lobster", "Ɔbɔnkɔ", "", "", "", ""));
-            allArrayList.add(new All("Cocoa", "Kokoo", "", "", "", ""));
-            allArrayList.add(new All("Palm kernel", "Adwe", "", "", "", ""));
-            allArrayList.add(new All("Palm kernel oil", "Adwe ngo", "", "", "", ""));
-            allArrayList.add(new All("Vegetable oil", "Anwa", "", "", "", ""));
-            allArrayList.add(new All("Snail", "Nwa", "", "", "", ""));
-            allArrayList.add(new All("Groundnut soup", "Nkate nkwan", "", "", "", ""));
-            allArrayList.add(new All("Palm nut soup", "Abɛ nkwan", "", "", "", ""));
+                allArrayList.add(new All("Lobster", "Ɔbɔnkɔ", "", "", "", ""));
+                allArrayList.add(new All("Cocoa", "Kokoo", "", "", "", ""));
+                allArrayList.add(new All("Palm kernel", "Adwe", "", "", "", ""));
+                allArrayList.add(new All("Palm kernel oil", "Adwe ngo", "", "", "", ""));
+                allArrayList.add(new All("Vegetable oil", "Anwa", "", "", "", ""));
+                allArrayList.add(new All("Snail", "Nwa", "", "", "", ""));
+                allArrayList.add(new All("Groundnut soup", "Nkate nkwan", "", "", "", ""));
+                allArrayList.add(new All("Palm nut soup", "Abɛ nkwan", "", "", "", ""));
 
 //Others
-            allArrayList.add(new All("Dough", "Mmɔre", "", "", "", ""));
-            allArrayList.add(new All("Kenkey", "Dɔkono", "", "", "", ""));
-            allArrayList.add(new All("Flour", "Esiam", "", "", "", ""));
-            allArrayList.add(new All("Wheat", "Ayuo", "", "", "", ""));
-            allArrayList.add(new All("Soup", "Nkwan", "", "", "", ""));
-            allArrayList.add(new All("Stew", "Abomu", "", "", "", ""));
-            allArrayList.add(new All("Egg", "Kosua", "", "", "", ""));
-            allArrayList.add(new All("Bread (1)", "Paanoo", "", "", "", ""));
-            allArrayList.add(new All("Bread (2)", "Burodo", "", "", "", ""));
-            allArrayList.add(new All("Oil", "Ngo", "", "", "", ""));
-            allArrayList.add(new All("Fish (1)", "Apataa", "", "", "", ""));
-            allArrayList.add(new All("Fish (2)", "Nsuomnam", "", "", "", ""));
-            allArrayList.add(new All("Pork", "Prakonam", "", "", "", ""));
-            allArrayList.add(new All("Meat (1)", "Nam", "", "", "", ""));
-            allArrayList.add(new All("Meat (2)", "Mogyanam", "", "", "", ""));
-            allArrayList.add(new All("Mutton", "Odwannam", "", "", "", ""));
-            allArrayList.add(new All("Lamb", "Odwannam", "", "", "", ""));
-            allArrayList.add(new All("Sugar", "Asikyire", "", "", "", ""));
-            allArrayList.add(new All("Honey", "Ɛwoɔ", "", "", "", ""));
-            allArrayList.add(new All("Water", "Nsuo", "", "", "", ""));
-            allArrayList.add(new All("Food", "Aduane", "", "", "", ""));
+                allArrayList.add(new All("Dough", "Mmɔre", "", "", "", ""));
+                allArrayList.add(new All("Kenkey", "Dɔkono", "", "", "", ""));
+                allArrayList.add(new All("Flour", "Esiam", "", "", "", ""));
+                allArrayList.add(new All("Wheat", "Ayuo", "", "", "", ""));
+                allArrayList.add(new All("Soup", "Nkwan", "", "", "", ""));
+                allArrayList.add(new All("Stew", "Abomu", "", "", "", ""));
+                allArrayList.add(new All("Egg", "Kosua", "", "", "", ""));
+                allArrayList.add(new All("Bread (1)", "Paanoo", "", "", "", ""));
+                allArrayList.add(new All("Bread (2)", "Burodo", "", "", "", ""));
+                allArrayList.add(new All("Oil", "Ngo", "", "", "", ""));
+                allArrayList.add(new All("Fish (1)", "Apataa", "", "", "", ""));
+                allArrayList.add(new All("Fish (2)", "Nsuomnam", "", "", "", ""));
+                allArrayList.add(new All("Pork", "Prakonam", "", "", "", ""));
+                allArrayList.add(new All("Meat (1)", "Nam", "", "", "", ""));
+                allArrayList.add(new All("Meat (2)", "Mogyanam", "", "", "", ""));
+                allArrayList.add(new All("Mutton", "Odwannam", "", "", "", ""));
+                allArrayList.add(new All("Lamb", "Odwannam", "", "", "", ""));
+                allArrayList.add(new All("Sugar", "Asikyire", "", "", "", ""));
+                allArrayList.add(new All("Honey", "Ɛwoɔ", "", "", "", ""));
+                allArrayList.add(new All("Water", "Nsuo", "", "", "", ""));
+                allArrayList.add(new All("Food", "Aduane", "", "", "", ""));
 
-            Collections.sort(allArrayList);
+                Collections.sort(allArrayList);
 
-            allArrayList.add(new All("I am hungry", "Ɛkɔm de me", "", "", "", ""));
-            allArrayList.add(new All("Are you hungry?", "Ɛkɔm de wo anaa?", "", "", "", ""));
-            allArrayList.add(new All("What will you eat?", "Dɛn na wobedi?", "", "", "", ""));
-            allArrayList.add(new All("I will eat kenkey", "Medi dɔkono", "", "", "", ""));
-
+                allArrayList.add(new All("I am hungry", "Ɛkɔm de me", "", "", "", ""));
+                allArrayList.add(new All("Are you hungry?", "Ɛkɔm de wo anaa?", "", "", "", ""));
+                allArrayList.add(new All("What will you eat?", "Dɛn na wobedi?", "", "", "", ""));
+                allArrayList.add(new All("I will eat kenkey", "Medi dɔkono", "", "", "", ""));
+            }
 
             //FAMILY
+            {
+                allArrayList.add(new All("Family", "Abusua", "", "", "", ""));
+                allArrayList.add(new All("Families", "Mmusua", "", "", "", ""));
 
-            allArrayList.add(new All("Family", "Abusua", "", "", "", ""));
-            allArrayList.add(new All("Families", "Mmusua", "", "", "", ""));
+                allArrayList.add(new All("Father (1)", "Papa", "", "", "", ""));
+                allArrayList.add(new All("Father (2)", "Agya", "", "", "", ""));
+                allArrayList.add(new All("Father (3)", "Ɔse", "", "", "", ""));
+                allArrayList.add(new All("My father (1)", "Me papa", "", "", "", ""));
+                allArrayList.add(new All("My father (2)", "M'agya", "", "", "", ""));
+                allArrayList.add(new All("My father (3)", "Me se", "", "", "", ""));
+                allArrayList.add(new All("Daddy", "Dada", "", "", "", ""));
 
-            allArrayList.add(new All("Father (1)", "Papa", "", "", "", ""));
-            allArrayList.add(new All("Father (2)", "Agya", "", "", "", ""));
-            allArrayList.add(new All("Father (3)", "Ɔse", "", "", "", ""));
-            allArrayList.add(new All("My father (1)", "Me papa", "", "", "", ""));
-            allArrayList.add(new All("My father (2)", "M'agya", "", "", "", ""));
-            allArrayList.add(new All("My father (3)", "Me se", "", "", "", ""));
-            allArrayList.add(new All("Daddy", "Dada", "", "", "", ""));
-
-            allArrayList.add(new All("Mother (1)", "Maame", "", "", "", ""));
-            allArrayList.add(new All("Mother (2)", "Ɛna", "", "", "", ""));
-            allArrayList.add(new All("Mother (3)", "Oni", "", "", "", ""));
-            allArrayList.add(new All("My Mother (1)", "Me maame", "", "", "", ""));
-            allArrayList.add(new All("My Mother (2)", "Me na", "", "", "", ""));
-            allArrayList.add(new All("My Mother (3)", "Me ni", "", "", "", ""));
-            allArrayList.add(new All("Mummy", "Mama", "", "", "", ""));
-
-
-            allArrayList.add(new All("Parent", "Ɔwofo", "", "", "", ""));
-            allArrayList.add(new All("Parents", "Awofo", "", "", "", ""));
-            allArrayList.add(new All("Child (1)", "Abofra", "", "", "", ""));
-            allArrayList.add(new All("Child (2)", "Akwadaa", "", "", "", ""));
-            allArrayList.add(new All("Children (1)", "Mma", "", "", "", ""));
-            allArrayList.add(new All("Children (2)", "Mmofra", "", "", "", ""));
-            allArrayList.add(new All("Baby", "Abofra", "", "", "", ""));
-
-            allArrayList.add(new All("Firstborn (1)", "Abakan", "", "", "", ""));
-            allArrayList.add(new All("Firstborn (2)", "Piesie", "", "", "", ""));
-            allArrayList.add(new All("Lastborn", "Kaakyire", "", "", "", ""));
-
-            allArrayList.add(new All("Husband", "Kunu", "", "", "", ""));
-            allArrayList.add(new All("Husbands", "Kununom", "", "", "", ""));
-
-            allArrayList.add(new All("Wife", "Yere", "", "", "", ""));
-            allArrayList.add(new All("Wives", "Yerenom", "", "", "", ""));
-
-            allArrayList.add(new All("Brother", "Nuabarima", "", "", "", ""));
-            allArrayList.add(new All("Brothers", "Nua mmarima", "", "", "", ""));
-            allArrayList.add(new All("Sister", "Nuabaa", "", "", "", ""));
-            allArrayList.add(new All("Sisters", "Nua mmaa", "", "", "", ""));
-
-            allArrayList.add(new All("Sibling", "Nua", "", "", "", ""));
-            allArrayList.add(new All("Siblings", "Nuanom", "", "", "", ""));
-
-            allArrayList.add(new All("Son", "Babarima", "", "", "", ""));
-            allArrayList.add(new All("Sons", "mma mmarima", "", "", "", ""));
-            allArrayList.add(new All("Daughter", "Babaa", "", "", "", ""));
-            allArrayList.add(new All("Daughters", "Mma mmaa", "", "", "", ""));
-
-            allArrayList.add(new All("Cousin", "Nua", "", "", "", ""));
-            allArrayList.add(new All("Grandchild", "Banana", "", "", "", ""));
-            allArrayList.add(new All("Great Grandchild", "Nanankanso", "", "", "", ""));
-            allArrayList.add(new All("Grandfather", "Nanabarima", "", "", "", ""));
-            allArrayList.add(new All("Great grandfather", "Nanabarima prenu", "", "", "", ""));
-            allArrayList.add(new All("Grandmother", "Nanabaa", "", "", "", ""));
-            allArrayList.add(new All("Great grandmother", "Nanabaa prenu", "", "", "", ""));
-
-            allArrayList.add(new All("In-law", "Asew", "", "", "", ""));
-            allArrayList.add(new All("Father-in-law", "Asebarima", "", "", "", ""));
-            allArrayList.add(new All("Mother-in-law", "Asebaa", "", "", "", ""));
-            allArrayList.add(new All("Brother-in-law", "Akonta", "", "", "", ""));
-            allArrayList.add(new All("Sister-in-law", "Akumaa", "", "", "", ""));
-            allArrayList.add(new All("Son-in-law (1)", "Asew", "", "", "", ""));
-            allArrayList.add(new All("Son-in-law (2)", "Babaa kunu", "", "", "", ""));
-            allArrayList.add(new All("Daughter-in-law", "Asew", "", "", "", ""));
-            allArrayList.add(new All("Daughter-in-law", "Babarima yere", "", "", "", ""));
+                allArrayList.add(new All("Mother (1)", "Maame", "", "", "", ""));
+                allArrayList.add(new All("Mother (2)", "Ɛna", "", "", "", ""));
+                allArrayList.add(new All("Mother (3)", "Oni", "", "", "", ""));
+                allArrayList.add(new All("My Mother (1)", "Me maame", "", "", "", ""));
+                allArrayList.add(new All("My Mother (2)", "Me na", "", "", "", ""));
+                allArrayList.add(new All("My Mother (3)", "Me ni", "", "", "", ""));
+                allArrayList.add(new All("Mummy", "Mama", "", "", "", ""));
 
 
-            allArrayList.add(new All("Maternal Uncle", "Wɔfa", "", "", "", ""));
-            allArrayList.add(new All("Paternal Uncle (1)", "Papa", "", "", "", ""));
-            allArrayList.add(new All("Paternal Uncle (2)", "Agya", "", "", "", ""));
-            allArrayList.add(new All("Paternal Uncle (3)", "Papa nuabarima", "", "", "", ""));
+                allArrayList.add(new All("Parent", "Ɔwofo", "", "", "", ""));
+                allArrayList.add(new All("Parents", "Awofo", "", "", "", ""));
+                allArrayList.add(new All("Child (1)", "Abofra", "", "", "", ""));
+                allArrayList.add(new All("Child (2)", "Akwadaa", "", "", "", ""));
+                allArrayList.add(new All("Children (1)", "Mma", "", "", "", ""));
+                allArrayList.add(new All("Children (2)", "Mmofra", "", "", "", ""));
+                allArrayList.add(new All("Baby", "Abofra", "", "", "", ""));
 
-            allArrayList.add(new All("Paternal Aunt", "Sewaa", "", "", "", ""));
-            allArrayList.add(new All("My Paternal Aunt", "Me Sewaa", "", "", "", ""));
+                allArrayList.add(new All("Firstborn (1)", "Abakan", "", "", "", ""));
+                allArrayList.add(new All("Firstborn (2)", "Piesie", "", "", "", ""));
+                allArrayList.add(new All("Lastborn", "Kaakyire", "", "", "", ""));
 
-            allArrayList.add(new All("Maternal Aunt (1)", "Maame nuabaa", "", "", "", ""));
-            allArrayList.add(new All("Maternal Aunt (2)", "Maame", "", "", "", ""));
-            allArrayList.add(new All("My maternal Aunt", "Me maame nuabaa", "", "", "", ""));
+                allArrayList.add(new All("Husband", "Kunu", "", "", "", ""));
+                allArrayList.add(new All("Husbands", "Kununom", "", "", "", ""));
 
-            allArrayList.add(new All("Niece", "Wɔfaase baa", "", "", "", ""));
-            allArrayList.add(new All("Nephew", "Wɔfaase barima", "", "", "", ""));
-            allArrayList.add(new All("Niece/Nephew", "Wɔfaase", "", "", "", ""));
+                allArrayList.add(new All("Wife", "Yere", "", "", "", ""));
+                allArrayList.add(new All("Wives", "Yerenom", "", "", "", ""));
 
-            allArrayList.add(new All("Cousin (1)", "Nua", "", "", "", ""));
-            allArrayList.add(new All("Cousin (2)", "Wɔfa ba", "", "", "", ""));
-            allArrayList.add(new All("Cousin (3)", "Sewaa ba", "", "", "", ""));
-            allArrayList.add(new All("My Cousin", "Me nua", "", "", "", ""));
+                allArrayList.add(new All("Brother", "Nuabarima", "", "", "", ""));
+                allArrayList.add(new All("Brothers", "Nua mmarima", "", "", "", ""));
+                allArrayList.add(new All("Sister", "Nuabaa", "", "", "", ""));
+                allArrayList.add(new All("Sisters", "Nua mmaa", "", "", "", ""));
+
+                allArrayList.add(new All("Sibling", "Nua", "", "", "", ""));
+                allArrayList.add(new All("Siblings", "Nuanom", "", "", "", ""));
+
+                allArrayList.add(new All("Son", "Babarima", "", "", "", ""));
+                allArrayList.add(new All("Sons", "mma mmarima", "", "", "", ""));
+                allArrayList.add(new All("Daughter", "Babaa", "", "", "", ""));
+                allArrayList.add(new All("Daughters", "Mma mmaa", "", "", "", ""));
+
+                allArrayList.add(new All("Cousin", "Nua", "", "", "", ""));
+                allArrayList.add(new All("Grandchild", "Banana", "", "", "", ""));
+                allArrayList.add(new All("Great Grandchild", "Nanankanso", "", "", "", ""));
+                allArrayList.add(new All("Grandfather", "Nanabarima", "", "", "", ""));
+                allArrayList.add(new All("Great grandfather", "Nanabarima prenu", "", "", "", ""));
+                allArrayList.add(new All("Grandmother", "Nanabaa", "", "", "", ""));
+                allArrayList.add(new All("Great grandmother", "Nanabaa prenu", "", "", "", ""));
+
+                allArrayList.add(new All("In-law", "Asew", "", "", "", ""));
+                allArrayList.add(new All("Father-in-law", "Asebarima", "", "", "", ""));
+                allArrayList.add(new All("Mother-in-law", "Asebaa", "", "", "", ""));
+                allArrayList.add(new All("Brother-in-law", "Akonta", "", "", "", ""));
+                allArrayList.add(new All("Sister-in-law", "Akumaa", "", "", "", ""));
+                allArrayList.add(new All("Son-in-law (1)", "Asew", "", "", "", ""));
+                allArrayList.add(new All("Son-in-law (2)", "Babaa kunu", "", "", "", ""));
+                allArrayList.add(new All("Daughter-in-law", "Asew", "", "", "", ""));
+                allArrayList.add(new All("Daughter-in-law", "Babarima yere", "", "", "", ""));
 
 
-            allArrayList.add(new All("Adopted child", "Abanoma", "", "", "", ""));
-            allArrayList.add(new All("Orphan", "Agyanka", "", "", "", ""));
-            allArrayList.add(new All("Widow", "Okunafo", "", "", "", ""));
-            allArrayList.add(new All("Widower", "Barima kunafo", "", "", "", ""));
+                allArrayList.add(new All("Maternal Uncle", "Wɔfa", "", "", "", ""));
+                allArrayList.add(new All("Paternal Uncle (1)", "Papa", "", "", "", ""));
+                allArrayList.add(new All("Paternal Uncle (2)", "Agya", "", "", "", ""));
+                allArrayList.add(new All("Paternal Uncle (3)", "Papa nuabarima", "", "", "", ""));
 
-            allArrayList.add(new All("Marriage", "Awareɛ", "", "", "", ""));
+                allArrayList.add(new All("Paternal Aunt", "Sewaa", "", "", "", ""));
+                allArrayList.add(new All("My Paternal Aunt", "Me Sewaa", "", "", "", ""));
 
-            allArrayList.add(new All("Twins", "Ntafoɔ", "", "", "", ""));
-            allArrayList.add(new All("Triplets", "Ahenasa", "", "", "", ""));
-            allArrayList.add(new All("Quadruplets", "Ahenanan", "", "", "", ""));
+                allArrayList.add(new All("Maternal Aunt (1)", "Maame nuabaa", "", "", "", ""));
+                allArrayList.add(new All("Maternal Aunt (2)", "Maame", "", "", "", ""));
+                allArrayList.add(new All("My maternal Aunt", "Me maame nuabaa", "", "", "", ""));
+
+                allArrayList.add(new All("Niece", "Wɔfaase baa", "", "", "", ""));
+                allArrayList.add(new All("Nephew", "Wɔfaase barima", "", "", "", ""));
+                allArrayList.add(new All("Niece/Nephew", "Wɔfaase", "", "", "", ""));
+
+                allArrayList.add(new All("Cousin (1)", "Nua", "", "", "", ""));
+                allArrayList.add(new All("Cousin (2)", "Wɔfa ba", "", "", "", ""));
+                allArrayList.add(new All("Cousin (3)", "Sewaa ba", "", "", "", ""));
+                allArrayList.add(new All("My Cousin", "Me nua", "", "", "", ""));
+
+
+                allArrayList.add(new All("Adopted child", "Abanoma", "", "", "", ""));
+                allArrayList.add(new All("Orphan", "Agyanka", "", "", "", ""));
+                allArrayList.add(new All("Widow", "Okunafo", "", "", "", ""));
+                allArrayList.add(new All("Widower", "Barima kunafo", "", "", "", ""));
+
+                allArrayList.add(new All("Marriage", "Awareɛ", "", "", "", ""));
+
+                allArrayList.add(new All("Twins", "Ntafoɔ", "", "", "", ""));
+                allArrayList.add(new All("Triplets", "Ahenasa", "", "", "", ""));
+                allArrayList.add(new All("Quadruplets", "Ahenanan", "", "", "", ""));
+            }
 
             //COMMONEXPRESSIONSA
+            {
+                allArrayList.add(new All("Good morning (1)", "Maakye", "", "", "", ""));
+                allArrayList.add(new All("Good morning (2)", "Mema wo akye", "", "", "", ""));
+                allArrayList.add(new All("Good afternoon (1)", "Maaha", "", "", "", ""));
+                allArrayList.add(new All("Good afternoon (2)", "Mema wo aha", "", "", "", ""));
+                allArrayList.add(new All("Good evening (1)", "Maadwo", "", "", "", ""));
+                allArrayList.add(new All("Good evening (2)", "Mema wo adwo", "", "", "", ""));
+                allArrayList.add(new All("Good night", "Da yie", "", "", "", ""));
 
-            allArrayList.add(new All("Good morning (1)", "Maakye", "", "", "", ""));
-            allArrayList.add(new All("Good morning (2)", "Mema wo akye", "", "", "", ""));
-            allArrayList.add(new All("Good afternoon (1)", "Maaha", "", "", "", ""));
-            allArrayList.add(new All("Good afternoon (2)", "Mema wo aha", "", "", "", ""));
-            allArrayList.add(new All("Good evening (1)", "Maadwo", "", "", "", ""));
-            allArrayList.add(new All("Good evening (2)", "Mema wo adwo", "", "", "", ""));
-            allArrayList.add(new All("Good night", "Da yie", "", "", "", ""));
+                allArrayList.add(new All("How are you?", "Wo ho te sɛn?", "", "", "", ""));
+                allArrayList.add(new All("How is your mother?", "Wo maame ho te sɛn?", "", "", "", ""));
+                allArrayList.add(new All("How is your wife?", "Wo yere ho te sɛn?", "", "", "", ""));
+                allArrayList.add(new All("I am fine", "Me ho yɛ", "", "", "", ""));
+                allArrayList.add(new All("How are they doing?", "Wɔn ho te sɛn?", "", "", "", ""));
+                allArrayList.add(new All("I am not feeling well (1)", "Me ho mfa me", "", "", "", ""));
+                allArrayList.add(new All("I am not feeling well (2)", "Mente apɔ", "", "", "", ""));
 
-            allArrayList.add(new All("How are you?", "Wo ho te sɛn?", "", "", "", ""));
-            allArrayList.add(new All("How is your mother?", "Wo maame ho te sɛn?", "", "", "", ""));
-            allArrayList.add(new All("How is your wife?", "Wo yere ho te sɛn?", "", "", "", ""));
-            allArrayList.add(new All("I am fine", "Me ho yɛ", "", "", "", ""));
-            allArrayList.add(new All("How are they doing?", "Wɔn ho te sɛn?", "", "", "", ""));
-            allArrayList.add(new All("I am not feeling well (1)", "Me ho mfa me", "", "", "", ""));
-            allArrayList.add(new All("I am not feeling well (2)", "Mente apɔ", "", "", "", ""));
-
-            allArrayList.add(new All("She is fine", "Ne ho yɛ", "", "", "", ""));
-            allArrayList.add(new All("He is fine", "Ne ho yɛ", "", "", "", ""));
-            allArrayList.add(new All("They are fine", "Wɔn ho yɛ", "", "", "", ""));
-            allArrayList.add(new All("They are all fine", "Wɔn nyinaa ho yɛ", "", "", "", ""));
-
-
-            allArrayList.add(new All("I am happy to meet you", "M'ani agye sɛ mahyia wo", "", "", "", ""));
-            allArrayList.add(new All("Welcome", "Akwaaba", "", "", "", ""));
-            allArrayList.add(new All("I bid you welcome", "Mema wo akwaaba", "", "", "", ""));
-            allArrayList.add(new All("I am happy", "M'ani agye", "", "", "", ""));
-            allArrayList.add(new All("I am sad", "Me werɛ ahow", "", "", "", ""));
-
-            allArrayList.add(new All("Stop crying", "Gyae su", "", "", "", ""));
+                allArrayList.add(new All("She is fine", "Ne ho yɛ", "", "", "", ""));
+                allArrayList.add(new All("He is fine", "Ne ho yɛ", "", "", "", ""));
+                allArrayList.add(new All("They are fine", "Wɔn ho yɛ", "", "", "", ""));
+                allArrayList.add(new All("They are all fine", "Wɔn nyinaa ho yɛ", "", "", "", ""));
 
 
-            allArrayList.add(new All("Please (1)", "Mepa wo kyɛw", "", "", "", ""));
-            allArrayList.add(new All("Please (2)", "Mesrɛ wo", "", "", "", ""));
-            allArrayList.add(new All("Thank you (1)", "Medaase", "", "", "", ""));
-            allArrayList.add(new All("Thank you (2)", "Me da wo ase", "", "", "", ""));
-            allArrayList.add(new All("I miss you", "Mafe wo", "", "", "", ""));
-            allArrayList.add(new All("I will miss you", "Mɛfe wo", "", "", "", ""));
-            allArrayList.add(new All("We will miss you", "Yɛbɛfe wo", "", "", "", ""));
-            allArrayList.add(new All("We will miss you (Plural)", "Yɛbɛfe mo", "", "", "", ""));
-            allArrayList.add(new All("Love", "Ɔdɔ", "", "", "", ""));
-            allArrayList.add(new All("I love you", "Me dɔ wo", "", "", "", ""));
-            allArrayList.add(new All("We love you", "Yɛdɔ mo", "", "", "", ""));
-            allArrayList.add(new All("Do you love me?", "Wo dɔ me?", "", "", "", ""));
-            allArrayList.add(new All("Yes", "Aane", "", "", "", ""));
-            allArrayList.add(new All("No", "Dabi", "", "", "", ""));
-            allArrayList.add(new All("My name is Kwaku (1)", "Yɛfrɛ me Kwaku", "", "", "", ""));
-            allArrayList.add(new All("My name is Kwaku (2)", "Me din de Kwaku", "", "", "", ""));
-            allArrayList.add(new All("What is your name? (1)", "Yɛfrɛ wo sɛn?", "", "", "", ""));
-            allArrayList.add(new All("What is your name? (2)", "Wo din de sɛn?", "", "", "", ""));
+                allArrayList.add(new All("I am happy to meet you", "M'ani agye sɛ mahyia wo", "", "", "", ""));
+                allArrayList.add(new All("Welcome", "Akwaaba", "", "", "", ""));
+                allArrayList.add(new All("I bid you welcome", "Mema wo akwaaba", "", "", "", ""));
+                allArrayList.add(new All("I am happy", "M'ani agye", "", "", "", ""));
+                allArrayList.add(new All("I am sad", "Me werɛ ahow", "", "", "", ""));
 
-            allArrayList.add(new All("How old are you?", "Wadi mfe sɛn?", "", "", "", ""));
-            allArrayList.add(new All("I am 30 years old", "Madi mfe aduasa", "", "", "", ""));
-            allArrayList.add(new All("Call me", "Frɛ me", "", "", "", ""));
-            allArrayList.add(new All("Do you speak English?", "Wo ka borɔfo?", "", "", "", ""));
+                allArrayList.add(new All("Stop crying", "Gyae su", "", "", "", ""));
+                allArrayList.add(new All("Please (1)", "Mepa wo kyɛw", "", "", "", ""));
+                allArrayList.add(new All("Please (2)", "Mesrɛ wo", "", "", "", ""));
+                allArrayList.add(new All("Thank you (1)", "Medaase", "", "", "", ""));
+                allArrayList.add(new All("Thank you (2)", "Me da wo ase", "", "", "", ""));
+                allArrayList.add(new All("I miss you", "Mafe wo", "", "", "", ""));
+                allArrayList.add(new All("I will miss you", "Mɛfe wo", "", "", "", ""));
+                allArrayList.add(new All("We will miss you", "Yɛbɛfe wo", "", "", "", ""));
+                allArrayList.add(new All("We will miss you (Plural)", "Yɛbɛfe mo", "", "", "", ""));
+                allArrayList.add(new All("Love", "Ɔdɔ", "", "", "", ""));
+                allArrayList.add(new All("I love you", "Me dɔ wo", "", "", "", ""));
+                allArrayList.add(new All("We love you", "Yɛdɔ mo", "", "", "", ""));
+                allArrayList.add(new All("Do you love me?", "Wo dɔ me?", "", "", "", ""));
+                allArrayList.add(new All("Yes", "Aane", "", "", "", ""));
+                allArrayList.add(new All("No", "Dabi", "", "", "", ""));
+                allArrayList.add(new All("My name is Kwaku (1)", "Yɛfrɛ me Kwaku", "", "", "", ""));
+                allArrayList.add(new All("My name is Kwaku (2)", "Me din de Kwaku", "", "", "", ""));
+                allArrayList.add(new All("What is your name? (1)", "Yɛfrɛ wo sɛn?", "", "", "", ""));
+                allArrayList.add(new All("What is your name? (2)", "Wo din de sɛn?", "", "", "", ""));
 
-
-            allArrayList.add(new All("Do you understand English?", "Wo te borɔfo?", "", "", "", ""));
-            allArrayList.add(new All("Say it in English", "Ka no borɔfo", "", "", "", ""));
-            allArrayList.add(new All("I am lost", "Mayera", "", "", "", ""));
-            allArrayList.add(new All("Show me the way", "Kyerɛ me kwan no", "", "", "", ""));
-            allArrayList.add(new All("Where is the toilet?", "Agyananbea no wɔ he?", "", "", "", ""));
-
-            allArrayList.add(new All("I am sick", "Me yare", "", "", "", ""));
-            allArrayList.add(new All("Help me", "Boa me", "", "", "", ""));
-            allArrayList.add(new All("Help us", "Boa yɛn", "", "", "", ""));
-            allArrayList.add(new All("I need help", "Me hia mmoa", "", "", "", ""));
-            allArrayList.add(new All("Sorry (1)", "Kafra", "", "", "", ""));
-            allArrayList.add(new All("Sorry (2)", "Kosɛ", "", "", "", ""));
+                allArrayList.add(new All("How old are you?", "Wadi mfe sɛn?", "", "", "", ""));
+                allArrayList.add(new All("I am 30 years old", "Madi mfe aduasa", "", "", "", ""));
+                allArrayList.add(new All("Call me", "Frɛ me", "", "", "", ""));
+                allArrayList.add(new All("Do you speak English?", "Wo ka borɔfo?", "", "", "", ""));
 
 
-            allArrayList.add(new All("I need money", "Me hia sika", "", "", "", ""));
-            allArrayList.add(new All("Do you have money", "Wowɔ sika?", "", "", "", ""));
+                allArrayList.add(new All("Do you understand English?", "Wo te borɔfo?", "", "", "", ""));
+                allArrayList.add(new All("Say it in English", "Ka no borɔfo", "", "", "", ""));
+                allArrayList.add(new All("I am lost", "Mayera", "", "", "", ""));
+                allArrayList.add(new All("Show me the way", "Kyerɛ me kwan no", "", "", "", ""));
+                allArrayList.add(new All("Where is the toilet?", "Agyananbea no wɔ he?", "", "", "", ""));
 
-            allArrayList.add(new All("Congratulations", "Ayekoo", "", "", "", ""));
-            allArrayList.add(new All("See you soon", "Ɛrenkyɛ mehu wo", "", "", "", ""));
-            allArrayList.add(new All("Give me a hug", "Yɛ me atuu", "", "", "", ""));
+                allArrayList.add(new All("I am sick", "Me yare", "", "", "", ""));
+                allArrayList.add(new All("Help me", "Boa me", "", "", "", ""));
+                allArrayList.add(new All("Help us", "Boa yɛn", "", "", "", ""));
+                allArrayList.add(new All("I need help", "Me hia mmoa", "", "", "", ""));
+                allArrayList.add(new All("Sorry (1)", "Kafra", "", "", "", ""));
+                allArrayList.add(new All("Sorry (2)", "Kosɛ", "", "", "", ""));
 
+
+                allArrayList.add(new All("I need money", "Me hia sika", "", "", "", ""));
+                allArrayList.add(new All("Do you have money", "Wowɔ sika?", "", "", "", ""));
+
+                allArrayList.add(new All("Congratulations", "Ayekoo", "", "", "", ""));
+                allArrayList.add(new All("See you soon", "Ɛrenkyɛ mehu wo", "", "", "", ""));
+                allArrayList.add(new All("Give me a hug", "Yɛ me atuu", "", "", "", ""));
+            }
 
             //COLOURS
-
-            allArrayList.add(new All("Colour (1)", "Ahosu", "", "", "", ""));
-            allArrayList.add(new All("Colour (2)", "Kɔla", "", "", "", ""));
-            allArrayList.add(new All("What colour is it?", "Ɛyɛ kɔla bɛn?", "", "", "", ""));
-            allArrayList.add(new All("Red", "Kɔkɔɔ", "", "", "", ""));
-            allArrayList.add(new All("Black", "Tuntum", "", "", "", ""));
-            allArrayList.add(new All("White (1)", "Fitaa", "", "", "", ""));
-            allArrayList.add(new All("White (2)", "Fufuo", "", "", "", ""));
-            allArrayList.add(new All("Green", "Ahabammono", "", "", "", ""));
-            allArrayList.add(new All("Blue", "Bruu", "", "", "", ""));
-            allArrayList.add(new All("Brown", "Dodowee", "", "", "", ""));
-            allArrayList.add(new All("Grey", "Nsonso", "", "", "", ""));
-            allArrayList.add(new All("Ash", "Nsonso", "", "", "", ""));
-            allArrayList.add(new All("Yellow", "Akokɔsrade", "", "", "", ""));
-            allArrayList.add(new All("Spotted", "Nsisimu", "", "", "", ""));
-            allArrayList.add(new All("Purple (1)", "Beredum", "", "", "", ""));
-            allArrayList.add(new All("Purple (2)", "Afasebiri", "", "", "", ""));
-            allArrayList.add(new All("Pink", "Memen", "", "", "", ""));
-            allArrayList.add(new All("Dark", "Sum", "", "", "", ""));
+            {
+                allArrayList.add(new All("Colour (1)", "Ahosu", "", "", "", ""));
+                allArrayList.add(new All("Colour (2)", "Kɔla", "", "", "", ""));
+                allArrayList.add(new All("What colour is it?", "Ɛyɛ kɔla bɛn?", "", "", "", ""));
+                allArrayList.add(new All("Red", "Kɔkɔɔ", "", "", "", ""));
+                allArrayList.add(new All("Black", "Tuntum", "", "", "", ""));
+                allArrayList.add(new All("White (1)", "Fitaa", "", "", "", ""));
+                allArrayList.add(new All("White (2)", "Fufuo", "", "", "", ""));
+                allArrayList.add(new All("Green", "Ahabammono", "", "", "", ""));
+                allArrayList.add(new All("Blue", "Bruu", "", "", "", ""));
+                allArrayList.add(new All("Brown", "Dodowee", "", "", "", ""));
+                allArrayList.add(new All("Grey", "Nsonso", "", "", "", ""));
+                allArrayList.add(new All("Ash", "Nsonso", "", "", "", ""));
+                allArrayList.add(new All("Yellow", "Akokɔsrade", "", "", "", ""));
+                allArrayList.add(new All("Spotted", "Nsisimu", "", "", "", ""));
+                allArrayList.add(new All("Purple (1)", "Beredum", "", "", "", ""));
+                allArrayList.add(new All("Purple (2)", "Afasebiri", "", "", "", ""));
+                allArrayList.add(new All("Pink", "Memen", "", "", "", ""));
+                allArrayList.add(new All("Dark", "Sum", "", "", "", ""));
+            }
 
             //DAYS OF WEEK
-
-            allArrayList.add(new All("Monday", "Dwoada", "", "", "", ""));
-            allArrayList.add(new All("Tuesday", "Benada", "", "", "", ""));
-            allArrayList.add(new All("Wednesday", "Wukuada", "", "", "", ""));
-            allArrayList.add(new All("Thursday", "Yawada", "", "", "", ""));
-            allArrayList.add(new All("Friday", "Fiada", "", "", "", ""));
-            allArrayList.add(new All("Saturday", "Memeneda", "", "", "", ""));
-            allArrayList.add(new All("Sunday", "Kwasiada", "", "", "", ""));
-
+            {
+                allArrayList.add(new All("Monday", "Dwoada", "", "", "", ""));
+                allArrayList.add(new All("Tuesday", "Benada", "", "", "", ""));
+                allArrayList.add(new All("Wednesday", "Wukuada", "", "", "", ""));
+                allArrayList.add(new All("Thursday", "Yawada", "", "", "", ""));
+                allArrayList.add(new All("Friday", "Fiada", "", "", "", ""));
+                allArrayList.add(new All("Saturday", "Memeneda", "", "", "", ""));
+                allArrayList.add(new All("Sunday", "Kwasiada", "", "", "", ""));
+            }
 
             //TIME
-
-            allArrayList.add(new All("Second", "Anibu", "", "", "", ""));
-            allArrayList.add(new All(" One second", "Anibu baako", "", "", "", ""));
-            allArrayList.add(new All(" Two seconds", "Anibu mmienu", "", "", "", ""));
-
-
-            allArrayList.add(new All("Minute (1)", "Simma", "", "", "", ""));
-            allArrayList.add(new All("Minute (2)", "Miniti", "", "", "", ""));
-            allArrayList.add(new All("One minute", "Simma baako", "", "", "", ""));
-            allArrayList.add(new All("Two minutes", "Simma mmienu", "", "", "", ""));
+            {
+                allArrayList.add(new All("Second", "Anibu", "", "", "", ""));
+                allArrayList.add(new All(" One second", "Anibu baako", "", "", "", ""));
+                allArrayList.add(new All(" Two seconds", "Anibu mmienu", "", "", "", ""));
 
 
-            allArrayList.add(new All("Hour", "Dɔnhwere", "", "", "", ""));
-            allArrayList.add(new All("Hours", "Nnɔnhwere", "", "", "", ""));
-            allArrayList.add(new All("1 hour", "Dɔnhwere baako", "", "", "", ""));
-            allArrayList.add(new All("2 hours", "Nnɔnhwere mmienu", "", "", "", ""));
-
-            allArrayList.add(new All("Day", "Da", "", "", "", ""));
-            allArrayList.add(new All("Days", "Nna", "", "", "", ""));
-            allArrayList.add(new All("One day", "Da koro", "", "", "", ""));
-            allArrayList.add(new All("Two days", "Nnanu", "", "", "", ""));
-            allArrayList.add(new All("Three days", "Nnansa", "", "", "", ""));
-            allArrayList.add(new All("Four days", "Nnanan", "", "", "", ""));
-            allArrayList.add(new All("Five days", "Nnanum", "", "", "", ""));
-            allArrayList.add(new All("Six days", "Nnansia", "", "", "", ""));
-            allArrayList.add(new All("Seven days", "Nnanson", "", "", "", ""));
-
-            allArrayList.add(new All("First day", "Da a edi kan", "", "", "", ""));
-            allArrayList.add(new All("Second day", "Da a ɛtɔ so mmienu", "", "", "", ""));
-            allArrayList.add(new All("Third day", "Da a ɛtɔ so mmiɛnsa", "", "", "", ""));
-
-            allArrayList.add(new All("Week (1)", "Nnawɔtwe", "", "", "", ""));
-            allArrayList.add(new All("Week (2)", "Dapɛn", "", "", "", ""));
-            allArrayList.add(new All("Weeks (1)", "Nnawɔtwe", "", "", "", ""));
-            allArrayList.add(new All("Weeks (2)", "Adapɛn", "", "", "", ""));
-            allArrayList.add(new All("First week", "Nnawɔtwe a edi kan", "", "", "", ""));
-            allArrayList.add(new All("Second week", "Nnawɔtwe a ɛtɔ so mmienu", "", "", "", ""));
-            allArrayList.add(new All("Third week", "Nnawɔtwe a ɛtɔ so mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("Fortnight", "Nnawɔtwe mmienu", "", "", "", ""));
-            allArrayList.add(new All("Next week", "Nnawɔtwe a edi hɔ", "", "", "", ""));
-            allArrayList.add(new All("Last week", "Nnawɔtwe a etwaam", "", "", "", ""));
-            allArrayList.add(new All("Last two weeks", "Nnawɔtwe mmienu a etwaam", "", "", "", ""));
-            allArrayList.add(new All("This week", "Nnawɔtwe yi", "", "", "", ""));
-
-            allArrayList.add(new All("Month (1)", "Ɔsram", "", "", "", ""));
-            allArrayList.add(new All("Month (2)", "Bosome", "", "", "", ""));
-            allArrayList.add(new All("Months", "Abosome", "", "", "", ""));
-            allArrayList.add(new All("This Month", "Bosome yi", "", "", "", ""));
-            allArrayList.add(new All("Last Month", "Bosome a etwaam", "", "", "", ""));
-            allArrayList.add(new All("First Month (2)", "Bosome a edi kan", "", "", "", ""));
-            allArrayList.add(new All("Second Month (2)", "Bosome a ɛtɔ so mmienu", "", "", "", ""));
-
-            allArrayList.add(new All("Year", "Afe", "", "", "", ""));
-            allArrayList.add(new All("Years", "Mfe", "", "", "", ""));
-            allArrayList.add(new All("This year", "Afe yi", "", "", "", ""));
-            allArrayList.add(new All("Last year", "Afe a etwaam", "", "", "", ""));
-            allArrayList.add(new All("A year by this time", "Afe sesɛɛ", "", "", "", ""));
-            allArrayList.add(new All("Next year (1)", "Afedan", "", "", "", ""));
-            allArrayList.add(new All("Next year (2)", "Afe a yebesi mu", "", "", "", ""));
+                allArrayList.add(new All("Minute (1)", "Simma", "", "", "", ""));
+                allArrayList.add(new All("Minute (2)", "Miniti", "", "", "", ""));
+                allArrayList.add(new All("One minute", "Simma baako", "", "", "", ""));
+                allArrayList.add(new All("Two minutes", "Simma mmienu", "", "", "", ""));
 
 
-            allArrayList.add(new All("Today", "Nnɛ", "", "", "", ""));
-            allArrayList.add(new All("Yesterday", "Ɛnnora", "", "", "", ""));
-            allArrayList.add(new All("Tomorrow", "Ɔkyena", "", "", "", ""));
+                allArrayList.add(new All("Hour", "Dɔnhwere", "", "", "", ""));
+                allArrayList.add(new All("Hours", "Nnɔnhwere", "", "", "", ""));
+                allArrayList.add(new All("1 hour", "Dɔnhwere baako", "", "", "", ""));
+                allArrayList.add(new All("2 hours", "Nnɔnhwere mmienu", "", "", "", ""));
 
-            allArrayList.add(new All("When", "Bere bɛn", "", "", "", ""));
-            allArrayList.add(new All("What is the weather?", "Abɔ sɛn?", "", "", "", ""));
-            allArrayList.add(new All("What time is it?", "Abɔ sɛn?", "", "", "", ""));
+                allArrayList.add(new All("Day", "Da", "", "", "", ""));
+                allArrayList.add(new All("Days", "Nna", "", "", "", ""));
+                allArrayList.add(new All("One day", "Da koro", "", "", "", ""));
+                allArrayList.add(new All("Two days", "Nnanu", "", "", "", ""));
+                allArrayList.add(new All("Three days", "Nnansa", "", "", "", ""));
+                allArrayList.add(new All("Four days", "Nnanan", "", "", "", ""));
+                allArrayList.add(new All("Five days", "Nnanum", "", "", "", ""));
+                allArrayList.add(new All("Six days", "Nnansia", "", "", "", ""));
+                allArrayList.add(new All("Seven days", "Nnanson", "", "", "", ""));
+
+                allArrayList.add(new All("First day", "Da a edi kan", "", "", "", ""));
+                allArrayList.add(new All("Second day", "Da a ɛtɔ so mmienu", "", "", "", ""));
+                allArrayList.add(new All("Third day", "Da a ɛtɔ so mmiɛnsa", "", "", "", ""));
+
+                allArrayList.add(new All("Week (1)", "Nnawɔtwe", "", "", "", ""));
+                allArrayList.add(new All("Week (2)", "Dapɛn", "", "", "", ""));
+                allArrayList.add(new All("Weeks (1)", "Nnawɔtwe", "", "", "", ""));
+                allArrayList.add(new All("Weeks (2)", "Adapɛn", "", "", "", ""));
+                allArrayList.add(new All("First week", "Nnawɔtwe a edi kan", "", "", "", ""));
+                allArrayList.add(new All("Second week", "Nnawɔtwe a ɛtɔ so mmienu", "", "", "", ""));
+                allArrayList.add(new All("Third week", "Nnawɔtwe a ɛtɔ so mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("Fortnight", "Nnawɔtwe mmienu", "", "", "", ""));
+                allArrayList.add(new All("Next week", "Nnawɔtwe a edi hɔ", "", "", "", ""));
+                allArrayList.add(new All("Last week", "Nnawɔtwe a etwaam", "", "", "", ""));
+                allArrayList.add(new All("Last two weeks", "Nnawɔtwe mmienu a etwaam", "", "", "", ""));
+                allArrayList.add(new All("This week", "Nnawɔtwe yi", "", "", "", ""));
+
+                allArrayList.add(new All("Month (1)", "Ɔsram", "", "", "", ""));
+                allArrayList.add(new All("Month (2)", "Bosome", "", "", "", ""));
+                allArrayList.add(new All("Months", "Abosome", "", "", "", ""));
+                allArrayList.add(new All("This Month", "Bosome yi", "", "", "", ""));
+                allArrayList.add(new All("Last Month", "Bosome a etwaam", "", "", "", ""));
+                allArrayList.add(new All("First Month (2)", "Bosome a edi kan", "", "", "", ""));
+                allArrayList.add(new All("Second Month (2)", "Bosome a ɛtɔ so mmienu", "", "", "", ""));
+
+                allArrayList.add(new All("Year", "Afe", "", "", "", ""));
+                allArrayList.add(new All("Years", "Mfe", "", "", "", ""));
+                allArrayList.add(new All("This year", "Afe yi", "", "", "", ""));
+                allArrayList.add(new All("Last year", "Afe a etwaam", "", "", "", ""));
+                allArrayList.add(new All("A year by this time", "Afe sesɛɛ", "", "", "", ""));
+                allArrayList.add(new All("Next year (1)", "Afedan", "", "", "", ""));
+                allArrayList.add(new All("Next year (2)", "Afe a yebesi mu", "", "", "", ""));
 
 
-            allArrayList.add(new All("Morning", "Anɔpa", "", "", "", ""));
-            allArrayList.add(new All("This morning", "Anɔpa yi", "", "", "", ""));
+                allArrayList.add(new All("Today", "Nnɛ", "", "", "", ""));
+                allArrayList.add(new All("Yesterday", "Ɛnnora", "", "", "", ""));
+                allArrayList.add(new All("Tomorrow", "Ɔkyena", "", "", "", ""));
 
-            allArrayList.add(new All("Afternoon", "Awia", "", "", "", ""));
-            allArrayList.add(new All("This afternoon", "Awia yi", "", "", "", ""));
-
-            allArrayList.add(new All("Evening", "Anwummere", "", "", "", ""));
-            allArrayList.add(new All("This evening", "Anwummere yi", "", "", "", ""));
-
-            allArrayList.add(new All("Night", "Anadwo", "", "", "", ""));
-            allArrayList.add(new All("This night", "Anadwo yi", "", "", "", ""));
-
-            allArrayList.add(new All("Midnight", "Dasuom", "", "", "", ""));
-
-            allArrayList.add(new All("Dawn", "Anɔpatutu", "", "", "", ""));
+                allArrayList.add(new All("When", "Bere bɛn", "", "", "", ""));
+                allArrayList.add(new All("What is the weather?", "Abɔ sɛn?", "", "", "", ""));
+                allArrayList.add(new All("What time is it?", "Abɔ sɛn?", "", "", "", ""));
 
 
-            allArrayList.add(new All("1 am", "Anɔpa Dɔnkoro", "", "", "", ""));
-            allArrayList.add(new All("1:01", "Dɔnkoro apa ho simma baako", "", "", "", ""));
-            allArrayList.add(new All("1:05", "Dɔnkoro apa ho simma num", "", "", "", ""));
-            allArrayList.add(new All("1:15", "Dɔnkoro apa ho simma dunum", "", "", "", ""));
+                allArrayList.add(new All("Morning", "Anɔpa", "", "", "", ""));
+                allArrayList.add(new All("This morning", "Anɔpa yi", "", "", "", ""));
+
+                allArrayList.add(new All("Afternoon", "Awia", "", "", "", ""));
+                allArrayList.add(new All("This afternoon", "Awia yi", "", "", "", ""));
+
+                allArrayList.add(new All("Evening", "Anwummere", "", "", "", ""));
+                allArrayList.add(new All("This evening", "Anwummere yi", "", "", "", ""));
+
+                allArrayList.add(new All("Night", "Anadwo", "", "", "", ""));
+                allArrayList.add(new All("This night", "Anadwo yi", "", "", "", ""));
+
+                allArrayList.add(new All("Midnight", "Dasuom", "", "", "", ""));
+
+                allArrayList.add(new All("Dawn", "Anɔpatutu", "", "", "", ""));
 
 
-            allArrayList.add(new All("2 am", "Anɔpa Nnɔnmmienu", "", "", "", ""));
-            allArrayList.add(new All("2:30 (1)", "Nnɔnmmienu ne fa", "", "", "", ""));
-            allArrayList.add(new All("2:30 (2)", "Nnɔnmmienu apa ho simma aduasa", "", "", "", ""));
+                allArrayList.add(new All("1 am", "Anɔpa Dɔnkoro", "", "", "", ""));
+                allArrayList.add(new All("1:01", "Dɔnkoro apa ho simma baako", "", "", "", ""));
+                allArrayList.add(new All("1:05", "Dɔnkoro apa ho simma num", "", "", "", ""));
+                allArrayList.add(new All("1:15", "Dɔnkoro apa ho simma dunum", "", "", "", ""));
 
 
-            allArrayList.add(new All("3 am", "Anɔpa Nnɔnmmiɛnsa ", "", "", "", ""));
+                allArrayList.add(new All("2 am", "Anɔpa Nnɔnmmienu", "", "", "", ""));
+                allArrayList.add(new All("2:30 (1)", "Nnɔnmmienu ne fa", "", "", "", ""));
+                allArrayList.add(new All("2:30 (2)", "Nnɔnmmienu apa ho simma aduasa", "", "", "", ""));
 
-            allArrayList.add(new All("4 am", "Anɔpa Nnɔnnan", "", "", "", ""));
-            allArrayList.add(new All("5 am", "Anɔpa Nnɔnnum", "", "", "", ""));
-            allArrayList.add(new All("6 am", "Anɔpa Nnɔnsia", "", "", "", ""));
-            allArrayList.add(new All("7 am", "Anɔpa Nnɔnson", "", "", "", ""));
-            allArrayList.add(new All("8 am", "Anɔpa Nnɔnwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("9 am", "Anɔpa Nnɔnkron", "", "", "", ""));
-            allArrayList.add(new All("10 am", "Anɔpa Nnɔndu", "", "", "", ""));
-            allArrayList.add(new All("11 am", "Anɔpa Nnɔndubaako", "", "", "", ""));
-            allArrayList.add(new All("12 am", "Nnɔndummienu", "", "", "", ""));
-            allArrayList.add(new All("Noon (1)", "Nnɔndummienu", "", "", "", ""));
-            allArrayList.add(new All("Noon (2)", "Owigyinae", "", "", "", ""));
-            allArrayList.add(new All("1 pm", "Awia Dɔnkoro", "", "", "", ""));
-            allArrayList.add(new All("2 pm", "Awia Nnɔnmmienu", "", "", "", ""));
-            allArrayList.add(new All("3 pm", "Awia Nnɔnmmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("4 pm", "Anwummere Nnɔnnan", "", "", "", ""));
-            allArrayList.add(new All("5 pm", "Anwummere Nnɔnnum", "", "", "", ""));
-            allArrayList.add(new All("6 pm", "Anwummere Nnɔnsia", "", "", "", ""));
-            allArrayList.add(new All("7 pm", "Anwummere Nnɔnson", "", "", "", ""));
-            allArrayList.add(new All("8 pm", "Anadwo Nnɔnwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("9 pm", "Anadwo Nnɔnkron", "", "", "", ""));
-            allArrayList.add(new All("10 pm", "Anadwo Nnɔndu", "", "", "", ""));
-            allArrayList.add(new All("11 pm", "Anadwo Nnɔndubaako", "", "", "", ""));
-            allArrayList.add(new All("12 pm (1)", "Anadwo dummienu", "", "", "", ""));
-            allArrayList.add(new All("12 pm (2)", "Dasuom", "", "", "", ""));
 
+                allArrayList.add(new All("3 am", "Anɔpa Nnɔnmmiɛnsa ", "", "", "", ""));
+
+                allArrayList.add(new All("4 am", "Anɔpa Nnɔnnan", "", "", "", ""));
+                allArrayList.add(new All("5 am", "Anɔpa Nnɔnnum", "", "", "", ""));
+                allArrayList.add(new All("6 am", "Anɔpa Nnɔnsia", "", "", "", ""));
+                allArrayList.add(new All("7 am", "Anɔpa Nnɔnson", "", "", "", ""));
+                allArrayList.add(new All("8 am", "Anɔpa Nnɔnwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("9 am", "Anɔpa Nnɔnkron", "", "", "", ""));
+                allArrayList.add(new All("10 am", "Anɔpa Nnɔndu", "", "", "", ""));
+                allArrayList.add(new All("11 am", "Anɔpa Nnɔndubaako", "", "", "", ""));
+                allArrayList.add(new All("12 am", "Nnɔndummienu", "", "", "", ""));
+                allArrayList.add(new All("Noon (1)", "Nnɔndummienu", "", "", "", ""));
+                allArrayList.add(new All("Noon (2)", "Owigyinae", "", "", "", ""));
+                allArrayList.add(new All("1 pm", "Awia Dɔnkoro", "", "", "", ""));
+                allArrayList.add(new All("2 pm", "Awia Nnɔnmmienu", "", "", "", ""));
+                allArrayList.add(new All("3 pm", "Awia Nnɔnmmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("4 pm", "Anwummere Nnɔnnan", "", "", "", ""));
+                allArrayList.add(new All("5 pm", "Anwummere Nnɔnnum", "", "", "", ""));
+                allArrayList.add(new All("6 pm", "Anwummere Nnɔnsia", "", "", "", ""));
+                allArrayList.add(new All("7 pm", "Anwummere Nnɔnson", "", "", "", ""));
+                allArrayList.add(new All("8 pm", "Anadwo Nnɔnwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("9 pm", "Anadwo Nnɔnkron", "", "", "", ""));
+                allArrayList.add(new All("10 pm", "Anadwo Nnɔndu", "", "", "", ""));
+                allArrayList.add(new All("11 pm", "Anadwo Nnɔndubaako", "", "", "", ""));
+                allArrayList.add(new All("12 pm (1)", "Anadwo dummienu", "", "", "", ""));
+                allArrayList.add(new All("12 pm (2)", "Dasuom", "", "", "", ""));
+            }
 
             //WEATHER ARRAY
+            {
+                allArrayList.add(new All("Rain", "Osu", "", "", "", ""));
+                allArrayList.add(new All("It is raining", "Osu retɔ", "", "", "", ""));
+                allArrayList.add(new All("Will it rain today?", "Osu bɛtɔ nnɛ anaa?", "", "", "", ""));
+                allArrayList.add(new All("Did it rain yesterday?", "Osu tɔɔ ɛnnora anaa?", "", "", "", ""));
+                allArrayList.add(new All("It will rain today", "Osu bɛtɔ nnɛ", "", "", "", ""));
+                allArrayList.add(new All("Umbrella", "Kyinneɛ", "", "", "", ""));
+                allArrayList.add(new All("Take the umbrella", "Fa kyinneɛ no", "", "", "", ""));
+                allArrayList.add(new All("It is drizzling", "Osu repetepete", "", "", "", ""));
 
-            allArrayList.add(new All("Rain", "Osu", "", "", "", ""));
-            allArrayList.add(new All("It is raining", "Osu retɔ", "", "", "", ""));
-            allArrayList.add(new All("Will it rain today?", "Osu bɛtɔ nnɛ anaa?", "", "", "", ""));
-            allArrayList.add(new All("Did it rain yesterday?", "Osu tɔɔ ɛnnora anaa?", "", "", "", ""));
-            allArrayList.add(new All("It will rain today", "Osu bɛtɔ nnɛ", "", "", "", ""));
-            allArrayList.add(new All("Umbrella", "Kyinneɛ", "", "", "", ""));
-            allArrayList.add(new All("Take the umbrella", "Fa kyinneɛ no", "", "", "", ""));
-            allArrayList.add(new All("It is drizzling", "Osu repetepete", "", "", "", ""));
-
-            allArrayList.add(new All("Snow", "Sukyerɛmma", "", "", "", ""));
-
-
-            allArrayList.add(new All("Sun", "Awia", "", "", "", ""));
-            allArrayList.add(new All("It is sunny", "Awia abɔ", "", "", "", ""));
-            allArrayList.add(new All("It is very sunny", "Awia abɔ paa", "", "", "", ""));
-            allArrayList.add(new All("It is hot today", "Ewiem ayɛ hye nnɛ", "", "", "", ""));
-            allArrayList.add(new All("Sunset", "Owitɔe", "", "", "", ""));
-            allArrayList.add(new All("The sun has set", "Owia no akɔtɔ", "", "", "", ""));
-            allArrayList.add(new All("Sunrise", "Owipue", "", "", "", ""));
-            allArrayList.add(new All("The sun is rising", "Owia no repue", "", "", "", ""));
-            allArrayList.add(new All("The sun has risen", "Owia no apue", "", "", "", ""));
-
-            allArrayList.add(new All("It is warm", "Ahohuru wom", "", "", "", ""));
-            allArrayList.add(new All("I am feeling hot", "Ɔhyew de me", "", "", "", ""));
-            allArrayList.add(new All("I am feeling warm", "Ahohuru de me", "", "", "", ""));
-            allArrayList.add(new All("It is cold", "Awɔw wom", "", "", "", ""));
-            allArrayList.add(new All("It is very cold", "Awɔw wom paa", "", "", "", ""));
-            allArrayList.add(new All("I am feeling cold", "Awɔw de me", "", "", "", ""));
-            allArrayList.add(new All("It is very chilly", "Awɔw wom paa", "", "", "", ""));
-
-            allArrayList.add(new All("Lightning", "Anyinam", "", "", "", ""));
-            allArrayList.add(new All("Thunder", "Apranaa", "", "", "", ""));
-            allArrayList.add(new All("Cloud", "Mununkum", "", "", "", ""));
-            allArrayList.add(new All("Rain clouds have formed", "Osu amuna", "", "", "", ""));
-            allArrayList.add(new All("It is cloudy", "Ewiem ayɛ kusuu", "", "", "", ""));
-            allArrayList.add(new All("Wind", "Mframa", "", "", "", ""));
-            allArrayList.add(new All("It is windy", "Mframa rebɔ", "", "", "", ""));
-            allArrayList.add(new All("It is very windy", "Mframa rebɔ paa", "", "", "", ""));
-
-            allArrayList.add(new All("Sky (1)", "Soro", "", "", "", ""));
-            allArrayList.add(new All("Sky (2)", "Ewiem", "", "", "", ""));
-            allArrayList.add(new All("Weather", "Ewiem tebea", "", "", "", ""));
-            allArrayList.add(new All("How is the weather like?", "Ewiem tebea te sɛn?", "", "", "", ""));
-            allArrayList.add(new All("What will the weather be like today?", "Ɛnnɛ ewiem tebea bɛyɛ sɛn?", "", "", "", ""));
-            allArrayList.add(new All("Weather changes", "Ewiem nsakrae", "", "", "", ""));
-            allArrayList.add(new All("Stars", "Nsoromma", "", "", "", ""));
-            allArrayList.add(new All("The stars are glittering", "Nsoromma no rehyerɛn", "", "", "", ""));
-
-            allArrayList.add(new All("Misty", "Ɛbɔ", "", "", "", ""));
-            allArrayList.add(new All("It is misty", "Ɛbɔ asi", "", "", "", ""));
-
-            allArrayList.add(new All("Harmattan", "Ɔpɛ", "", "", "", ""));
-            allArrayList.add(new All("Harmattan is here", "Ɔpɛ asi", "", "", "", ""));
-
-            allArrayList.add(new All("Shade", "Onwunu", "", "", "", ""));
-            allArrayList.add(new All("Storm", "Ahum", "", "", "", ""));
-            allArrayList.add(new All("Rainbow", "Nyankontɔn", "", "", "", ""));
-            allArrayList.add(new All("I saw the rainbow", "Me huu nyankontɔn no", "", "", "", ""));
+                allArrayList.add(new All("Snow", "Sukyerɛmma", "", "", "", ""));
 
 
-            allArrayList.add(new All("Moon", "Bosome", "", "", "", ""));
+                allArrayList.add(new All("Sun", "Awia", "", "", "", ""));
+                allArrayList.add(new All("It is sunny", "Awia abɔ", "", "", "", ""));
+                allArrayList.add(new All("It is very sunny", "Awia abɔ paa", "", "", "", ""));
+                allArrayList.add(new All("It is hot today", "Ewiem ayɛ hye nnɛ", "", "", "", ""));
+                allArrayList.add(new All("Sunset", "Owitɔe", "", "", "", ""));
+                allArrayList.add(new All("The sun has set", "Owia no akɔtɔ", "", "", "", ""));
+                allArrayList.add(new All("Sunrise", "Owipue", "", "", "", ""));
+                allArrayList.add(new All("The sun is rising", "Owia no repue", "", "", "", ""));
+                allArrayList.add(new All("The sun has risen", "Owia no apue", "", "", "", ""));
 
+                allArrayList.add(new All("It is warm", "Ahohuru wom", "", "", "", ""));
+                allArrayList.add(new All("I am feeling hot", "Ɔhyew de me", "", "", "", ""));
+                allArrayList.add(new All("I am feeling warm", "Ahohuru de me", "", "", "", ""));
+                allArrayList.add(new All("It is cold", "Awɔw wom", "", "", "", ""));
+                allArrayList.add(new All("It is very cold", "Awɔw wom paa", "", "", "", ""));
+                allArrayList.add(new All("I am feeling cold", "Awɔw de me", "", "", "", ""));
+                allArrayList.add(new All("It is very chilly", "Awɔw wom paa", "", "", "", ""));
+
+                allArrayList.add(new All("Lightning", "Anyinam", "", "", "", ""));
+                allArrayList.add(new All("Thunder", "Apranaa", "", "", "", ""));
+                allArrayList.add(new All("Cloud", "Mununkum", "", "", "", ""));
+                allArrayList.add(new All("Rain clouds have formed", "Osu amuna", "", "", "", ""));
+                allArrayList.add(new All("It is cloudy", "Ewiem ayɛ kusuu", "", "", "", ""));
+                allArrayList.add(new All("Wind", "Mframa", "", "", "", ""));
+                allArrayList.add(new All("It is windy", "Mframa rebɔ", "", "", "", ""));
+                allArrayList.add(new All("It is very windy", "Mframa rebɔ paa", "", "", "", ""));
+
+                allArrayList.add(new All("Sky (1)", "Soro", "", "", "", ""));
+                allArrayList.add(new All("Sky (2)", "Ewiem", "", "", "", ""));
+                allArrayList.add(new All("Weather", "Ewiem tebea", "", "", "", ""));
+                allArrayList.add(new All("How is the weather like?", "Ewiem tebea te sɛn?", "", "", "", ""));
+                allArrayList.add(new All("What will the weather be like today?", "Ɛnnɛ ewiem tebea bɛyɛ sɛn?", "", "", "", ""));
+                allArrayList.add(new All("Weather changes", "Ewiem nsakrae", "", "", "", ""));
+                allArrayList.add(new All("Stars", "Nsoromma", "", "", "", ""));
+                allArrayList.add(new All("The stars are glittering", "Nsoromma no rehyerɛn", "", "", "", ""));
+
+                allArrayList.add(new All("Misty", "Ɛbɔ", "", "", "", ""));
+                allArrayList.add(new All("It is misty", "Ɛbɔ asi", "", "", "", ""));
+
+                allArrayList.add(new All("Harmattan", "Ɔpɛ", "", "", "", ""));
+                allArrayList.add(new All("Harmattan is here", "Ɔpɛ asi", "", "", "", ""));
+
+                allArrayList.add(new All("Shade", "Onwunu", "", "", "", ""));
+                allArrayList.add(new All("Storm", "Ahum", "", "", "", ""));
+                allArrayList.add(new All("Rainbow", "Nyankontɔn", "", "", "", ""));
+                allArrayList.add(new All("I saw the rainbow", "Me huu nyankontɔn no", "", "", "", ""));
+
+
+                allArrayList.add(new All("Moon", "Bosome", "", "", "", ""));
+            }
 
             //NUMBERS
+            {
 
-            allArrayList.add(new All("0", "Hwee/Ohunu", "", "", "", ""));
-            allArrayList.add(new All("1", "Baako", "", "", "", ""));
-            allArrayList.add(new All("2", "Mmienu", "", "", "", ""));
-            allArrayList.add(new All("3", "Mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("4", "Ɛnan", "", "", "", ""));
-            allArrayList.add(new All("5", "Enum", "", "", "", ""));
-            allArrayList.add(new All("6", "Nsia", "", "", "", ""));
-            allArrayList.add(new All("7", "Nson", "", "", "", ""));
-            allArrayList.add(new All("8", "Nwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("9", "Nkron", "", "", "", ""));
-            allArrayList.add(new All("10", "Du", "", "", "", ""));
+                allArrayList.add(new All("0", "Hwee/Ohunu", "", "", "", ""));
+                allArrayList.add(new All("1", "Baako", "", "", "", ""));
+                allArrayList.add(new All("2", "Mmienu", "", "", "", ""));
+                allArrayList.add(new All("3", "Mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("4", "Ɛnan", "", "", "", ""));
+                allArrayList.add(new All("5", "Enum", "", "", "", ""));
+                allArrayList.add(new All("6", "Nsia", "", "", "", ""));
+                allArrayList.add(new All("7", "Nson", "", "", "", ""));
+                allArrayList.add(new All("8", "Nwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("9", "Nkron", "", "", "", ""));
+                allArrayList.add(new All("10", "Du", "", "", "", ""));
 
-            allArrayList.add(new All("11", "Dubaako", "", "", "", ""));
-            allArrayList.add(new All("12", "Dummienu", "", "", "", ""));
-            allArrayList.add(new All("13", "Dummiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("14", "Dunan", "", "", "", ""));
-            allArrayList.add(new All("15", "Dunum", "", "", "", ""));
-            allArrayList.add(new All("16", "Dunsia", "", "", "", ""));
-            allArrayList.add(new All("17", "Dunson", "", "", "", ""));
-            allArrayList.add(new All("18", "Dunwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("19", "Dunkron", "", "", "", ""));
-            allArrayList.add(new All("20", "Aduonu", "", "", "", ""));
+                allArrayList.add(new All("11", "Dubaako", "", "", "", ""));
+                allArrayList.add(new All("12", "Dummienu", "", "", "", ""));
+                allArrayList.add(new All("13", "Dummiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("14", "Dunan", "", "", "", ""));
+                allArrayList.add(new All("15", "Dunum", "", "", "", ""));
+                allArrayList.add(new All("16", "Dunsia", "", "", "", ""));
+                allArrayList.add(new All("17", "Dunson", "", "", "", ""));
+                allArrayList.add(new All("18", "Dunwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("19", "Dunkron", "", "", "", ""));
+                allArrayList.add(new All("20", "Aduonu", "", "", "", ""));
 
-            allArrayList.add(new All("21", "Aduonu baako", "", "", "", ""));
-            allArrayList.add(new All("22", "Aduonu mmienu", "", "", "", ""));
-            allArrayList.add(new All("23", "Aduonu mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("24", "Aduonu nan", "", "", "", ""));
-            allArrayList.add(new All("25", "Aduonu num", "", "", "", ""));
-            allArrayList.add(new All("26", "Aduonu nsia", "", "", "", ""));
-            allArrayList.add(new All("27", "Aduonu nson", "", "", "", ""));
-            allArrayList.add(new All("28", "Aduonu nwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("29", "Aduonu nkron", "", "", "", ""));
-            allArrayList.add(new All("30", "Aduasa", "", "", "", ""));
-
-
-            allArrayList.add(new All("31", "Aduasa baako", "", "", "", ""));
-            allArrayList.add(new All("32", "Aduasa mmienu", "", "", "", ""));
-            allArrayList.add(new All("33", "Aduasa mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("34", "Aduasa nan", "", "", "", ""));
-            allArrayList.add(new All("35", "Aduasa num", "", "", "", ""));
-            allArrayList.add(new All("36", "Aduasa nsia", "", "", "", ""));
-            allArrayList.add(new All("37", "Aduasa nson", "", "", "", ""));
-            allArrayList.add(new All("38", "Aduasa nwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("39", "Aduasa nkron", "", "", "", ""));
-            allArrayList.add(new All("40", "Aduanan", "", "", "", ""));
-
-            allArrayList.add(new All("41", "Aduanan baako", "", "", "", ""));
-            allArrayList.add(new All("42", "Aduanan mmienu", "", "", "", ""));
-            allArrayList.add(new All("43", "Aduanan mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("44", "Aduanan nan", "", "", "", ""));
-            allArrayList.add(new All("45", "Aduanan num", "", "", "", ""));
-            allArrayList.add(new All("46", "Aduanan nsia", "", "", "", ""));
-            allArrayList.add(new All("47", "Aduanan nson", "", "", "", ""));
-            allArrayList.add(new All("48", "Aduanan nwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("49", "Aduanan nkron", "", "", "", ""));
-            allArrayList.add(new All("50", "Aduonum", "", "", "", ""));
-
-            allArrayList.add(new All("51", "Aduonum baako", "", "", "", ""));
-            allArrayList.add(new All("52", "Aduonum mmienu", "", "", "", ""));
-            allArrayList.add(new All("53", "Aduonum mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("54", "Aduonum nan", "", "", "", ""));
-            allArrayList.add(new All("55", "Aduonum num", "", "", "", ""));
-            allArrayList.add(new All("56", "Aduonum nsia", "", "", "", ""));
-            allArrayList.add(new All("57", "Aduonum nson", "", "", "", ""));
-            allArrayList.add(new All("58", "Aduonum nwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("59", "Aduonum nkron", "", "", "", ""));
-            allArrayList.add(new All("60", "Aduosia", "", "", "", ""));
-
-            allArrayList.add(new All("61", "Aduosia baako", "", "", "", ""));
-            allArrayList.add(new All("62", "Aduosia mmienu", "", "", "", ""));
-            allArrayList.add(new All("63", "Aduosia mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("64", "Aduosia nan", "", "", "", ""));
-            allArrayList.add(new All("65", "Aduosia num", "", "", "", ""));
-            allArrayList.add(new All("66", "Aduosia nsia", "", "", "", ""));
-            allArrayList.add(new All("67", "Aduosia nson", "", "", "", ""));
-            allArrayList.add(new All("68", "Aduosia nwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("69", "Aduosia nkron", "", "", "", ""));
-            allArrayList.add(new All("70", "Aduoson", "", "", "", ""));
-
-            allArrayList.add(new All("71", "Aduoson baako", "", "", "", ""));
-            allArrayList.add(new All("72", "Aduoson mmienu", "", "", "", ""));
-            allArrayList.add(new All("73", "Aduoson mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("74", "Aduoson nan", "", "", "", ""));
-            allArrayList.add(new All("75", "Aduoson num", "", "", "", ""));
-            allArrayList.add(new All("76", "Aduoson nsia", "", "", "", ""));
-            allArrayList.add(new All("77", "Aduoson nson", "", "", "", ""));
-            allArrayList.add(new All("78", "Aduoson nwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("79", "Aduoson nkron", "", "", "", ""));
-            allArrayList.add(new All("80", "Aduowɔtwe", "", "", "", ""));
-
-            allArrayList.add(new All("81", "Aduowɔtwe baako", "", "", "", ""));
-            allArrayList.add(new All("82", "Aduowɔtwe mmienu", "", "", "", ""));
-            allArrayList.add(new All("83", "Aduowɔtwe mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("84", "Aduowɔtwe nan", "", "", "", ""));
-            allArrayList.add(new All("85", "Aduowɔtwe num", "", "", "", ""));
-            allArrayList.add(new All("86", "Aduowɔtwe nsia", "", "", "", ""));
-            allArrayList.add(new All("87", "Aduowɔtwe nson", "", "", "", ""));
-            allArrayList.add(new All("88", "Aduowɔtwe nwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("89", "Aduowɔtwe nkron", "", "", "", ""));
-            allArrayList.add(new All("90", "Aduokron", "", "", "", ""));
-
-            allArrayList.add(new All("91", "Aduokron baako", "", "", "", ""));
-            allArrayList.add(new All("92", "Aduokron mmienu", "", "", "", ""));
-            allArrayList.add(new All("93", "Aduokron mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("94", "Aduokron nan", "", "", "", ""));
-            allArrayList.add(new All("95", "Aduokron num", "", "", "", ""));
-            allArrayList.add(new All("96", "Aduokron nsia", "", "", "", ""));
-            allArrayList.add(new All("97", "Aduokron nson", "", "", "", ""));
-            allArrayList.add(new All("98", "Aduokron nwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("99", "Aduokron nkron", "", "", "", ""));
-            allArrayList.add(new All("100", "Ɔha", "", "", "", ""));
-
-            allArrayList.add(new All("101", "Ɔha ne baako", "", "", "", ""));
-            allArrayList.add(new All("102", "Ɔha ne mmienu", "", "", "", ""));
-            allArrayList.add(new All("103", "Ɔha ne mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("104", "Ɔha ne nan", "", "", "", ""));
-            allArrayList.add(new All("105", "Ɔha ne num", "", "", "", ""));
-            allArrayList.add(new All("106", "Ɔha ne nsia", "", "", "", ""));
-            allArrayList.add(new All("107", "Ɔha ne nson", "", "", "", ""));
-            allArrayList.add(new All("108", "Ɔha ne nwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("109", "Ɔha ne nkron", "", "", "", ""));
-            allArrayList.add(new All("110", "Ɔha ne du", "", "", "", ""));
-
-            allArrayList.add(new All("111", "Ɔha ne dubaako", "", "", "", ""));
-            allArrayList.add(new All("112", "Ɔha ne dummienu", "", "", "", ""));
-            allArrayList.add(new All("113", "Ɔha ne dummiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("114", "Ɔha ne dunan", "", "", "", ""));
-            allArrayList.add(new All("115", "Ɔha ne dunum", "", "", "", ""));
-            allArrayList.add(new All("116", "Ɔha ne dunsia", "", "", "", ""));
-            allArrayList.add(new All("117", "Ɔha ne dunson", "", "", "", ""));
-            allArrayList.add(new All("118", "Ɔha ne dunwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("119", "Ɔha ne dunkron", "", "", "", ""));
-            allArrayList.add(new All("120", "Ɔha aduonu", "", "", "", ""));
+                allArrayList.add(new All("21", "Aduonu baako", "", "", "", ""));
+                allArrayList.add(new All("22", "Aduonu mmienu", "", "", "", ""));
+                allArrayList.add(new All("23", "Aduonu mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("24", "Aduonu nan", "", "", "", ""));
+                allArrayList.add(new All("25", "Aduonu num", "", "", "", ""));
+                allArrayList.add(new All("26", "Aduonu nsia", "", "", "", ""));
+                allArrayList.add(new All("27", "Aduonu nson", "", "", "", ""));
+                allArrayList.add(new All("28", "Aduonu nwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("29", "Aduonu nkron", "", "", "", ""));
+                allArrayList.add(new All("30", "Aduasa", "", "", "", ""));
 
 
-            allArrayList.add(new All("121", "Ɔha aduonu baako", "", "", "", ""));
-            allArrayList.add(new All("122", "Ɔha aduonu mmienu", "", "", "", ""));
-            allArrayList.add(new All("123", "Ɔha aduonu mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("124", "Ɔha aduonu nan", "", "", "", ""));
-            allArrayList.add(new All("125", "Ɔha aduonu num", "", "", "", ""));
+                allArrayList.add(new All("31", "Aduasa baako", "", "", "", ""));
+                allArrayList.add(new All("32", "Aduasa mmienu", "", "", "", ""));
+                allArrayList.add(new All("33", "Aduasa mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("34", "Aduasa nan", "", "", "", ""));
+                allArrayList.add(new All("35", "Aduasa num", "", "", "", ""));
+                allArrayList.add(new All("36", "Aduasa nsia", "", "", "", ""));
+                allArrayList.add(new All("37", "Aduasa nson", "", "", "", ""));
+                allArrayList.add(new All("38", "Aduasa nwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("39", "Aduasa nkron", "", "", "", ""));
+                allArrayList.add(new All("40", "Aduanan", "", "", "", ""));
 
-            allArrayList.add(new All("130", "Ɔha aduasa", "", "", "", ""));
-            allArrayList.add(new All("140", "Ɔha aduanan", "", "", "", ""));
-            allArrayList.add(new All("150", "Ɔha aduonum", "", "", "", ""));
-            allArrayList.add(new All("160", "Ɔha aduosia", "", "", "", ""));
-            allArrayList.add(new All("170", "Ɔha aduoson", "", "", "", ""));
-            allArrayList.add(new All("180", "Ɔha aduowɔtwe", "", "", "", ""));
-            allArrayList.add(new All("190", "Ɔha aduokron", "", "", "", ""));
-            allArrayList.add(new All("200", "Ahanu", "", "", "", ""));
+                allArrayList.add(new All("41", "Aduanan baako", "", "", "", ""));
+                allArrayList.add(new All("42", "Aduanan mmienu", "", "", "", ""));
+                allArrayList.add(new All("43", "Aduanan mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("44", "Aduanan nan", "", "", "", ""));
+                allArrayList.add(new All("45", "Aduanan num", "", "", "", ""));
+                allArrayList.add(new All("46", "Aduanan nsia", "", "", "", ""));
+                allArrayList.add(new All("47", "Aduanan nson", "", "", "", ""));
+                allArrayList.add(new All("48", "Aduanan nwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("49", "Aduanan nkron", "", "", "", ""));
+                allArrayList.add(new All("50", "Aduonum", "", "", "", ""));
 
+                allArrayList.add(new All("51", "Aduonum baako", "", "", "", ""));
+                allArrayList.add(new All("52", "Aduonum mmienu", "", "", "", ""));
+                allArrayList.add(new All("53", "Aduonum mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("54", "Aduonum nan", "", "", "", ""));
+                allArrayList.add(new All("55", "Aduonum num", "", "", "", ""));
+                allArrayList.add(new All("56", "Aduonum nsia", "", "", "", ""));
+                allArrayList.add(new All("57", "Aduonum nson", "", "", "", ""));
+                allArrayList.add(new All("58", "Aduonum nwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("59", "Aduonum nkron", "", "", "", ""));
+                allArrayList.add(new All("60", "Aduosia", "", "", "", ""));
 
-            allArrayList.add(new All("201", "Ahanu ne baako", "", "", "", ""));
-            allArrayList.add(new All("202", "Ahanu ne mmienu", "", "", "", ""));
-            allArrayList.add(new All("203", "Ahanu ne mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("204", "Ahanu ne nan", "", "", "", ""));
-            allArrayList.add(new All("205", "Ahanu ne num", "", "", "", ""));
-            allArrayList.add(new All("206", "Ahanu ne nsia", "", "", "", ""));
-            allArrayList.add(new All("207", "Ahanu ne nson", "", "", "", ""));
-            allArrayList.add(new All("208", "Ahanu ne nwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("209", "Ahanu ne nkron", "", "", "", ""));
-            allArrayList.add(new All("210", "Ahanu ne du", "", "", "", ""));
-            allArrayList.add(new All("211", "Ahanu ne dubaako", "", "", "", ""));
+                allArrayList.add(new All("61", "Aduosia baako", "", "", "", ""));
+                allArrayList.add(new All("62", "Aduosia mmienu", "", "", "", ""));
+                allArrayList.add(new All("63", "Aduosia mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("64", "Aduosia nan", "", "", "", ""));
+                allArrayList.add(new All("65", "Aduosia num", "", "", "", ""));
+                allArrayList.add(new All("66", "Aduosia nsia", "", "", "", ""));
+                allArrayList.add(new All("67", "Aduosia nson", "", "", "", ""));
+                allArrayList.add(new All("68", "Aduosia nwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("69", "Aduosia nkron", "", "", "", ""));
+                allArrayList.add(new All("70", "Aduoson", "", "", "", ""));
 
-            allArrayList.add(new All("220", "Ahanu aduonu", "", "", "", ""));
-            allArrayList.add(new All("221", "Ahanu aduonu baako", "", "", "", ""));
-            allArrayList.add(new All("230", "Ahanu aduasa", "", "", "", ""));
-            allArrayList.add(new All("240", "Ahanu aduanan", "", "", "", ""));
-            allArrayList.add(new All("250", "Ahanu aduonum", "", "", "", ""));
+                allArrayList.add(new All("71", "Aduoson baako", "", "", "", ""));
+                allArrayList.add(new All("72", "Aduoson mmienu", "", "", "", ""));
+                allArrayList.add(new All("73", "Aduoson mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("74", "Aduoson nan", "", "", "", ""));
+                allArrayList.add(new All("75", "Aduoson num", "", "", "", ""));
+                allArrayList.add(new All("76", "Aduoson nsia", "", "", "", ""));
+                allArrayList.add(new All("77", "Aduoson nson", "", "", "", ""));
+                allArrayList.add(new All("78", "Aduoson nwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("79", "Aduoson nkron", "", "", "", ""));
+                allArrayList.add(new All("80", "Aduowɔtwe", "", "", "", ""));
 
-            allArrayList.add(new All("300", "Ahasa", "", "", "", ""));
-            allArrayList.add(new All("400", "Ahanan", "", "", "", ""));
-            allArrayList.add(new All("500", "Ahanum", "", "", "", ""));
-            allArrayList.add(new All("600", "Ahansia", "", "", "", ""));
-            allArrayList.add(new All("700", "Ahanson", "", "", "", ""));
-            allArrayList.add(new All("800", "Ahanwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("900", "Ahankron", "", "", "", ""));
-            allArrayList.add(new All("1000", "Apem", "", "", "", ""));
+                allArrayList.add(new All("81", "Aduowɔtwe baako", "", "", "", ""));
+                allArrayList.add(new All("82", "Aduowɔtwe mmienu", "", "", "", ""));
+                allArrayList.add(new All("83", "Aduowɔtwe mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("84", "Aduowɔtwe nan", "", "", "", ""));
+                allArrayList.add(new All("85", "Aduowɔtwe num", "", "", "", ""));
+                allArrayList.add(new All("86", "Aduowɔtwe nsia", "", "", "", ""));
+                allArrayList.add(new All("87", "Aduowɔtwe nson", "", "", "", ""));
+                allArrayList.add(new All("88", "Aduowɔtwe nwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("89", "Aduowɔtwe nkron", "", "", "", ""));
+                allArrayList.add(new All("90", "Aduokron", "", "", "", ""));
 
+                allArrayList.add(new All("91", "Aduokron baako", "", "", "", ""));
+                allArrayList.add(new All("92", "Aduokron mmienu", "", "", "", ""));
+                allArrayList.add(new All("93", "Aduokron mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("94", "Aduokron nan", "", "", "", ""));
+                allArrayList.add(new All("95", "Aduokron num", "", "", "", ""));
+                allArrayList.add(new All("96", "Aduokron nsia", "", "", "", ""));
+                allArrayList.add(new All("97", "Aduokron nson", "", "", "", ""));
+                allArrayList.add(new All("98", "Aduokron nwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("99", "Aduokron nkron", "", "", "", ""));
+                allArrayList.add(new All("100", "Ɔha", "", "", "", ""));
 
-            allArrayList.add(new All("1001", "Apem ne baako", "", "", "", ""));
-            allArrayList.add(new All("1002", "Apem ne mmienu", "", "", "", ""));
-            allArrayList.add(new All("1003", "Apem ne mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("1004", "Apem ne nan", "", "", "", ""));
-            allArrayList.add(new All("1005", "Apem ne num", "", "", "", ""));
+                allArrayList.add(new All("101", "Ɔha ne baako", "", "", "", ""));
+                allArrayList.add(new All("102", "Ɔha ne mmienu", "", "", "", ""));
+                allArrayList.add(new All("103", "Ɔha ne mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("104", "Ɔha ne nan", "", "", "", ""));
+                allArrayList.add(new All("105", "Ɔha ne num", "", "", "", ""));
+                allArrayList.add(new All("106", "Ɔha ne nsia", "", "", "", ""));
+                allArrayList.add(new All("107", "Ɔha ne nson", "", "", "", ""));
+                allArrayList.add(new All("108", "Ɔha ne nwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("109", "Ɔha ne nkron", "", "", "", ""));
+                allArrayList.add(new All("110", "Ɔha ne du", "", "", "", ""));
 
-            allArrayList.add(new All("1010", "Apem ne du", "", "", "", ""));
-            allArrayList.add(new All("1011", "Apem ne dubaako", "", "", "", ""));
-            allArrayList.add(new All("1012", "Apem ne dummienu", "", "", "", ""));
-            allArrayList.add(new All("1013", "Apem ne dummiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("1014", "Apem ne dunan", "", "", "", ""));
-            allArrayList.add(new All("1015", "Apem ne dunum", "", "", "", ""));
-
-            allArrayList.add(new All("1020", "Apem aduonu", "", "", "", ""));
-            allArrayList.add(new All("1021", "Apem aduonu baako", "", "", "", ""));
-            allArrayList.add(new All("1022", "Apem aduonu mmienu", "", "", "", ""));
-            allArrayList.add(new All("1023", "Apem aduonu mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("1024", "Apem aduonu nan", "", "", "", ""));
-            allArrayList.add(new All("1025", "Apem aduonu num", "", "", "", ""));
-
-            allArrayList.add(new All("1100", "Apem ɔha", "", "", "", ""));
-            allArrayList.add(new All("1101", "Apem ɔha ne baako", "", "", "", ""));
-            allArrayList.add(new All("1102", "Apem ɔha ne mmienu", "", "", "", ""));
-            allArrayList.add(new All("1103", "Apem ɔha ne mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("1104", "Apem ɔha ne nan", "", "", "", ""));
-            allArrayList.add(new All("1105", "Apem ɔha ne num", "", "", "", ""));
-
-            allArrayList.add(new All("1200", "Apem ahanu", "", "", "", ""));
-            allArrayList.add(new All("1201", "Apem ahanu ne baako", "", "", "", ""));
-            allArrayList.add(new All("1202", "Apem ahanu ne mmienu", "", "", "", ""));
-            allArrayList.add(new All("1203", "Apem ahanu ne mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("1204", "Apem ahanu ne nan", "", "", "", ""));
-            allArrayList.add(new All("1205", "Apem ahanu ne num", "", "", "", ""));
-
-            allArrayList.add(new All("1300", "Apem ahasa", "", "", "", ""));
-            allArrayList.add(new All("1400", "Apem ahanan", "", "", "", ""));
-            allArrayList.add(new All("1500", "Apem ahanum", "", "", "", ""));
-            allArrayList.add(new All("1600", "Apem ahansia", "", "", "", ""));
-            allArrayList.add(new All("1700", "Apem ahanson", "", "", "", ""));
-            allArrayList.add(new All("1800", "Apem ahanwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("1900", "Apem ahankron", "", "", "", ""));
-            allArrayList.add(new All("2000", "Mpem mmienu", "", "", "", ""));
-
-            allArrayList.add(new All("2001", "Mpem mmienu ne baako", "", "", "", ""));
-            allArrayList.add(new All("2010", "Mpem mmienu ne du", "", "", "", ""));
-            allArrayList.add(new All("2100", "Mpem mmienu ne ɔha", "", "", "", ""));
-            allArrayList.add(new All("2101", "Mpem mmienu ɔha ne baako", "", "", "", ""));
-            allArrayList.add(new All("2201", "Mpem mmienu ahanu ne baako", "", "", "", ""));
-            allArrayList.add(new All("2301", "Mpem mmienu ahasa ne baako", "", "", "", ""));
-
-            allArrayList.add(new All("3000", "Mpem mmiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("4000", "Mpem nan", "", "", "", ""));
-            allArrayList.add(new All("5000", "Mpem num", "", "", "", ""));
-            allArrayList.add(new All("6000", "Mpem nsia", "", "", "", ""));
-            allArrayList.add(new All("7000", "Mpem nson", "", "", "", ""));
-            allArrayList.add(new All("8000", "Mpem nwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("9000", "Mpem nkron", "", "", "", ""));
-            allArrayList.add(new All("10000", "Mpem du", "", "", "", ""));
-
-            allArrayList.add(new All("10001", "Mpem du ne baako", "", "", "", ""));
-            allArrayList.add(new All("10100", "Mpem du ne ɔha", "", "", "", ""));
-            allArrayList.add(new All("10101", "Mpem du, ɔha ne baako", "", "", "", ""));
-            allArrayList.add(new All("10200", "Mpem du ne ahanu", "", "", "", ""));
-            allArrayList.add(new All("10201", "Mpem du, ahanu ne baako", "", "", "", ""));
-            allArrayList.add(new All("10300", "Mpem du ne ahasa", "", "", "", ""));
-
-            allArrayList.add(new All("11000", "Mpem dubaako", "", "", "", ""));
-            allArrayList.add(new All("11001", "Mpem dubaako ne baako", "", "", "", ""));
-            allArrayList.add(new All("11011", "Mpem dubaako ne dubaako", "", "", "", ""));
-            allArrayList.add(new All("11121", "Mpem dubaako, ɔha ne aduonu baako", "", "", "", ""));
-
-            allArrayList.add(new All("12000", "Mpem dummienu", "", "", "", ""));
-            allArrayList.add(new All("13000", "Mpem dummiɛnsa", "", "", "", ""));
-            allArrayList.add(new All("14000", "Mpem dunan", "", "", "", ""));
-            allArrayList.add(new All("15000", "Mpem dunum", "", "", "", ""));
-            allArrayList.add(new All("16000", "Mpem dunsia", "", "", "", ""));
-            allArrayList.add(new All("17000", "Mpem dunson", "", "", "", ""));
-            allArrayList.add(new All("18000", "Mpem dunwɔtwe", "", "", "", ""));
-            allArrayList.add(new All("19000", "Mpem dunkron", "", "", "", ""));
-            allArrayList.add(new All("20000", "Mpem aduonu", "", "", "", ""));
-
-            allArrayList.add(new All("30000", "Mpem aduasa", "", "", "", ""));
-            allArrayList.add(new All("40000", "Mpem aduanan", "", "", "", ""));
-            allArrayList.add(new All("50000", "Mpem aduonum", "", "", "", ""));
-            allArrayList.add(new All("60000", "Mpem aduosia", "", "", "", ""));
-            allArrayList.add(new All("70000", "Mpem aduoson", "", "", "", ""));
-            allArrayList.add(new All("80000", "Mpem aduowɔtwe", "", "", "", ""));
-            allArrayList.add(new All("90000", "Mpem aduokron", "", "", "", ""));
-            allArrayList.add(new All("100 000", "Mpem ɔha", "", "", "", ""));
+                allArrayList.add(new All("111", "Ɔha ne dubaako", "", "", "", ""));
+                allArrayList.add(new All("112", "Ɔha ne dummienu", "", "", "", ""));
+                allArrayList.add(new All("113", "Ɔha ne dummiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("114", "Ɔha ne dunan", "", "", "", ""));
+                allArrayList.add(new All("115", "Ɔha ne dunum", "", "", "", ""));
+                allArrayList.add(new All("116", "Ɔha ne dunsia", "", "", "", ""));
+                allArrayList.add(new All("117", "Ɔha ne dunson", "", "", "", ""));
+                allArrayList.add(new All("118", "Ɔha ne dunwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("119", "Ɔha ne dunkron", "", "", "", ""));
+                allArrayList.add(new All("120", "Ɔha aduonu", "", "", "", ""));
 
 
-            allArrayList.add(new All("1,000,000", "Ɔpepem baako", "", "", "", ""));
-            allArrayList.add(new All("2 000 000", "Ɔpepem mmienu", "", "", "", ""));
-            allArrayList.add(new All("10 000 000", "Ɔpepem du", "", "", "", ""));
+                allArrayList.add(new All("121", "Ɔha aduonu baako", "", "", "", ""));
+                allArrayList.add(new All("122", "Ɔha aduonu mmienu", "", "", "", ""));
+                allArrayList.add(new All("123", "Ɔha aduonu mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("124", "Ɔha aduonu nan", "", "", "", ""));
+                allArrayList.add(new All("125", "Ɔha aduonu num", "", "", "", ""));
 
-            allArrayList.add(new All("100 000 000", "Ɔpepem ɔha", "", "", "", ""));
+                allArrayList.add(new All("130", "Ɔha aduasa", "", "", "", ""));
+                allArrayList.add(new All("140", "Ɔha aduanan", "", "", "", ""));
+                allArrayList.add(new All("150", "Ɔha aduonum", "", "", "", ""));
+                allArrayList.add(new All("160", "Ɔha aduosia", "", "", "", ""));
+                allArrayList.add(new All("170", "Ɔha aduoson", "", "", "", ""));
+                allArrayList.add(new All("180", "Ɔha aduowɔtwe", "", "", "", ""));
+                allArrayList.add(new All("190", "Ɔha aduokron", "", "", "", ""));
+                allArrayList.add(new All("200", "Ahanu", "", "", "", ""));
 
-            allArrayList.add(new All("1 000 000 000", "Ɔpepepem baako", "", "", "", ""));
 
+                allArrayList.add(new All("201", "Ahanu ne baako", "", "", "", ""));
+                allArrayList.add(new All("202", "Ahanu ne mmienu", "", "", "", ""));
+                allArrayList.add(new All("203", "Ahanu ne mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("204", "Ahanu ne nan", "", "", "", ""));
+                allArrayList.add(new All("205", "Ahanu ne num", "", "", "", ""));
+                allArrayList.add(new All("206", "Ahanu ne nsia", "", "", "", ""));
+                allArrayList.add(new All("207", "Ahanu ne nson", "", "", "", ""));
+                allArrayList.add(new All("208", "Ahanu ne nwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("209", "Ahanu ne nkron", "", "", "", ""));
+                allArrayList.add(new All("210", "Ahanu ne du", "", "", "", ""));
+                allArrayList.add(new All("211", "Ahanu ne dubaako", "", "", "", ""));
+
+                allArrayList.add(new All("220", "Ahanu aduonu", "", "", "", ""));
+                allArrayList.add(new All("221", "Ahanu aduonu baako", "", "", "", ""));
+                allArrayList.add(new All("230", "Ahanu aduasa", "", "", "", ""));
+                allArrayList.add(new All("240", "Ahanu aduanan", "", "", "", ""));
+                allArrayList.add(new All("250", "Ahanu aduonum", "", "", "", ""));
+
+                allArrayList.add(new All("300", "Ahasa", "", "", "", ""));
+                allArrayList.add(new All("400", "Ahanan", "", "", "", ""));
+                allArrayList.add(new All("500", "Ahanum", "", "", "", ""));
+                allArrayList.add(new All("600", "Ahansia", "", "", "", ""));
+                allArrayList.add(new All("700", "Ahanson", "", "", "", ""));
+                allArrayList.add(new All("800", "Ahanwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("900", "Ahankron", "", "", "", ""));
+                allArrayList.add(new All("1000", "Apem", "", "", "", ""));
+
+
+                allArrayList.add(new All("1001", "Apem ne baako", "", "", "", ""));
+                allArrayList.add(new All("1002", "Apem ne mmienu", "", "", "", ""));
+                allArrayList.add(new All("1003", "Apem ne mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("1004", "Apem ne nan", "", "", "", ""));
+                allArrayList.add(new All("1005", "Apem ne num", "", "", "", ""));
+
+                allArrayList.add(new All("1010", "Apem ne du", "", "", "", ""));
+                allArrayList.add(new All("1011", "Apem ne dubaako", "", "", "", ""));
+                allArrayList.add(new All("1012", "Apem ne dummienu", "", "", "", ""));
+                allArrayList.add(new All("1013", "Apem ne dummiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("1014", "Apem ne dunan", "", "", "", ""));
+                allArrayList.add(new All("1015", "Apem ne dunum", "", "", "", ""));
+
+                allArrayList.add(new All("1020", "Apem aduonu", "", "", "", ""));
+                allArrayList.add(new All("1021", "Apem aduonu baako", "", "", "", ""));
+                allArrayList.add(new All("1022", "Apem aduonu mmienu", "", "", "", ""));
+                allArrayList.add(new All("1023", "Apem aduonu mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("1024", "Apem aduonu nan", "", "", "", ""));
+                allArrayList.add(new All("1025", "Apem aduonu num", "", "", "", ""));
+
+                allArrayList.add(new All("1100", "Apem ɔha", "", "", "", ""));
+                allArrayList.add(new All("1101", "Apem ɔha ne baako", "", "", "", ""));
+                allArrayList.add(new All("1102", "Apem ɔha ne mmienu", "", "", "", ""));
+                allArrayList.add(new All("1103", "Apem ɔha ne mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("1104", "Apem ɔha ne nan", "", "", "", ""));
+                allArrayList.add(new All("1105", "Apem ɔha ne num", "", "", "", ""));
+
+                allArrayList.add(new All("1200", "Apem ahanu", "", "", "", ""));
+                allArrayList.add(new All("1201", "Apem ahanu ne baako", "", "", "", ""));
+                allArrayList.add(new All("1202", "Apem ahanu ne mmienu", "", "", "", ""));
+                allArrayList.add(new All("1203", "Apem ahanu ne mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("1204", "Apem ahanu ne nan", "", "", "", ""));
+                allArrayList.add(new All("1205", "Apem ahanu ne num", "", "", "", ""));
+
+                allArrayList.add(new All("1300", "Apem ahasa", "", "", "", ""));
+                allArrayList.add(new All("1400", "Apem ahanan", "", "", "", ""));
+                allArrayList.add(new All("1500", "Apem ahanum", "", "", "", ""));
+                allArrayList.add(new All("1600", "Apem ahansia", "", "", "", ""));
+                allArrayList.add(new All("1700", "Apem ahanson", "", "", "", ""));
+                allArrayList.add(new All("1800", "Apem ahanwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("1900", "Apem ahankron", "", "", "", ""));
+                allArrayList.add(new All("2000", "Mpem mmienu", "", "", "", ""));
+
+                allArrayList.add(new All("2001", "Mpem mmienu ne baako", "", "", "", ""));
+                allArrayList.add(new All("2010", "Mpem mmienu ne du", "", "", "", ""));
+                allArrayList.add(new All("2100", "Mpem mmienu ne ɔha", "", "", "", ""));
+                allArrayList.add(new All("2101", "Mpem mmienu ɔha ne baako", "", "", "", ""));
+                allArrayList.add(new All("2201", "Mpem mmienu ahanu ne baako", "", "", "", ""));
+                allArrayList.add(new All("2301", "Mpem mmienu ahasa ne baako", "", "", "", ""));
+
+                allArrayList.add(new All("3000", "Mpem mmiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("4000", "Mpem nan", "", "", "", ""));
+                allArrayList.add(new All("5000", "Mpem num", "", "", "", ""));
+                allArrayList.add(new All("6000", "Mpem nsia", "", "", "", ""));
+                allArrayList.add(new All("7000", "Mpem nson", "", "", "", ""));
+                allArrayList.add(new All("8000", "Mpem nwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("9000", "Mpem nkron", "", "", "", ""));
+                allArrayList.add(new All("10000", "Mpem du", "", "", "", ""));
+
+                allArrayList.add(new All("10001", "Mpem du ne baako", "", "", "", ""));
+                allArrayList.add(new All("10100", "Mpem du ne ɔha", "", "", "", ""));
+                allArrayList.add(new All("10101", "Mpem du, ɔha ne baako", "", "", "", ""));
+                allArrayList.add(new All("10200", "Mpem du ne ahanu", "", "", "", ""));
+                allArrayList.add(new All("10201", "Mpem du, ahanu ne baako", "", "", "", ""));
+                allArrayList.add(new All("10300", "Mpem du ne ahasa", "", "", "", ""));
+
+                allArrayList.add(new All("11000", "Mpem dubaako", "", "", "", ""));
+                allArrayList.add(new All("11001", "Mpem dubaako ne baako", "", "", "", ""));
+                allArrayList.add(new All("11011", "Mpem dubaako ne dubaako", "", "", "", ""));
+                allArrayList.add(new All("11121", "Mpem dubaako, ɔha ne aduonu baako", "", "", "", ""));
+
+                allArrayList.add(new All("12000", "Mpem dummienu", "", "", "", ""));
+                allArrayList.add(new All("13000", "Mpem dummiɛnsa", "", "", "", ""));
+                allArrayList.add(new All("14000", "Mpem dunan", "", "", "", ""));
+                allArrayList.add(new All("15000", "Mpem dunum", "", "", "", ""));
+                allArrayList.add(new All("16000", "Mpem dunsia", "", "", "", ""));
+                allArrayList.add(new All("17000", "Mpem dunson", "", "", "", ""));
+                allArrayList.add(new All("18000", "Mpem dunwɔtwe", "", "", "", ""));
+                allArrayList.add(new All("19000", "Mpem dunkron", "", "", "", ""));
+                allArrayList.add(new All("20000", "Mpem aduonu", "", "", "", ""));
+
+                allArrayList.add(new All("30000", "Mpem aduasa", "", "", "", ""));
+                allArrayList.add(new All("40000", "Mpem aduanan", "", "", "", ""));
+                allArrayList.add(new All("50000", "Mpem aduonum", "", "", "", ""));
+                allArrayList.add(new All("60000", "Mpem aduosia", "", "", "", ""));
+                allArrayList.add(new All("70000", "Mpem aduoson", "", "", "", ""));
+                allArrayList.add(new All("80000", "Mpem aduowɔtwe", "", "", "", ""));
+                allArrayList.add(new All("90000", "Mpem aduokron", "", "", "", ""));
+                allArrayList.add(new All("100 000", "Mpem ɔha", "", "", "", ""));
+
+
+                allArrayList.add(new All("1,000,000", "Ɔpepem baako", "", "", "", ""));
+                allArrayList.add(new All("2 000 000", "Ɔpepem mmienu", "", "", "", ""));
+                allArrayList.add(new All("10 000 000", "Ɔpepem du", "", "", "", ""));
+
+                allArrayList.add(new All("100 000 000", "Ɔpepem ɔha", "", "", "", ""));
+
+                allArrayList.add(new All("1 000 000 000", "Ɔpepepem baako", "", "", "", ""));
+            }
             //////////ALL UNCATEGORIZES///////////
+
+
+
 
             allArrayList.add(new All("Christmas", "Buronya", "", "", "", ""));
             allArrayList.add(new All("Christmas day", "Buronya da", "", "", "", ""));
             allArrayList.add(new All("Christmas Time", "Buronya bere", "", "", "", ""));
             allArrayList.add(new All("New Year", "Afe foforo", "", "", "", ""));
-        }
-
-        /////////////////////////////////ALL ARRAY LIST  END///////////////////////////
 
 
-        //////PROVERBS///////////////
+            //Verbs
+            {
+               allArrayList.add(new All("Come", "Bra", "verb", "", "", ""));
+                allArrayList.add(new All("Don't Come", "Mma", "verb", "", "", ""));
+                allArrayList.add(new All("Go", "Kɔ", "verb", "", "", ""));
+                allArrayList.add(new All("Don't go", "Nkɔ", "verb", "", "", ""));
+                allArrayList.add(new All("Converse (1)", "Bɔ nkɔmmɔ", "verb", "", "", ""));
+                allArrayList.add(new All("Don't Converse (1)", "Mmɔ Nkɔmmɔ", "verb", "", "", ""));
+                allArrayList.add(new All("Converse (2)", "Di nkɔmmɔ", "verb", "", "", ""));
+                allArrayList.add(new All("Don't Converse (2)", "Nni Nkɔmmɔ", "verb", "", "", ""));
+                allArrayList.add(new All("Help", "Boa", "verb", "", "", ""));
+                allArrayList.add(new All("Don't Help", "Mmoa", "verb", "", "", ""));
+                allArrayList.add(new All("Try", "Bɔ Mmɔden", "verb", "", "", ""));
+                allArrayList.add(new All("Don't Try", "Mmɔ mmɔden", "verb", "", "", ""));
+                allArrayList.add(new All("Ask", "Bisa", "verb", "", "", ""));
+                allArrayList.add(new All("Don't Ask", "Mmisa", "verb", "", "", ""));
+                allArrayList.add(new All("Break", "Bu", "verb", "", "", ""));
+                allArrayList.add(new All("Don't Break", "Mmu", "verb", "", "", ""));
+                allArrayList.add(new All("Calculate (work sums)", "Bu akontaa", "verb", "", "", ""));
+                allArrayList.add(new All("Don't Calculate (work sums)", "Mmu Akontaa", "verb", "", "", ""));
+                allArrayList.add(new All("Eat", "Didi", "verb", "", "", ""));
+                allArrayList.add(new All("Don't Eat", "Nnidi", "verb", "", "", ""));
+                allArrayList.add(new All("Sleep", "Da", "verb", "", "", ""));
+                allArrayList.add(new All("Don't Sleep", "Nna", "verb", "", "", ""));
+                allArrayList.add(new All("Deceive", "Daadaa", "verb", "", "", ""));
+                allArrayList.add(new All("Don't Deceive", "Nnaadaa", "verb", "", "", ""));
+                allArrayList.add(new All("Take", "Fa", "verb", "", "", ""));
+                allArrayList.add(new All("Don't Take", "Mfa", "verb", "", "", ""));
+                allArrayList.add(new All("Bring it", "Fa bra", "verb", "", "", ""));
+                allArrayList.add(new All("Don't Bring it", "Mfa mma", "verb", "", "", ""));
+                allArrayList.add(new All("Take it away", "Fa kɔ", "verb", "", "", ""));
+                allArrayList.add(new All("Don't take it away", "Mfa nkɔ", "verb", "", "", ""));
+                allArrayList.add(new All("Take it to...", "Fa kɔma ...", "verb", "", "", ""));
+                allArrayList.add(new All("Don't take it to...", "Mfa nkɔma ...", "verb", "", "", ""));
+                allArrayList.add(new All("Come out", "Fi bra", "verb", "", "", ""));
+                allArrayList.add(new All("Don't come out", "Mfi mma", "verb", "", "", ""));
+                allArrayList.add(new All("Buy on credit", "Firi", "verb", "", "", ""));
+                allArrayList.add(new All("Don't buy on credit", "Mfiri", "verb", "", "", ""));
+                if (Subscribed == 1) {
 
-        // proverbsArrayList.add(new Proverbs());
-        if (5 > 1) {
+                    allArrayList.add(new All("Bath(e)", "Dware", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't Bath(e)", "Nnware", "verb", "", "", ""));
 
-            /////
-            proverbsArrayList.add(new Proverbs("Woforo dua pa a ɛnna yepia woɔ", "If you climb a good tree, you get a push", "If you start something good you will attract people to help"));
-            proverbsArrayList.add(new Proverbs("Wusie nni ahoɔden wɔ mframa kurom", "The smoke has no power in the city of the wind", "The stranger has no power in a strange land"));
-            proverbsArrayList.add(new Proverbs("Nokware di etuo", "The truth gets a gun", "Speaking the truth boldly can at times end your life as if you called for to be shot by a gun"));
-            proverbsArrayList.add(new Proverbs("Sɛnea sekan te no saa ara na ne bɔha nso te", "The shape of the sword is the same as its scabbard", "Your behaviour tells where you come from"));
-            proverbsArrayList.add(new Proverbs("Aboa aserewa hwɛ ne kɛse ho na wanwene ne buo", "The silverbird weaves its nest according to its size", "Do what you can do and avoid trying to do things beyond your ability in order to please others"));
-            proverbsArrayList.add(new Proverbs("Abofra bɔ nnwa na ɔmmɔ akyekyedeɛ", "A child breaks the shell of a crab and not the tortoise", "A child must know his limit. Some things are for adults"));
-            proverbsArrayList.add(new Proverbs("Aboa bi bɛka wo a, na ofiri wo ntoma mu", "If an animal will bite you, it is the one hidden in your clothes", "It is people close to you that will hurt you"));
-            proverbsArrayList.add(new Proverbs("Ɔba nyansafo, yebu no bɛ, yɛnnka no asɛm", "We speak in proverbs to a wise son, we do not use direct statements", "Just a proverb can be used to instruct a wise person. No need to explain things in detail to a wise person"));
-            proverbsArrayList.add(new Proverbs("Ti koro nkɔ agyina", "One head does not consult", "It is better to consult with others before making a decision"));
-            proverbsArrayList.add(new Proverbs("Anomaa antu a, obua da", "If a bird does not fly, it starves to death", "If you don't take action and work you will not gain anything and will die as a result. Laziness produces nothing"));
-            proverbsArrayList.add(new Proverbs("Obi nnim oberempɔn ahyɛase", "No one knows the beginning of a great man", "You cannot always tell how great a man will be by his current state. A poor person can become a great man in the future"));
-            proverbsArrayList.add(new Proverbs("Agya bi wu a, agya bi te ase", "If a father dies, another father lives", "If a parent dies, you can find someone who will look after you like your parent"));
-            proverbsArrayList.add(new Proverbs("Animguase mfata Akanni ba", "To be disgraced is not deserving of an Akan", "If you have respect for yourself then it is better to die than to be disgraced"));
-            proverbsArrayList.add(new Proverbs("Agorɔ bɛsɔ a, efiri anɔpa", "You can tell from the morning if the play will be nice", "You can tell from the beginning of a venture how successfull it will be in the future"));
-            proverbsArrayList.add(new Proverbs("Kwaterekwa se ɔbɛma wo ntoma a, tie ne din", "If a naked person says that he will give you a cloth, listen to his name", "Be careful when someone who is himself in need of something promises to give you that thing. Dont trust all promises. Take into consideratoin the calibre of a person who promises you something"));
-            proverbsArrayList.add(new Proverbs("Yɛsoma onyansafo, ɛnyɛ anamɔntenten", "It is the wise person that we send on errand but not a person with long steps", "Speed should not override efficiency. Getting things done properly is better than getting it done fast but not properly."));
-            proverbsArrayList.add(new Proverbs("Aboa a onni dua no, Nyame na ɔpra ne ho", "An animal without a tail is cleaned by God", "God provides for those who have no means of catering for themselves"));
-            proverbsArrayList.add(new Proverbs("Borɔferɛ a ɛyɛ dɛ na abaa da ase", "It is the pawpaw tree which has tasty fruits that you will find a stick beneath it", "If you see people flocking to a particular venture it is because it is profitable"));
-            proverbsArrayList.add(new Proverbs("Prayɛ, sɛ wuyi baako a na ebu, woka bom a emmu", "If you remove one broomstick it will break but if you put all the broomsticks together it will not break", "We are stronger when we are united. It is harder to defeat a united people than a single person"));
-            proverbsArrayList.add(new Proverbs("Nsateaa nyinaa nnyɛ pɛ", "All fingers are not the same", "We all have different abilities"));
-            proverbsArrayList.add(new Proverbs("Obi nnim a, obi kyerɛ", "If one does not know, another teaches", "You should allow others to teach you things you don't know. You should listen to advice"));
-            proverbsArrayList.add(new Proverbs("Abofra hunu ne nsa hohoro a ɔne mpanyimfoɔ didi", "If a child learns how to wash his hands, he will eat with adults", "If a person learns and applies the customs and traditions, people in higher positions will work with him. "));
-            proverbsArrayList.add(new Proverbs("Yɛwo wo to esie so a, wo nnkyɛ tenten yɛ", "If you are born onto an anthill, you become tall quickly", "If you have a good foundation in life, it is easy for you to succeed in life. If your family is rich, you are able to make money early in life"));
-            proverbsArrayList.add(new Proverbs("Ayɔnko gorɔ nti na ɔkɔtɔ annya ti", "It is because of mingling with friends that the crab has no head", "Too many friends can make you lose a lot life. Choose friends wisely"));
-            proverbsArrayList.add(new Proverbs("Wo nsa akyi bɛyɛ wo dɛ a ɛnte sɛ wo nsa yam", "The back of your hand can be sweet but it will not be as sweet as your palm or inner surface of your hand", "The original is always better than imitation"));
+                    allArrayList.add(new All("See him off", "Gya no kwan", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't see him off", "Nnya no kwan", "verb", "", "", ""));
+                    allArrayList.add(new All("Take it / Receive it / Have it", "Gye", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't (Take it/Receive it/Have it)", "Nnye", "verb", "", "", ""));
+                    allArrayList.add(new All("Believe", "Gye di", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't believe", "Nnye nni", "verb", "", "", ""));
+                    allArrayList.add(new All("Play", "Di agorɔ", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't play", "Nni agorɔ", "verb", "", "", ""));
+                    allArrayList.add(new All("Stop", "Gyina", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't stop", "Nnyina", "verb", "", "", ""));
+                    allArrayList.add(new All("Continue", "Kɔ so", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't continue", "Gyae", "verb", "", "", ""));
+                    allArrayList.add(new All("Wear", "Hyɛ", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't wear", "Nhyɛ", "verb", "", "", ""));
+                    allArrayList.add(new All("Put on shoes", "Hyɛ mpaboa", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't put on shoes", "Nhyɛ mpaboa", "verb", "", "", ""));
 
-            proverbsArrayList.add(new Proverbs("Obi fom kum a, yɛn mfom ndwa", "If one kills by mistake, we do not cut up by mistake", "We do not deliberately repay someone with a bad deed for their unintentional mistake "));
-            proverbsArrayList.add(new Proverbs("Wuhu sɛ wo yɔnko abɔdwesɛ rehye a na wasa nsuo asi wo de ho", "If you see that the beard of a friend is on fire, fetch water and put by your beard", "If something bad happens to a neighbour, plan on how you will deal it with if it happens to you next"));
-            proverbsArrayList.add(new Proverbs("Dua a enya wo a ɛbɛwɔ w'ani no, yetu ase; yɛnsensene ano", "A tree which is likely to pierce your eye must be uprooted, not merely pruned", "If a problem has the potential to harm you, we do not solve it partially but rather we solve it completely. Eliminate completely anything that can harm you"));
-            proverbsArrayList.add(new Proverbs("Nyansapɔ wɔsane no badwemma", "A discerning man loosens a hard tight knot", "It takes a wise person to solve hard riddles. One who solves a complex problem is wise"));
-            proverbsArrayList.add(new Proverbs("Ahunu bi pɛn nti na aserewa regyegye ne ba agorɔ a na wayi n'ani ato nkyɛn", "When playing with its child, the silverbird looks away because of what it has seen before", "The behaviour of some people are as a result of the bad experiences they have encountered in their lives"));
-            proverbsArrayList.add(new Proverbs("Abaa a yɛde bɔ Takyi no yɛde bɛbɔ Baa", "The cane which is used on Takyi will also be used on Baa", "The punishment given to someone for a crime will be the same punishment for another who commits the same crime. What is done to someone will be the same that will happen to you if you act like him"));
-            proverbsArrayList.add(new Proverbs("Abɛ bi rebewu a na ɛsɔ", "When some palm trees are about to die, its wine tastes good", "Some people get to their best when they are about to retire or in their old age. The aged are the most experienced"));
-            proverbsArrayList.add(new Proverbs("Nea ɔwɔ aka no pɛn no suro sonsono", "He who has been bitten by a snake before, fears the worm", "A bad experience with a particular venture makes one afraid of anything resembling it"));
-            proverbsArrayList.add(new Proverbs("Efie biara Mensah wɔ mu", "Every household has a third born", "In every community there will be people whose opinion are totally different which might result in problems"));
-            proverbsArrayList.add(new Proverbs("Abofra a ɔmma ne maame nna no, bentoa mpa ne to da", "The enema will not depart from the buttocks of a child who doesn't let his mother sleep", "If you make trouble for your leaders who cater for you, you will also not have peace"));
-            proverbsArrayList.add(new Proverbs("Hu m'ani so ma me nti na atwe mmienu nam", "Deers walk in pairs so that one can blow the eye of the other if needed", "It is good to have a partner so that he will support you when you are in need"));
-            proverbsArrayList.add(new Proverbs("Obi nnom aduro mma ɔyarefo", "One does not take medicine for a sick person", "Don't expect someone to handle your responsibilities for you. There are some responsibilities you cannot do for another person"));
-            proverbsArrayList.add(new Proverbs("Akokɔbere nim adekyee nanso otie firi akokɔ nini ano", "The hen knows of the new day but it listens to the announcement from the cock", "Even though you might be knowledgeable in something it is always good to listen to the elderly and wait for direction"));
-            proverbsArrayList.add(new Proverbs("Ano da hɔ kwa a, ɛkeka nsɛm", "A mouth which is idle will say many things", "Those who have nothing to do become gossipers or commit crimes"));
-            proverbsArrayList.add(new Proverbs("Ɔsansa fa adeɛ a ɔde kyerɛ amansan", "When the hawk picks up something it shows it to the universe", "An honest person will not hide his works"));
-            proverbsArrayList.add(new Proverbs("Ɛtoa na ɛpɛ na ahoma da ne kɔn mu", "The bottle likes it that is why there is a rope around its neck", "It is your fault if you allow your enemies to trap you"));
-            proverbsArrayList.add(new Proverbs("Dadeɛ bi twa dadeɛ bi", "An iron can cut another iron or can sharpen another iron", "There is someone or something stronger than you. Even if you are strong it doesn't mean that you are unbeatable"));
-            proverbsArrayList.add(new Proverbs("Obi atifi nso yɛ obi anaafoɔ", "Your north is someone's south", "What you see as new maybe old to someone. "));
-            proverbsArrayList.add(new Proverbs("Abosomakoterɛ se ntɛm yɛ, brɛbrɛ nso yɛ", "The chameleon claims that to be fast is good and to be slow is also good", "If you do anything in good faith it is good"));
-            proverbsArrayList.add(new Proverbs("Wo sum borɔdeɛ a, sum kwadu", "You should take good care of the banana just as you take good care of the plantain", "Give the same attention to those you see as good and those you see as bad because you don't know when they will be useful to you"));
-            proverbsArrayList.add(new Proverbs("Nea ɔte fam no nsuro ahweaseɛ", "The one who is sitting down does not fear falling", "If you have done all that is required of you, you don't fear what will come. If you are at your lowest point, you do not fear humiliation"));
-            proverbsArrayList.add(new Proverbs("Abɔdwesɛ bɛtoo ani ntɔn nhwi", "The eyebrow was there before the beard came", "No matter how high your current position is, you have to give respect to the elderly"));
-            proverbsArrayList.add(new Proverbs("Koterɛ nnkɔdi mako mma mfifire nkɔfiri apɔnkyerɛni", "If the lizard consumes pepper, it's not the frog that sweats", "The one who commits a crime must bear his own punishment"));
-            proverbsArrayList.add(new Proverbs("Obi ntɔn n'akokɔ bedeɛ kwa", "No one sells his laying hen for nothing", "There is no action without cause. If there is nothing wrong, no one will sell his valuable property"));
-            proverbsArrayList.add(new Proverbs("Abaa nna hɔ mma kraman nnka nipa", "The stick should not lie idle while a dog bites a human", "Use your resources for your good. Don't keep money and end up dying from a minor ailment"));
+                    allArrayList.add(new All("Dry", "Hata", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't dry", "Nhata", "verb", "", "", ""));
+                    allArrayList.add(new All("Wash Clothes (1)", "Horo ntade", "verb", "", "", ""));
+                    allArrayList.add(new All("Wash Clothes (1)", "Si ntade", "verb", "", "", ""));
+                    allArrayList.add(new All("Wash", "Hohoro", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't wash", "Nhohoro", "verb", "", "", ""));
+                    allArrayList.add(new All("Meet", "Hyia", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't meet", "Nhyia", "verb", "", "", ""));
+                    allArrayList.add(new All("Rest", "Home", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't rest", "Nhome", "verb", "", "", ""));
+                    allArrayList.add(new All("Quarrel", "Ham", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't quarrel", "Nham", "verb", "", "", ""));
+                    allArrayList.add(new All("Speak", "Kasa", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't speak", "Nkasa", "verb", "", "", ""));
+                    allArrayList.add(new All("Teach", "Kyerɛ", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't teach", "Nkyerɛ", "verb", "", "", ""));
+                    allArrayList.add(new All("Greet", "Kyea", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't greet", "Nkyea", "verb", "", "", ""));
+                    allArrayList.add(new All("Keep long", "Kyɛ", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't keep long", "Nkyɛ", "verb", "", "", ""));
+                    allArrayList.add(new All("Divide (or share)", "Kyɛ", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't divide (or share)", "Nkyɛ", "verb", "", "", ""));
+                    allArrayList.add(new All("Look for (or Search)", "Hwehwɛ", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't look for (or search)", "Nhwehwɛ", "verb", "", "", ""));
+                    allArrayList.add(new All("Look at", "Hwɛ", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't look at", "Nhwɛ", "verb", "", "", ""));
+                    allArrayList.add(new All("Give", "Ma", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't give", "Mma", "verb", "", "", ""));
+                    allArrayList.add(new All("Read", "Kan", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't read", "Nkan", "verb", "", "", ""));
+                    allArrayList.add(new All("Read (1)", "Kenkan", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't read(1)", "Nkenkan", "verb", "", "", ""));
+                    allArrayList.add(new All("Praise", "Kamfo", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't praise", "Nkamfo", "verb", "", "", ""));
+                    allArrayList.add(new All("Fight", "Ko", "verb", "", "", ""));
+                    allArrayList.add(new All("Don't fight", "Nko", "verb", "", "", ""));
 
-
-            proverbsArrayList.add(new Proverbs("Eti wɔ hɔ a yɛnhyɛ kotodwe kyɛ", "If the head is available we do not put a hat on the knee", "Give honour to who is due. Give privileges to those who can handle it better"));
-            proverbsArrayList.add(new Proverbs("Ɔhɔhoɔ behu mpoatwa a, na kuroman ni na akyerɛ no", "If a foreigner knows how to insult, it is a citizen who has taught him", "New comers learn bad traits from ones they came to meet."));
-            proverbsArrayList.add(new Proverbs("Ɛnyɛ ɔdehye biara na ɔfata kyinneɛ ase", "It is not every royal who deserves an umbrella over him", "Having the birthright or legal right to receiving honor does not automatically mean you will be praised or pampered especially if your behaviour is not fitting"));
-            proverbsArrayList.add(new Proverbs("Nkurow dɔɔso a yɛntena faako nnye animguase", "If there are many cities, we do not stay in one and be shamed", "If you fail in something you should try other avenues. Move from where you have been disgraced to where you will not be shamed or disgraced"));
-            proverbsArrayList.add(new Proverbs("Wo se akyi nnyɛ wo dɛ a, ɛhɔ a na wotafere", "If the back of your tooth is not sweet to you, that is the exact place you lick", "We tend to dwell on tends that hurt us or things we don't like. We spend more time to fix things we don't like"));
-            proverbsArrayList.add(new Proverbs("Dua koro ntumi nyɛ kwae", "One tree cannot be a forest", "One person cannot do it all. We all need help"));
-            proverbsArrayList.add(new Proverbs("Sotorɔ a ɛbɛn wo no, yegye no ntɛm", "A slap which is close to you is to be received quickly", "If something bad will inevitably happen to you, it is better to face it quickly than to try to delay it."));
-            proverbsArrayList.add(new Proverbs("Baabiara nni hɔ a wusie befi a egya nni hɔ", "There is no where that you will find smoke without fire", "There is always a root cause to a problem"));
-            proverbsArrayList.add(new Proverbs("Ntɛtea betwa nsuo a, na efi dua", "If the ant will cross a river, then it's because of a tree or wood", "Someone is only able to overcome an unsurmountable challenge only with help from someone or something"));
-            proverbsArrayList.add(new Proverbs("Sɛ yɛhwɛ nea etuo ayɛ a, anka yenni ano nam da", "If we consider what guns have caused then we would never eat an animal that has been brought down by a gun", "If you take into consideration all the bad that a person has committed you will not take any good from him so at times we have to forget the evil others have done"));
-            proverbsArrayList.add(new Proverbs("Sɛ tipae ba kurom a, kɔtɔ nka ho", "If there is headahe in town, the crab is not part", "If there is a case to be investigated, it is only suspects who should be interrogated"));
-            proverbsArrayList.add(new Proverbs("Sɛ wokɔto aboa kraman wɔ dua so a, na ɛnyɛ ɔno ara na ɔforoe na mmom ɔdesani na apagyaw no asi so", "If you see a dog on top of a tree, it did not climb the tree by itself but rather a human put it there", "If someone is able to do something he does not have access to, then someone who has access to it is involved."));
-
-            proverbsArrayList.add(new Proverbs("Sɛ nsuo fa wo a, wunnyae nsuo nom", "If you get drowned in water, you do not stop drinking water", "A bad experience with something(or someone) does not mean you should not use it again if there are benefits"));
-            proverbsArrayList.add(new Proverbs("Nea ade yɛ ne dea no ɔde benkum na ɛgye", "He who owns something collects it with his left hand", "The one owns something does not need to thank you if you return it. He has the right to get it from you anyway he wishes"));
-            proverbsArrayList.add(new Proverbs("Nea odi akyiri sua nea odi kan nanteɛ", "He one behind learns the walking style of the one in front", "The young learns their traits and habits from the old who trained them"));
-            proverbsArrayList.add(new Proverbs("Baabi a yedidi no yɛnsɛe hɔ", "We do not spoil where we eat", "Make sure that you are always at peace with the people who provide your needs for you"));
-
-            proverbsArrayList.add(new Proverbs("Aboa apɔnkyerɛni na ɛkaa sɛ wobaa me fie yɛkotow hɔ, wo nso rebisa me akonwa", "The frog says that when you came to my house you saw us squatting and you are asking me for a chair", "Do not require from others things which are obvious that they don't have. A good guest does not ask more than the host himself uses"));
-            proverbsArrayList.add(new Proverbs("Etua wo yɔnko a etua dua mu", "If it is pierced into your friend then it is pierced into a tree", "You do not feel the pain if you are not the one suffering"));
-
-            proverbsArrayList.add(new Proverbs("Sɛ ehia wo na ehia wo hia mu boafo a, ɛnna na awie wo hia", "It is when you are poor and the one who bails you is also poor then you have ended up poor", "If you are poor and you have someone to help you, then there is hope"));
-            proverbsArrayList.add(new Proverbs("Ɛkɔm de wo a ɛnkyerɛ sɛ fa wo nsa mmienu nyinaa didi", "If you are hungry it doesn't mean you should eat with your two hands", "Even if you need something so much you should still follow the right procedure to get it"));
-            proverbsArrayList.add(new Proverbs("Mogya mu yɛ du sen nsuo", "Blood is thicker than water", "Your blood relatives are more dear to you than your friends"));
-            proverbsArrayList.add(new Proverbs("Wuhu nea ɔbɛsɛe wo maame ayie a, na wode ayie no ahyɛ ne nsa", "If you notice someone who will make trouble at your mum's funeral, let that person handle the funeral arrangements", "If you suspect someone of sabotaging or stealing something, it is best to make that person responsible for that thing"));
-            proverbsArrayList.add(new Proverbs("Baabi a ɔsono bɛfa biara yɛ kwan", "Where ever the elephant passes is a way", "A powerful person can make a way where there seems to be no way"));
-            proverbsArrayList.add(new Proverbs("Dua koro yi ara, sɛ woforo si a wasi na wote hwe nso a wasi", "This same tree, if you climb up and climb down, you are down and similarly if you fall down from the tree you are also down", "The end of a matter is what matters most"));
-
-           ///////
-
-            //  proverbsArrayList.add(new Proverbs("Baabi a nkosua gu no yɛnto boɔ nkɔ hɔ","We do not throw stones to where there are eggs",""));
-            //proverbsArrayList.add(new Proverbs("Yɛma wo ɔhene na wɔanni a, ahenkwaa bɔ wo","",""));
-
-            //SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+                    // allArrayList.add(new All("","", "verb", "", "", ""));
+                }
+            }
+           // Collections.sort(allArrayList);
+//allArrayList.add(new All("New Year", "Afe foforo", "verb", "", "", ""));
+            /////////////////////////////////ALL ARRAY LIST  END///////////////////////////
 
 
-            // if(MainActivity.Lifetime ==1 || MainActivity.Subscribed == 1){
-            if (Subscribed == 1) {
+            //////PROVERBS///////////////
 
-               // Toast.makeText(this, "Hi: "+ Subscribed, Toast.LENGTH_SHORT).show();
+            // proverbsArrayList.add(new Proverbs());
+            if (5 > 1) {
+
+                /////
+                proverbsArrayList.add(new Proverbs("Woforo dua pa a ɛnna yepia woɔ", "If you climb a good tree, you get a push", "If you start something good you will attract people to help"));
+                proverbsArrayList.add(new Proverbs("Wusie nni ahoɔden wɔ mframa kurom", "The smoke has no power in the city of the wind", "The stranger has no power in a strange land"));
+                proverbsArrayList.add(new Proverbs("Nokware di etuo", "The truth gets a gun", "Speaking the truth boldly can at times end your life as if you called for to be shot by a gun"));
+                proverbsArrayList.add(new Proverbs("Sɛnea sekan te no saa ara na ne bɔha nso te", "The shape of the sword is the same as its scabbard", "Your behaviour tells where you come from"));
+                proverbsArrayList.add(new Proverbs("Aboa aserewa hwɛ ne kɛse ho na wanwene ne buo", "The silverbird weaves its nest according to its size", "Do what you can do and avoid trying to do things beyond your ability in order to please others"));
+                proverbsArrayList.add(new Proverbs("Abofra bɔ nnwa na ɔmmɔ akyekyedeɛ", "A child breaks the shell of a crab and not the tortoise", "A child must know his limit. Some things are for adults"));
+                proverbsArrayList.add(new Proverbs("Aboa bi bɛka wo a, na ofiri wo ntoma mu", "If an animal will bite you, it is the one hidden in your clothes", "It is people close to you that will hurt you"));
+                proverbsArrayList.add(new Proverbs("Ɔba nyansafo, yebu no bɛ, yɛnnka no asɛm", "We speak in proverbs to a wise son, we do not use direct statements", "Just a proverb can be used to instruct a wise person. No need to explain things in detail to a wise person"));
+                proverbsArrayList.add(new Proverbs("Ti koro nkɔ agyina", "One head does not consult", "It is better to consult with others before making a decision"));
+                proverbsArrayList.add(new Proverbs("Anomaa antu a, obua da", "If a bird does not fly, it starves to death", "If you don't take action and work you will not gain anything and will die as a result. Laziness produces nothing"));
+                proverbsArrayList.add(new Proverbs("Obi nnim oberempɔn ahyɛase", "No one knows the beginning of a great man", "You cannot always tell how great a man will be by his current state. A poor person can become a great man in the future"));
+                proverbsArrayList.add(new Proverbs("Agya bi wu a, agya bi te ase", "If a father dies, another father lives", "If a parent dies, you can find someone who will look after you like your parent"));
+                proverbsArrayList.add(new Proverbs("Animguase mfata Akanni ba", "To be disgraced is not deserving of an Akan", "If you have respect for yourself then it is better to die than to be disgraced"));
+                proverbsArrayList.add(new Proverbs("Agorɔ bɛsɔ a, efiri anɔpa", "You can tell from the morning if the play will be nice", "You can tell from the beginning of a venture how successfull it will be in the future"));
+                proverbsArrayList.add(new Proverbs("Kwaterekwa se ɔbɛma wo ntoma a, tie ne din", "If a naked person says that he will give you a cloth, listen to his name", "Be careful when someone who is himself in need of something promises to give you that thing. Dont trust all promises. Take into consideratoin the calibre of a person who promises you something"));
+                proverbsArrayList.add(new Proverbs("Yɛsoma onyansafo, ɛnyɛ anamɔntenten", "It is the wise person that we send on errand but not a person with long steps", "Speed should not override efficiency. Getting things done properly is better than getting it done fast but not properly."));
+                proverbsArrayList.add(new Proverbs("Aboa a onni dua no, Nyame na ɔpra ne ho", "An animal without a tail is cleaned by God", "God provides for those who have no means of catering for themselves"));
+                proverbsArrayList.add(new Proverbs("Borɔferɛ a ɛyɛ dɛ na abaa da ase", "It is the pawpaw tree which has tasty fruits that you will find a stick beneath it", "If you see people flocking to a particular venture it is because it is profitable"));
+                proverbsArrayList.add(new Proverbs("Prayɛ, sɛ wuyi baako a na ebu, woka bom a emmu", "If you remove one broomstick it will break but if you put all the broomsticks together it will not break", "We are stronger when we are united. It is harder to defeat a united people than a single person"));
+                proverbsArrayList.add(new Proverbs("Nsateaa nyinaa nnyɛ pɛ", "All fingers are not the same", "We all have different abilities"));
+                proverbsArrayList.add(new Proverbs("Obi nnim a, obi kyerɛ", "If one does not know, another teaches", "You should allow others to teach you things you don't know. You should listen to advice"));
+                proverbsArrayList.add(new Proverbs("Abofra hunu ne nsa hohoro a ɔne mpanyimfoɔ didi", "If a child learns how to wash his hands, he will eat with adults", "If a person learns and applies the customs and traditions, people in higher positions will work with him. "));
+                proverbsArrayList.add(new Proverbs("Yɛwo wo to esie so a, wo nnkyɛ tenten yɛ", "If you are born onto an anthill, you become tall quickly", "If you have a good foundation in life, it is easy for you to succeed in life. If your family is rich, you are able to make money early in life"));
+                proverbsArrayList.add(new Proverbs("Ayɔnko gorɔ nti na ɔkɔtɔ annya ti", "It is because of mingling with friends that the crab has no head", "Too many friends can make you lose a lot life. Choose friends wisely"));
+                proverbsArrayList.add(new Proverbs("Wo nsa akyi bɛyɛ wo dɛ a ɛnte sɛ wo nsa yam", "The back of your hand can be sweet but it will not be as sweet as your palm or inner surface of your hand", "The original is always better than imitation"));
+
+                proverbsArrayList.add(new Proverbs("Obi fom kum a, yɛn mfom ndwa", "If one kills by mistake, we do not cut up by mistake", "We do not deliberately repay someone with a bad deed for their unintentional mistake "));
+                proverbsArrayList.add(new Proverbs("Wuhu sɛ wo yɔnko abɔdwesɛ rehye a na wasa nsuo asi wo de ho", "If you see that the beard of a friend is on fire, fetch water and put by your beard", "If something bad happens to a neighbour, plan on how you will deal it with if it happens to you next"));
+                proverbsArrayList.add(new Proverbs("Dua a enya wo a ɛbɛwɔ w'ani no, yetu ase; yɛnsensene ano", "A tree which is likely to pierce your eye must be uprooted, not merely pruned", "If a problem has the potential to harm you, we do not solve it partially but rather we solve it completely. Eliminate completely anything that can harm you"));
+                proverbsArrayList.add(new Proverbs("Nyansapɔ wɔsane no badwemma", "A discerning man loosens a hard tight knot", "It takes a wise person to solve hard riddles. One who solves a complex problem is wise"));
+                proverbsArrayList.add(new Proverbs("Ahunu bi pɛn nti na aserewa regyegye ne ba agorɔ a na wayi n'ani ato nkyɛn", "When playing with its child, the silverbird looks away because of what it has seen before", "The behaviour of some people are as a result of the bad experiences they have encountered in their lives"));
+                proverbsArrayList.add(new Proverbs("Abaa a yɛde bɔ Takyi no yɛde bɛbɔ Baa", "The cane which is used on Takyi will also be used on Baa", "The punishment given to someone for a crime will be the same punishment for another who commits the same crime. What is done to someone will be the same that will happen to you if you act like him"));
+                proverbsArrayList.add(new Proverbs("Abɛ bi rebewu a na ɛsɔ", "When some palm trees are about to die, its wine tastes good", "Some people get to their best when they are about to retire or in their old age. The aged are the most experienced"));
+                proverbsArrayList.add(new Proverbs("Nea ɔwɔ aka no pɛn no suro sonsono", "He who has been bitten by a snake before, fears the worm", "A bad experience with a particular venture makes one afraid of anything resembling it"));
+                proverbsArrayList.add(new Proverbs("Efie biara Mensah wɔ mu", "Every household has a third born", "In every community there will be people whose opinion are totally different which might result in problems"));
+                proverbsArrayList.add(new Proverbs("Abofra a ɔmma ne maame nna no, bentoa mpa ne to da", "The enema will not depart from the buttocks of a child who doesn't let his mother sleep", "If you make trouble for your leaders who cater for you, you will also not have peace"));
+                proverbsArrayList.add(new Proverbs("Hu m'ani so ma me nti na atwe mmienu nam", "Deers walk in pairs so that one can blow the eye of the other if needed", "It is good to have a partner so that he will support you when you are in need"));
+                proverbsArrayList.add(new Proverbs("Obi nnom aduro mma ɔyarefo", "One does not take medicine for a sick person", "Don't expect someone to handle your responsibilities for you. There are some responsibilities you cannot do for another person"));
+                proverbsArrayList.add(new Proverbs("Akokɔbere nim adekyee nanso otie firi akokɔ nini ano", "The hen knows of the new day but it listens to the announcement from the cock", "Even though you might be knowledgeable in something it is always good to listen to the elderly and wait for direction"));
+                proverbsArrayList.add(new Proverbs("Ano da hɔ kwa a, ɛkeka nsɛm", "A mouth which is idle will say many things", "Those who have nothing to do become gossipers or commit crimes"));
+                proverbsArrayList.add(new Proverbs("Ɔsansa fa adeɛ a ɔde kyerɛ amansan", "When the hawk picks up something it shows it to the universe", "An honest person will not hide his works"));
+                proverbsArrayList.add(new Proverbs("Ɛtoa na ɛpɛ na ahoma da ne kɔn mu", "The bottle likes it that is why there is a rope around its neck", "It is your fault if you allow your enemies to trap you"));
+                proverbsArrayList.add(new Proverbs("Dadeɛ bi twa dadeɛ bi", "An iron can cut another iron or can sharpen another iron", "There is someone or something stronger than you. Even if you are strong it doesn't mean that you are unbeatable"));
+                proverbsArrayList.add(new Proverbs("Obi atifi nso yɛ obi anaafoɔ", "Your north is someone's south", "What you see as new maybe old to someone. "));
+                proverbsArrayList.add(new Proverbs("Abosomakoterɛ se ntɛm yɛ, brɛbrɛ nso yɛ", "The chameleon claims that to be fast is good and to be slow is also good", "If you do anything in good faith it is good"));
+                proverbsArrayList.add(new Proverbs("Wo sum borɔdeɛ a, sum kwadu", "You should take good care of the banana just as you take good care of the plantain", "Give the same attention to those you see as good and those you see as bad because you don't know when they will be useful to you"));
+                proverbsArrayList.add(new Proverbs("Nea ɔte fam no nsuro ahweaseɛ", "The one who is sitting down does not fear falling", "If you have done all that is required of you, you don't fear what will come. If you are at your lowest point, you do not fear humiliation"));
+                proverbsArrayList.add(new Proverbs("Abɔdwesɛ bɛtoo ani ntɔn nhwi", "The eyebrow was there before the beard came", "No matter how high your current position is, you have to give respect to the elderly"));
+                proverbsArrayList.add(new Proverbs("Koterɛ nnkɔdi mako mma mfifire nkɔfiri apɔnkyerɛni", "If the lizard consumes pepper, it's not the frog that sweats", "The one who commits a crime must bear his own punishment"));
+                proverbsArrayList.add(new Proverbs("Obi ntɔn n'akokɔ bedeɛ kwa", "No one sells his laying hen for nothing", "There is no action without cause. If there is nothing wrong, no one will sell his valuable property"));
+                proverbsArrayList.add(new Proverbs("Abaa nna hɔ mma kraman nnka nipa", "The stick should not lie idle while a dog bites a human", "Use your resources for your good. Don't keep money and end up dying from a minor ailment"));
+
+
+                proverbsArrayList.add(new Proverbs("Eti wɔ hɔ a yɛnhyɛ kotodwe kyɛ", "If the head is available we do not put a hat on the knee", "Give honour to who is due. Give privileges to those who can handle it better"));
+                proverbsArrayList.add(new Proverbs("Ɔhɔhoɔ behu mpoatwa a, na kuroman ni na akyerɛ no", "If a foreigner knows how to insult, it is a citizen who has taught him", "New comers learn bad traits from ones they came to meet."));
+                proverbsArrayList.add(new Proverbs("Ɛnyɛ ɔdehye biara na ɔfata kyinneɛ ase", "It is not every royal who deserves an umbrella over him", "Having the birthright or legal right to receiving honor does not automatically mean you will be praised or pampered especially if your behaviour is not fitting"));
+                proverbsArrayList.add(new Proverbs("Nkurow dɔɔso a yɛntena faako nnye animguase", "If there are many cities, we do not stay in one and be shamed", "If you fail in something you should try other avenues. Move from where you have been disgraced to where you will not be shamed or disgraced"));
+                proverbsArrayList.add(new Proverbs("Wo se akyi nnyɛ wo dɛ a, ɛhɔ a na wotafere", "If the back of your tooth is not sweet to you, that is the exact place you lick", "We tend to dwell on tends that hurt us or things we don't like. We spend more time to fix things we don't like"));
+                proverbsArrayList.add(new Proverbs("Dua koro ntumi nyɛ kwae", "One tree cannot be a forest", "One person cannot do it all. We all need help"));
+                proverbsArrayList.add(new Proverbs("Sotorɔ a ɛbɛn wo no, yegye no ntɛm", "A slap which is close to you is to be received quickly", "If something bad will inevitably happen to you, it is better to face it quickly than to try to delay it."));
+                proverbsArrayList.add(new Proverbs("Baabiara nni hɔ a wusie befi a egya nni hɔ", "There is no where that you will find smoke without fire", "There is always a root cause to a problem"));
+                proverbsArrayList.add(new Proverbs("Ntɛtea betwa nsuo a, na efi dua", "If the ant will cross a river, then it's because of a tree or wood", "Someone is only able to overcome an unsurmountable challenge only with help from someone or something"));
+                proverbsArrayList.add(new Proverbs("Sɛ yɛhwɛ nea etuo ayɛ a, anka yenni ano nam da", "If we consider what guns have caused then we would never eat an animal that has been brought down by a gun", "If you take into consideration all the bad that a person has committed you will not take any good from him so at times we have to forget the evil others have done"));
+                proverbsArrayList.add(new Proverbs("Sɛ tipae ba kurom a, kɔtɔ nka ho", "If there is headahe in town, the crab is not part", "If there is a case to be investigated, it is only suspects who should be interrogated"));
+                proverbsArrayList.add(new Proverbs("Sɛ wokɔto aboa kraman wɔ dua so a, na ɛnyɛ ɔno ara na ɔforoe na mmom ɔdesani na apagyaw no asi so", "If you see a dog on top of a tree, it did not climb the tree by itself but rather a human put it there", "If someone is able to do something he does not have access to, then someone who has access to it is involved."));
+
+                proverbsArrayList.add(new Proverbs("Sɛ nsuo fa wo a, wunnyae nsuo nom", "If you get drowned in water, you do not stop drinking water", "A bad experience with something(or someone) does not mean you should not use it again if there are benefits"));
+                proverbsArrayList.add(new Proverbs("Nea ade yɛ ne dea no ɔde benkum na ɛgye", "He who owns something collects it with his left hand", "The one owns something does not need to thank you if you return it. He has the right to get it from you anyway he wishes"));
+                proverbsArrayList.add(new Proverbs("Nea odi akyiri sua nea odi kan nanteɛ", "He one behind learns the walking style of the one in front", "The young learns their traits and habits from the old who trained them"));
+                proverbsArrayList.add(new Proverbs("Baabi a yedidi no yɛnsɛe hɔ", "We do not spoil where we eat", "Make sure that you are always at peace with the people who provide your needs for you"));
+
+                proverbsArrayList.add(new Proverbs("Aboa apɔnkyerɛni na ɛkaa sɛ wobaa me fie yɛkotow hɔ, wo nso rebisa me akonwa", "The frog says that when you came to my house you saw us squatting and you are asking me for a chair", "Do not require from others things which are obvious that they don't have. A good guest does not ask more than the host himself uses"));
+                proverbsArrayList.add(new Proverbs("Etua wo yɔnko a etua dua mu", "If it is pierced into your friend then it is pierced into a tree", "You do not feel the pain if you are not the one suffering"));
+
+                proverbsArrayList.add(new Proverbs("Sɛ ehia wo na ehia wo hia mu boafo a, ɛnna na awie wo hia", "It is when you are poor and the one who bails you is also poor then you have ended up poor", "If you are poor and you have someone to help you, then there is hope"));
+                proverbsArrayList.add(new Proverbs("Ɛkɔm de wo a ɛnkyerɛ sɛ fa wo nsa mmienu nyinaa didi", "If you are hungry it doesn't mean you should eat with your two hands", "Even if you need something so much you should still follow the right procedure to get it"));
+                proverbsArrayList.add(new Proverbs("Mogya mu yɛ du sen nsuo", "Blood is thicker than water", "Your blood relatives are more dear to you than your friends"));
+                proverbsArrayList.add(new Proverbs("Wuhu nea ɔbɛsɛe wo maame ayie a, na wode ayie no ahyɛ ne nsa", "If you notice someone who will make trouble at your mum's funeral, let that person handle the funeral arrangements", "If you suspect someone of sabotaging or stealing something, it is best to make that person responsible for that thing"));
                 proverbsArrayList.add(new Proverbs("Baabi a ɔsono bɛfa biara yɛ kwan", "Where ever the elephant passes is a way", "A powerful person can make a way where there seems to be no way"));
-                proverbsArrayList.add(new Proverbs("Ɛba a, ɛka oni", "If it comes it affects mother", "If trouble comes it affects your closest relatives"));
-                //  proverbsArrayList.add(new Proverbs("Ɛreba a, mɛbɔ ho ban, ne ɛtoto a, mɛsane, wɔn mu hena na wowɔ n'afa? Mewɔ ɛreba a, mɛbɔ ano ban afa.","hello","YEs"));
-                proverbsArrayList.add(new Proverbs("Yɛbaa mmebu a, anka yɛso nkuma", "If we had come to fell proverbs then we would be carrying axes", "We did not come to play. We mean business"));
-                proverbsArrayList.add(new Proverbs("Bra bɛhwɛ bi nkyerɛ sɛ behunu sen me", "Come and see some does not mean that come and see more than me", "If you are offered something, you shouldn't take more than your fair share or more than the one who offered it to you"));
-                proverbsArrayList.add(new Proverbs("Bra bɛhwɛ ne deɛ wahunu", "Come and see is what you have seen", "You can only talk about what you have seen or experienced"));
-                proverbsArrayList.add(new Proverbs("Aba a ɛtɔ nyinaa na efifi a, anka obi rennya dua ase kwan", "If all seeds that fall grow, then there will be no way to pass under trees", "Not everyone or every endeavour will succeed. That will allow room for others to succeed"));
-                //proverbsArrayList.add(new Proverbs("Wo ba koro wu a, na wo kosua korɔ abɔ","a","b"));
-                proverbsArrayList.add(new Proverbs("Ɔba nsɛ oni a ɔsɛ ɔse", "If a baby or child does not resemble its mother then it resembles its father", "Traits that people exhibit are picked up from those closest to you especially your relatives"));
-                proverbsArrayList.add(new Proverbs("Ɔba nsu a, yɛma no nom", "If a baby does not cry we let it drink", "You don't have to wait for someone to cry or toil for something that you know he needs before giving it"));
-                proverbsArrayList.add(new Proverbs("Ɔbaakofoɔ nkyere bɔdamfo", "One person does not arrest a mad person", "We have to work together"));
-                // proverbsArrayList.add(new Proverbs("","",""));
+                proverbsArrayList.add(new Proverbs("Dua koro yi ara, sɛ woforo si a wasi na wote hwe nso a wasi", "This same tree, if you climb up and climb down, you are down and similarly if you fall down from the tree you are also down", "The end of a matter is what matters most"));
 
-                proverbsArrayList.add(new Proverbs("Ɔbaa na ɔwo ɔbarima", "It is a woman who gives birth to a man", "A seemingly weak person can help a strong person to succeed"));
-                proverbsArrayList.add(new Proverbs("Ɔbaa ne ne kunu asɛm, obi nnim mu", "No one knows the issues between a woman and her husband", "Intimacy is required to know underlying issues. Marriage issues are best known to the couples only. Don't interfere in marital affairs of others"));
-                proverbsArrayList.add(new Proverbs("Ɔbaakofoɔ di awu a, ɔsoa ne funu", "If one person kills, he carries the corpse", "If you plot and commit a sin alone, you will suffer the consequence alone"));
-                proverbsArrayList.add(new Proverbs("Mmaapɛ mu wɔ ade a, anka ɔpapo da apakan mu", "If there was something to be gained from being a womanizer the he-goat would ride in a palanquin", "Look at womanizers and learn that their lifestyle do not make them chiefs. You will not gain profit by being a womanizer"));
-                proverbsArrayList.add(new Proverbs("Ɔbaatan na onim nea ne ba bedi", "A mother knows what her child will eat", "Someone who cares for your physical needs even before you ask can be considered your mother"));
-                proverbsArrayList.add(new Proverbs("Abaa a yɛde bɔ efie aboa no, yɛmfa mmɔ wuram aboa", "The stick that is used to hit the domestic animal is not the same stick that is used to hit a wild animal", "Friends should be treated differently from strangers (even if they all deserve to be punished)"));
-                proverbsArrayList.add(new Proverbs("Ɔbaa kɔ adware na ɔmma ntɛm a, na ɔresiesie ne ho", "If a woman goes to the bathroom and she delays, she is tidying herself up", "If someone or something is delaying maybe there is a good reason. Be patient when expecting good things. There is an underlying reason for each cause"));
-                proverbsArrayList.add(new Proverbs("Baabi dehyeɛ kɔsom a, wɔfrɛ no afenaa", "When a royal goes to another place to serve others, she is called a slave", "You can be regarded with great respect within your community or family but viewed as of little value by those of another community"));
-                proverbsArrayList.add(new Proverbs("Baabiara nni hɔ a wotena we atadwe a, ɛnyɛ dɛ", "There is no place that if you sit and chew tiger nuts, the tiger nuts will become bitter", "A good thing is good, no matter where it is located"));
-                proverbsArrayList.add(new Proverbs("Sɛ ababaa wu na yɛde aberewa di n'adeɛ a, na ayie no na yɛatu ahyɛ da", "If a young lady dies and we make an old lady inherit her property then it is the funeral that we are postponing to another day", "If you replace a good thing with a bad thing then you will have to replace it again very soon"));
-                proverbsArrayList.add(new Proverbs("Ɔbaa na onim ne kunu yam kɔm", "A woman knows how hungry her husband is", "Those closest to you are those who know what you are going through"));
-                proverbsArrayList.add(new Proverbs("Sɛ bafan nnim hwee mpo a, onim nsam bɔ", "If a cripple knows nothing at all, he can clap his hands", "Even if you are disabled or disadvantaged in a way, there is still something you can do"));
-                proverbsArrayList.add(new Proverbs("Ɔba kwasea rehonhono a, ɔse ɔreyɛ kɛse", "If a stupid child (person) is developing a swollen body he says he is getting fat", "A stupid person cannot see the truth in the reality of events"));
-                // proverbsArrayList.add(new Proverbs("Ɔbaa ","",""));
+                ///////
 
-                proverbsArrayList.add(new Proverbs("Ɔbaako yɛ ya", "One is painful", "To be a alone hurts"));
-                proverbsArrayList.add(new Proverbs("Ɔbaakofo di ɛwoɔ a enyane ne yam", "If one person eats honey alone it awakens his stomach", "A greedy person will suffer. If one enjoys good things alone he will suffer"));
-                proverbsArrayList.add(new Proverbs("Ɔbaakofo nkyekyere kurow", "One person does not build a city", "You cannot achieve great things by working alone"));
-                proverbsArrayList.add(new Proverbs("Ɔbaakofo na ɔto tuo na ɛdɔm guo", "One person shoots a gun and an army falls", "One person's decision determines the outcome.(Usually said when one makes a wise suggestion"));
-                proverbsArrayList.add(new Proverbs("Ɔbaako nnante anadwo", "One person does not walk alone at night", "In blurry situations seek the company of others. Be careful and take care"));
-                proverbsArrayList.add(new Proverbs("Ɔbaakofo nsa nso nyame ani kata", "One person's hand cannot cover god's eyes", "You need help to be able to do something that seems impossible"));
-                proverbsArrayList.add(new Proverbs("Ɔbaako tirim nni adwen", "There are no thoughts in the head of a single person", "It is difficult to come up with wise thought if you don't consult others"));
-                proverbsArrayList.add(new Proverbs("Ɔdaadaafo na ɔsɛe adamfo", "A deceitful person spoils a friend", "It is the dishonesty of people that corrupts a friend"));
-                proverbsArrayList.add(new Proverbs("Dadeɛ, yɛse no boɔ so, na yɛnse no nku so", "Iron, we sharpen it on a stone but not on cream", "Use the right tools for the job at hand"));
-                proverbsArrayList.add(new Proverbs("W'adaka si aburokyire mpo a, nea ɛwɔ mu nyinaa wo nim", "If your box is overseas, you still know it's contents", "You know what is yours and its details no matter where it may be"));
-                proverbsArrayList.add(new Proverbs("Adamfoɔ, adamfoɔ ɛne me nnɛ", "Friends, friends and this is me today", "Being over friendly has made me lose a lot"));
-                proverbsArrayList.add(new Proverbs("Dammirifua firi tete, ɛmfiri nnɛ", "Condolences are from ancient times, they ar not from today", "The causes of bad events are from the remote past not from present situations"));
-                proverbsArrayList.add(new Proverbs("Ɛdan wɔ aso", "Houses have ears", "Others can hear you even when you think you are alone. Be careful of what you say if you don't want it to spread"));
-                proverbsArrayList.add(new Proverbs("Wodan wo na ka a, wokɔto w'agya deɛ", "If you request your mother to pay you what she owes you, you go and meet that of your father", "The boss pays the debt in the long run"));
-                proverbsArrayList.add(new Proverbs("Wodan kusie amoakua a, ɔrennane da", "If you change a rat into a squirrel it won't change", "It is impossible to change the real nature of a person"));
+                //  proverbsArrayList.add(new Proverbs("Baabi a nkosua gu no yɛnto boɔ nkɔ hɔ","We do not throw stones to where there are eggs",""));
+                //proverbsArrayList.add(new Proverbs("Yɛma wo ɔhene na wɔanni a, ahenkwaa bɔ wo","",""));
 
-               // Toast.makeText(this, "After add: " + proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
-            } /*else {
+                //SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+
+
+                // if(MainActivity.Lifetime ==1 || MainActivity.Subscribed == 1){
+                if (Subscribed == 1) {
+
+                    // Toast.makeText(this, "Hi: "+ Subscribed, Toast.LENGTH_SHORT).show();
+                    proverbsArrayList.add(new Proverbs("Baabi a ɔsono bɛfa biara yɛ kwan", "Where ever the elephant passes is a way", "A powerful person can make a way where there seems to be no way"));
+                    proverbsArrayList.add(new Proverbs("Ɛba a, ɛka oni", "If it comes it affects mother", "If trouble comes it affects your closest relatives"));
+                    //  proverbsArrayList.add(new Proverbs("Ɛreba a, mɛbɔ ho ban, ne ɛtoto a, mɛsane, wɔn mu hena na wowɔ n'afa? Mewɔ ɛreba a, mɛbɔ ano ban afa.","hello","YEs"));
+                    proverbsArrayList.add(new Proverbs("Yɛbaa mmebu a, anka yɛso nkuma", "If we had come to fell proverbs then we would be carrying axes", "We did not come to play. We mean business"));
+                    proverbsArrayList.add(new Proverbs("Bra bɛhwɛ bi nkyerɛ sɛ behunu sen me", "Come and see some does not mean that come and see more than me", "If you are offered something, you shouldn't take more than your fair share or more than the one who offered it to you"));
+                    proverbsArrayList.add(new Proverbs("Bra bɛhwɛ ne deɛ wahunu", "Come and see is what you have seen", "You can only talk about what you have seen or experienced"));
+                    proverbsArrayList.add(new Proverbs("Aba a ɛtɔ nyinaa na efifi a, anka obi rennya dua ase kwan", "If all seeds that fall grow, then there will be no way to pass under trees", "Not everyone or every endeavour will succeed. That will allow room for others to succeed"));
+                    //proverbsArrayList.add(new Proverbs("Wo ba koro wu a, na wo kosua korɔ abɔ","a","b"));
+                    proverbsArrayList.add(new Proverbs("Ɔba nsɛ oni a ɔsɛ ɔse", "If a baby or child does not resemble its mother then it resembles its father", "Traits that people exhibit are picked up from those closest to you especially your relatives"));
+                    proverbsArrayList.add(new Proverbs("Ɔba nsu a, yɛma no nom", "If a baby does not cry we let it drink", "You don't have to wait for someone to cry or toil for something that you know he needs before giving it"));
+                    proverbsArrayList.add(new Proverbs("Ɔbaakofoɔ nkyere bɔdamfo", "One person does not arrest a mad person", "We have to work together"));
+                    // proverbsArrayList.add(new Proverbs("","",""));
+
+                    proverbsArrayList.add(new Proverbs("Ɔbaa na ɔwo ɔbarima", "It is a woman who gives birth to a man", "A seemingly weak person can help a strong person to succeed"));
+                    proverbsArrayList.add(new Proverbs("Ɔbaa ne ne kunu asɛm, obi nnim mu", "No one knows the issues between a woman and her husband", "Intimacy is required to know underlying issues. Marriage issues are best known to the couples only. Don't interfere in marital affairs of others"));
+                    proverbsArrayList.add(new Proverbs("Ɔbaakofoɔ di awu a, ɔsoa ne funu", "If one person kills, he carries the corpse", "If you plot and commit a sin alone, you will suffer the consequence alone"));
+                    proverbsArrayList.add(new Proverbs("Mmaapɛ mu wɔ ade a, anka ɔpapo da apakan mu", "If there was something to be gained from being a womanizer the he-goat would ride in a palanquin", "Look at womanizers and learn that their lifestyle do not make them chiefs. You will not gain profit by being a womanizer"));
+                    proverbsArrayList.add(new Proverbs("Ɔbaatan na onim nea ne ba bedi", "A mother knows what her child will eat", "Someone who cares for your physical needs even before you ask can be considered your mother"));
+                    proverbsArrayList.add(new Proverbs("Abaa a yɛde bɔ efie aboa no, yɛmfa mmɔ wuram aboa", "The stick that is used to hit the domestic animal is not the same stick that is used to hit a wild animal", "Friends should be treated differently from strangers (even if they all deserve to be punished)"));
+                    proverbsArrayList.add(new Proverbs("Ɔbaa kɔ adware na ɔmma ntɛm a, na ɔresiesie ne ho", "If a woman goes to the bathroom and she delays, she is tidying herself up", "If someone or something is delaying maybe there is a good reason. Be patient when expecting good things. There is an underlying reason for each cause"));
+                    proverbsArrayList.add(new Proverbs("Baabi dehyeɛ kɔsom a, wɔfrɛ no afenaa", "When a royal goes to another place to serve others, she is called a slave", "You can be regarded with great respect within your community or family but viewed as of little value by those of another community"));
+                    proverbsArrayList.add(new Proverbs("Baabiara nni hɔ a wotena we atadwe a, ɛnyɛ dɛ", "There is no place that if you sit and chew tiger nuts, the tiger nuts will become bitter", "A good thing is good, no matter where it is located"));
+                    proverbsArrayList.add(new Proverbs("Sɛ ababaa wu na yɛde aberewa di n'adeɛ a, na ayie no na yɛatu ahyɛ da", "If a young lady dies and we make an old lady inherit her property then it is the funeral that we are postponing to another day", "If you replace a good thing with a bad thing then you will have to replace it again very soon"));
+                    proverbsArrayList.add(new Proverbs("Ɔbaa na onim ne kunu yam kɔm", "A woman knows how hungry her husband is", "Those closest to you are those who know what you are going through"));
+                    proverbsArrayList.add(new Proverbs("Sɛ bafan nnim hwee mpo a, onim nsam bɔ", "If a cripple knows nothing at all, he can clap his hands", "Even if you are disabled or disadvantaged in a way, there is still something you can do"));
+                    proverbsArrayList.add(new Proverbs("Ɔba kwasea rehonhono a, ɔse ɔreyɛ kɛse", "If a stupid child (person) is developing a swollen body he says he is getting fat", "A stupid person cannot see the truth in the reality of events"));
+                    // proverbsArrayList.add(new Proverbs("Ɔbaa ","",""));
+
+                    proverbsArrayList.add(new Proverbs("Ɔbaako yɛ ya", "One is painful", "To be a alone hurts"));
+                    proverbsArrayList.add(new Proverbs("Ɔbaakofo di ɛwoɔ a enyane ne yam", "If one person eats honey alone it awakens his stomach", "A greedy person will suffer. If one enjoys good things alone he will suffer"));
+                    proverbsArrayList.add(new Proverbs("Ɔbaakofo nkyekyere kurow", "One person does not build a city", "You cannot achieve great things by working alone"));
+                    proverbsArrayList.add(new Proverbs("Ɔbaakofo na ɔto tuo na ɛdɔm guo", "One person shoots a gun and an army falls", "One person's decision determines the outcome.(Usually said when one makes a wise suggestion"));
+                    proverbsArrayList.add(new Proverbs("Ɔbaako nnante anadwo", "One person does not walk alone at night", "In blurry situations seek the company of others. Be careful and take care"));
+                    proverbsArrayList.add(new Proverbs("Ɔbaakofo nsa nso nyame ani kata", "One person's hand cannot cover god's eyes", "You need help to be able to do something that seems impossible"));
+                    proverbsArrayList.add(new Proverbs("Ɔbaako tirim nni adwen", "There are no thoughts in the head of a single person", "It is difficult to come up with wise thought if you don't consult others"));
+                    proverbsArrayList.add(new Proverbs("Ɔdaadaafo na ɔsɛe adamfo", "A deceitful person spoils a friend", "It is the dishonesty of people that corrupts a friend"));
+                    proverbsArrayList.add(new Proverbs("Dadeɛ, yɛse no boɔ so, na yɛnse no nku so", "Iron, we sharpen it on a stone but not on cream", "Use the right tools for the job at hand"));
+                    proverbsArrayList.add(new Proverbs("W'adaka si aburokyire mpo a, nea ɛwɔ mu nyinaa wo nim", "If your box is overseas, you still know it's contents", "You know what is yours and its details no matter where it may be"));
+                    proverbsArrayList.add(new Proverbs("Adamfoɔ, adamfoɔ ɛne me nnɛ", "Friends, friends and this is me today", "Being over friendly has made me lose a lot"));
+                    proverbsArrayList.add(new Proverbs("Dammirifua firi tete, ɛmfiri nnɛ", "Condolences are from ancient times, they ar not from today", "The causes of bad events are from the remote past not from present situations"));
+                    proverbsArrayList.add(new Proverbs("Ɛdan wɔ aso", "Houses have ears", "Others can hear you even when you think you are alone. Be careful of what you say if you don't want it to spread"));
+                    proverbsArrayList.add(new Proverbs("Wodan wo na ka a, wokɔto w'agya deɛ", "If you request your mother to pay you what she owes you, you go and meet that of your father", "The boss pays the debt in the long run"));
+                    proverbsArrayList.add(new Proverbs("Wodan kusie amoakua a, ɔrennane da", "If you change a rat into a squirrel it won't change", "It is impossible to change the real nature of a person"));
+
+
+                    ///October 2020
+                    proverbsArrayList.add(new Proverbs("Obi mmɔɔ ɔhene asum da koraa na ɛnyɛ nea oyi ne ti","If no one has slapped a king before it is not his barber","No matter who you are there are people you submit to in order to help you"));
+                    proverbsArrayList.add(new Proverbs("Yenni se a yɛnnko dompe ho","If we don't have teeth we don't fight over bones","We don't fight over things which are of no benefit to us due to our circumstances"));
+                    proverbsArrayList.add(new Proverbs("Tɛfrɛ nni bem wɔ akokɔ anim da","The cockroach is never innocent in the face of a hen","You can never prove your innocence to your enemy"));
+                    proverbsArrayList.add(new Proverbs("Bere a owura de n'ano reya akoa no, na akoa de n'adwene regu owura","Whiles a master is insulting his slave with his mouth, the slave is destroying his master in his mind","Don't think that a dependant does not mind how you treat him just because he doesn't say anything"));
+                    proverbsArrayList.add(new Proverbs("Ɛbere, yenni nka so","Time, we do not enjoy and stay forever in it","If it is your time now, it doesn't mean it will be your time forever. There is an end to all (good) things we enjoy now"));
+                    proverbsArrayList.add(new Proverbs("Ɛbere nsoeɛ a, yɛnkra nkɔ ","If time has not arrived, we don't say farewell and go","Wait till the correct time before you act"));
+                    proverbsArrayList.add(new Proverbs("Aberewa hwe ase a, ɔde hyɛ ne poma","If an old woman falls down, she blames it on her walking stick","We (think we are wise if we) always try to blame others for our own weakness"));
+                    proverbsArrayList.add(new Proverbs("Aberewa kɔ asuo a, ɔbɛba, na ne ntɛm","If an old woman goes to fetch water, she will come, but her earliness","The aged will deliver, but don't expect speed"));
+                    proverbsArrayList.add(new Proverbs("Aberewa nsuro kaka","An aged woman does not fear toothache","We don't fear what can't harm us(Aged women normally don't have teeth hence don't fear toothache)"));
+                    proverbsArrayList.add(new Proverbs("Obi a wo nim no awia no, yɛnsɔ kanea nhwɛ n'anim anadwo","For someone you know at daytime, you don't need to put on light to see his face in the evening","It is easy to identify a familiar person regardless of the circumstance"));
+
+                    // Toast.makeText(this, "After add: " + proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
+                } /*else {
                // Toast.makeText(this, "Not Subscribed: " + proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
-            }*/
+            } */
 
 
-        }
+
+            }
 
 
-        ///VerbsArrayList/////
+            ///VerbsArrayList/////
 
-       //// verbArrayList.add(new Verb("","",""));
+            //// verbArrayList.add(new Verb("","",""));
 //        verbArrayList.add(new Verb("",""));
 
-        verbArrayList = new ArrayList<>();
+            verbArrayList = new ArrayList<>();
 
-        if (5 > 1){
-            verbArrayList.add( new Verb("Come", "Bra"));
-            verbArrayList.add( new Verb("Don't Come", "Mma"));
-            verbArrayList.add( new Verb("Go", "Kɔ"));
-            verbArrayList.add( new Verb("Don't go", "Nkɔ"));
-            verbArrayList.add(new Verb("Converse (1)","Bɔ nkɔmmɔ"));
-            verbArrayList.add(new Verb("Don't Converse (1)","Mmɔ Nkɔmmɔ"));
-            verbArrayList.add(new Verb("Converse (2)","Di nkɔmmɔ"));
-            verbArrayList.add(new Verb("Don't Converse (2)","Nni Nkɔmmɔ"));
-            verbArrayList.add(new Verb("Help","Boa"));
+            {
+                verbArrayList.add(new Verb("Come", "Bra"));
+                verbArrayList.add(new Verb("Don't Come", "Mma"));
+                verbArrayList.add(new Verb("Go", "Kɔ"));
+                verbArrayList.add(new Verb("Don't go", "Nkɔ"));
+                verbArrayList.add(new Verb("Converse (1)", "Bɔ nkɔmmɔ"));
+                verbArrayList.add(new Verb("Don't Converse (1)", "Mmɔ Nkɔmmɔ"));
+                verbArrayList.add(new Verb("Converse (2)", "Di nkɔmmɔ"));
+                verbArrayList.add(new Verb("Don't Converse (2)", "Nni Nkɔmmɔ"));
+                verbArrayList.add(new Verb("Help", "Boa"));
 
                 verbArrayList.add(new Verb("Don't Help", "Mmoa"));
                 verbArrayList.add(new Verb("Try", "Bɔ Mmɔden"));
@@ -2826,89 +2937,81 @@ public class AppStartClass extends Application {
                 verbArrayList.add(new Verb("Don't Deceive", "Nnaadaa"));
                 verbArrayList.add(new Verb("Take", "Fa"));
                 verbArrayList.add(new Verb("Don't Take", "Mfa"));
-                verbArrayList.add(new Verb("Bring it","Fa bra"));
-                verbArrayList.add(new Verb("Don't Bring it","Mfa mma"));
-                verbArrayList.add(new Verb("Take it away","Fa kɔ"));
-                verbArrayList.add(new Verb("Don't take it away","Mfa nkɔ"));
-                verbArrayList.add(new Verb("Take it to...","Fa kɔma ..."));
-                verbArrayList.add(new Verb("Don't take it to...","Mfa nkɔma ..."));
-                verbArrayList.add(new Verb("Come out","Fi bra"));
-                verbArrayList.add(new Verb("Don't come out","Mfi mma"));
-                verbArrayList.add(new Verb("Buy on credit","Firi"));
-                verbArrayList.add(new Verb("Don't buy on credit","Mfiri"));
-            if (Subscribed == 1) {
+                verbArrayList.add(new Verb("Bring it", "Fa bra"));
+                verbArrayList.add(new Verb("Don't Bring it", "Mfa mma"));
+                verbArrayList.add(new Verb("Take it away", "Fa kɔ"));
+                verbArrayList.add(new Verb("Don't take it away", "Mfa nkɔ"));
+                verbArrayList.add(new Verb("Take it to...", "Fa kɔma ..."));
+                verbArrayList.add(new Verb("Don't take it to...", "Mfa nkɔma ..."));
+                verbArrayList.add(new Verb("Come out", "Fi bra"));
+                verbArrayList.add(new Verb("Don't come out", "Mfi mma"));
+                verbArrayList.add(new Verb("Buy on credit", "Firi"));
+                verbArrayList.add(new Verb("Don't buy on credit", "Mfiri"));
+                if (Subscribed == 1) {
 
-                verbArrayList.add(new Verb("Bath(e)","Dware"));
-                verbArrayList.add(new Verb("Don't Bath(e)","Nnware"));
+                    verbArrayList.add(new Verb("Bath(e)", "Dware"));
+                    verbArrayList.add(new Verb("Don't Bath(e)", "Nnware"));
 
-                verbArrayList.add(new Verb("See him off","Gya no kwan"));
-                verbArrayList.add(new Verb("Don't see him off","Nnya no kwan"));
-                verbArrayList.add(new Verb("Take it / Receive it / Have it","Gye"));
-                verbArrayList.add(new Verb("Don't (Take it/Receive it/Have it)","Nnye"));
-                verbArrayList.add(new Verb("Believe","Gye di"));
-                verbArrayList.add(new Verb("Don't believe","Nnye nni"));
-                verbArrayList.add(new Verb("Play","Di agorɔ"));
-                verbArrayList.add(new Verb("Don't play","Nni agorɔ"));
-                verbArrayList.add(new Verb("Stop","Gyina"));
-                verbArrayList.add(new Verb("Don't stop","Nnyina"));
-                 verbArrayList.add(new Verb("Continue","Kɔ so"));
-                 verbArrayList.add(new Verb("Don't continue","Gyae"));
-                verbArrayList.add(new Verb("Wear","Hyɛ"));
-                verbArrayList.add(new Verb("Don't wear","Nhyɛ"));
-                verbArrayList.add(new Verb("Put on shoes","Hyɛ mpaboa"));
-                verbArrayList.add(new Verb("Don't put on shoes","Nhyɛ mpaboa"));
+                    verbArrayList.add(new Verb("See him off", "Gya no kwan"));
+                    verbArrayList.add(new Verb("Don't see him off", "Nnya no kwan"));
+                    verbArrayList.add(new Verb("Take it / Receive it / Have it", "Gye"));
+                    verbArrayList.add(new Verb("Don't (Take it/Receive it/Have it)", "Nnye"));
+                    verbArrayList.add(new Verb("Believe", "Gye di"));
+                    verbArrayList.add(new Verb("Don't believe", "Nnye nni"));
+                    verbArrayList.add(new Verb("Play", "Di agorɔ"));
+                    verbArrayList.add(new Verb("Don't play", "Nni agorɔ"));
+                    verbArrayList.add(new Verb("Stop", "Gyina"));
+                    verbArrayList.add(new Verb("Don't stop", "Nnyina"));
+                    verbArrayList.add(new Verb("Continue", "Kɔ so"));
+                    verbArrayList.add(new Verb("Don't continue", "Gyae"));
+                    verbArrayList.add(new Verb("Wear", "Hyɛ"));
+                    verbArrayList.add(new Verb("Don't wear", "Nhyɛ"));
+                    verbArrayList.add(new Verb("Put on shoes", "Hyɛ mpaboa"));
+                    verbArrayList.add(new Verb("Don't put on shoes", "Nhyɛ mpaboa"));
 
-                verbArrayList.add(new Verb("Dry","Hata"));
-                verbArrayList.add(new Verb("Don't dry","Nhata"));
-                verbArrayList.add(new Verb("Wash Clothes (1)","Horo ntade"));
-                verbArrayList.add(new Verb("Wash Clothes (1)","Si ntade"));
-                verbArrayList.add(new Verb("Wash","Hohoro"));
-                verbArrayList.add(new Verb("Don't wash","Nhohoro"));
-                verbArrayList.add(new Verb("Meet","Hyia"));
-                verbArrayList.add(new Verb("Don't meet","Nhyia"));
-                verbArrayList.add(new Verb("Rest","Home"));
-                verbArrayList.add(new Verb("Don't rest","Nhome"));
-                verbArrayList.add(new Verb("Quarrel","Ham"));
-                verbArrayList.add(new Verb("Don't quarrel","Nham"));
-                verbArrayList.add(new Verb("Speak","Kasa"));
-                verbArrayList.add(new Verb("Don't speak","Nkasa"));
-                verbArrayList.add(new Verb("Teach","Kyerɛ"));
-                verbArrayList.add(new Verb("Don't teach","Nkyerɛ"));
-                verbArrayList.add(new Verb("Greet","Kyea"));
-                verbArrayList.add(new Verb("Don't greet","Nkyea"));
-                verbArrayList.add(new Verb("Keep long","Kyɛ"));
-                verbArrayList.add(new Verb("Don't keep long","Nkyɛ"));
-                verbArrayList.add(new Verb("Divide (or share)","Kyɛ"));
-                verbArrayList.add(new Verb("Don't divide (or share)","Nkyɛ"));
-                verbArrayList.add(new Verb("Look for (or Search)","Hwehwɛ"));
-                verbArrayList.add(new Verb("Don't look for (or search)","Nhwehwɛ"));
-                verbArrayList.add(new Verb("Look at","Hwɛ"));
-                verbArrayList.add(new Verb("Don't look at","Nhwɛ"));
-                verbArrayList.add(new Verb("Give","Ma"));
-                verbArrayList.add(new Verb("Don't give","Mma"));
-                verbArrayList.add(new Verb("Read","Kan"));
-                verbArrayList.add(new Verb("Don't read","Nkan"));
-                verbArrayList.add(new Verb("Read (1)","Kenkan"));
-                verbArrayList.add(new Verb("Don't read(1)","Nkenkan"));
-                verbArrayList.add(new Verb("Praise","Kamfo"));
-                verbArrayList.add(new Verb("Don't praise","Nkamfo"));
-                verbArrayList.add(new Verb("Fight","Ko"));
-                verbArrayList.add(new Verb("Don't fight","Nko"));
-                
-               // verbArrayList.add(new Verb("",""));
-
-
-
-
-            }else{
-                verbArrayList.add(new Verb("Subscribe or Purchase","for more verbs"));
+                    verbArrayList.add(new Verb("Dry", "Hata"));
+                    verbArrayList.add(new Verb("Don't dry", "Nhata"));
+                    verbArrayList.add(new Verb("Wash Clothes (1)", "Horo ntade"));
+                    verbArrayList.add(new Verb("Wash Clothes (1)", "Si ntade"));
+                    verbArrayList.add(new Verb("Wash", "Hohoro"));
+                    verbArrayList.add(new Verb("Don't wash", "Nhohoro"));
+                    verbArrayList.add(new Verb("Meet", "Hyia"));
+                    verbArrayList.add(new Verb("Don't meet", "Nhyia"));
+                    verbArrayList.add(new Verb("Rest", "Home"));
+                    verbArrayList.add(new Verb("Don't rest", "Nhome"));
+                    verbArrayList.add(new Verb("Quarrel", "Ham"));
+                    verbArrayList.add(new Verb("Don't quarrel", "Nham"));
+                    verbArrayList.add(new Verb("Speak", "Kasa"));
+                    verbArrayList.add(new Verb("Don't speak", "Nkasa"));
+                    verbArrayList.add(new Verb("Teach", "Kyerɛ"));
+                    verbArrayList.add(new Verb("Don't teach", "Nkyerɛ"));
+                    verbArrayList.add(new Verb("Greet", "Kyea"));
+                    verbArrayList.add(new Verb("Don't greet", "Nkyea"));
+                    verbArrayList.add(new Verb("Keep long", "Kyɛ"));
+                    verbArrayList.add(new Verb("Don't keep long", "Nkyɛ"));
+                    verbArrayList.add(new Verb("Divide (or share)", "Kyɛ"));
+                    verbArrayList.add(new Verb("Don't divide (or share)", "Nkyɛ"));
+                    verbArrayList.add(new Verb("Look for (or Search)", "Hwehwɛ"));
+                    verbArrayList.add(new Verb("Don't look for (or search)", "Nhwehwɛ"));
+                    verbArrayList.add(new Verb("Look at", "Hwɛ"));
+                    verbArrayList.add(new Verb("Don't look at", "Nhwɛ"));
+                    verbArrayList.add(new Verb("Give", "Ma"));
+                    verbArrayList.add(new Verb("Don't give", "Mma"));
+                    verbArrayList.add(new Verb("Read", "Kan"));
+                    verbArrayList.add(new Verb("Don't read", "Nkan"));
+                    verbArrayList.add(new Verb("Read (1)", "Kenkan"));
+                    verbArrayList.add(new Verb("Don't read(1)", "Nkenkan"));
+                    verbArrayList.add(new Verb("Praise", "Kamfo"));
+                    verbArrayList.add(new Verb("Don't praise", "Nkamfo"));
+                    verbArrayList.add(new Verb("Fight", "Ko"));
+                    verbArrayList.add(new Verb("Don't fight", "Nko"));
+                    // verbArrayList.add(new Verb("",""));
+                } else {
+                    verbArrayList.add(new Verb("Subscribe or Purchase", "for more verbs"));
+                }
             }
         }
 
     }
-
-
-
-
 }
 

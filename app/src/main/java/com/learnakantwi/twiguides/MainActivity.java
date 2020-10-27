@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
 
     int SPLASH_TIME_OUT = 3000;
-    static int Subscribed;
+    static int Subscribed =0;
     static int Lifetime;
     int times = 0;
 
@@ -222,8 +222,15 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                                 //Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
                                                                 startActivity(homeIntent);
                                                             } else {
+                                                                Subscribed = 0;
                                                                 Lifetime = 4;
                                                                 mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Regular");
+
+                                                                sharedPreferencesAds = getSharedPreferences("AdsDecision", MODE_PRIVATE);
+                                                                SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+                                                                editor.putInt("Lifetime", 0);
+                                                                editor.putInt("Sub", 0);
+                                                                editor.apply();
                                                                 //Toast.makeText(MainActivity.this, "I don't have access5: "+skuName, Toast.LENGTH_SHORT).show();
                                                             }
                                                             // }
@@ -334,8 +341,14 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                                     }
                                                                     //toast.setText(Integer.toString(me3));
                                                                 } else {
+                                                               /*     SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+                                                                    editor.putInt("Sub", 0);*/
+                                                                    sharedPreferencesAds = getSharedPreferences("AdsDecision", MODE_PRIVATE);
                                                                     SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+                                                                    editor.putInt("Lifetime", 0);
                                                                     editor.putInt("Sub", 0);
+                                                                    editor.apply();
+                                                                    Subscribed = 0;
                                                                     mFirebaseAnalytics.setUserProperty("Monthly_Premium", "Regular");
                                                                     Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                                                                     // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
@@ -354,8 +367,11 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                             toast.setText("No Internet Connection");
                                                             toast.show();
                                                             if (!isNetworkAvailable()) {
+                                                                sharedPreferencesAds = getSharedPreferences("AdsDecision", MODE_PRIVATE);
                                                                 SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+                                                                editor.putInt("Lifetime", 0);
                                                                 editor.putInt("Sub", 0);
+                                                                editor.apply();
                                                                 Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                                                                 startActivity(homeIntent);
                                                                 finish();
@@ -364,8 +380,11 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                                                             }
 
                                                         } else {
+                                                            sharedPreferencesAds = getSharedPreferences("AdsDecision", MODE_PRIVATE);
                                                             SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+                                                            editor.putInt("Lifetime", 0);
                                                             editor.putInt("Sub", 0);
+                                                            editor.apply();
                                                             Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                                                             startActivity(homeIntent);
                                                             finish();
@@ -399,8 +418,13 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
                     setUpBillingClient();
                 } else {
+                    sharedPreferencesAds = getSharedPreferences("AdsDecision", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+                    editor.putInt("Lifetime", 0);
                     editor.putInt("Sub", 0);
+                    editor.apply();
+                   // SharedPreferences.Editor editor = sharedPreferencesAds.edit();
+
                     Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
                     //Toast.makeText(MainActivity.this, "Disconnected O", Toast.LENGTH_SHORT).show();
                     startActivity(homeIntent);
@@ -442,7 +466,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         Lifetime = sharedPreferencesAds.getInt("Lifetime", 5); //runtime
         Subscribed = sharedPreferencesAds.getInt("Sub", 0);
         // Subscribed = 0;
-        Lifetime = 1;  //Subscribed
+       // Lifetime = 1;  //Subscribed
         //  Lifetime = 5;
 
         //Toast.makeText(this, "My: "+ Lifetime, Toast.LENGTH_SHORT).show();
@@ -453,11 +477,12 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         // Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
         //Intent homeIntent = new Intent(getApplicationContext(), QuizTimedAll.class);
         //Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
+       // Intent homeIntent = new Intent(getApplicationContext(), Repeating_activity.class);
         //startActivity(homeIntent);
 
         ////////
 
-        new Handler().postDelayed(new Runnable() {
+       new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (Lifetime == 1) {
@@ -491,22 +516,20 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
         ///////////////////
 
-        //int sub = sharedPreferencesAds.getInt("Sub",10);
-/*if(sub!=0){
-    proverbsArrayList.add( 0, new Proverbs( "Seious o", "If it comes it affects mother", "If trouble comes it affects your closest relatives"));
-}*/
-
 
     }
 
     @Override
     protected void onResume() {
 
+
         // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
         // Intent homeIntent = new Intent(getApplicationContext(), QuizTimedAll.class);
         // Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
         // Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
-        //  startActivity(homeIntent);
+      //  Intent homeIntent = new Intent(getApplicationContext(), Repeating_activity.class);
+        //startActivity(homeIntent);
+      //  Intent homeIntent = new Intent(getApplicationContext(), Repeating_activity.class);
         super.onResume();
 
         /////////////

@@ -581,9 +581,9 @@ public class SubPBodypartsActivity extends AppCompatActivity implements  RVBodyP
 
     public void pauseSlideshow(View view) {
 
-        //Log.i("Mee1","Hi b4pause"+ count);
-        count--;
-        // Log.i("Mee1","Hi pause"+ count);
+        if (!repeat1){
+            count--;
+        }
 
         pauseButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
@@ -858,8 +858,8 @@ public class SubPBodypartsActivity extends AppCompatActivity implements  RVBodyP
             public void run() {
                 // String a = recycleArrayList.get(count).getTwiProverb();
                 if (repeat1){
-                    String a = bodypartsArrayList.get(count-1).getTwiBodyparts();
-                    String c =bodypartsArrayList.get(count-1).getEnglishBodyparts();
+                    String a = bodypartsArrayList.get(count).getTwiBodyparts();
+                    String c =bodypartsArrayList.get(count).getEnglishBodyparts();
                     btSlideText.setText(a);
                     tvNumberWord.setText(c);
 

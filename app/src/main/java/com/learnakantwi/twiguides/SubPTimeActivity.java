@@ -589,9 +589,9 @@ public class SubPTimeActivity extends AppCompatActivity implements RVTimeAdapter
 
     public void pauseSlideshow(View view) {
 
-        //Log.i("Mee1","Hi b4pause"+ count);
-        count--;
-        // Log.i("Mee1","Hi pause"+ count);
+        if (!repeat1){
+            count--;
+        }
 
         pauseButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
@@ -867,8 +867,8 @@ public class SubPTimeActivity extends AppCompatActivity implements RVTimeAdapter
             public void run() {
                 // String a = recycleArrayList.get(count).getTwiProverb();
                 if (repeat1){
-                    String a = timeArrayList.get(count-1).getTwiTime();
-                    String c = timeArrayList.get(count-1).getEnglishTime();
+                    String a = timeArrayList.get(count).getTwiTime();
+                    String c = timeArrayList.get(count).getEnglishTime();
 
                     btSlideText.setText(a);
                     tvNumberWord.setText(c);

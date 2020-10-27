@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -25,8 +27,10 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -49,6 +53,9 @@ public class SubPAllActivity extends AppCompatActivity {
     MediaPlayer mp1;
 
     Context context;
+
+    int audioToDownload=0;
+    int downloadAllClickCount=0;
 
 
     Toast toast;
@@ -85,35 +92,8 @@ public class SubPAllActivity extends AppCompatActivity {
         return activeNetworkInfo != null;
     }
 
-    public void downloadOnly(final String filename){
-        if (isNetworkAvailable()){
-            final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
-            musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    String url = uri.toString();
-                    downloadFile(getApplicationContext(), filename, ".m4a", url);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    toast.setText("Lost Internet Connection");
-                    toast.show();
-                }
-            });
-        }
-        else {
-            toast.setText("Please connect to Internet to download audio");
-            toast.show();
-        }
-    }
 
-    /*public boolean hasInternetAccess() {
 
-        Thread myThread = new Thread(runnable);
-        myThread.start();
-        return isRunning;
-    }*/
 
     public void deleteAllDownload(){
 
@@ -178,92 +158,7 @@ public class SubPAllActivity extends AppCompatActivity {
         }
 
     }
-    public void downloadClick () {
-        int counter = 0;
 
-        if (isNetworkAvailable()) {
-            for (int j = 0; j < allArrayList.size(); j++) {
-
-                String bb = allArrayList.get(j).getTwiMain();
-                bb= bb.toLowerCase();
-                boolean dd = bb.contains("ɔ");
-                boolean ee = bb.contains("ɛ");
-                if (dd || ee) {
-                    bb = bb.replace("ɔ", "x");
-                    bb = bb.replace("ɛ", "q");
-                }
-
-                if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'") | bb.contains("...")) {
-                    bb = bb.replace(" ", "");
-                    bb = bb.replace("/", "");
-                    bb = bb.replace(",", "");
-                    bb = bb.replace("(", "");
-                    bb = bb.replace(")", "");
-                    bb = bb.replace("-", "");
-                    bb = bb.replace("?", "");
-                    bb = bb.replace("'", "");
-                    bb= bb.replace("...","");
-                }
-                File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
-                if (myFiles.exists()) {
-                    counter++;
-                }
-
-            }
-            if (counter == allArrayList.size()) {
-                toast.setText("All downloaded");
-                toast.show();
-
-            } else {
-                toast.setText("Downloading...");
-                toast.show();
-
-                // toast.setText(counter + " -- "+ allArrayList.size());
-                // toast.show();
-
-                for (int i = 0; i < allArrayList.size(); i++) {
-                    String b = allArrayList.get(i).getTwiMain().toLowerCase();
-                    boolean d = b.contains("ɔ");
-                    boolean e = b.contains("ɛ");
-                    if (d || e) {
-                        b = b.replace("ɔ", "x");
-                        b = b.replace("ɛ", "q");
-                    }
-
-                    if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") || b.contains("?")|| b.contains("...")|| b.contains("'")) {
-                        b = b.replace(" ", "");
-                        b = b.replace("/", "");
-                        b= b.replace(",","");
-                        b= b.replace("(","");
-                        b= b.replace(")","");
-                        b= b.replace("-","");
-                        b= b.replace("?","");
-                        b= b.replace("...","");
-                        b = b.replace("'", "");
-                    }
-
-                    File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + b + ".m4a");
-                    if (!myFile.exists()) {
-                        if (isNetworkAvailable()){
-                            downloadOnly(b);
-                        }
-                        else{
-                            toast.setText("Please connect to the Internet");
-                            toast.show();
-                            break;
-                        }
-
-                    }
-
-                }
-
-            }
-        }
-        else{
-            toast.setText("Please connect to the Internet to download audio");
-            toast.show();
-        }
-    }
 
     public void playFromFirebase(StorageReference musicRef) {
 
@@ -325,8 +220,12 @@ public class SubPAllActivity extends AppCompatActivity {
 
     }
 
-    public void playFromFileOrDownload(final String filename){
+    public void playFromFileOrDownload(final String filename, String type){
+
         File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
+        if (type.equals("verb")){
+            myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/VERBS/" + filename + ".m4a");
+        }
         if (myFile.exists()){
 
             try {
@@ -353,24 +252,43 @@ public class SubPAllActivity extends AppCompatActivity {
         }
         else {
 
-            if (isNetworkAvailable()){
+            if (isNetworkAvailable()) {
+
                 final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
-                musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        String url = uri.toString();
-                        playFromFirebase(musicRef);
-                        downloadFile(getApplicationContext(), filename, ".m4a", url);
-                       /* toast.setText(appearText);
-                        toast.show();*/
-                        //Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
-                    }
-                });
+
+                final StorageReference musicRef2 = storageReference.child("/Verbs/" + filename + ".m4a");
+
+                if (type.equals("verb")) {
+                    playFromFirebase(musicRef2);
+                    musicRef2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            String url = uri.toString();
+                          downloadFile(getApplicationContext(), filename, ".m4a", url, type);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            String url = uri.toString();
+
+                            playFromFirebase(musicRef);
+
+                            downloadFile(getApplicationContext(), filename, ".m4a", url, type);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
             else {
                 toast.setText("Please connect to Internet to download audio");
@@ -381,13 +299,15 @@ public class SubPAllActivity extends AppCompatActivity {
         }
     }
 
-    public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
+    public void downloadFile(final Context context, final String filename, final String fileExtension, final String url, String type) {
 
         if (Build.VERSION.SDK_INT > 22) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
         if (isNetworkAvailable()) {
+
+
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
@@ -395,7 +315,12 @@ public class SubPAllActivity extends AppCompatActivity {
                     Uri uri = Uri.parse(url);
                     DownloadManager.Request request = new DownloadManager.Request(uri);
                     request.setVisibleInDownloadsUi(false);
-                    request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                    if(type.equals("verb")){
+                        request.setDestinationInExternalFilesDir(getApplicationContext(),Environment.DIRECTORY_MUSIC + "/VERBS", filename + fileExtension);
+                    }
+                    else {
+                        request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                    }
                     downloadManager.enqueue(request);
                 }
             };
@@ -408,6 +333,187 @@ public class SubPAllActivity extends AppCompatActivity {
             toast.show();
 
         }
+    }
+
+    public void downloadOnly(final String filename, String type){
+        if (isNetworkAvailable()) {
+
+            audioToDownload++;
+
+            final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+
+            final StorageReference musicRef2 = storageReference.child("/Verbs/" + filename + ".m4a");
+
+            if (type.equals("verb")) {
+                musicRef2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String url = uri.toString();
+                        downloadFile(getApplicationContext(), filename, ".m4a", url, type);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (audioToDownload == downloadAllClickCount){
+                            downloadAllClickCount = 0;
+                        }
+                    }
+                });
+            } else {
+                musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String url = uri.toString();
+                        downloadFile(getApplicationContext(), filename, ".m4a", url, type);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (audioToDownload == downloadAllClickCount){
+                            downloadAllClickCount = 0;
+                        }
+                    }
+                });
+            }
+        }
+        else {
+            toast.setText("Please connect to Internet to download audio");
+            toast.show();
+        }
+    }
+
+    public void downloadClick () {
+        int counter = 0;
+
+        downloadAllClickCount = allArrayList.size()- counter;
+
+        if (isNetworkAvailable()) {
+            for (int j = 0; j < allArrayList.size(); j++) {
+
+                String bb = allArrayList.get(j).getTwiMain();
+                String type1 = allArrayList.get(j).getEnglish1().toLowerCase();
+
+                bb = PlayFromFirebase.viewTextConvert(bb);
+
+
+                File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
+
+                if (type1.equals("verb")){
+                    myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/VERBS/" + bb + ".m4a");
+                }
+                if (myFiles.exists()) {
+                    counter++;
+                    downloadAllClickCount = allArrayList.size()- counter;
+                }
+            }
+
+            if (counter == allArrayList.size()) {
+                toast.setText("All downloaded");
+                toast.show();
+                // Toast.makeText(this, "Download Complete", Toast.LENGTH_SHORT).show();
+
+            } else {
+                toast.setText("Downloading...");
+                toast.show();
+
+                // toast.setText(counter + " -- "+ allArrayList.size());
+                // toast.show();
+                audioToDownload = 0;
+                for (int i = 0; i < allArrayList.size(); i++) {
+                    String b = allArrayList.get(i).getTwiMain().toLowerCase();
+                    String type2 = allArrayList.get(i).getEnglish1().toLowerCase();
+
+                    b = PlayFromFirebase.viewTextConvert(b);
+
+                    File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + b + ".m4a");
+                    if (type2.equals("verb")){
+                        myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/VERBS/" + b + ".m4a");
+                    }
+                    if (!myFile.exists()) {
+                        if (isNetworkAvailable()){
+                            downloadOnly(b, type2);
+                        }
+                        else{
+                            toast.setText("Please connect to the Internet");
+                            toast.show();
+                            break;
+                        }
+
+                    }
+
+                }
+
+            }
+        }
+        else{
+            toast.setText("Please connect to the Internet to download audio");
+            toast.show();
+        }
+    }
+
+    public boolean downloadState() {
+        int testCounter = 0;
+        if (isNetworkAvailable()) {
+            for (int j = 0; j < allArrayList.size(); j++) {
+
+                String bb = allArrayList.get(j).getTwiMain();
+                String type = allArrayList.get(j).getEnglish1();
+
+                bb = PlayFromFirebase.viewTextConvert(bb);
+
+                File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + bb + ".m4a");
+                if (type.equals("verb")){
+                    myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/VERBS/" + bb + ".m4a");
+                }
+                if (myFiles.exists()) {
+                    testCounter++;
+                }
+            }
+        }
+
+        return testCounter != allArrayList.size();
+    }
+
+    public void downloadAll(){
+
+        if (downloadAllClickCount==0) {
+            if (downloadState()) {
+                new AlertDialog.Builder(this)
+                        .setIcon(R.drawable.learnakantwiimage)
+                        .setTitle("Download Audio?")
+                        .setMessage("Downloading Audio will download any new vocabulary audio which has been added and allow you to use the audio offline. This might take a few minutes and will use your data. Would you like to Download Audio to enhance your experience.")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // downloadAllClickCount++;
+                                toast.setText("Downloading in background. Please ");
+                                toast.show();
+                                downloadClick();
+                            }
+                        }).setNegativeButton("No", null)
+                        .show();
+            } else {
+                toast.setText("You have All Audio Downloaded. No New Audio");
+                toast.show();
+            }
+        }
+        else{
+            //toast.setText("Please wait a moment \n" + downloadAllClickCount +"\n"+ audioToDownload);
+           toast.setText("Downloading... \n Please wait a moment");
+            toast.show();
+
+        }
+
     }
 
 
@@ -453,7 +559,7 @@ public class SubPAllActivity extends AppCompatActivity {
         }
 
 
-        playFromFileOrDownload(b);
+        playFromFileOrDownload(b, "all");
 
     }
     @Override
@@ -497,6 +603,12 @@ public class SubPAllActivity extends AppCompatActivity {
 
                         a = results.get(position).getTwiMain();
 
+                        String type = results.get(position).getEnglish1().toLowerCase();
+
+               /* if (!type.equals("verb")){
+                    type = "all";
+                }*/
+
 
                         String c;
                         c= results.get(position).getEnglishmain();
@@ -513,7 +625,7 @@ public class SubPAllActivity extends AppCompatActivity {
 
                         toast.setText(sb);
                         toast.show();
-                        playFromFileOrDownload(b);
+                        playFromFileOrDownload(b, type);
 
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -551,7 +663,7 @@ public class SubPAllActivity extends AppCompatActivity {
                 goToQuizAll();
                 return  true;
             case R.id.downloadAllAudio:
-                 downloadClick();
+                 downloadAll();
                 //deleteAllDownload();
                 return true;
             case R.id.videoCourse:
@@ -567,8 +679,6 @@ public class SubPAllActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-
     public void goToMain(){
         Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
         startActivity(intent);
@@ -583,6 +693,8 @@ public class SubPAllActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_pall);
+
+        downloadAllClickCount =0;
 
         context = this;
         playFromFirebase = new PlayFromFirebase();
@@ -606,8 +718,14 @@ public class SubPAllActivity extends AppCompatActivity {
 
                 view.setBackgroundColor(Color.GREEN);
                 String a;
+                String type;
 
                 a = allArrayList.get(position).getTwiMain();
+                type = allArrayList.get(position).getEnglish1().toLowerCase();
+
+               /* if (!type.equals("verb")){
+                    type = "all";
+                }*/
 
 
                 String c;
@@ -624,7 +742,7 @@ public class SubPAllActivity extends AppCompatActivity {
 
                 toast.setText(sb);
                 toast.show();
-                playFromFileOrDownload(b);
+                playFromFileOrDownload(b, type);
 
                 new Handler().postDelayed(new Runnable() {
                     @Override

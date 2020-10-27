@@ -597,9 +597,9 @@ public class SubPColoursActivity extends AppCompatActivity implements RVColoursA
 
     public void pauseSlideshow(View view) {
 
-        //Log.i("Mee1","Hi b4pause"+ count);
-        count--;
-        // Log.i("Mee1","Hi pause"+ count);
+        if (!repeat1){
+            count--;
+        }
 
         pauseButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
@@ -871,8 +871,8 @@ public class SubPColoursActivity extends AppCompatActivity implements RVColoursA
             public void run() {
                 // String a = recycleArrayList.get(count).getTwiProverb();
                 if (repeat1){
-                    String a = coloursArrayList.get(count-1).getTwiColours();
-                    String c = coloursArrayList.get(count-1).getEnglishColours();
+                    String a = coloursArrayList.get(count).getTwiColours();
+                    String c = coloursArrayList.get(count).getEnglishColours();
                     btSlideText.setText(a);
                     tvNumberWord.setText(c);
 

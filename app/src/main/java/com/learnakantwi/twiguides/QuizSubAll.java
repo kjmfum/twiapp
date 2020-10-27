@@ -73,6 +73,8 @@ public class QuizSubAll extends AppCompatActivity {
 
     Toast toast;
 
+    String theType = "all";
+
 
     ImageView ivMute;
     ImageView ivUnMute;
@@ -204,7 +206,7 @@ public class QuizSubAll extends AppCompatActivity {
             }
         },4000);
     }
-    public void playFromFileOrDownload(final String filename, final String appearText) {
+    public void playFromFileOrDownload(final String filename, final String appearText, String type) {
 
         if (appearText.equals(twi1)) {
             toast.setText(appearText + " -" + " " + "CORRECT!!!!");
@@ -246,6 +248,9 @@ public class QuizSubAll extends AppCompatActivity {
         } else {
 
             File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + filename + ".m4a");
+            if (type.equals("verb")){
+                myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/VERBS/" + filename + ".m4a");
+            }
             if (myFile.exists()) {
 
                 try {
@@ -277,36 +282,74 @@ public class QuizSubAll extends AppCompatActivity {
                     e.printStackTrace();
                 }
             } else if (isNetworkAvailable()) {
+
                 final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
-                musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        String url = uri.toString();
-                        playFromFirebase(musicRef);
-                        downloadFile(getApplicationContext(), filename, ".m4a", url);
-                        if (appearText.equals(twi1)) {
-                            toast.setText(appearText + " -" + " " + "CORRECT!!!!");
-                            toast.show();
-                            handleCorrectAnswer();
-                        } else {
-                            toast.setText(appearText);
-                            toast.show();
+
+                final StorageReference musicRef2 = storageReference.child("/Verbs/" + filename + ".m4a");
+
+                if (type.equals("verb")){
+                    musicRef2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            String url = uri.toString();
+                            playFromFirebase(musicRef2);
+                            downloadFile(getApplicationContext(), filename, ".m4a", url, type);
+                            if (appearText.equals(twi1)) {
+                                toast.setText(appearText + " -" + " " + "CORRECT!!!!");
+                                toast.show();
+                                handleCorrectAnswer();
+                            } else {
+                                toast.setText(appearText);
+                                toast.show();
+                            }
+                            //Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
                         }
-                        //Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        if (appearText.equals(twi1)) {
-                            toast.setText(appearText + " -" + " " + "CORRECT!!!!");
-                            toast.show();
-                            generateQuestion();
-                        } else {
-                            toast.setText(appearText);
-                            toast.show();
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            if (appearText.equals(twi1)) {
+                                toast.setText(appearText + " -" + " " + "CORRECT!!!!");
+                                toast.show();
+                                generateQuestion();
+                            } else {
+                                toast.setText(appearText);
+                                toast.show();
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                else {
+                    musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            String url = uri.toString();
+                            playFromFirebase(musicRef);
+                            downloadFile(getApplicationContext(), filename, ".m4a", url, type);
+                            if (appearText.equals(twi1)) {
+                                toast.setText(appearText + " -" + " " + "CORRECT!!!!");
+                                toast.show();
+                                handleCorrectAnswer();
+                            } else {
+                                toast.setText(appearText);
+                                toast.show();
+                            }
+                            //Toast.makeText(getApplicationContext(), appearText, Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            if (appearText.equals(twi1)) {
+                                toast.setText(appearText + " -" + " " + "CORRECT!!!!");
+                                toast.show();
+                                generateQuestion();
+                            } else {
+                                toast.setText(appearText);
+                                toast.show();
+                            }
+                        }
+                    });
+                }
+
             } else {
 
                 if (appearText.equals(twi1)) {
@@ -323,13 +366,15 @@ public class QuizSubAll extends AppCompatActivity {
 
     }
 
-    public void downloadFile(final Context context, final String filename, final String fileExtension, final String url) {
+    public void downloadFile(final Context context, final String filename, final String fileExtension, final String url, String type) {
 
         if (Build.VERSION.SDK_INT > 22) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
         if (isNetworkAvailable()) {
+
+
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
@@ -337,7 +382,12 @@ public class QuizSubAll extends AppCompatActivity {
                     Uri uri = Uri.parse(url);
                     DownloadManager.Request request = new DownloadManager.Request(uri);
                     request.setVisibleInDownloadsUi(false);
-                    request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                    if(type.equals("verb")){
+                        request.setDestinationInExternalFilesDir(getApplicationContext(),Environment.DIRECTORY_MUSIC + "/VERBS", filename + fileExtension);
+                    }
+                    else {
+                        request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                    }
                     downloadManager.enqueue(request);
                 }
             };
@@ -351,7 +401,6 @@ public class QuizSubAll extends AppCompatActivity {
 
         }
     }
-
 
 
 
@@ -422,6 +471,7 @@ public class QuizSubAll extends AppCompatActivity {
 
         randomChoiceQuestion = random.nextInt(allArrayList.size()-1);
         english1 = allArrayList.get(randomChoiceQuestion).getEnglishmain();
+        theType = allArrayList.get(randomChoiceQuestion).getEnglish1();
 
         questionText.setText(english1);
 
@@ -489,7 +539,7 @@ public class QuizSubAll extends AppCompatActivity {
             b= b.replace("...","");
         }
 
-        playFromFileOrDownload(b,a);
+        playFromFileOrDownload(b, a, theType);
 
     }
 

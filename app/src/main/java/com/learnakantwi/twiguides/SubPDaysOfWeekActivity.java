@@ -550,9 +550,9 @@ public class SubPDaysOfWeekActivity extends AppCompatActivity implements  RVDayo
 
     public void pauseSlideshow(View view) {
 
-        //Log.i("Mee1","Hi b4pause"+ count);
-        count--;
-        // Log.i("Mee1","Hi pause"+ count);
+        if (!repeat1){
+            count--;
+        }
 
         pauseButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
@@ -649,7 +649,7 @@ public class SubPDaysOfWeekActivity extends AppCompatActivity implements  RVDayo
     public void next(View view){
         pauseSlideshow();
         //proverbsViewFlipper.stopFlipping();
-        Log.i("Mee1","Hi next b4 "+ count);
+
         if (!slideshowBool){
             count++;
         }
@@ -657,8 +657,6 @@ public class SubPDaysOfWeekActivity extends AppCompatActivity implements  RVDayo
             slideshowBool = false;
         }
 
-
-        Log.i("Mee1","Hi next after"+ count);
 
 
         if (count>=ArraySize-1){
@@ -831,8 +829,8 @@ public class SubPDaysOfWeekActivity extends AppCompatActivity implements  RVDayo
                 // String a = recycleArrayList.get(count).getTwiProverb();
                 if (repeat1){
 
-                    String a = daysOfWeeksArray.get(count-1).getNameTwi();
-                    String c = daysOfWeeksArray.get(count-1).getNameEnglish();
+                    String a = daysOfWeeksArray.get(count).getNameTwi();
+                    String c = daysOfWeeksArray.get(count).getNameEnglish();
 
                     btSlideText.setText(a);
                     tvNumberWord.setText(c);

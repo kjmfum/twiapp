@@ -31,7 +31,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SubPVerbActivity"></activity>
+        <activity android:name=".Games"></activity>
+        <activity android:name=".SubPVerbActivity" />
         <activity android:name=".NoticeBoardActivity" />
         <activity
             android:name=".HomeMainActivity"

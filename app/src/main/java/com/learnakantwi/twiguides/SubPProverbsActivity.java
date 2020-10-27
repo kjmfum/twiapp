@@ -995,7 +995,7 @@ public class SubPProverbsActivity extends AppCompatActivity implements RVProverb
         if (MainActivity.Subscribed != 1) {
 
             if (prob < 7) {
-                Log.i("advert", "came");
+               // Log.i("advert", "came");
                 advert1();
                 // advert1();
             }

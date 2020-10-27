@@ -593,9 +593,9 @@ public class SubPFoodActivity extends AppCompatActivity implements FoodAdapter.o
 
     public void pauseSlideshow(View view) {
 
-        //Log.i("Mee1","Hi b4pause"+ count);
-        count--;
-        // Log.i("Mee1","Hi pause"+ count);
+        if (!repeat1){
+            count--;
+        }
 
         pauseButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
@@ -869,8 +869,8 @@ public class SubPFoodActivity extends AppCompatActivity implements FoodAdapter.o
             public void run() {
                 // String a = recycleArrayList.get(count).getTwiProverb();
                 if (repeat1){
-                    String a = foodArrayList.get(count-1).getTwiFood();
-                    String c = foodArrayList.get(count-1).getEnglishFood();
+                    String a = foodArrayList.get(count).getTwiFood();
+                    String c = foodArrayList.get(count).getEnglishFood();
                     btSlideText.setText(a);
                     tvNumberWord.setText(c);
 

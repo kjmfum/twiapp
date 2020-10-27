@@ -587,9 +587,9 @@ public class SubPMonthsActivity extends AppCompatActivity implements RVMonthsAda
 
     public void pauseSlideshow(View view) {
 
-        //Log.i("Mee1","Hi b4pause"+ count);
-        count--;
-        // Log.i("Mee1","Hi pause"+ count);
+        if (!repeat1){
+            count--;
+        }
 
         pauseButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
@@ -863,8 +863,8 @@ public class SubPMonthsActivity extends AppCompatActivity implements RVMonthsAda
             public void run() {
                 // String a = recycleArrayList.get(count).getTwiProverb();
                 if (repeat1){
-                    String a = monthsArrayList.get(count-1).getTwiMonths();
-                    String c = monthsArrayList.get(count-1).getEnglishMonths();
+                    String a = monthsArrayList.get(count).getTwiMonths();
+                    String c = monthsArrayList.get(count).getEnglishMonths();
                     btSlideText.setText(a);
                     tvNumberWord.setText(c);
 

@@ -378,8 +378,8 @@ public class ChildrenHome extends AppCompatActivity {
                                 case "Numbers":
                                     goToNumber();
                                     return;
-                                case "Time":
-                                    goToTime();
+                                    case "Non Twi Games":
+                                    goToGames();
                                     return;
                                 case "Weather":
                                     goToWeather();
@@ -494,8 +494,8 @@ public class ChildrenHome extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToTime() {
-        Intent intent = new Intent(getApplicationContext(), QuizTime.class);
+    public void goToGames() {
+        Intent intent = new Intent(getApplicationContext(), Games.class);
         startActivity(intent);
     }
 
@@ -557,30 +557,6 @@ public class ChildrenHome extends AppCompatActivity {
         sharedPreferences.edit().putString("DailyTwiPreference", "Yes").apply();
         Toast.makeText(this, "Daily Twi Alerts Turned On", Toast.LENGTH_SHORT).show();
     }
-
-
-   /* public void checkPermission(String permission, int requestCode)
-    {
-        // Checking if permission is not granted
-        if (ContextCompat.checkSelfPermission(
-                Home.this,
-                permission)
-                == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat
-                    .requestPermissions(
-                            Home.this,
-                            new String[] {permission },
-                            100);
-        }
-        else {
-            Toast
-                    .makeText(Home.this,
-                            "Permission already granted",
-                            Toast.LENGTH_SHORT)
-                    .show();
-        }
-    }*/
-//In your case, you do not need the LinearLayout and ImageView at all. Just add android:drawableLeft="@drawable/up_count_big" to your TextView.
 
     public void downloadClickAnimals () {
         int counter = 0;
@@ -783,6 +759,7 @@ public class ChildrenHome extends AppCompatActivity {
         homeListView = findViewById(R.id.homeListView);
 
         homeButtonArrayList.add(new HomeButton("Alphabets", R.drawable.childrenalphabetimage));
+        homeButtonArrayList.add(new HomeButton("Non Twi Games", R.drawable.gamesimage));
         homeButtonArrayList.add(new HomeButton("Animals", R.drawable.childrenanimalsimage));
         homeButtonArrayList.add(new HomeButton("Numbers", R.drawable.childrennumbersimage));
 
@@ -834,8 +811,8 @@ public class ChildrenHome extends AppCompatActivity {
                     case "Numbers":
                         goToNumber();
                         return;
-                    case "Time":
-                        goToTime();
+                    case "Non Twi Games":
+                        goToGames();
                         return;
                     case "Weather":
                         goToWeather();

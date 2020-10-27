@@ -590,9 +590,9 @@ public class SubPWeatherActivity extends AppCompatActivity implements RVWeatherA
 
     public void pauseSlideshow(View view) {
 
-        //Log.i("Mee1","Hi b4pause"+ count);
-        count--;
-        // Log.i("Mee1","Hi pause"+ count);
+        if (!repeat1){
+            count--;
+        }
 
         pauseButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
@@ -639,8 +639,7 @@ public class SubPWeatherActivity extends AppCompatActivity implements RVWeatherA
         pauseSlideshow();
         //proverbsViewFlipper.showPrevious();
 
-        Log.i("Mee1","Hi b4"+ count);
-        // count = count-1;
+
         if (!slideshowBool){
             if (count!=0){
                 count--;
@@ -653,8 +652,6 @@ public class SubPWeatherActivity extends AppCompatActivity implements RVWeatherA
             slideshowBool = false;
         }
 
-        Log.i("Mee1","Hi after "+ count);
-        // int position = proverbsViewFlipper.getDisplayedChild();
 
         String a = weatherArray.get(count).getWeatherTwi();
         String c =weatherArray.get(count).getWeatherEnglish();

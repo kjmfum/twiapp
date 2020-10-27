@@ -29,8 +29,10 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -59,6 +61,8 @@ public class Repeating_activity extends AppCompatActivity {
     Toast toast;
     int testShared;
 
+    String type= "";
+
     AdView mAdView;
     AdView mAdView1;
 
@@ -70,7 +74,230 @@ public class Repeating_activity extends AppCompatActivity {
         return activeNetworkInfo != null;
     }
 
-    public void downloadOnly(final String filename) {
+    public void playFromFirebase(StorageReference musicRef) {
+
+        if (Build.VERSION.SDK_INT > 22) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+        if (isNetworkAvailable()) {
+
+            try {
+                final File localFile = File.createTempFile("aduonu", "m4a");
+
+                if (localFile != null) {
+                    musicRef.getFile(localFile)
+                            .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                                    if (mp1 != null) {
+                                        mp1.stop();
+                                        mp1.reset();
+                                        mp1.release();
+                                    }
+                                    mp1 = new MediaPlayer();
+                                    try {
+                                        mp1.setDataSource(getApplicationContext(), Uri.fromFile(localFile));
+                                        mp1.prepareAsync();
+                                        mp1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                            @Override
+                                            public void onPrepared(MediaPlayer mp) {
+                                                mp.start();
+                                            }
+                                        });
+                                    } catch (IOException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle failed download
+                            // ...
+                        }
+                    });
+                } else {
+                    toast.setText("Unable to download now. Please try later");
+                    toast.show();
+                }
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        else {
+            toast.setText("Please Connect to the Internet");
+            toast.show();
+        }
+
+    }
+
+    public void playFromFileOrDownload(final String filename, String type){
+
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/"+filename+ ".m4a");
+        if (type.equals("verb")){
+            myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/VERBS/" + filename + ".m4a");
+        }
+        if (myFile.exists()){
+
+            try {
+                if (playFromDevice != null){
+                    playFromDevice.stop();
+                    playFromDevice.reset();
+                    playFromDevice.release();
+                }
+                playFromDevice = new MediaPlayer();
+
+                playFromDevice.setDataSource(myFile.toString());
+                playFromDevice.prepareAsync();
+                playFromDevice.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.start();
+                        /*toast.setText(appearText);
+                        toast.show();*/
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+
+            if (isNetworkAvailable()) {
+
+                final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+
+                final StorageReference musicRef2 = storageReference.child("/Verbs/" + filename + ".m4a");
+
+                if (type.equals("verb")) {
+                    playFromFirebase(musicRef2);
+                    musicRef2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            String url = uri.toString();
+                            downloadFile(getApplicationContext(), filename, ".m4a", url, type);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            String url = uri.toString();
+
+                            playFromFirebase(musicRef);
+
+                            downloadFile(getApplicationContext(), filename, ".m4a", url, type);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+            else {
+                toast.setText("Please connect to Internet to download audio");
+                toast.show();
+            }
+
+
+        }
+    }
+
+    public void downloadFile(final Context context, final String filename, final String fileExtension, final String url, String type) {
+
+        if (Build.VERSION.SDK_INT > 22) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+        if (isNetworkAvailable()) {
+
+
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                    Uri uri = Uri.parse(url);
+                    DownloadManager.Request request = new DownloadManager.Request(uri);
+                    request.setVisibleInDownloadsUi(false);
+                    if(type.equals("verb")){
+                        request.setDestinationInExternalFilesDir(getApplicationContext(),Environment.DIRECTORY_MUSIC + "/VERBS", filename + fileExtension);
+                    }
+                    else {
+                        request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                    }
+                    downloadManager.enqueue(request);
+                }
+            };
+            Thread myThread = new Thread(runnable);
+            myThread.start();
+        }
+        else
+        {
+            toast.setText("No Internet");
+            toast.show();
+
+        }
+    }
+
+    public void downloadOnly(final String filename, String type){
+        if (isNetworkAvailable()) {
+
+            final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
+
+            final StorageReference musicRef2 = storageReference.child("/Verbs/" + filename + ".m4a");
+
+            if (type.equals("verb")) {
+                musicRef2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String url = uri.toString();
+                        downloadFile(getApplicationContext(), filename, ".m4a", url, type);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "No Internet 1", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                    }
+                });
+            } else {
+                musicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String url = uri.toString();
+                        downloadFile(getApplicationContext(), filename, ".m4a", url, type);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "No Internet 2", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                    }
+                });
+            }
+        }
+        else {
+            toast.setText("Please connect to Internet to download audio");
+            toast.show();
+        }
+    }
+  /*  public void downloadOnly(final String filename) {
         if (isNetworkAvailable()) {
 
             final StorageReference musicRef = storageReference.child("/AllTwi/" + filename + ".m4a");
@@ -93,7 +320,6 @@ public class Repeating_activity extends AppCompatActivity {
             toast.show();
         }
     }
-
 
     public void downloadClick() {
         int counter = 1;
@@ -320,6 +546,9 @@ public class Repeating_activity extends AppCompatActivity {
 
         }
     }
+*/
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -385,6 +614,7 @@ public class Repeating_activity extends AppCompatActivity {
 
 
         twi1 = allArrayList.get(randomChoiceQuestion).getTwiMain();
+        type = allArrayList.get(randomChoiceQuestion).getEnglish1().toLowerCase();
 
 
         textView.setText(english1);
@@ -457,28 +687,9 @@ public class Repeating_activity extends AppCompatActivity {
                 TextView blabla = view.findViewById(idview);
                 String a = (String) blabla.getText();
 
-                String b = a.toLowerCase();
+                String b = PlayFromFirebase.viewTextConvert(a);
 
-                boolean d = b.contains("ɔ");
-                boolean e = b.contains("ɛ");
-
-                if (d || e) {
-                    b = b.replace("ɔ", "x");
-                    b = b.replace("ɛ", "q");
-                }
-
-
-                if (b.contains(" ") || b.contains("/") || b.contains(",") || b.contains("(") || b.contains(")") || b.contains("-") | b.contains("?") | b.contains("...")) {
-                    b = b.replace(" ", "");
-                    b = b.replace("/", "");
-                    b = b.replace(",", "");
-                    b = b.replace("(", "");
-                    b = b.replace(")", "");
-                    b = b.replace("-", "");
-                    b = b.replace("?", "");
-                    b = b.replace("...", "");
-                }
-                playFromFileOrDownload(b, a);
+                playFromFileOrDownload(b, type);
             }
         });
 
@@ -509,10 +720,13 @@ public class Repeating_activity extends AppCompatActivity {
         });
 
         final SharedPreferences sharedPreferencesAds = this.getSharedPreferences("AdsDecision", MODE_PRIVATE);
-        testShared = sharedPreferencesAds.getInt("Ads", 5);
+        testShared = sharedPreferencesAds.getInt("Sub", 0);
 
 
-        if (testShared != 0) {
+
+
+        if (testShared != 1) {
+          // Toast.makeText(this, "Advert Show", Toast.LENGTH_SHORT).show();
             MobileAds.initialize(this, new OnInitializationCompleteListener() {
                 @Override
                 public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -531,7 +745,9 @@ public class Repeating_activity extends AppCompatActivity {
         mAdView1 = findViewById(R.id.adView1);
         AdRequest adRequest1 = new AdRequest.Builder().build();
         mAdView1.loadAd(adRequest1);
-    }
+    }/*else{
+            Toast.makeText(this, "Averts now: "+ testShared, Toast.LENGTH_SHORT).show();
+        }*/
 
         }
     }

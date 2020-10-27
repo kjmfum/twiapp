@@ -43,7 +43,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.games.Games;
 import com.google.android.gms.games.LeaderboardsClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -85,10 +84,10 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
     RecyclerView recyclerView;
     RVHomeMainAdapter rvHomeMainAdapter;
 
-    private static final int RC_UNUSED = 5001;
-    GoogleSignInOptions  signInOptions;
+//    private static final int RC_UNUSED = 5001;
+  /*  GoogleSignInOptions  signInOptions;
     private LeaderboardsClient mLeaderboardsClient;
-    private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInClient mGoogleSignInClient;*/
 
 
 
@@ -147,6 +146,9 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
                                     return;
                                 case "Reading":
                                     goToReading();
+                                case "Non Twi Games":
+                                    goToGames();
+                                    return;
                             }
                         }
                     });
@@ -399,25 +401,6 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
                 //toast.show();
             }
 
-            /*String bb = allArrayList.get(j).getTwiMain();
-            bb= bb.toLowerCase();
-            boolean dd = bb.contains("ɔ");
-            boolean ee = bb.contains("ɛ");
-            if (dd || ee) {
-                bb = bb.replace("ɔ", "x");
-                bb = bb.replace("ɛ", "q");
-            }
-
-            if (bb.contains(" ") || bb.contains("/") || bb.contains(",") || bb.contains("(") || bb.contains(")") || bb.contains("-") || bb.contains("?") || bb.contains("'") | bb.contains("...")) {
-                bb = bb.replace(" ", "");
-                bb = bb.replace("/", "");
-                bb = bb.replace(",", "");
-                bb = bb.replace("(", "");
-                bb = bb.replace(")", "");
-                bb = bb.replace("-", "");
-                bb = bb.replace("?", "");
-                bb = bb.replace("'", "");
-                bb= bb.replace("...","");*/
             }
 
         }
@@ -437,6 +420,11 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
     public void goToReading(){
         Intent intent = new Intent(getApplicationContext(), ReadingActivityMain.class);
+        startActivity(intent);
+    }
+
+    public void goToGames() {
+        Intent intent = new Intent(getApplicationContext(), Games.class);
         startActivity(intent);
     }
 
@@ -464,6 +452,9 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
                 return;
             case "Proverbs":
                 goToProverbs();
+                return;
+            case "Non Twi Games":
+                goToGames();
                 return;
             case "Quiz":
                 goToQuizHome();
@@ -499,35 +490,13 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home1);
 
+
         //firebaseAuth = FirebaseAuth.getInstance();
 
        // Toast.makeText(this, "Testing1", Toast.LENGTH_SHORT).show();
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
-        /////////Testing
 
-      //  Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
-        //        .submitScore(getString(R.string.leaderboard_id), 1337);
-
-        signInOptions =
-                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
-                        .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this,
-                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build());
-
-
-       // signInSilently();
-      //  Games.getLeaderboardsClient(this, googleSignInAccount);
-
-       // mLeaderboardsClient = Games.getLeaderboardsClient(this, googleSignInAccount);
-       // mLeaderboardsClient = Games.getLeaderboardsClient(this, "kjmfum1@gmail.com");
-
-
-
-
-
-        /////////Testing
 
 
         try {
@@ -588,7 +557,7 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
         AppRate.with(this)
                 .setInstallDays(0)
-                .setLaunchTimes(5)
+                .setLaunchTimes(3)
                 .setRemindInterval(2)
                 .monitor();
 
@@ -615,22 +584,8 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
         homeMainButtonArrayList.add(new HomeMainButton("Conversations", R.drawable.conversationimage));
         homeMainButtonArrayList.add(new HomeMainButton("Reading", R.drawable.readingimage));
         homeMainButtonArrayList.add(new HomeMainButton("Manage Storage", R.drawable.ic_download_audio));
+        homeMainButtonArrayList.add(new HomeMainButton("Non Twi Games", R.drawable.gamesimage));
 
-
-
-
-
-       /* homeMainButtonArrayList.add(new HomeMainButton("Food", R.drawable.foodimage));
-        homeMainButtonArrayList.add(new HomeMainButton("Alphabets", R.drawable.alphabetsimage));
-        homeMainButtonArrayList.add(new HomeMainButton("Time", R.drawable.time));*/
-
-
-        //Collections.sort(this.homeButtonArrayList);
-
-     //   homeButtonArrayList.add(new HomeButton("Search", R.drawable.allimage));
-
-        //HomeMainAdapter homeMainAdapter = new HomeMainAdapter(this, homeMainButtonArrayList);
-        //homeListView.setAdapter(homeMainAdapter);
 
         recyclerView = findViewById(R.id.recyclerView);
         rvHomeMainAdapter = new RVHomeMainAdapter(this, homeMainButtonArrayList, this);

@@ -575,9 +575,9 @@ public class SubPVerbActivity extends AppCompatActivity implements VerbAdapter_o
 
     public void pauseSlideshow(View view) {
 
-        //Log.i("Mee1","Hi b4pause"+ count);
-        count--;
-        // Log.i("Mee1","Hi pause"+ count);
+        if (!repeat1){
+            count--;
+        }
 
         pauseButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
@@ -850,8 +850,8 @@ public class SubPVerbActivity extends AppCompatActivity implements VerbAdapter_o
             public void run() {
                 // String a = recycleArrayList.get(count).getTwiProverb();
                 if (repeat1){
-                    String a = verbArrayList.get(count-1).getTwiVerb();
-                    String c = verbArrayList.get(count-1).getEnglishVerb();
+                    String a = verbArrayList.get(count).getTwiVerb();
+                    String c = verbArrayList.get(count).getEnglishVerb();
 
                     btSlideText.setText(a);
                     tvNumberWord.setText(c);

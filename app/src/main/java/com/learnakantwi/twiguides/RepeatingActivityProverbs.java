@@ -344,10 +344,10 @@ public class RepeatingActivityProverbs extends AppCompatActivity {
         });
 
         final SharedPreferences sharedPreferencesAds = this.getSharedPreferences("AdsDecision", MODE_PRIVATE);
-        testShared = sharedPreferencesAds.getInt("Ads", 5);
+        testShared = sharedPreferencesAds.getInt("Sub", 0);
 
 
-        if (testShared != 0) {
+        if (testShared != 1) {
             MobileAds.initialize(this, new OnInitializationCompleteListener() {
                 @Override
                 public void onInitializationComplete(InitializationStatus initializationStatus) {

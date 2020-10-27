@@ -595,9 +595,9 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
 
     public void pauseSlideshow(View view) {
 
-        //Log.i("Mee1","Hi b4pause"+ count);
-        count--;
-       // Log.i("Mee1","Hi pause"+ count);
+        if (!repeat1){
+            count--;
+        }
 
         pauseButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
@@ -860,8 +860,8 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
             public void run() {
                 // String a = recycleArrayList.get(count).getTwiProverb();
                 if (repeat1){
-                    String a = numbersArrayList.get(count-1).getNumberWord();
-                    String c = numbersArrayList.get(count-1).getFigure();
+                    String a = numbersArrayList.get(count).getNumberWord();
+                    String c = numbersArrayList.get(count).getFigure();
 
 
                     btSlideText.setText(c);
@@ -1025,7 +1025,7 @@ public class SubPNumbersActivity extends AppCompatActivity implements RVNumbersA
                         playFromDevice.stop();
                     }
 
-                    tvStartSlideShow.setText("Start Family Slideshow");
+                    tvStartSlideShow.setText("Start Numbers Slideshow");
                     foodListView.setVisibility(View.VISIBLE);
                     tvStartSlideShow.setVisibility(View.VISIBLE);
                     btSlideText.setVisibility(View.INVISIBLE);

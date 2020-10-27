@@ -575,9 +575,9 @@ public class SubPBusinessActivity extends AppCompatActivity  implements  RVBusin
 
     public void pauseSlideshow(View view) {
 
-        //Log.i("Mee1","Hi b4pause"+ count);
-        count--;
-        // Log.i("Mee1","Hi pause"+ count);
+        if (!repeat1){
+            count--;
+        }
 
         pauseButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
@@ -851,8 +851,8 @@ public class SubPBusinessActivity extends AppCompatActivity  implements  RVBusin
             public void run() {
                 // String a = recycleArrayList.get(count).getTwiProverb();
                 if (repeat1){
-                    String a = businessArrayList.get(count-1).getTwiBusiness();
-                    String c = businessArrayList.get(count-1).getEnglishBusiness();
+                    String a = businessArrayList.get(count).getTwiBusiness();
+                    String c = businessArrayList.get(count).getEnglishBusiness();
                     btSlideText.setText(a);
                     tvNumberWord.setText(c);
 

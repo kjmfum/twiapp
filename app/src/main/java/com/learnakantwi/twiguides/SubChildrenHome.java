@@ -456,8 +456,8 @@ public class SubChildrenHome extends AppCompatActivity {
                                 case "Numbers":
                                     goToNumber();
                                     return;
-                                case "Time":
-                                    goToTime();
+                                case "Non Twi Games":
+                                    goToGames();
                                     return;
                                 case "Weather":
                                     goToWeather();
@@ -572,8 +572,8 @@ public class SubChildrenHome extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToTime() {
-        Intent intent = new Intent(getApplicationContext(), QuizTime.class);
+    public void goToGames() {
+        Intent intent = new Intent(getApplicationContext(), Games.class);
         startActivity(intent);
     }
 
@@ -660,12 +660,7 @@ public class SubChildrenHome extends AppCompatActivity {
         }catch (Exception E){
             System.out.println("Errors: " + E);
         }
-       /* try{
-            downloadClickAnimals();
-        }catch (Exception E){
-            Toast.makeText(this, "Unable to Download Animals Audio", Toast.LENGTH_SHORT).show();
-        }
-*/
+
         if (Build.VERSION.SDK_INT > 22) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     INTERNET,
@@ -685,6 +680,7 @@ public class SubChildrenHome extends AppCompatActivity {
         homeListView = findViewById(R.id.homeListView);
 
         homeButtonArrayList.add(new HomeButton("Alphabets", R.drawable.childrenalphabetimage));
+        homeButtonArrayList.add(new HomeButton("Non Twi Games", R.drawable.gamesimage));
         homeButtonArrayList.add(new HomeButton("Animals", R.drawable.childrenanimalsimage));
         homeButtonArrayList.add(new HomeButton("Animals Quiz", R.drawable.childrenanimalsimage));
         homeButtonArrayList.add(new HomeButton("Numbers", R.drawable.childrennumbersimage));
@@ -711,8 +707,8 @@ public class SubChildrenHome extends AppCompatActivity {
                     case "Numbers":
                         goToNumber();
                         return;
-                    case "Time":
-                        goToTime();
+                    case "Non Twi Games":
+                        goToGames();
                         return;
                     case "Weather":
                         goToWeather();

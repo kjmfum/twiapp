@@ -615,9 +615,9 @@ public class SubPAnimalsActivity extends AppCompatActivity implements RVAnimalsA
 
     public void pauseSlideshow(View view) {
 
-        //Log.i("Mee1","Hi b4pause"+ count);
-        count--;
-        // Log.i("Mee1","Hi pause"+ count);
+        if (!repeat1){
+            count--;
+        }
 
         pauseButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
@@ -892,8 +892,8 @@ public class SubPAnimalsActivity extends AppCompatActivity implements RVAnimalsA
             public void run() {
                 // String a = recycleArrayList.get(count).getTwiProverb();
                 if (repeat1){
-                    String a = animalsArrayList.get(count-1).getTwiAnimals();
-                    String c = animalsArrayList.get(count-1).getEnglishAnimals();
+                    String a = animalsArrayList.get(count).getTwiAnimals();
+                    String c = animalsArrayList.get(count).getEnglishAnimals();
                     btSlideText.setText(a);
                     tvNumberWord.setText(c);
 

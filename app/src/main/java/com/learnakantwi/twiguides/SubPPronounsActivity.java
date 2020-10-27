@@ -583,9 +583,9 @@ public class SubPPronounsActivity extends AppCompatActivity implements RVPronoun
 
     public void pauseSlideshow(View view) {
 
-        //Log.i("Mee1","Hi b4pause"+ count);
-        count--;
-        // Log.i("Mee1","Hi pause"+ count);
+        if (!repeat1){
+            count--;
+        }
 
         pauseButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
@@ -646,8 +646,6 @@ public class SubPPronounsActivity extends AppCompatActivity implements RVPronoun
             slideshowBool = false;
         }
 
-        Log.i("Mee1","Hi after "+ count);
-        // int position = proverbsViewFlipper.getDisplayedChild();
 
         String a = pronounsArrayList.get(count).getTwiPronoun();
         String c = pronounsArrayList.get(count).getEnglishPronoun();
@@ -701,7 +699,7 @@ public class SubPPronounsActivity extends AppCompatActivity implements RVPronoun
 
         }
 
-        Log.i("Mee1","Hi next2 after"+ count);
+
 
         String a = pronounsArrayList.get(count).getTwiPronoun();
         String c = pronounsArrayList.get(count).getEnglishPronoun();
@@ -863,8 +861,8 @@ public class SubPPronounsActivity extends AppCompatActivity implements RVPronoun
             public void run() {
                 // String a = recycleArrayList.get(count).getTwiProverb();
                 if (repeat1){
-                    String a = pronounsArrayList.get(count-1).getTwiPronoun();
-                    String c = pronounsArrayList.get(count-1).getEnglishPronoun();
+                    String a = pronounsArrayList.get(count).getTwiPronoun();
+                    String c = pronounsArrayList.get(count).getEnglishPronoun();
                     btSlideText.setText(a);
                     tvNumberWord.setText(c);
 

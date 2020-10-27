@@ -600,7 +600,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
         }
     }
 
-    private void signInSilently() {
+   /* private void signInSilently() {
         GoogleSignInOptions signInOptions = GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN;
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (GoogleSignIn.hasPermissions(account, signInOptions.getScopeArray())) {
@@ -634,7 +634,7 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
                                 }
                             });
         }
-    }
+    }*/
 
 
     @Override
@@ -800,7 +800,6 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
             }
         });*/
 
-       signInSilently();
 
 
         childrenAnimalsArrayList = new ArrayList<>();
@@ -1208,6 +1207,8 @@ public class SubPHomeMainActivity extends AppCompatActivity implements Purchases
 
 
         }
+
+
     }
 
     @Override

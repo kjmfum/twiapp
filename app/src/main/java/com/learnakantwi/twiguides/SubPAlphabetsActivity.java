@@ -600,9 +600,9 @@ public class SubPAlphabetsActivity extends AppCompatActivity implements RVAlphab
 
     public void pauseSlideshow(View view) {
 
-        //Log.i("Mee1","Hi b4pause"+ count);
-        count--;
-        // Log.i("Mee1","Hi pause"+ count);
+        if (!repeat1){
+            count--;
+        }
 
         pauseButton.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
@@ -876,8 +876,8 @@ public class SubPAlphabetsActivity extends AppCompatActivity implements RVAlphab
             public void run() {
                 // String a = recycleArrayList.get(count).getTwiProverb();
                 if (repeat1){
-                    String a = alphabetArray.get(count-1).getUpper();
-                    String c = alphabetArray.get(count-1).getBoth();
+                    String a = alphabetArray.get(count).getUpper();
+                    String c = alphabetArray.get(count).getBoth();
                     btSlideText.setText(a);
                     tvNumberWord.setText(c);
 
