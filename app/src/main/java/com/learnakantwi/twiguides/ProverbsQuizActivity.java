@@ -202,7 +202,7 @@ public class ProverbsQuizActivity extends AppCompatActivity {
 
             english1 = proverbsQuizQuestionArray.get(randomChoiceQuestion).getProverbQuiz();
             //english1 = conversationArrayList.get(0).getEnglishConversation();
-            PlayFromFirebase playFromFirebase = new PlayFromFirebase();
+           // PlayFromFirebase playFromFirebase = new PlayFromFirebase();
             String c = PlayFromFirebase.viewTextConvert(english1);
 
             playFromFileOrDownload(c,english1);
@@ -813,10 +813,6 @@ public class ProverbsQuizActivity extends AppCompatActivity {
             proverbsQuizQuestionArray.add(new Proverbs("Koterɛ nnkɔdi mako mma","mfifire nkɔfiri apɔnkyerɛni","ne ho nkyere no","obi nhu","Koterɛ nnkɔdi mako mma mfifire nkɔfiri apɔnkyerɛni", "If the lizard consumes pepper, it's not the frog that sweats","The one who commits a crime must bear his own punishment"));
             proverbsQuizQuestionArray.add(new Proverbs("Obi ntɔn n'akokɔ","bedeɛ kwa","mma ne tamfo","a ne bo yɛ den","Obi ntɔn n'akokɔ bedeɛ kwa","No one sells his laying hen for nothing","There is no action without cause. If there is nothing wrong, no one will sell his valuable property"));
             proverbsQuizQuestionArray.add(new Proverbs("Abaa nna hɔ mma","kraman nnka nipa","ɔkorɔmfo ndwane","nnipa nsu","Abaa nna hɔ mma kraman nnka nipa","The stick should not lie idle while a dog bites a human","Use your resources for your good. Don't keep money and end up dying from a minor ailment"));
-
-
-            //Not recorded
-           // proverbsQuizQuestionArray.add(new Proverbs("Abaa nna hɔ mma","kraman nnka nipa","ɔkorɔmfo ndwane","nnipa nsu","","",""));
 
             proverbsQuizQuestionArray.add(new Proverbs("Eti wɔ hɔ a","yɛnhyɛ kotodwe kyɛ","fa dwene","wuhu nyansa","Eti wɔ hɔ a yɛnhyɛ kotodwe kyɛ","If the head is availble we do not put a hat on the knee","Give honour to who is due. Give privileges to those who can handle it better"));
             proverbsQuizQuestionArray.add(new Proverbs("Ɔhɔhoɔ behu mpoatwa a"," na kuroman ni na akyerɛ no","na ne suban nyɛ","na wasua no yiye","Ɔhɔhoɔ behu mpoatwa a, na kuroman ni na akyerɛ no","If a foreigner knows how to insult, it is a citizen who has taught him","New comers learn bad traits from ones they came to meet."));

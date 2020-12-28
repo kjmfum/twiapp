@@ -85,6 +85,8 @@ public class SubConversationHomeActivity extends AppCompatActivity {
                                 return;
                             case "Asking and Giving Directions":
                                 goToCategory("directions");
+                            case "Showing Gratitude":
+                                goToCategory("gratitude");
                         }
                         //goToTwoLetters();
 
@@ -174,6 +176,14 @@ public class SubConversationHomeActivity extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), SubConversationDirections.class);
                 startActivity(intent);
                 return;
+            case "all":
+                intent = new Intent(getApplicationContext(), SubConversationAll.class);
+                startActivity(intent);
+                return;
+            case "gratitude":
+                intent = new Intent(getApplicationContext(), SubConversationGratitude.class);
+                startActivity(intent);
+                return;
             case "welcome":
                 intent = new Intent(getApplicationContext(), SubConversationWelcomingOthers.class);
                 startActivity(intent);
@@ -228,15 +238,14 @@ public class SubConversationHomeActivity extends AppCompatActivity {
         lvsubconversation = findViewById(R.id.lvsubconversation);
 
         subConversationHomeArrayList.add("Introducing yourself");
-
         subConversationHomeArrayList.add("Welcoming others");
         subConversationHomeArrayList.add("On The Phone");
         subConversationHomeArrayList.add("Love and Relationship");
-
         subConversationHomeArrayList.add("Apologies and Regret");
         subConversationHomeArrayList.add("Asking and Giving Directions");
-
         subConversationHomeArrayList.add("At the Hospital");
+        subConversationHomeArrayList.add("Showing Gratitude");
+        subConversationHomeArrayList.add("All Conversations");
 
        // homeButtonArrayList.add(new HomeButton("Business", R.drawable.businessimage));
 
@@ -271,6 +280,12 @@ public class SubConversationHomeActivity extends AppCompatActivity {
                         return;
                     case "On The Phone":
                         goToConversationPhone();
+                        return;
+                    case "All Conversations":
+                        goToCategory("all");
+                        return;
+                    case "Showing Gratitude":
+                        goToCategory("gratitude");
                         return;
                     case "Asking and Giving Directions":
                            goToCategory("directions");

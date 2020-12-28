@@ -544,6 +544,11 @@ public class SubChildrenHome extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToGames() {
+        Intent intent = new Intent(getApplicationContext(), Games.class);
+        startActivity(intent);
+    }
+
 
     public void goToBusiness(){
         Intent intent = new Intent(getApplicationContext(), SubChildrenAnimalQuiz.class);
@@ -572,10 +577,10 @@ public class SubChildrenHome extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToGames() {
-        Intent intent = new Intent(getApplicationContext(), Games.class);
-        startActivity(intent);
-    }
+//    public void goToGames() {
+//        Intent intent = new Intent(getApplicationContext(), Games.class);
+//        startActivity(intent);
+//    }
 
     public void goToFamily() {
         Intent intent = new Intent(getApplicationContext(), QuizFamily.class);
@@ -680,10 +685,11 @@ public class SubChildrenHome extends AppCompatActivity {
         homeListView = findViewById(R.id.homeListView);
 
         homeButtonArrayList.add(new HomeButton("Alphabets", R.drawable.childrenalphabetimage));
-        homeButtonArrayList.add(new HomeButton("Non Twi Games", R.drawable.gamesimage));
+      //
         homeButtonArrayList.add(new HomeButton("Animals", R.drawable.childrenanimalsimage));
         homeButtonArrayList.add(new HomeButton("Animals Quiz", R.drawable.childrenanimalsimage));
         homeButtonArrayList.add(new HomeButton("Numbers", R.drawable.childrennumbersimage));
+        homeButtonArrayList.add(new HomeButton("Non Twi Games", R.drawable.gamesimage));
 
 
         HomeAdapter homeAdapter = new HomeAdapter(this, homeButtonArrayList);

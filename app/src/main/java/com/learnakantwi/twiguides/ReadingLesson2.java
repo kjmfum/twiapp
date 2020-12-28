@@ -332,14 +332,14 @@ AdapterViewFlipper lessonAdapterView;
         String b= PlayFromFirebase.viewTextConvert(twiAnimals);
         playFromFileOrDownload(b);
 
-        view.setOnLongClickListener(new View.OnLongClickListener() {
+       /* view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 return false;
             }
-        });
+        });*/
     }
 
 

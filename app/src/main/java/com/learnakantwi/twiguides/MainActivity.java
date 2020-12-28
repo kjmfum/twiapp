@@ -466,7 +466,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         Lifetime = sharedPreferencesAds.getInt("Lifetime", 5); //runtime
         Subscribed = sharedPreferencesAds.getInt("Sub", 0);
         // Subscribed = 0;
-       // Lifetime = 1;  //Subscribed
+       Lifetime = 1;  //Subscribed
         //  Lifetime = 5;
 
         //Toast.makeText(this, "My: "+ Lifetime, Toast.LENGTH_SHORT).show();
@@ -478,11 +478,11 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         //Intent homeIntent = new Intent(getApplicationContext(), QuizTimedAll.class);
         //Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
        // Intent homeIntent = new Intent(getApplicationContext(), Repeating_activity.class);
-        //startActivity(homeIntent);
+       // startActivity(homeIntent);
 
         ////////
 
-       new Handler().postDelayed(new Runnable() {
+      new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (Lifetime == 1) {
@@ -525,14 +525,16 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
         // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
         // Intent homeIntent = new Intent(getApplicationContext(), QuizTimedAll.class);
-        // Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
+         // Intent homeIntent = new Intent(getApplicationContext(), HomeMainActivity.class);
         // Intent homeIntent = new Intent(getApplicationContext(), InAppActivity.class);
       //  Intent homeIntent = new Intent(getApplicationContext(), Repeating_activity.class);
-        //startActivity(homeIntent);
+       // Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivityReal.class);
+       // startActivity(homeIntent);
       //  Intent homeIntent = new Intent(getApplicationContext(), Repeating_activity.class);
         super.onResume();
 
         /////////////
+
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -557,6 +559,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                 }
             }
         }, SPLASH_TIME_OUT);
+
 
 
         ///////////////

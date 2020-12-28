@@ -38,7 +38,6 @@ public class subConversationAdapter extends BaseAdapter implements Filterable {
 
     Context context;
     ArrayList<subConversation> originalArray , tempArray;
-    //TimeAdapter.CustomFilter cf;
 
     StorageReference storageReference;
     MediaPlayer playFromDevice;

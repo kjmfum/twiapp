@@ -451,7 +451,7 @@ public class WeatherActivity extends AppCompatActivity {
 
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), Home.class);
+        Intent intent = new Intent(getApplicationContext(), VocabularyMain.class);
         startActivity(intent);
     }
 

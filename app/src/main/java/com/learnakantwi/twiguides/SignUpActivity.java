@@ -35,9 +35,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.IgnoreExtraProperties;
+import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.learnakantwi.twiguides.Firestore.UserClass;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -54,9 +58,11 @@ public class SignUpActivity extends AppCompatActivity {
     FirebaseUser currentUser;
     private  FirebaseAuth mAuth;
 
+    static UserClass userLocal;
+
     private static final String TAG = "SignUpActivity";
     private String username;
-
+    String nextScreen ="";
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -127,7 +133,13 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+        Intent intent;
+        if (MainActivity.Subscribed != 1){
+            intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+        }
+        else{
+            intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+        }
         startActivity(intent);
     }
 
@@ -169,19 +181,24 @@ public class SignUpActivity extends AppCompatActivity {
             etUsername.setError("Please enter a username");
             progressBar.setVisibility(View.INVISIBLE);
         }
+        else if (etUsername.length()<4) {
+            etUsername.setError("User name should be at least 4 characters");
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+        else if (etUsername.length()>21) {
+            etUsername.setError("User name is too long");
+            progressBar.setVisibility(View.INVISIBLE);
+        }
         else if (etPassword.length()<6){
             etPassword.setError("Password should be at least 6 characters");
             progressBar.setVisibility(View.INVISIBLE);
         }
         else {
 
-            mAuth.createUserWithEmailAndPassword(etEmail.getText().toString(), password)
+            mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnFailureListener(this, new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                          //  Toast.makeText(SignUpActivity.this, "I'm here", Toast.LENGTH_SHORT).show();
-                            Log.i("Yipee", e.toString());
-
                             if (e.toString().contains("com.google.firebase.auth.FirebaseAuthUserCollisionException")){
                                 Toast.makeText(SignUpActivity.this, "This e-mail address is already in use by another account", Toast.LENGTH_SHORT).show();
                             }
@@ -198,76 +215,57 @@ public class SignUpActivity extends AppCompatActivity {
                                 Objects.requireNonNull(mAuth.getCurrentUser()).updateProfile(userProfileChangeRequest).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(SignUpActivity.this, "Success: "+ username, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SignUpActivity.this, "You are Signed Up", Toast.LENGTH_SHORT).show();
                                         currentUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                Toast.makeText(SignUpActivity.this, "An email has been sent to "+ currentUser.getEmail() +" \n Please click the link in the email to verify account", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(SignUpActivity.this, "An email has been sent to "+ currentUser.getEmail() +" \n Please click the link in the email to verify account", Toast.LENGTH_LONG).show();
                                             }
                                         });
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Log.d(TAG, "onFailure: "+ e);
-                                        Toast.makeText(SignUpActivity.this, "Failed "+ e.toString(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SignUpActivity.this, "Failed \n"+ e.toString(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
                                 progressBar.setVisibility(View.VISIBLE);
                                 currentUser = mAuth.getCurrentUser();
                                 //Toast.makeText(SignUpActivity.this, "Success" + " " + currentUser, Toast.LENGTH_SHORT).show();
-                                writeNewUser(currentUser.getUid(), username,currentUser.getEmail());
+                                //writeNewUser(currentUser.getUid(), username,currentUser.getEmail());
 
                                 writeNewFirestore(currentUser.getUid(), username, currentUser.getEmail());
 
                                // Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+
+
                                 Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
                                 intent.putExtra("registeredEmail", currentUser.getEmail());
+                                intent.putExtra("nextScreen", nextScreen);
                                 startActivity(intent);
-                                progressBar.setVisibility(View.INVISIBLE);
+                                finish();
 
                             } else {
                                 Toast.makeText(SignUpActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
-                                progressBar.setVisibility(View.INVISIBLE);
                             }
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
 
                     });
         }
     }
 
-    private void writeNewUser(String userID, String name, String email){
-
-        //User user = new User();
+ /*   private void writeNewUser(String userID, String name, String email){
 
         RealTimeDatabaseUsers users = new RealTimeDatabaseUsers(userID, name, email);
         databaseReference.child("Users").setValue(users);
-      //  databaseReference.child("Users").a
-        //databaseReference.updateChildren("Users")
-
-
-
-        //mDatabase.child("Baby").setValue(user);
-
-    /*    ValueEventListener listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-        mDatabase.addValueEventListener(listener);*/
-    }
+    }*/
 
     private void writeNewFirestore(String userID, String name, String email){
 
 
-        RealTimeDatabaseUsers users = new RealTimeDatabaseUsers(userID, name, email);
-        databaseReference.child("Users").setValue(users);
+        //RealTimeDatabaseUsers users = new RealTimeDatabaseUsers(userID, name, email);
+        //databaseReference.child("Users").setValue(users);
 
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
@@ -291,16 +289,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+
     public void sendRegistrationToServer(String userID, String name, String email, String token){
-
-       /* Toast.makeText(this, "SentToken", Toast.LENGTH_SHORT).show();
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        DatabaseReference reference = database.getReference("message");
-
-        // reference.setValue("Hello, World!");
-        reference.push().setValue(token);*/
-
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
        /* Map<String, String> user = new HashMap<>();
@@ -308,16 +298,38 @@ public class SignUpActivity extends AppCompatActivity {
         user.put("", token);*/
 
         // Create a new user with a first and last name
-       Map<String, Object> user = new HashMap<>();
+        /////
+   /*    Map<String, Object> user = new HashMap<>();
         user.put("userID", userID);
         user.put("name", name);
         user.put("email", email);
         user.put("token", token);
+*/
+        ////
+        userLocal = new UserClass(userID, name, email, token, null);
+       /* user.email = email;
+        user.userID = userID;
+        user.name = name;
+        user.token = token;
+*/
 
+        db.collection("users").document(email)
+                .set(userLocal).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.i("Debugged", "No Error adding document");
+            }
+        })
 
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Debugged", "Error adding document", e);
+                    }
+                });
 
 // Add a new document with a generated ID
-        db.collection("users").document(email)
+      /*  db.collection("users").document(email)
                 .set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -332,6 +344,21 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
 
+        db.collection("users").document(email)
+                .set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.i("Debugged", "No Error adding document");
+            }
+        })
+
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Debugged", "Error adding document", e);
+                    }
+                });
+*/
     }
 
     @Override
@@ -339,16 +366,21 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        Intent intent = getIntent();
+
+        if (intent.getStringExtra("nextScreen") != null){
+            nextScreen = intent.getStringExtra("nextScreen");
+        }
 
 
         mAuth = FirebaseAuth.getInstance();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users/");
+       /* databaseReference = FirebaseDatabase.getInstance().getReference("Users/");
 
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                //Toast.makeText(SignUpActivity.this, "Added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "Added", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -373,7 +405,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
 
         etPassword = findViewById(R.id.etPassword);
@@ -395,6 +427,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent signIn = new Intent(getApplicationContext(), SignInActivity.class  );
                 startActivity(signIn);
+                finish();
             }
         });
 

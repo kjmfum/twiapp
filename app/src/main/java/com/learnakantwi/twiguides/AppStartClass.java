@@ -56,6 +56,7 @@ public class AppStartClass extends Application {
 
     public static final String CHANNEL_1_ID = "channel1";
     public static final String CHANNEL_2_ID = "channel2";
+    public static final String CHANNEL_3_ID = "channel3";
 
     //  sharedPreferences.edit().putString("AdvertPreference", "No").apply();
 
@@ -93,44 +94,23 @@ public class AppStartClass extends Application {
 
 
         Intent intent = new Intent(getApplicationContext(), Notification_receiver.class);
-        //Intent intent = new Intent(getApplicationContext(), Home.class);
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        //PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        //alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
-
-        //correct one below
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
     }
 
     public void showProverbDaily() {
         Calendar calendar = Calendar.getInstance();
-
-        //calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, 23);
         calendar.set(Calendar.MINUTE, 35);
 
-        ///////
-        // calendar.set(Calendar.HOUR_OF_DAY, 16);
-        //calendar.set(Calendar.MINUTE, 50);
-        ////////
-
-        //calendar.set(Calendar.SECOND,5);
-
         Intent intent = new Intent(getApplicationContext(), Notification_receiver_Proverbs.class);
-        //Intent intent = new Intent(getApplicationContext(), Home.class);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        //alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
-
-        //correct one below
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-
 
     }
 
@@ -217,7 +197,7 @@ public class AppStartClass extends Application {
 
         ///ChildrenAnimalFew
         childrenAnimalsArrayListFew = new ArrayList<>();
-        if (5 > 2) {
+     {
             childrenAnimalsArrayListFew.add(new Animals("Bee", "Wowa"));
             childrenAnimalsArrayListFew.add(new Animals("Cat", "Ɔkra"));
             childrenAnimalsArrayListFew.add(new Animals("Cattle", "Nantwie"));
@@ -238,7 +218,7 @@ public class AppStartClass extends Application {
         //ChildrenArray
 
         childrenArray = new ArrayList<>();
-        if (5 > 2) {
+        {
             childrenArray.add(new Children("1"));
             childrenArray.add(new Children("0"));
             childrenArray.add(new Children("2"));
@@ -2699,7 +2679,7 @@ public class AppStartClass extends Application {
                     allArrayList.add(new All("Don't wash", "Nhohoro", "verb", "", "", ""));
                     allArrayList.add(new All("Meet", "Hyia", "verb", "", "", ""));
                     allArrayList.add(new All("Don't meet", "Nhyia", "verb", "", "", ""));
-                    allArrayList.add(new All("Rest", "Home", "verb", "", "", ""));
+                    allArrayList.add(new All("Rest", "VocabularyMain", "verb", "", "", ""));
                     allArrayList.add(new All("Don't rest", "Nhome", "verb", "", "", ""));
                     allArrayList.add(new All("Quarrel", "Ham", "verb", "", "", ""));
                     allArrayList.add(new All("Don't quarrel", "Nham", "verb", "", "", ""));
@@ -2835,7 +2815,7 @@ public class AppStartClass extends Application {
                 if (Subscribed == 1) {
 
                     // Toast.makeText(this, "Hi: "+ Subscribed, Toast.LENGTH_SHORT).show();
-                    proverbsArrayList.add(new Proverbs("Baabi a ɔsono bɛfa biara yɛ kwan", "Where ever the elephant passes is a way", "A powerful person can make a way where there seems to be no way"));
+                    //proverbsArrayList.add(new Proverbs("Baabi a ɔsono bɛfa biara yɛ kwan", "Where ever the elephant passes is a way", "A powerful person can make a way where there seems to be no way"));
                     proverbsArrayList.add(new Proverbs("Ɛba a, ɛka oni", "If it comes it affects mother", "If trouble comes it affects your closest relatives"));
                     //  proverbsArrayList.add(new Proverbs("Ɛreba a, mɛbɔ ho ban, ne ɛtoto a, mɛsane, wɔn mu hena na wowɔ n'afa? Mewɔ ɛreba a, mɛbɔ ano ban afa.","hello","YEs"));
                     proverbsArrayList.add(new Proverbs("Yɛbaa mmebu a, anka yɛso nkuma", "If we had come to fell proverbs then we would be carrying axes", "We did not come to play. We mean business"));
@@ -2893,6 +2873,12 @@ public class AppStartClass extends Application {
                     proverbsArrayList.add(new Proverbs("Obi a wo nim no awia no, yɛnsɔ kanea nhwɛ n'anim anadwo","For someone you know at daytime, you don't need to put on light to see his face in the evening","It is easy to identify a familiar person regardless of the circumstance"));
 
                     // Toast.makeText(this, "After add: " + proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
+
+
+                    //December 2020
+
+
+
                 } /*else {
                // Toast.makeText(this, "Not Subscribed: " + proverbsArrayList.size(), Toast.LENGTH_SHORT).show();
             } */
@@ -2977,7 +2963,7 @@ public class AppStartClass extends Application {
                     verbArrayList.add(new Verb("Don't wash", "Nhohoro"));
                     verbArrayList.add(new Verb("Meet", "Hyia"));
                     verbArrayList.add(new Verb("Don't meet", "Nhyia"));
-                    verbArrayList.add(new Verb("Rest", "Home"));
+                    verbArrayList.add(new Verb("Rest", "VocabularyMain"));
                     verbArrayList.add(new Verb("Don't rest", "Nhome"));
                     verbArrayList.add(new Verb("Quarrel", "Ham"));
                     verbArrayList.add(new Verb("Don't quarrel", "Nham"));

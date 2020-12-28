@@ -7,6 +7,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,6 +27,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class SignInActivity extends AppCompatActivity {
 
+    String nextScreen = "";
+
    String email = "kjmfum@yahoo.co.uk" ;
    String password = "Check12";
     String registeredEmail;
@@ -41,10 +44,6 @@ public class SignInActivity extends AppCompatActivity {
    public void SignInButtons() {
        email = emailText.getText().toString().trim();
        password = passwordText.getText().toString().trim();
-
-       //Toast.makeText(this, email + " " + password, Toast.LENGTH_SHORT).show();
-
-       /*if (email.length() > 0 && password.length() > 0) {*/
 
            if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password)){
                emailText.setError("No email entered");
@@ -74,8 +73,16 @@ public class SignInActivity extends AppCompatActivity {
                                    mAuth.getCurrentUser().sendEmailVerification();
 
                                }
-                               Intent subscriptionHome = new Intent(getApplicationContext(), SubPHomeMainActivity.class );
+
+                               Intent subscriptionHome =  new Intent();
+                               if (nextScreen.equals("Games")){
+                                   subscriptionHome = new Intent(getApplicationContext(), Games.class );
+                               }else{
+                                   subscriptionHome = new Intent(getApplicationContext(), SubPHomeMainActivity.class );
+                               }
+
                                startActivity(subscriptionHome);
+                               finish();
                                // Sign in success, update UI with the signed-in user's information
                            /*Log.d(TAG, "signInWithEmail:success");
                            FirebaseUser user = mAuth.getCurrentUser();
@@ -104,44 +111,56 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //MenuInflater menuInflater = getMenuInflater();
-        getMenuInflater().inflate(R.menu.vocabulary_menu, menu);
-
-
-
-        final MenuItem item = menu.findItem(R.id.menusearch);
+        getMenuInflater().inflate(R.menu.signinout_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
-
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
 
         switch (item.getItemId()) {
-            case R.id.searchAll:
-                goToAll();
+
+            case R.id.signIn:
+                signInMenu();
                 return true;
-            case R.id.videoCourse:
-                goToWeb();
+            case R.id.signOut:
+                signOutMenu();
                 return true;
             case R.id.main:
                 goToMain();
-                return true;
-            case R.id.rate:
-                rateMe();
-                return true;
-            case R.id.share:
-                shareApp();
-                return true;
-            case R.id.dailyTwiAlert:
-                tunOnDailyTwi();
                 return true;
             default:
                 return false;
         }
     }
 
+
+    public void signOutMenu(){
+        if (mAuth.getCurrentUser() != null){
+            FirebaseAuth.getInstance().signOut();
+        }else{
+            Toast.makeText(this, "Not Signed In", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void signInMenu(){
+        if (mAuth.getCurrentUser() != null ){
+            if (mAuth.getCurrentUser().isEmailVerified()){
+                Toast.makeText(this, "You are Already Signed In as\n"+ mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
+                finish();
+            }
+            else{
+                Toast.makeText(this, "Please verify your email at:\n"+ mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
+            }
+
+        }else{
+            SignInButtons();
+            // Toast.makeText(this, "Not Signed In", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     public void tunOnDailyTwi() {
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
@@ -170,8 +189,14 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-        startActivity(intent);
+            Intent intent;
+            if (MainActivity.Subscribed != 1){
+                intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+            }
+            else{
+                intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+            }
+            startActivity(intent);
     }
 
     public void goToWeb() {
@@ -193,6 +218,11 @@ public class SignInActivity extends AppCompatActivity {
 
         registeredEmail = intent.getStringExtra("registeredEmail");
 
+        if (intent.getStringExtra("nextScreen") != null){
+            nextScreen = intent.getStringExtra("nextScreen");
+        }
+
+
         emailText = findViewById(R.id.etEmail);
         passwordText = findViewById(R.id.etPassword);
         signInButton = findViewById(R.id.btSignIn);
@@ -202,6 +232,11 @@ public class SignInActivity extends AppCompatActivity {
         if (registeredEmail !=null){
             emailText.setText(registeredEmail);
             tvsignUp.setText("Please click on the verification link sent to your email\n and enter your password to sign in");
+            passwordText.requestFocus();
+        }
+
+        if (emailText != null && emailText.getText().length()>0){
+            passwordText.requestFocus();
         }
 
 
@@ -209,6 +244,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent signUp = new Intent(getApplicationContext(), ForgotPassword.class  );
+                signUp.putExtra("nextScreen", nextScreen);
                 startActivity(signUp);
             }
         });
@@ -216,8 +252,10 @@ public class SignInActivity extends AppCompatActivity {
         tvsignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signUp = new Intent(getApplicationContext(), SignUpActivity.class  );
+                Intent signUp = new Intent(getApplicationContext(), SignUpActivity.class);
+                signUp.putExtra("nextScreen", nextScreen);
                 startActivity(signUp);
+                finish();
             }
         });
 
@@ -267,4 +305,11 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        if (emailText != null && emailText.getText().toString().contains("@")){
+            passwordText.requestFocus();
+        }
+        super.onResume();
+    }
 }

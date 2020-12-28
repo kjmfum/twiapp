@@ -15,9 +15,11 @@
         android:text="AKWAABA"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/guideline43"
+        app:layout_constraintEnd_toEndOf="@id/Verguideline30"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
 
     <ListView
         android:id="@+id/lvtwoLetters"
@@ -25,8 +27,8 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline43"
-        app:layout_constraintTop_toBottomOf="@id/guideline42"></ListView>
+        app:layout_constraintStart_toStartOf="@id/Verguideline30"
+        app:layout_constraintTop_toBottomOf="@id/guideline42"/>
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -37,20 +39,244 @@
         app:layout_constraintGuide_percent="0.15" />
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/mediaCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/lvtwoLetters" />
-
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline43"
+        android:id="@+id/Verguideline30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.3" />
+
+    <TextView
+        android:id="@+id/tvStartSlideshow"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorGreen"
+        android:gravity="center"
+        android:text="Start Slideshow"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/Horguideline10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/Horguideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/Horguideline05"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/Horguideline20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <Button
+        android:id="@+id/btSlideText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:text="Button"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/Horguideline60"
+        app:layout_constraintEnd_toEndOf="@id/Verguideline85"
+        app:layout_constraintStart_toStartOf="@id/Verguideline15"
+        app:layout_constraintTop_toTopOf="@+id/Horguideline20" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/Verguideline15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/Horguideline60"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.60" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/Verguideline85"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <TextView
+        android:id="@+id/tvNumberWord"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/Horguideline70"
+        app:layout_constraintEnd_toEndOf="@+id/btSlideText"
+        app:layout_constraintStart_toStartOf="@+id/btSlideText"
+        app:layout_constraintTop_toBottomOf="@+id/btSlideText" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/Horguideline70"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.70" />
+
+    <ImageButton
+        android:id="@+id/ivUnMuteButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/Horguideline20"
+        app:layout_constraintEnd_toEndOf="@+id/Verguideline65"
+        app:layout_constraintStart_toStartOf="@+id/Verguideline35"
+        app:layout_constraintTop_toBottomOf="@+id/Horguideline10"
+        app:srcCompat="@drawable/ic_mute" />
+
+    <ImageButton
+        android:id="@+id/ivMuteButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/Horguideline20"
+        app:layout_constraintEnd_toEndOf="@+id/Verguideline65"
+        app:layout_constraintStart_toStartOf="@+id/Verguideline35"
+        app:layout_constraintTop_toBottomOf="@+id/Horguideline10"
+        app:srcCompat="@drawable/ic_unmute" />
+
+    <ImageButton
+        android:id="@+id/repeatButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/Horguideline20"
+        app:layout_constraintEnd_toEndOf="@+id/Verguideline85"
+        app:layout_constraintStart_toStartOf="@+id/Verguideline65"
+        app:layout_constraintTop_toBottomOf="@+id/Horguideline10"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_repeatall" />
+
+    <ImageButton
+        android:id="@+id/repeatOne"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/Horguideline20"
+        app:layout_constraintEnd_toEndOf="@+id/Verguideline35"
+        app:layout_constraintStart_toStartOf="@id/Verguideline15"
+        app:layout_constraintTop_toBottomOf="@+id/Horguideline10"
+        app:srcCompat="@drawable/ic_repeatone" />
+
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/Horguideline80"
+        app:layout_constraintEnd_toEndOf="@+id/Verguideline65"
+        app:layout_constraintStart_toStartOf="@+id/Verguideline35"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumberWord"
+        app:srcCompat="@drawable/ic_play_circle_outline_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/pauseButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/Horguideline80"
+        app:layout_constraintEnd_toEndOf="@+id/Verguideline65"
+        app:layout_constraintStart_toStartOf="@+id/Verguideline35"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumberWord"
+        app:srcCompat="@drawable/ic_pause_circle_outline_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/nextButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/Horguideline80"
+        app:layout_constraintEnd_toEndOf="@+id/tvNumberWord"
+        app:layout_constraintStart_toEndOf="@+id/Verguideline65"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumberWord"
+        app:srcCompat="@drawable/ic_fast_forward" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/Verguideline35"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/Verguideline65"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.65" />
+
+    <ImageButton
+        android:id="@+id/previousButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/Horguideline80"
+        app:layout_constraintEnd_toStartOf="@+id/Verguideline35"
+        app:layout_constraintStart_toStartOf="@+id/tvNumberWord"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumberWord"
+        app:srcCompat="@drawable/ic_fast_rewind" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/Horguideline80"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.80" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/Horguideline90"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="@string/AdUnitBanner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Horguideline90" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

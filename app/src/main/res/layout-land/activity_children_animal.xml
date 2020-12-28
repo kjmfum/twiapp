@@ -11,7 +11,8 @@
         android:id="@+id/ivAnimal"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/adView1"
+        android:contentDescription="Animal Image"
+        app:layout_constraintBottom_toTopOf="@id/adView"
         app:layout_constraintEnd_toEndOf="@id/guideline50"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,13 +38,13 @@
         android:background="@color/colorGreen"
         android:foregroundGravity="center"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@id/adView1"
+        app:layout_constraintBottom_toTopOf="@id/adView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline50"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.gms.ads.AdView
-        android:id="@+id/adView1"
+        android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

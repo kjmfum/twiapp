@@ -16,16 +16,25 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -35,11 +44,19 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
+
+import static com.learnakantwi.twiguides.MainActivity.largeFont;
+import static com.learnakantwi.twiguides.MainActivity.longDelay;
+import static com.learnakantwi.twiguides.MainActivity.shortDelay;
+import static com.learnakantwi.twiguides.MainActivity.smallFont;
+import static com.learnakantwi.twiguides.MainActivity.textLength;
 
 public class SubPReadingActivityTwoLetters extends AppCompatActivity {
 
     ArrayList  <String> twoLettersArrayList = new ArrayList<>();
     String vowelLetter = "e";
+    public InterstitialAd mInterstitialAd;
     ListView lvTwoLetters;
     TextView tvHeader;
     String b;
@@ -50,6 +67,32 @@ public class SubPReadingActivityTwoLetters extends AppCompatActivity {
     MediaPlayer mp1;
 
     Toast toast;
+    String type = "vowel";
+    AdView mAdView;
+    ImageButton playButton;
+    ImageButton pauseButton;
+    ImageButton nextButton;
+    ImageButton previousButton;
+    ImageButton muteButton;
+    ImageButton unmuteButton;
+    ImageButton repeatButton;
+    ImageButton repeatOne;
+    Boolean slideshowBool = false;
+    Boolean unMuted = true;
+    Boolean repeat = false;
+    Boolean repeat1 = false;
+    Button btSlideText;
+    TextView tvStartSlideShow;
+    TextView tvNumberWord;
+    Handler handler1;
+    Runnable ranable;
+    Random random;
+
+
+    long delayTime=5000;
+    int showAdProbability;
+    int count= 0;
+
 
 
     @Override
@@ -150,8 +193,15 @@ public class SubPReadingActivityTwoLetters extends AppCompatActivity {
     }
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-        startActivity(intent);
+        if (MainActivity.Subscribed !=1){
+            Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+            startActivity(intent);
+        }
+
     }
 
     public void goToWeb() {
@@ -226,7 +276,7 @@ public class SubPReadingActivityTwoLetters extends AppCompatActivity {
 
         //Toast.makeText(this, "I'm here o", Toast.LENGTH_SHORT).show();
 
-        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/" + filename + ".m4a");
+        File myFile = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/READING/" + filename + ".m4a");
         if (myFile.exists()) {
 
             try {
@@ -296,7 +346,7 @@ public class SubPReadingActivityTwoLetters extends AppCompatActivity {
                     Uri uri = Uri.parse(url);
                     DownloadManager.Request request = new DownloadManager.Request(uri);
                     request.setVisibleInDownloadsUi(false);
-                    request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, filename + fileExtension);
+                    request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_MUSIC, "/READING/"+filename + fileExtension);
                     downloadManager.enqueue(request);
                 }
             };
@@ -311,12 +361,537 @@ public class SubPReadingActivityTwoLetters extends AppCompatActivity {
     }
 
 
+    public void advert1() {
+
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+    }
+
+    public void slideshow() {
+
+        slideshowBool = true;
+
+        count = 0;
+        handler1.postDelayed(ranable, 2);
+    }
+
+    public void slideshow(View v) {
+
+        playButton.setVisibility(View.INVISIBLE);
+        pauseButton.setVisibility(View.VISIBLE);
+
+        handler1.postDelayed(ranable, 2);
+
+        slideshowBool = true;
+    }
+
+    public void pauseSlideshow(View view) {
+
+        if (!repeat1){
+            count--;
+        }
+
+        pauseButton.setVisibility(View.INVISIBLE);
+        pauseButton.setVisibility(View.INVISIBLE);
+        playButton.setVisibility(View.VISIBLE);
+
+        toast.setText("Paused");
+        toast.show();
+
+        //slideshowBool = false;
+
+        if (handler1 !=null){
+            handler1.removeCallbacks(ranable);
+        }
+        if (playFromDevice!=null){
+            playFromDevice.stop();
+        }
+    }
+    public void pauseSlideshow() {
+
+        pauseButton.setVisibility(View.INVISIBLE);
+        pauseButton.setVisibility(View.INVISIBLE);
+        playButton.setVisibility(View.VISIBLE);
+
+
+        //slideshowBool = false;
+
+        if (handler1 !=null){
+            handler1.removeCallbacks(ranable);
+        }
+        if (playFromDevice!=null){
+            playFromDevice.stop();
+        }
+
+
+
+        //proverbsViewFlipper.getChildCount();
+    }
+
+    public void previous (View view){
+        pauseSlideshow();
+
+        Log.i("Mee1","Hi b4"+ count);
+        // count = count-1;
+        if (!slideshowBool){
+            if (count!=0){
+                count--;
+            }
+        }
+        else{
+            if (count>=2){
+                count= count-2;
+            }
+            slideshowBool = false;
+        }
+
+        String a = twoLettersArrayList.get(count);
+        String c =  twoLettersArrayList.get(count);
+
+        StringBuilder sb = new StringBuilder();
+        sb= sb.append(a.substring(0,1)).append("   ").append(a.charAt(1));
+
+        btSlideText.setText(sb);
+        tvNumberWord.setText(c);
+
+
+        String b = PlayFromFirebase.viewTextConvert("read"+a);
+
+        if(b.length()>textLength){
+            btSlideText.setTextSize(smallFont);
+
+        }else{
+            btSlideText.setTextSize(largeFont);
+        }
+
+        if (unMuted){
+            playFromFileOrDownload(b);
+        }
+        else{
+            toast.setText("Sound Muted");
+            toast.show();
+        }
+
+       /* if (unMuted){
+            playFromFileOrDownload(b, a);
+        }*/
+
+    }
+
+    public void next(View view){
+        pauseSlideshow();
+        if (!slideshowBool){
+            count++;
+        }
+        else{
+            slideshowBool = false;
+        }
+        if (count>=twoLettersArrayList.size()-1){
+            count = twoLettersArrayList.size()-1;
+            toast.setText("The End");
+            toast.show();
+
+        }
+        String a = twoLettersArrayList.get(count);
+        String c =  twoLettersArrayList.get(count);
+
+        StringBuilder sb = new StringBuilder();
+        sb= sb.append(a.substring(0,1)).append("   ").append(a.charAt(1));
+
+        btSlideText.setText(sb);
+        tvNumberWord.setText(c);
+
+        String b = PlayFromFirebase.viewTextConvert("read"+a);
+
+        if(b.length()>textLength){
+            btSlideText.setTextSize(smallFont);
+
+        }else{
+            btSlideText.setTextSize(largeFont);
+        }
+        if (unMuted){
+            playFromFileOrDownload(b);
+        }
+        else{
+            toast.setText("Sound Muted");
+            toast.show();
+        }
+
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_preading_two_letters);
 
+
+
+        Intent intent = getIntent();
+        Intent typeIntent = getIntent();
+        vowelLetter = intent.getStringExtra("vowel");
+        type = typeIntent.getStringExtra("type");
+
+        tvHeader = findViewById(R.id.tvTwoLetterHeader);
+        tvHeader.setText(vowelLetter);
+        tvHeader.setTextColor(Color.BLUE);
+
+        if (type.contains("vowel")){
+            twoLettersArrayList.add("B"+vowelLetter);
+            twoLettersArrayList.add("D"+vowelLetter);
+            twoLettersArrayList.add("F"+vowelLetter);
+            twoLettersArrayList.add("G"+vowelLetter);
+            twoLettersArrayList.add("H"+vowelLetter);
+            twoLettersArrayList.add("K"+vowelLetter);
+            twoLettersArrayList.add("L"+vowelLetter);
+            twoLettersArrayList.add("M"+vowelLetter);
+            twoLettersArrayList.add("N"+vowelLetter);
+            twoLettersArrayList.add("P"+vowelLetter);
+            twoLettersArrayList.add("R"+vowelLetter);
+            twoLettersArrayList.add("S"+vowelLetter);
+            twoLettersArrayList.add("T"+vowelLetter);
+            twoLettersArrayList.add("W"+vowelLetter);
+            twoLettersArrayList.add("Y"+vowelLetter);
+        }
+        else{
+            twoLettersArrayList.add(vowelLetter+"A");
+            twoLettersArrayList.add(vowelLetter+"E");
+            twoLettersArrayList.add(vowelLetter+"I");
+            twoLettersArrayList.add(vowelLetter+"O");
+            twoLettersArrayList.add(vowelLetter+"U");
+            twoLettersArrayList.add(vowelLetter+"Ɔ");
+            twoLettersArrayList.add(vowelLetter+"Ɛ");
+        }
+
+
+        if (MainActivity.Subscribed != 1){
+
+            random = new Random();
+            showAdProbability = random.nextInt(10);
+
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            mAdView = findViewById(R.id.adView);
+            mAdView.setVisibility(View.VISIBLE);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }
+
+//////SlideshowStuff
+
+        {
+            isNetworkAvailable();
+
+            btSlideText = findViewById(R.id.btSlideText);
+            tvStartSlideShow = findViewById(R.id.tvStartSlideshow);
+            tvNumberWord = findViewById(R.id.tvNumberWord);
+            pauseButton = findViewById(R.id.pauseButton);
+            playButton = findViewById(R.id.playButton);
+            nextButton = findViewById(R.id.nextButton);
+            previousButton = findViewById(R.id.previousButton);
+            muteButton = findViewById(R.id.ivMuteButton);
+            unmuteButton = findViewById(R.id.ivUnMuteButton);
+            repeatButton = findViewById(R.id.repeatButton);
+            repeatOne = findViewById(R.id.repeatOne);
+
+            muteButton.setVisibility(View.INVISIBLE);
+            unmuteButton.setVisibility(View.INVISIBLE);
+
+            playButton.setVisibility(View.INVISIBLE);
+            repeatButton.setVisibility(View.INVISIBLE);
+            repeatOne.setVisibility(View.INVISIBLE);
+            pauseButton.setVisibility(View.INVISIBLE);
+            nextButton.setVisibility(View.INVISIBLE);
+            previousButton.setVisibility(View.INVISIBLE);
+
+            tvNumberWord.setVisibility(View.INVISIBLE);
+            btSlideText.setVisibility(View.INVISIBLE);
+
+
+            repeatButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (MainActivity.Subscribed != 1) {
+                        //Toast.makeText(SubPFamilyActivity.this, "Repeat All Feature \n Only For Premium Users", Toast.LENGTH_SHORT).show();
+                        toast.setText("Repeat All Feature \n Only For Premium Users");
+                        toast.show();
+                    } else {
+                        repeat = !repeat;
+                        if (repeat) {
+                            repeatButton.setBackgroundColor(Color.GREEN);
+                            repeatOne.setBackgroundColor(Color.WHITE);
+                            repeat1 = false;
+                            toast.setText("REPEAT ALL\n ACTIVATED");
+                            toast.show();
+                        } else {
+                            repeatButton.setBackgroundColor(Color.WHITE);
+                            toast.setText("REPEAT ALL\n DEACTIVATED");
+                            toast.show();
+                        }
+                    }
+                }
+            });
+
+            repeatOne.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (MainActivity.Subscribed != 1) {
+                        toast.setText("Repeat One Feature \n Only For Premium Users");
+                        toast.show();
+                        //Toast.makeText(SubPFamilyActivity.this, "Repeat All Feature \n Only For Premium Users", Toast.LENGTH_SHORT).show();
+                    } else {
+                        repeat1 = !repeat1;
+                        if (repeat1) {
+                            repeat = false;
+                            repeatOne.setBackgroundColor(Color.GREEN);
+                            repeatButton.setBackgroundColor(Color.WHITE);
+                            toast.setText("REPEAT SELECTED\n ACTIVATED");
+                            toast.show();
+                        } else {
+                            repeatOne.setBackgroundColor(Color.WHITE);
+                            toast.setText("REPEAT SELECTED\n DEACTIVATED");
+                            toast.show();
+                        }
+                    }
+                }
+            });
+
+
+            handler1 = new Handler();
+            Handler handler2 = new Handler();
+
+            ranable = new Runnable() {
+                @Override
+                public void run() {
+                    // String a = recycleArrayList.get(count).getTwiProverb();
+                    if (repeat1) {
+
+                        String a = twoLettersArrayList.get(count);
+                        String c = twoLettersArrayList.get(count);
+
+                        StringBuilder sb = new StringBuilder();
+                        sb= sb.append(a.substring(0,1)).append("   ").append(a.charAt(1));
+
+                        btSlideText.setText(sb);
+                        tvNumberWord.setText(c);
+
+                        String b = PlayFromFirebase.viewTextConvert("read" + a);
+
+                        if (unMuted) {
+                            playFromFileOrDownload(b);
+                            delayTime = longDelay;
+                        } else {
+                            delayTime = shortDelay;
+                        }
+
+
+                    /*if(b.length()>textLength){
+                        btSlideText.setTextSize(smallFont);
+
+                        delayTime= longDelay;
+                    }else{
+                        delayTime=shortDelay;
+                        btSlideText.setTextSize(largeFont);
+                    }*/
+                        handler1.postDelayed(ranable, delayTime);
+                    } else {
+                        if (count <= twoLettersArrayList.size() - 1) {
+                            String a = twoLettersArrayList.get(count);
+                            String c = twoLettersArrayList.get(count);
+
+                            StringBuilder sb = new StringBuilder();
+                            sb= sb.append(a.substring(0,1)).append("   ").append(a.charAt(1));
+
+                            btSlideText.setText(sb);
+                            tvNumberWord.setText(c);
+
+                            String b = PlayFromFirebase.viewTextConvert("read" + a);
+
+                            if (unMuted) {
+                                playFromFileOrDownload(b);
+                                delayTime = longDelay;
+                            } else {
+                                delayTime = shortDelay;
+                            }
+                            //  Log.i("Mee1","Hi1 "+ count);
+                            count++;
+
+
+                            handler1.postDelayed(ranable, delayTime);
+                        } else if (repeat) {
+                            count = 0;
+                            //repeat=false;
+
+                            handler1.postDelayed(ranable, 1000);
+                        } else {
+                            tvStartSlideShow.setText("Start "+ "\""+ vowelLetter+ "\""+ " Slideshow");
+                            lvTwoLetters.setVisibility(View.VISIBLE);
+                            tvStartSlideShow.setVisibility(View.VISIBLE);
+                            btSlideText.setVisibility(View.INVISIBLE);
+                            tvNumberWord.setVisibility(View.INVISIBLE);
+                            playButton.setVisibility(View.INVISIBLE);
+                            pauseButton.setVisibility(View.INVISIBLE);
+                            nextButton.setVisibility(View.INVISIBLE);
+                            previousButton.setVisibility(View.INVISIBLE);
+                            ////
+
+                            muteButton.setVisibility(View.INVISIBLE);
+                            unmuteButton.setVisibility(View.INVISIBLE);
+                            repeatButton.setVisibility(View.INVISIBLE);
+                            repeatOne.setVisibility(View.INVISIBLE);
+
+                            tvHeader.setVisibility(View.VISIBLE);
+
+                        }
+                    }
+
+
+                }
+            };
+
+            playButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    slideshow(v);
+                }
+            });
+
+            pauseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pauseSlideshow(v);
+                }
+            });
+
+            nextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (count <= twoLettersArrayList.size()) {
+                        System.out.println("Mee " + twoLettersArrayList.size() + ": " + count);
+                        next(v);
+                    }
+
+                }
+            });
+
+            previousButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    previous(v);
+                }
+            });
+
+            unmuteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    unMuted = true;
+                    toast.setText("Sound Unmuted");
+                    toast.show();
+                    muteButton.setVisibility(View.VISIBLE);
+                    unmuteButton.setVisibility(View.INVISIBLE);
+                }
+            });
+
+            muteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    unMuted = false;
+                    toast.setText("Sound Muted");
+                    toast.show();
+                    //Toast.makeText(SubPFamilyActivity.this, "Sound Muted", Toast.LENGTH_SHORT).show();
+                    unmuteButton.setVisibility(View.VISIBLE);
+                    muteButton.setVisibility(View.INVISIBLE);
+                }
+            });
+
+            btSlideText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // foodListView.setVisibility(View.INVISIBLE);
+                    //slideshow();
+                    String c = btSlideText.getText().toString();
+                    toast.setText(c);
+                    toast.show();
+
+                }
+            });
+
+            tvStartSlideShow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (tvStartSlideShow.getText().toString().toLowerCase().contains("end")) {
+
+                        if (handler1 != null) {
+                            handler1.removeCallbacks(ranable);
+                        }
+                        if (playFromDevice != null) {
+                            playFromDevice.stop();
+                        }
+
+                        tvStartSlideShow.setText("Start " + "\"" + vowelLetter + "\"" + " Slideshow");
+                        lvTwoLetters.setVisibility(View.VISIBLE);
+                        tvStartSlideShow.setVisibility(View.VISIBLE);
+                        btSlideText.setVisibility(View.INVISIBLE);
+                        tvNumberWord.setVisibility(View.INVISIBLE);
+                        playButton.setVisibility(View.INVISIBLE);
+                        pauseButton.setVisibility(View.INVISIBLE);
+                        nextButton.setVisibility(View.INVISIBLE);
+                        previousButton.setVisibility(View.INVISIBLE);
+                        muteButton.setVisibility(View.INVISIBLE);
+                        unmuteButton.setVisibility(View.INVISIBLE);
+                        repeatButton.setVisibility(View.INVISIBLE);
+                        repeatOne.setVisibility(View.INVISIBLE);
+
+                        ///
+                        tvHeader.setVisibility(View.VISIBLE);
+
+
+                    } else {
+                        tvHeader.setVisibility(View.INVISIBLE);
+                        lvTwoLetters.setVisibility(View.INVISIBLE);
+                        //tvStartSlideShow.setVisibility(View.INVISIBLE);
+                        tvStartSlideShow.setText("End Slideshow");
+                        tvNumberWord.setVisibility(View.VISIBLE);
+                        btSlideText.setVisibility(View.VISIBLE);
+                        playButton.setVisibility(View.VISIBLE);
+                        repeatButton.setVisibility(View.VISIBLE);
+                        repeatButton.setBackgroundColor(Color.WHITE);
+                        repeatOne.setVisibility(View.VISIBLE);
+                        repeatOne.setBackgroundColor(Color.WHITE);
+                        pauseButton.setVisibility(View.VISIBLE);
+                        nextButton.setVisibility(View.VISIBLE);
+                        previousButton.setVisibility(View.VISIBLE);
+                        if (unMuted) {
+                            muteButton.setVisibility(View.VISIBLE);
+                            unmuteButton.setVisibility(View.INVISIBLE);
+                        } else {
+                            muteButton.setVisibility(View.INVISIBLE);
+                            unmuteButton.setVisibility(View.VISIBLE);
+                            Toast.makeText(SubPReadingActivityTwoLetters.this, "Sound Muted", Toast.LENGTH_SHORT).show();
+                        }
+
+                        slideshow();
+                    }
+
+                }
+            });
+
+            //convertAndPlay = new PlayFromFirebase();
+
+
+        }
+        ////////
 
         toast = Toast.makeText(getApplicationContext(), "Tap to Listen" , Toast.LENGTH_LONG);
 
@@ -327,13 +902,10 @@ public class SubPReadingActivityTwoLetters extends AppCompatActivity {
         mp1 = new MediaPlayer();
 
 
-        Intent intent = getIntent();
-        vowelLetter = intent.getStringExtra("vowel");
+
         //getIntent(vowel);
 
-        tvHeader = findViewById(R.id.tvTwoLetterHeader);
-        tvHeader.setText(vowelLetter);
-        tvHeader.setTextColor(Color.BLUE);
+
 
         tvHeader.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -361,23 +933,6 @@ public class SubPReadingActivityTwoLetters extends AppCompatActivity {
 
         lvTwoLetters = findViewById(R.id.lvtwoLetters);
 
-
-
-        twoLettersArrayList.add("B"+vowelLetter);
-        twoLettersArrayList.add("D"+vowelLetter);
-        twoLettersArrayList.add("F"+vowelLetter);
-        twoLettersArrayList.add("G"+vowelLetter);
-        twoLettersArrayList.add("H"+vowelLetter);
-        twoLettersArrayList.add("K"+vowelLetter);
-        twoLettersArrayList.add("L"+vowelLetter);
-        twoLettersArrayList.add("M"+vowelLetter);
-        twoLettersArrayList.add("N"+vowelLetter);
-        twoLettersArrayList.add("P"+vowelLetter);
-        twoLettersArrayList.add("R"+vowelLetter);
-        twoLettersArrayList.add("S"+vowelLetter);
-        twoLettersArrayList.add("T"+vowelLetter);
-        twoLettersArrayList.add("W"+vowelLetter);
-        twoLettersArrayList.add("Y"+vowelLetter);
 
 
 
@@ -429,10 +984,37 @@ public class SubPReadingActivityTwoLetters extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onStop() {
+        super.onStop();
+        if (handler1 !=null){
+            handler1.removeCallbacks(ranable);
+        }
+        if (playFromDevice!=null){
+            playFromDevice.stop();
+        }
+    }
 
-        toast.setText("");
-        toast.cancel();
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
+
+        if (handler1 !=null){
+            handler1.removeCallbacks(ranable);
+        }
+        if (playFromDevice!=null){
+            playFromDevice.stop();
+        }
+
+        Random random = new Random();
+        int prob = random.nextInt(10);
+
+        if (MainActivity.Subscribed != 1) {
+
+            if (prob < 7) {
+                Log.i("advert", "came");
+                advert1();
+                // advert1();
+            }
+        }
     }
 }

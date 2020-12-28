@@ -66,9 +66,14 @@ public class ReadingActivityMain extends AppCompatActivity {
 
                         switch (me){
                             case "Two Letter Words":
-                                goToTwoLetters();
+                                goToTwoLetters("vowels");
+                                return;
+                            case "Two Letter Words (Consonants)":
+                                goToTwoLetters("consonants");
                                 return;
                             case "Digraphs (Three Letter Sounds)":
+                            case "Reading Lesson 1":
+                            case "Reading Lesson 2":
                                 goToPleaseSubPage();
                                 return;
                         }
@@ -119,11 +124,23 @@ public class ReadingActivityMain extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToTwoLetters() {
-       // Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
-        Intent intent = new Intent(this, ReadingActivityTwoLettersMain.class);
-        //intent.putExtra("vowel", vowel);
-        startActivity(intent);
+    public void goToTwoLetters(String category) {
+        Intent intent;
+
+        switch (category){
+            case "vowels":
+                intent = new Intent(this, SubPReadingActivityTwoLettersMain.class);
+                intent.putExtra("type", "vowel");
+                startActivity(intent);
+                return;
+            case "consonants" :
+                intent = new Intent(this, SubPReadingActivityTwoLettersMain.class);
+                intent.putExtra("type", "consonant");
+                startActivity(intent);
+                return;
+
+        }
+
     }
 
     public void goToDigraph() {
@@ -170,6 +187,7 @@ public class ReadingActivityMain extends AppCompatActivity {
 
         readingMainArray = new ArrayList<>();
         readingMainArray.add("Two Letter Words");
+        readingMainArray.add("Two Letter Words (Consonants)");
         readingMainArray.add("Digraphs (Three Letter Sounds)");
         readingMainArray.add("Reading Lesson 1");
         readingMainArray.add("Reading Lesson 2");
@@ -194,7 +212,10 @@ public class ReadingActivityMain extends AppCompatActivity {
 
                 switch (me){
                     case "Two Letter Words":
-                        goToTwoLetters();
+                        goToTwoLetters("vowels");
+                        return;
+                    case "Two Letter Words (Consonants)":
+                        goToTwoLetters("consonants");
                         return;
                     case "Digraphs (Three Letter Sounds)":
                         goToPleaseSubPage();

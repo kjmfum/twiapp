@@ -107,34 +107,6 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
 
     }
 
-  /*  @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
-
-     if (actionBarDrawerToggle.onOptionsItemSelected(item)){
-            return true;
-        }
-        else{
-        switch (item.getItemId()){
-            case R.id.main:
-                goToMain();
-                return  true;
-            *//*case R.id.quiz1:
-                goToQuizFamily();
-                return  true;
-            case R.id.downloadAudio:
-                downloadClick();
-                return true;
-            case R.id.videoCourse:
-                //Log.i("Menu Item Selected", "Alphabets");
-                goToWeb();
-                return  true;*//*
-            default:
-                return false;
-        }
-        }
-    }*/
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
@@ -267,7 +239,7 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
                                     // Process the result.
 
                                     if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
-                                        toast.setText("Already Purchased 1");
+                                        toast.setText("Already Purchased");
                                         toast.show();
 
                                     } else{
@@ -676,46 +648,43 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
                                                             String skuName = purchase.getSku();
                                                             if ("year_subscription".equals(sku) ||"6months_subscription".equals(sku) ||"monthly_subscription".equals(sku) ||skuName.equals("reading_club") || skuName.equals("premium_6months") || skuName.equals("premium_annually")){
 
+                                                                Intent homeIntent;
                                                                 switch(skuName){
                                                                     case "reading_club":
-                                                                        me1 = "\n\t AN ACTIVE MONTHLY SUBSCRIPTION";
-                                                                        Toast.makeText(InAppActivity.this, "\t\t\t\t YOU ALREADY HAVE "+ me1 , Toast.LENGTH_SHORT).show();
-                                                                        Intent homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-                                                                        startActivity(homeIntent);
-                                                                        return;
-
                                                                     case "monthly_subscription":
                                                                         me1 = "\n\t AN ACTIVE MONTHLY SUBSCRIPTION";
                                                                         Toast.makeText(InAppActivity.this, "\t\t\t\t YOU ALREADY HAVE "+ me1 , Toast.LENGTH_SHORT).show();
-                                                                         homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+                                                                       homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
                                                                         startActivity(homeIntent);
                                                                         return;
 
                                                                     case "premium_6months":
-                                                                        me1 = "\n\t AN ACTIVE 6 MONTHS SUBSCRIPTION";
-                                                                        Toast.makeText(InAppActivity.this, "\t\t\t\t YOU ALREADY HAVE "+ me1 , Toast.LENGTH_SHORT).show();
-                                                                        homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-                                                                        startActivity(homeIntent);
-                                                                        return;
                                                                     case "6months_subscription":
                                                                         me1 = "\n\t AN ACTIVE 6 MONTHS SUBSCRIPTION";
                                                                         Toast.makeText(InAppActivity.this, "\t\t\t\t YOU ALREADY HAVE "+ me1 , Toast.LENGTH_SHORT).show();
                                                                         homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
                                                                         startActivity(homeIntent);
                                                                         return;
-                                                                    case "premium_annually":
-                                                                        me1 = "\n\t AN ACTIVE ANNUAL SUBSCRIPTION";
+                                                                  /*  case "6months_subscription":
+                                                                        me1 = "\n\t AN ACTIVE 6 MONTHS SUBSCRIPTION";
                                                                         Toast.makeText(InAppActivity.this, "\t\t\t\t YOU ALREADY HAVE "+ me1 , Toast.LENGTH_SHORT).show();
                                                                         homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
                                                                         startActivity(homeIntent);
-                                                                        return;
-
+                                                                        return;*/
+                                                                    case "premium_annually":
                                                                     case "year_subscription":
                                                                         me1 = "\n\t AN ACTIVE ANNUAL SUBSCRIPTION";
                                                                         Toast.makeText(InAppActivity.this, "\t\t\t\t YOU ALREADY HAVE "+ me1 , Toast.LENGTH_SHORT).show();
                                                                         homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
                                                                         startActivity(homeIntent);
                                                                         return;
+
+                                                                  /*  case "year_subscription":
+                                                                        me1 = "\n\t AN ACTIVE ANNUAL SUBSCRIPTION";
+                                                                        Toast.makeText(InAppActivity.this, "\t\t\t\t YOU ALREADY HAVE "+ me1 , Toast.LENGTH_SHORT).show();
+                                                                        homeIntent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+                                                                        startActivity(homeIntent);
+                                                                        return;*/
                                                                 }
 
 
@@ -810,77 +779,11 @@ public class InAppActivity extends AppCompatActivity implements PurchasesUpdated
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-  /*      FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
 
-  //////Temporary
-    /*    DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
-                .setDrawerLayout(drawer)
-                .build();*/
-
-
-
-
-/*        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);*/
 
         subscriptionStatePreference = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
 
 
-
-/*
-        toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
-        drawerLayout = findViewById(R.id.drawer_layout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       */
-
-
-        /*buyButton= findViewById(R.id.buy);
-
-        buyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String ButtonText = buyButton.getText().toString();
-
-                Toast.makeText(InAppActivity.this, "Ready", Toast.LENGTH_SHORT).show();
-
-                if (ButtonText.contains("Monthly")){
-                    Toast.makeText(InAppActivity.this, "Monthly", Toast.LENGTH_SHORT).show();
-                    buyMeMonthly();
-                }
-                else if (ButtonText.contains("6")){
-                    Toast.makeText(InAppActivity.this, " 6 Monthly", Toast.LENGTH_SHORT).show();
-                    buyMeHalfYear();
-                }
-                else if (ButtonText.contains("Annual")){
-                    Toast.makeText(InAppActivity.this, "Annual", Toast.LENGTH_SHORT).show();
-                    buyMeAnnually();
-                }
-                else{
-                    buyMeMonthly();
-                }
-
-            }
-        });*/
 
     }
 

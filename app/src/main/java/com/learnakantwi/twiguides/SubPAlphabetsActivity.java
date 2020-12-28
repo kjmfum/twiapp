@@ -285,7 +285,7 @@ public class SubPAlphabetsActivity extends AppCompatActivity implements RVAlphab
         }
 
         else {
-            Toast.makeText(this, "Please Connect to the Internet 1", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please Connect to the Internet", Toast.LENGTH_SHORT).show();
         }
 
     }

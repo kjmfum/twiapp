@@ -65,7 +65,7 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.4" />
 
-        <Button
+      <!--  <Button
             android:id="@+id/playAgain"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -75,7 +75,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/gridlayout123"
             app:layout_constraintEnd_toEndOf="@+id/gridlayout123"
             app:layout_constraintStart_toStartOf="@+id/gridlayout123"
-            app:layout_constraintTop_toTopOf="@+id/gridlayout123" />
+            app:layout_constraintTop_toTopOf="@+id/gridlayout123" />-->
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group2"

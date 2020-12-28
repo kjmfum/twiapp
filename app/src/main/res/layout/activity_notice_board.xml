@@ -32,7 +32,80 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <Button
+                    android:id="@+id/btGetQuestions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="getQuestions"
+                    android:text="GET QUESTIONS"
+                    android:visibility="gone" />
 
+
+                <EditText
+                    android:id="@+id/etQuestionEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="email"
+                    android:inputType="text"
+                    android:onClick="sendAnswer"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btSendAnswer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="sendAnswer"
+                    android:text="Send Answer"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/etAnswerToSend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="answer"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvNotice5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text=""
+                    android:textIsSelectable="true"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvAnswers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:onClick="SendChat" />
+
+                <com.google.android.material.textfield.TextInputLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <EditText
+                        android:id="@+id/etQuestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Ask a question (Bisa Asɛm)"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:textSize="30sp" />
+
+                    <Button
+                        android:id="@+id/btSendQuestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/blue"
+                        android:onClick="SendChat"
+                        android:text="SEND"
+                        android:textColor="@color/white" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:id="@+id/tvNotice1"
@@ -48,8 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text=""
-                    />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/tvNotice3"
@@ -57,7 +129,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text=""
-                    />
+                    android:textIsSelectable="true"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tvNotice4"
@@ -65,26 +138,20 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text=""
-                    />
-
-                <TextView
-                    android:id="@+id/tvNotice5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    />
+                    android:textIsSelectable="true"
+                    android:visibility="gone" />
 
 
 
-                <TextView
-                    android:id="@+id/tvAnswers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:onClick="SendChat"/>
 
-             <!--   <androidx.recyclerview.widget.RecyclerView
+
+
+
+
+
+
+
+                <!--   <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/noticeRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -98,35 +165,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/noticeimage"
+                    android:visibility="gone"
                     />
 
-                <com.google.android.material.textfield.TextInputLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                    <EditText
-                        android:id="@+id/etQuestion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Ask a question (Bisa Asɛm)"
-                        android:imeOptions="actionDone"
-                        android:inputType="text"
-                        android:textSize="30sp"/>
-
-                    <Button
-                        android:id="@+id/btSendQuestion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/blue"
-                        android:onClick="SendChat"
-                        android:text="SEND"
-                        android:textColor="@color/white"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            <!--    <Button
+                <!--    <Button
                     android:id="@+id/btSendQuestion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

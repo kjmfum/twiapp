@@ -206,7 +206,7 @@ public class QuizTimedHome extends AppCompatActivity {
                                 toast.show();
                                 // sharedDownloadingOrNot = "Yes";
                                 downloadClick();
-                                //Toast.makeText(Home.this, "Hi"+" "+ sharedDownloadingOrNot, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(VocabularyMain.this, "Hi"+" "+ sharedDownloadingOrNot, Toast.LENGTH_LONG).show();
                             }
                         }).setNegativeButton("No", null)
                         .show();

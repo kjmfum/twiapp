@@ -378,11 +378,11 @@ public class ChildrenHome extends AppCompatActivity {
                                 case "Numbers":
                                     goToNumber();
                                     return;
-                                    case "Non Twi Games":
-                                    goToGames();
-                                    return;
                                 case "Weather":
                                     goToWeather();
+                                    return;
+                                case "Non Twi Games":
+                                    goToGames();
                                     return;
                                 case "Business":
                                     goToBusiness();
@@ -813,12 +813,6 @@ public class ChildrenHome extends AppCompatActivity {
                         return;
                     case "Non Twi Games":
                         goToGames();
-                        return;
-                    case "Weather":
-                        goToWeather();
-                        return;
-                    case "Business":
-                        goToBusiness();
                         return;
                     case "All":
                         goToAll();

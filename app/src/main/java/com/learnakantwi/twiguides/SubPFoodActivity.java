@@ -759,15 +759,15 @@ public class SubPFoodActivity extends AppCompatActivity implements FoodAdapter.o
 
         toast = Toast.makeText(getApplicationContext(), " " , Toast.LENGTH_SHORT);
 
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         if (MainActivity.Subscribed != 1){
 
             random = new Random();
             showAdProbability = random.nextInt(10);
 
-            mInterstitialAd = new InterstitialAd(this);
-            mInterstitialAd.setAdUnitId(MainActivity.AdUnitInterstitial);
-            mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
             MobileAds.initialize(this, new OnInitializationCompleteListener() {
                 @Override

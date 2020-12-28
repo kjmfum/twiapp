@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/Verguideline15"
-        app:layout_constraintTop_toBottomOf="@id/adView1" />
+        app:layout_constraintTop_toBottomOf="@id/adView" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelinehor80"
@@ -178,7 +178,7 @@
 
 
     <com.google.android.gms.ads.AdView
-        android:id="@+id/adView1"
+        android:id="@+id/adView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -133,6 +133,7 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_logout">Sign out</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>

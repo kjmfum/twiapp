@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -478,9 +479,15 @@ public class ReadingActivityTwoLetters extends AppCompatActivity {
         toast.cancel();
         // stopPlay();
 
-        if (showAdProbability<=5){
-            advert1();
+        if (MainActivity.Subscribed != 1) {
 
+            if (showAdProbability <= 5) {
+                advert1();
+                Log.i("advert", "came");
+            }
+            else{
+                Log.i("advert", "came Not");
+            }
         }
         super.onDestroy();
     }

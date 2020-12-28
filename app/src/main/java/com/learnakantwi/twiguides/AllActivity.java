@@ -525,18 +525,18 @@ public class AllActivity extends AppCompatActivity {
                         state = "no";
                         String b = results.get(position).getTwiMain();
                         String a = results.get(position).getEnglishmain();
-
-                        PlayFromFirebase playFromFirebase = new PlayFromFirebase();
-
                         StringBuilder sb = new StringBuilder();
-                        sb = sb.append(a).append(" is:\n\t").append(b);
+
+
+
+                        String type = results.get(position).getEnglish1().toLowerCase();
+                        //sb = sb.append(a).append(" is:\n\t").append(b);
+
+                        //Toast.makeText(context, sb, Toast.LENGTH_SHORT).show();
 
                         b = PlayFromFirebase.viewTextConvert(b);
 
-
-                        Toast.makeText(context, sb, Toast.LENGTH_SHORT).show();
-
-                        playFromFileOrDownload(b,a);
+                        playFromFileOrDownload(b, type);
                     }
                 });
 
@@ -726,7 +726,7 @@ allListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             playFromFileOrDownload(b, type);
         }
         catch (Exception E){
-            Toast.makeText(context, "Too bad \n"+ E, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(context, "Too bad \n"+ E, Toast.LENGTH_SHORT).show();
         }
 
     }

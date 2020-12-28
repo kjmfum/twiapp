@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.learnakantwi.twiguides">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.android.vending.BILLING" />
@@ -36,8 +38,8 @@
         <activity android:name=".NoticeBoardActivity" />
         <activity
             android:name=".HomeMainActivity"
-            android:label="@string/title_activity_home_main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="Akan Twi Guide">
+            <!--android:theme="@style/AppTheme.NoActionBar"> -->
 
             <!--
             <intent-filter>
@@ -76,6 +78,7 @@
         <activity android:name=".SubPReadingActivityTwoLettersMain" />
         <activity android:name=".SubPReadingActivityTwoLetters" />
         <activity android:name=".SubPReadingActivityMain" />
+
         <activity android:name=".ReadingActivityTwoLetters" />
         <activity android:name=".ReadingActivityMain" />
         <activity android:name=".ReadingActivityTwoLettersMain" />
@@ -109,6 +112,8 @@
         <activity android:name=".SubPNumbersActivity" />
         <activity android:name=".SubPDaysOfWeekActivity" />
         <activity android:name=".SubPAlphabetsActivity" />
+        <activity android:name=".SubConversationGratitude"/>
+        <activity android:name=".SubConversationAll"/>
         <activity android:name=".SubChildrenHome" />
         <activity android:name=".QuizSubHome" />
         <activity
@@ -123,7 +128,7 @@
         <activity android:name=".SubConversationLove" />
         <activity android:name=".ForgotPassword" />
         <activity android:name=".RealTimeDatabase" />
-        <activity android:name=".PlayFromFirebase" />
+     <!--   <activity android:name=".PlayFromFirebase" /> -->
         <activity
             android:name=".SignUpActivity"
             android:screenOrientation="fullSensor" />
@@ -174,7 +179,7 @@
         <activity android:name=".PronounsActivity" />
         <activity android:name=".NumbersActivity" />
         <activity android:name=".MonthsActivity" />
-        <activity android:name=".Home" />
+        <activity android:name=".VocabularyMain" />
         <activity android:name=".ProverbsHome" />
         <activity android:name=".FoodActivity" />
         <activity android:name=".FamilyActivity" />

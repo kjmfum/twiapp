@@ -5,23 +5,28 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,61 +40,74 @@ import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.games.LeaderboardsClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import hotchemi.android.rate.AppRate;
 
 import static android.Manifest.permission.INTERNET;
+import static com.learnakantwi.twiguides.SubChildrenAnimals.childrenAnimalsArrayList;
+import static com.learnakantwi.twiguides.SubConversationApologiesAndResponses.conversationsApologiesArrayList;
+import static com.learnakantwi.twiguides.SubConversationDirections.conversationDirections;
+import static com.learnakantwi.twiguides.SubConversationHospital.conversationHospital;
+import static com.learnakantwi.twiguides.SubConversationIntroductionActivity.conversationArrayList;
+import static com.learnakantwi.twiguides.SubConversationLove.conversationLove;
+import static com.learnakantwi.twiguides.SubConversationPhone.conversationPhone;
+import static com.learnakantwi.twiguides.SubConversationWelcomingOthers.conversationWelcomingOthersArrayList;
 
 //import android.support.v7.app.AppCompatActivity;
 
-public class HomeMainActivity extends AppCompatActivity implements PurchasesUpdatedListener, RVHomeMainAdapter.onClickRecycle {
+public class HomeMainActivity extends AppCompatActivity implements RVHomeMainAdapter.onClickRecycle {
     //  app:adUnitId="ca-app-pub-6999427576830667~6251296006"ˆ
 
-    AdView mAdView;
-
-    BillingClient billingClient;
-    String premiumUpgradePrice;
-    Button buyButton;
-    Toast toast;
-    private InterstitialAd mInterstitialAd;
-
-    DrawerLayout drawerLayout;
 
     static ArrayList<HomeMainButton> homeMainButtonArrayList;
+    BillingClient billingClient;
+    String premiumUpgradePrice;
+    String userEmail;
+
+    Button buyButton;
+    Toast toast;
     ListView homeListView;
     MediaPlayer mediaPlayer;
     SharedPreferences subscriptionStatePreference;
     boolean subscriptionState;
-   /* FirebaseDatabase firebaseDatabase;
-    FirebaseAuth firebaseAuth;
-    DatabaseReference myRef;*/
+
+    TextView tvSignIn;
+    FirebaseAuth mAuth;
+    FirebaseUser User;
+    String displayName;
+
+    String currentUserEmail;
 
     RecyclerView recyclerView;
     RVHomeMainAdapter rvHomeMainAdapter;
-
-//    private static final int RC_UNUSED = 5001;
-  /*  GoogleSignInOptions  signInOptions;
-    private LeaderboardsClient mLeaderboardsClient;
-    private GoogleSignInClient mGoogleSignInClient;*/
-
-
+    AdView mAdView;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    CollectionReference usersReference = db.collection("users");
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,54 +125,7 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                final ArrayList<HomeMainButton> results = new ArrayList<>();
-                for (HomeMainButton x: homeMainButtonArrayList ){
-
-                    if(x.getNameofActivity().toLowerCase().contains(newText.toLowerCase())
-
-                    ){
-                        results.add(x);
-                    }
-
-                    ((HomeMainAdapter)homeListView.getAdapter()).update(results);
-
-                   homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                            String me1 = results.get(position).getNameofActivity();
-
-
-                            switch (me1){
-                                case "Conversations":
-                                    goToPleaseSubPage();
-                                    return;
-                                case "Settings":
-                                    goToSettings();
-                                    return;
-                                case "Vocabulary":
-                                    goToMain();
-                                    return;
-                                case "Children":
-                                    goToChildren();
-                                    return;
-                                case "Proverbs":
-                                    goToProverbs();
-                                    return;
-                                case "Quiz":
-                                    goToQuizHome();
-                                    return;
-                                case "Reading":
-                                    goToReading();
-                                case "Non Twi Games":
-                                    goToGames();
-                                    return;
-                            }
-                        }
-                    });
-                }
-
-
+                rvHomeMainAdapter.getFilter().filter(newText);
                 return false;
             }
         });
@@ -169,8 +140,9 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
         super.onOptionsItemSelected(item);
 
         switch (item.getItemId()) {
+
             case R.id.quiz1:
-                goToQuizAll();
+                goToQuizHome();
                 return true;
             case R.id.searchAll:
                 goToAll();
@@ -213,14 +185,29 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
     }
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), Home.class);
+        Intent intent = new Intent(getApplicationContext(), VocabularyMain.class);
+        startActivity(intent);
+    }
+
+    public void goToSettings(){
+        Intent intent = new Intent(getApplicationContext(), SettingsAndTips.class);
+        startActivity(intent);
+    }
+
+    public void goToPleaseSubPage(){
+        Intent intent = new Intent(getApplicationContext(), PleaseSubscribePage.class);
+        startActivity(intent);
+    }
+
+    public void goToReading(){
+        Intent intent = new Intent(getApplicationContext(), ReadingActivityMain.class);
         startActivity(intent);
     }
 
 
 
     public void goToQuizAll() {
-        Intent intent = new Intent(getApplicationContext(), QuizAll.class);
+        Intent intent = new Intent(getApplicationContext(), QuizSubHome.class);
         startActivity(intent);
     }
 
@@ -233,7 +220,10 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
         Intent intent = new Intent(getApplicationContext(), ProverbsHome.class);
         startActivity(intent);
     }
-
+    public void goToNoticeBoard(){
+        Intent intent = new Intent(getApplicationContext(), NoticeBoardActivity.class);
+        startActivity(intent);
+    }
 
     public void goToWeb() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
@@ -242,13 +232,17 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
 
     public void goToAll() {
-        Intent intent = new Intent(getApplicationContext(), AllActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SubPAllActivity.class);
         startActivity(intent);
     }
 
     public void goToChildren() {
-       // Intent intent = new Intent(getApplicationContext(), ChildrenNumberCount.class);
         Intent intent = new Intent(getApplicationContext(), ChildrenHome.class);
+        startActivity(intent);
+    }
+
+    public void goToGames() {
+        Intent intent = new Intent(getApplicationContext(), Games.class);
         startActivity(intent);
     }
 
@@ -259,173 +253,138 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
         Toast.makeText(this, "Daily Twi Alerts Turned On", Toast.LENGTH_SHORT).show();
     }
 
-   /* public void goToSubscriptionPage (View v){
-       // Toast.makeText(this, String.valueOf(subscriptionState), Toast.LENGTH_SHORT).show();
+    public void goToSubscriptionPage (View v){
+        Toast.makeText(this, String.valueOf(subscriptionState), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), InAppActivity.class);
         startActivity(intent);
-    }*/
-
-
-
-
-    public void buyMe() {
-        setUpBillingClient();
     }
 
+    public void deleteDuplicateConversation() {
+        File myFileConversation = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/SUBCONVERSATION/");
+        File[] files2 = myFileConversation.listFiles();
 
-    public void setUpBillingClient() {
-        billingClient = BillingClient.newBuilder(this)
-                .setListener(this)
-                .enablePendingPurchases()
-                .build();
-        setUpBilling();
+        for (int i = 0; i < files2.length; i++) {
+
+            File fileConversation = files2[i];
+            if (fileConversation.getName().contains("-")) {
+                fileConversation.delete();
+            }
+        }
     }
 
-    public void setUpBilling(){
+    public void deleteDuplicateProverbs() {
+        File myFileProverbs = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/PROVERBS/");
+        File[] files2 = myFileProverbs.listFiles();
 
 
-        billingClient.startConnection(new BillingClientStateListener() {
-            @Override
-            public void onBillingSetupFinished(BillingResult billingResult) {
-                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                    // The BillingClient is ready. You can query purchases here.
-                        //
+        for (int i = 0; i < files2.length; i++) {
 
-
-                    List<String> skuList = new ArrayList<>();
-                    skuList.add("reading_club");
-                    // skuList.add("gas");
-                    SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
-                    params.setSkusList(skuList).setType(BillingClient.SkuType.SUBS);
-
-
-
-                    billingClient.querySkuDetailsAsync(params.build(),
-                            new SkuDetailsResponseListener() {
-                                @Override
-                                public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> skuDetailsList) {
-                                    // Process the result.
-
-                                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
-                                        toast.setText("Already Purchased 1");
-                                        toast.show();
-
-                                    } else{
-                                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
-                                            for (SkuDetails skuDetails : skuDetailsList) {
-                                                String sku = skuDetails.getSku();
-                                                String price = skuDetails.getPrice();
-                                                if ("reading_club".equals(sku)) {
-                                                    premiumUpgradePrice = price;
-
-
-                                                    Purchase.PurchasesResult purchasesResult = billingClient.queryPurchases(BillingClient.SkuType.SUBS);
-                                                    List<Purchase> purchasesList = purchasesResult.getPurchasesList();
-                                                    //
-
-
-                                                    if (purchasesList !=null && !purchasesList.isEmpty()){
-                                                        String me1 = purchasesList.get(0).getOrderId();
-                                                        int me2 = purchasesList.get(0).getPurchaseState();
-                                                        int me3=  purchasesList.size();
-
-                                                        //toast.setText(Integer.toString(me3));
-                                                       /* toast.setText(me1);
-                                                        toast.show();*/
-
-                                                    }
-                                                    else{
-                                                        toast.setText("nothing subscribed");
-                                                        toast.show();
-                                                        goToAll();
-                                                    }
-
-
-                                                    //purchase.getOrderId();
-
-//                                                    billingClient.queryPurchases(sku);
-//                                                    Purchase.PurchasesResult purchasesResult = billingClient.queryPurchases(BillingClient.SkuType.SUBS);
-//                                                    purchasesResult.getPurchasesList();
-
-                                                } /*else if ("gas".equals(sku)) {
-                                                gasPrice = price;
-                                            }*/
-                                            }
-                                        }
-                                    }
-
-
-
-                                }
-                            });
-                }
+            File fileConversation = files2[i];
+            if (fileConversation.getName().contains("-")) {
+                fileConversation.delete();
             }
-            @Override
-            public void onBillingServiceDisconnected() {
-                Toast.makeText(HomeMainActivity.this, "I got disconnected", Toast.LENGTH_SHORT).show();
-                // Try to restart the connection on the next request to
-                // Google Play by calling the startConnection() method.
-                setUpBillingClient();
-            }
-
-
-        });
-        //billingClient.endConnection();
-    }
-
-
-    public void deleteDuplicatelDownload(){
-
-        File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/");
-
-
-        File [] files1 = myFiles.listFiles();
-
-        if (files1.length>0){
-        for (File file : files1) {
-
-            //for (int j = 0; j < files1.length; j++)
-            // toast.setText(String.valueOf(files1.length));
-            //toast.show();
-            if (file.getName().contains("-")) {
-
-                boolean wasDeleted = file.delete();
-
-
-                if (!wasDeleted){
-                    System.out.println("Was not deleted");
-                }
-
-
-                //toast.setText("Deleted");
-                //toast.show();
-            }
-
-            }
-
         }
 
     }
 
+    public void deleteDuplicateVocabulary() {
+        File myFiles = new File("/storage/emulated/0/Android/data/com.learnakantwi.twiguides/files/Music/");
 
-   public void goToPleaseSubPage(){
-       Intent intent = new Intent(getApplicationContext(), PleaseSubscribePage.class);
-       startActivity(intent);
-   }
+        File[] files1 = myFiles.listFiles();
 
-    public void goToSettings(){
-        Intent intent = new Intent(getApplicationContext(), SettingsAndTips.class);
-        startActivity(intent);
+
+        for (int j = 0; j < files1.length; j++) {
+            File file = files1[j];
+            if (file.getName().contains("-")) {
+                file.delete();
+                //toast.setText("Deleted");
+                //toast.show();
+
+            }
+        }
     }
 
-    public void goToReading(){
-        Intent intent = new Intent(getApplicationContext(), ReadingActivityMain.class);
-        startActivity(intent);
+    public void deleteDuplicatelDownload() {
+
+        try {
+            deleteDuplicateVocabulary();
+            deleteDuplicateConversation();
+            deleteDuplicateProverbs();
+        } catch (NullPointerException e) {
+            System.out.println("Error Null");
+        } catch (Exception any) {
+            System.out.println("Strange Exception Caught");
+        }
+
     }
 
-    public void goToGames() {
-        Intent intent = new Intent(getApplicationContext(), Games.class);
-        startActivity(intent);
+    public void SignIn(View view){
+        //Intent homeIntent = new Intent(getApplicationContext(), SignInActivity.class);
+        //startActivity(homeIntent);
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.i("getInstanceId failed", task.getException().toString());
+                            // Toast.makeText(SubPHomeMainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        // Log and toast
+                        // String msg = getString(R.string.msg_token_fmt, token);
+                        Log.i("getInstanceId Good", token);
+                        // Toast.makeText(SubPHomeMainActivity.this, token, Toast.LENGTH_SHORT).show();
+
+                        sendRegistrationToServer(token);
+                    }
+                });
+    }
+
+    public void sendRegistrationToServer(String token){
+
+        Toast.makeText(this, "SentToken", Toast.LENGTH_SHORT).show();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        DatabaseReference reference = database.getReference("message");
+
+        // reference.setValue("Hello, World!");
+        reference.push().setValue(token);
+
+
+
+        Map<String, String> user = new HashMap<>();
+
+        user.put("Justice", token);
+
+        // Create a new user with a first and last name
+      /*  Map<String, Object> user = new HashMap<>();
+        user.put("first", "Ada");
+        user.put("last", "Lovelace");
+        user.put("born", 1815);*/
+
+
+
+// Add a new document with a generated ID
+        db.collection("users")
+                .add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("Debugged", "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Debugged", "Error adding document", e);
+                    }
+                });
+
     }
 
 
@@ -442,6 +401,7 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
                 goToSettings();
                 return;
             case "Conversations":
+            case "Premium Users":
                 goToPleaseSubPage();
                 return;
             case "Vocabulary":
@@ -453,62 +413,24 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
             case "Proverbs":
                 goToProverbs();
                 return;
-            case "Non Twi Games":
-                goToGames();
-                return;
             case "Quiz":
                 goToQuizHome();
                 return;
+            case "Non Twi Games":
+                goToGames();
         }
     }
 
-     public void goToSubscriptionPage (View v){
-     // Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
-       Intent intent = new Intent(getApplicationContext(), InAppActivity.class);
-       startActivity(intent);
-    /*     mLeaderboardsClient.getAllLeaderboardsIntent()
-                 .addOnSuccessListener(new OnSuccessListener<Intent>() {
-                     @Override
-                     public void onSuccess(Intent intent) {
-                         startActivityForResult(intent, RC_UNUSED);
-                     }
-                 })
-                 .addOnFailureListener(new OnFailureListener() {
-                     @Override
-                     public void onFailure(@NonNull Exception e) {
-                         Toast.makeText(HomeMainActivity.this, "Failed with: \n"+ e, Toast.LENGTH_SHORT).show();;
-                     }
-                 });
-
-         //Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
-           //      .submitScore(getString(R.string.leaderboard_id), 1337);*/
-   }
+    public void goToSubscriptionPage (){
+        Intent intent = new Intent(getApplicationContext(), InAppActivity.class);
+        startActivity(intent);
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home1);
-
-
-        //firebaseAuth = FirebaseAuth.getInstance();
-
-       // Toast.makeText(this, "Testing1", Toast.LENGTH_SHORT).show();
-        toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
-
-
-
-
-        try {
-            deleteDuplicatelDownload();
-        }
-        catch (NullPointerException e){
-            System.out.println("Error Null");
-        }
-
-
-        subscriptionStatePreference = this.getSharedPreferences("com.learnakantwi.twiguides", Context.MODE_PRIVATE);
-        subscriptionState = subscriptionStatePreference.getBoolean("Paid",false);
+        setContentView(R.layout.subpactivity_home1);
 
 
         if (Build.VERSION.SDK_INT > 22) {
@@ -523,25 +445,32 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
                 }, 1);
             }
         }
+        recyclerView = findViewById(R.id.recyclerView);
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
-        //Appodeal.cache(this, Appodeal.INTERSTITIAL);
+        toast.setText("Akwaaba");
+        toast.show();
+
+        mAuth = FirebaseAuth.getInstance();
+
+        User = mAuth.getCurrentUser();
+
+        tvSignIn = findViewById(R.id.tvSignIn);
+        tvSignIn.setText("PURCHASE OR SUBSCRIBE FOR MORE CONTENT");
+        tvSignIn.setTypeface(tvSignIn.getTypeface(), Typeface.BOLD_ITALIC);
+        tvSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToSubscriptionPage();
+            }
+        });
 
 
-        //ca-app-pub-7384642419407303/9880404420
-        //ca-app-pub-3940256099942544/1033173712 test
-
-
-
-       // Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+        deleteDuplicatelDownload();
 
         mAdView = findViewById(R.id.adView);
-
         if (MainActivity.Subscribed!=1){
-
-            //AdView mAdView;
 
             MobileAds.initialize(this, new OnInitializationCompleteListener() {
                 @Override
@@ -557,25 +486,13 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
 
         AppRate.with(this)
                 .setInstallDays(0)
-                .setLaunchTimes(3)
+                .setLaunchTimes(5)
                 .setRemindInterval(2)
                 .monitor();
 
         AppRate.showRateDialogIfMeetsConditions(this);
 
-        /////////////
-       /* findViewById(R.id.homeAdvertButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                advert();
-            }
-        });*/
-/////////////
-
-        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
-
         homeMainButtonArrayList = new ArrayList<>();
-        homeListView = findViewById(R.id.homeListView);
 
         homeMainButtonArrayList.add(new HomeMainButton("Proverbs", R.drawable.proverbsimage));
         homeMainButtonArrayList.add(new HomeMainButton("Quiz", R.drawable.quizimage));
@@ -586,27 +503,23 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
         homeMainButtonArrayList.add(new HomeMainButton("Manage Storage", R.drawable.ic_download_audio));
         homeMainButtonArrayList.add(new HomeMainButton("Non Twi Games", R.drawable.gamesimage));
 
+       // homeMainButtonArrayList.add(new HomeMainButton("Premium Users", R.drawable.noticeimage));
 
-        recyclerView = findViewById(R.id.recyclerView);
+
         rvHomeMainAdapter = new RVHomeMainAdapter(this, homeMainButtonArrayList, this);
         // recyclerView.setLayoutManager(new LinearLayoutManager(this));
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(rvHomeMainAdapter);
-
-
-
-        //MobileAds.initialize(this, "ca-app-pub-6999427576830667~6251296006");
-
-
     }
 
-    @Override
+
+   /* @Override
     public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {
         if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK
                 && purchases != null) {
-           toast.setText("Okay1");
-           toast.show();
+            toast.setText("Okay1");
+            toast.show();
         } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
             // Handle an error caused by a user cancelling the purchase flow.
             Toast.makeText(this, "You cancelled the Purchase", Toast.LENGTH_SHORT).show();
@@ -617,7 +530,8 @@ public class HomeMainActivity extends AppCompatActivity implements PurchasesUpda
             // Handle any other error codes.
             Toast.makeText(this,"Could not complete purchase", Toast.LENGTH_LONG).show();
         }
-    }
+    }*/
+
 }
 
 

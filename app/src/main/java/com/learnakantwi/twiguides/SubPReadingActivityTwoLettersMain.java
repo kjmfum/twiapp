@@ -23,6 +23,7 @@ public class SubPReadingActivityTwoLettersMain extends AppCompatActivity {
     HorizontalScrollView horizontalScrollView;
     ListView lvReadingAlphabets;
     Toast toast;
+    String type = "vowel";
 
 
 
@@ -57,7 +58,8 @@ public class SubPReadingActivityTwoLettersMain extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         vowel = results.get(position);
-                        goToTwoLetters();
+                        goToTwoLetters(type);
+
 
                     }
                 });
@@ -95,8 +97,15 @@ public class SubPReadingActivityTwoLettersMain extends AppCompatActivity {
     }
 
     public void goToMain(){
-        Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-        startActivity(intent);
+        if (MainActivity.Subscribed !=1){
+            Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+            startActivity(intent);
+        }
+
     }
     public void goToWeb() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
@@ -104,10 +113,24 @@ public class SubPReadingActivityTwoLettersMain extends AppCompatActivity {
     }
 
 
-    public void goToTwoLetters() {
+    public void goToTwoLetters(String type) {
         // Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.udemy.com/course/learn-akan-twi/?referralCode=6D321CE6AEE1834CCB0F"));
-        Intent intent = new Intent(this, SubPReadingActivityTwoLetters.class);
-        intent.putExtra("vowel", vowel);
+        Intent intent;
+        if (type.contains("vowel")){
+            intent = new Intent(this, SubPReadingActivityTwoLetters.class);
+            intent.putExtra("vowel", vowel);
+            intent.putExtra("type", type);
+        }else{
+            if (MainActivity.Subscribed !=1){
+                intent = new Intent(getApplicationContext(), PleaseSubscribePage.class);
+            }else {
+                intent = new Intent(this, SubPReadingActivityTwoLetters.class);
+                intent.putExtra("vowel", vowel);
+                intent.putExtra("type", type);
+
+            }
+        }
+
         startActivity(intent);
     }
 
@@ -116,15 +139,41 @@ public class SubPReadingActivityTwoLettersMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_preading_two_letters_main);
 
-
+        Intent category = getIntent();
+        type = category.getStringExtra("type");
         readingAlphabetArray = new ArrayList<>();
-        readingAlphabetArray.add("A");
-        readingAlphabetArray.add("E");
-        readingAlphabetArray.add("Ɛ");
-        readingAlphabetArray.add("I");
-        readingAlphabetArray.add("O");
-        readingAlphabetArray.add("Ɔ");
-        readingAlphabetArray.add("U");
+
+
+        if (type.contains("vowel")){
+            readingAlphabetArray.add("A");
+            readingAlphabetArray.add("E");
+            readingAlphabetArray.add("Ɛ");
+            readingAlphabetArray.add("I");
+            readingAlphabetArray.add("O");
+            readingAlphabetArray.add("Ɔ");
+            readingAlphabetArray.add("U");
+        }
+        else{
+            readingAlphabetArray.add("B");
+            readingAlphabetArray.add("D");
+            readingAlphabetArray.add("F");
+            readingAlphabetArray.add("G");
+            readingAlphabetArray.add("H");
+            readingAlphabetArray.add("K");
+            readingAlphabetArray.add("L");
+            readingAlphabetArray.add("M");
+            readingAlphabetArray.add("N");
+            readingAlphabetArray.add("P");
+            readingAlphabetArray.add("R");
+            readingAlphabetArray.add("S");
+            readingAlphabetArray.add("T");
+            readingAlphabetArray.add("U");
+            readingAlphabetArray.add("W");
+            readingAlphabetArray.add("Y");
+        }
+
+
+
 
 //        tvLetterA = findViewById(R.id.tvVowelA);
         //      horizontalScrollView = findViewById(R.id.horizontalScrollView);
@@ -140,7 +189,7 @@ public class SubPReadingActivityTwoLettersMain extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 vowel = readingAlphabetArray.get(position);
-                goToTwoLetters();
+                goToTwoLetters(type);
 
             }
         });

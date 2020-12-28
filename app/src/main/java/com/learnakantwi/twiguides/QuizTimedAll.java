@@ -358,14 +358,14 @@ public class QuizTimedAll extends AppCompatActivity {
         }
 
         public void goToMain(){
-                if (Ads.equals("Ads")){
-                    Intent intent = new Intent(getApplicationContext(), HomeMainActivity.class);
-                    startActivity(intent);
-                }
+            Intent intent;
+            if (Ads.equals("Ads")){
+                intent = new Intent(getApplicationContext(), HomeMainActivity.class);
+            }
                 else{
-                    Intent intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
-                    startActivity(intent);
-                }
+                intent = new Intent(getApplicationContext(), SubPHomeMainActivity.class);
+            }
+            startActivity(intent);
         }
 
     public void goToFinishPage(){

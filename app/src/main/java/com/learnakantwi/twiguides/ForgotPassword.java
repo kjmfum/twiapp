@@ -3,6 +3,7 @@ package com.learnakantwi.twiguides;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -21,6 +22,8 @@ public class ForgotPassword extends AppCompatActivity {
     EditText etEmail;
     FirebaseAuth mAuth;
 
+    String nextScreen ="";
+
 
     public void ResetPassword(){
 
@@ -35,6 +38,11 @@ public class ForgotPassword extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()){
                         Toast.makeText(ForgotPassword.this, "Sent", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                       // intent.putExtra("registeredEmail", currentUser.getEmail());
+                        intent.putExtra("nextScreen", nextScreen);
+                        startActivity(intent);
+                        finish();
                     }
                     else{
                         Toast.makeText(ForgotPassword.this, "Not Sent", Toast.LENGTH_SHORT).show();
@@ -50,11 +58,26 @@ public class ForgotPassword extends AppCompatActivity {
 
     }
 
+  /*  @Override
+    protected void onDestroy() {
+        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+        // intent.putExtra("registeredEmail", currentUser.getEmail());
+        intent.putExtra("nextScreen", nextScreen);
+        startActivity(intent);
+        finish();
+        super.onDestroy();
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
+
+        Intent intent = getIntent();
+
+        if (intent.getStringExtra("nextScreen") != null){
+            nextScreen = intent.getStringExtra("nextScreen");
+        }
 
         mAuth = FirebaseAuth.getInstance();
         etEmail = findViewById(R.id.etEmail);
@@ -63,7 +86,6 @@ public class ForgotPassword extends AppCompatActivity {
         btResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 ResetPassword();
             }
         });
